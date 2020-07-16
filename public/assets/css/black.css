@@ -1,0 +1,223 @@
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+input[type="tel"], 
+input[type="search"], 
+input[type="url"], 
+select, 
+textarea{
+	border-color: #333333;
+}
+.black-version{
+	background: #000000;
+}
+a:hover, a:focus, a:active{
+	color: #eeeeee;
+}
+.main-menu > li > a,.turan-demolink .title{
+	color: #dddddd;
+}
+.block-account > a,.mega-menu .turan-custommenu .widgettitle,.shopcart-description .content-wrap .title,.mini_cart_item .product-name,
+.mini_cart_item .product-price,.shopcart-description .subtotal .total-price,.shopcart-description .actions .button-viewcart,.block-search .title-search,.block-search .title-search,
+.product-item .flash,.product-item .product-name a,.product-item .price,.quantity .control .input-qty,.pinmap-popup-main .product-name-pinmap,.pinmap-popup-main .pinmap-price{
+	color: #eeeeee;
+}
+.main-menu .submenu,.turan-submenu{
+	background-color: #000000;
+	-webkit-box-shadow: 0px 0px 12px 0px rgba(255, 255, 255, 0.2);
+    -moz-box-shadow: 0px 0px 12px 0px rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 0px 12px 0px rgba(255, 255, 255, 0.2);
+}
+.border-custom span,.shopcart-description .content-wrap .title,.shopcart-description .content-wrap ul li,.shopcart-description .actions .button-viewcart,.block-search .title-search,
+.form-checkbox span::before{
+	border-color: #333333;
+}
+.header.style8 .block-minicart .shopcart-icon:before,.header.style7 .block-minicart .shopcart-icon:before{
+    content: url(../images/bag-black.png);
+}
+.header.style8 .block-search .icon-search::before{
+     content: url(../images/search-header-black.png)
+}
+.submenu.menu-page{
+	background-image: url(../images/mega-bg-black.jpg);
+}
+.mega-menu .turan-custommenu ul li,.main-menu .submenu > li > a, .vertical-style .mega-menu .turan-custommenu ul li,
+.vertical-style .main-menu .submenu > li > a{
+	color:  #9b9b9b;
+}
+.main-menu .submenu > li:hover > a, .main-menu .submenu > li.active > a,.header-language .turan-submenu > li > a:hover{
+	background-color: #222222;
+}
+.shopcart-description .subtotal .total-title,.product-item .price del{
+	color: #888888;
+}
+/*product*/
+.product-item:hover .product-inner{
+	box-shadow: none;
+}
+.product-item .product-inner{
+	background: #070707;
+	border-color: transparent;
+}
+.product-item .loop-form-add-to-cart{
+	background-color: transparent;
+}
+.product-item .loop-form-add-to-cart .button{
+	background-color: #222;
+	color: #fff;
+	border-color: #222;
+}
+.product-item.product-type-variable .variations{
+	border-color: #181818;
+}
+.star-rating:before, .star-rating>span:before,.star-rating>span:before,.product-item .yith-wcwl-add-to-wishlist>div a:before{
+	color: #555555;
+}
+.quantity .control{
+	border-color: #323232;
+}
+.quantity .control .btn-number::after,
+.quantity .control .btn-number::before{
+	background: #464646;
+}
+.product-item.style-3 .group-buttons .button{
+	background-color: #222222;
+	color: #ffffff;
+	border: none;
+	padding: 6px;
+}
+.quantity .control .btn-number:hover::before,
+.quantity .control .btn-number:hover::after{
+	background: #d9d9d9;
+}
+.product-item .variations .variation .variation-value a{
+	color: #aaaaaa;
+}
+.product-item .variations .variation .variation-value a.active{
+	color: #ffffff;
+}
+.pinmap-popup-main{
+	background-color: #000000;
+}
+.popup-pinmap.left:before{
+	border-left-color: #000000;
+}
+.popup-pinmap.right:before{
+	border-right-color: #000000;
+}
+.pinmap-popup-buttons .button{
+	background-color: #333333;
+	border-color: #333333;
+	color: #ffffff;
+}
+.turan-iconbox.default .icon{
+	color: #333333;
+}
+.turan-iconbox.default .iconbox-inner .content .title{
+	color: #fefefe;
+}
+.turan-iconbox.default .iconbox-inner .content .text{
+	color: #555555;
+}
+.turan-iconbox.default{
+	border-color: #070707;
+}
+.custommenu-title-blog{
+	color: #ffffff;
+}
+.brand-slider-wrapp .owl-slick .slick-arrow{
+	background-color: #000000;
+	color: #eeeeee;
+	border-color: #333333;
+}
+.brand-item:hover img{
+	border-color: #333333;
+}
+.mobile-navigation span{
+	background-color: #eeeeee;
+}
+.header-device-mobile,.footer-device-mobile{
+	background-color: #000000;
+	border-color: rgba(255,255,255,0.2);
+}
+.footer-device-mobile-item > a,.product-deal-slider .title{
+	color: #eeeeee;
+}
+.count-star{
+	color: #888888;
+}
+.product-deal-slider{
+	border-color: #333333;
+}
+.turan-countdown .box-count{
+	border-color: #323232;
+}
+.turan-countdown .box-count .number{
+	color: #cccccc;
+}
+.turan-countdown .box-count .text{
+	color: #888888;
+}
+.turan-tabs .tab-link li a{
+	color: #555555;
+}
+.turan-tabs .tab-link li a:hover,
+.turan-tabs .tab-link li.active a{
+	color: #eeeeee;
+}
+.turan-iconbox.default .icon{
+	padding: 0 37px 0 0;
+}
+.turan-blog.default .turan-blog-item .blog-info{
+	border: none;
+	background-color: #070707;
+}
+.turan-blog-item .blog-meta{
+	border-color: #181818;
+}
+.turan-blog-item .blog-title span{
+	color: #555555;
+}
+.turan-blog-item .blog-title,.kt-panel > ul> li> a,.ovic-menu-panel > ul > li > a,
+.ovic-menu-panels-actions-wrap .ovic-menu-current-panel-title,.kt-panels-actions-wrap .kt-current-panel-title,
+.kt-panels-actions-wrap .kt-close-btn, .kt-panels-actions-wrap .kt-prev-panel{
+	color: #eeeeee;
+}
+.header-block-text{
+	background-color: #070707;
+}
+.header-top-message{
+	background-color: #000000;
+}
+.kt-clone-wrap,.kt-clone-wrap .kt-panel,.header-device-mobile .item .block-sub,.ovic-menu-clone-wrap,.ovic-menu-clone-wrap .ovic-menu-panel{
+	background-color: #000000;
+}
+.kt-panel > ul > li,.kt-panels-actions-wrap .kt-close-btn, .kt-panels-actions-wrap .kt-prev-panel,
+.kt-panels-actions-wrap,.header-device-mobile .mobile-navigation, .mobile-search-box>a, .mobile-settings-box>a,.header-device-mobile .block-item-title,
+.ovic-menu-panel > ul > li,.ovic-menu-panels-actions-wrap,.ovic-menu-panels-actions-wrap .ovic-menu-close-btn,
+ .ovic-menu-panels-actions-wrap .ovic-menu-prev-panel{
+	border-color: rgba(255,255,255,0.1);
+}
+.header-device-mobile .item .block-sub .close,.header-device-mobile .block-item-title,
+.ovic-menu-panels-actions-wrap .ovic-menu-close-btn, .ovic-menu-panels-actions-wrap .ovic-menu-prev-panel,
+.vertical-style .mega-menu .turan-custommenu .widgettitle{
+	color: #eeeeee;
+}
+.mobile-settings-box .turan-language-wrap li.active{
+	color: #ffffff;
+}
+.header-device-mobile .header-searchform-box .search-input{
+	background-color: transparent;
+}
+.ovic-menu-panel .main-menu > li > a, .ovic-menu-panel .turan-demolink .title, .ovic-menu-panel .mega-menu .turan-custommenu .widgettitle{
+	color: #dddddd !important;
+}
+.ovic-menu-panel .mega-menu .turan-custommenu ul li{
+	color: #9b9b9b;
+}
+.turan-newsletter.default .newsletter-form-wrap .submit-newsletter{
+	background-color: #000000;
+}
+.turan-newsletter.default .newsletter-form-wrap .submit-newsletter:hover{
+	color: #ffffff;
+}
