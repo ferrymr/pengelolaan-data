@@ -1,1 +1,1 @@
-@extends('product-detail')
+@extends('cart')

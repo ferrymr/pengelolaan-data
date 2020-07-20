@@ -39,7 +39,11 @@
         <div class="container">
 
             <!-- breadcrumb -->
-            <x-breadcrumb />
+            <div class="row">
+                <div class="col-lg-12">
+                    <x-breadcrumb />
+                </div>
+            </div>
 
             <!-- main content -->
             <div class="row">
