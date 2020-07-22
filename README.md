@@ -1,4 +1,4 @@
-<p align="center"><img src="https://bellezkin.com/wp-content/uploads/2019/09/logo-bellezkin.png" width="400"></p>
+<p align="center"><img src="https://bellezkin.com/wp-content/uploads/2019/09/logo-bellezkin.png" width="300"></p>
 
 ## About Bellezkin Shop v3
 
