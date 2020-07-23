@@ -1,6 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
+/public/assets/images/large
+/public/assets/images/thumbnails
 /storage/*.key
 /vendor
 .env.backup

@@ -6,14 +6,16 @@ use Illuminate\View\Component;
 
 class PromoProductsSection extends Component
 {
+    public $products;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($products)
     {
-        //
+        $this->products = $products;
     }
 
     /**

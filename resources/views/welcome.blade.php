@@ -1,1 +1,1 @@
-@extends('cart')
+@extends('layouts.master.home-1')

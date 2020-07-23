@@ -1,0 +1,22 @@
+.header-top-message {
+    background-color: #fddde6;
+    text-align: right;
+    font-weight: 500;
+    padding-right: 30px;
+    font-size: 13px;
+    line-height: 35px;
+}
+
+.header-top-message a{
+    text-decoration: none;
+    color: #555555;
+}
+
+
+.slider-item.style1 .slider-inner{
+    background-image: url(../images/slider-1.jpg);
+}
+
+.slider-item.style2 .slider-inner{
+    background-image: url(../images/slider-2.jpg);
+}

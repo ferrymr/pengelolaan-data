@@ -20,12 +20,15 @@
     <link rel="stylesheet" href="{{ asset('assets/css/jquery.mCustomScrollbar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style-custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+
+    @yield('styles')
 </head>
 <body class="home home-01 home-newletter">
     
-    {{-- <x-topbar>
-        <i class="icon fa fa-scissors" aria-hidden="true"></i> #Free EU Delivery + Return Over <a href="#">€99.00</a> Collect From Store
-    </x-topbar> --}}
+    <x-topbar>
+        <a href="#">Menjadi Reseller</a> &nbsp;&nbsp; <a href="#">Konsultasi Kecantikan</a>
+    </x-topbar>
     
     <!-- header -->
     <x-header />
@@ -40,20 +43,7 @@
             <!-- slide show -->
             <x-slider />
 
-            <!-- text block -->
-            <x-promo-text-bar />
-
-            <!-- products box -->
-            <x-promo-products-section />
-
-            <!-- banner newsletter -->
-            <x-newsletter />
-
-            <!-- products tabs -->
-            <x-products />
-
-            <!-- blogs -->
-            <x-blogs />
+            @yield('content')
 
         </div>
     </div>
@@ -85,5 +75,7 @@
     <script src="{{ asset('assets/js/mobilemenu.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.mCustomScrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/js/frontend-plugin.js') }}"></script>
+
+    @yield('scripts')
 </body>
 </html>
