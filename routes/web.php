@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'IndexController@index')->name('home');
 
 Route::resource('products', 'ProductController');
+Route::resource('profiles', 'ProfileController');
+// Route::resource('shoppingcarts', 'ShoppingCartController');
+
+Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
+Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');
