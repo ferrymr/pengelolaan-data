@@ -40,9 +40,6 @@
     <div class="main-content">
         <div class="fullwidth-template">
 
-            <!-- slide show -->
-            <x-slider />
-
             @yield('content')
 
         </div>

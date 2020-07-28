@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    <!-- slide show -->
+    <x-slider />
+
     <!-- text block -->
     <x-promo-text-bar>
         <i class="icon fa fa-flag" aria-hidden="true"></i>Buruan, Beli product <a href="#">Series diskon 30%</a>  & dapetin <a href="#">Serum Anti Flek gratis</a> sekarang!
