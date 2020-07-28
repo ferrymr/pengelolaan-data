@@ -7,13 +7,13 @@
     </x-promo-text-bar>
 
     <!-- products box -->
-    <x-promo-products-section :products="$products"/>
+    {{-- <x-promo-products-section :products="$products"/> --}}
 
     <!-- banner newsletter -->
     <x-newsletter />
 
     <!-- products tabs -->
-    <x-products />
+    <x-products :products="$best_seller_products"/>
 
     <!-- blogs -->
     <x-blogs />
