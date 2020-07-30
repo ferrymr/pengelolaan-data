@@ -6,6 +6,7 @@ use Illuminate\View\Component;
 
 class Products extends Component
 {
+    public $categoryName;
     public $products;
 
     /**
@@ -13,9 +14,10 @@ class Products extends Component
      *
      * @return void
      */
-    public function __construct($products)
+    public function __construct($products, $categoryName = "")
     {
         $this->products = $products;
+        $this->categoryName = $categoryName;
     }
 
     /**
