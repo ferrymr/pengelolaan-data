@@ -83,4 +83,14 @@ class ProductController extends Controller
     {
         //
     }
+
+    public function category($category_name)
+    {
+        $products = Product::select('kode_barang', 'nama', 'h_nomem as harga')
+                        ->where('jenis', $category_name)
+                        ->where('h_nomem', '!=', 0)
+                        ->paginate(20);
+
+        return view('products', compact('products'));
+    }
 }

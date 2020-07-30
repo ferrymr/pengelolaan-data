@@ -4,14 +4,14 @@
         <div class="tab-head">
             <ul class="tab-link">
                 <li class="active">
-                    <a data-toggle="tab" aria-expanded="true" data-animate="bounceIn" href="#bestseller">Bestseller</a>
+                    {{-- <a data-toggle="tab" aria-expanded="true" data-animate="bounceIn" href="#bestseller">Bestseller</a> --}}
                 </li>
-                <li class="">
+                {{-- <li class="">
                     <a data-toggle="tab" aria-expanded="true" data-animate="fadeInRight" href="#new_arrivals ">New Arrivals </a>
                 </li>
                 <li class="">
                     <a data-toggle="tab" aria-expanded="true" data-animate="fadeInLeft" href="#top-rated">Top Rated</a>
-                </li>
+                </li> --}}
             </ul>
         </div>
 
@@ -21,7 +21,7 @@
 
                 <!-- products -->
                 <div class="turan-product">
-                    <div class="product-list-owl owl-slick equal-container"  data-slick ='{"slidesToShow":4,"rows":2,"autoplay":false, "autoplaySpeed":1000, "arrows":false, "dots":false, "infinite":true, "speed":800}' data-responsive='[{"breakpoint":"2000","settings":{"slidesToShow":4}},{"breakpoint":"1200","settings":{"slidesToShow":3}},{"breakpoint":"992","settings":{"slidesToShow":2}},{"breakpoint":"768","settings":{"slidesToShow":2}},{"breakpoint":"481","settings":{"slidesToShow":1}}]'>
+                    <div class="product-list-owl owl-slick equal-container"  data-slick ='{"slidesToShow":4,"rows":5,"autoplay":false, "autoplaySpeed":1000, "arrows":true, "dots":false, "infinite":true, "speed":800}' data-responsive='[{"breakpoint":"2000","settings":{"slidesToShow":4}},{"breakpoint":"1200","settings":{"slidesToShow":3}},{"breakpoint":"992","settings":{"slidesToShow":2}},{"breakpoint":"768","settings":{"slidesToShow":2}},{"breakpoint":"481","settings":{"slidesToShow":1}}]'>
                         
                         @forelse ($products as $product)
                             <div class="product-item style-1">
@@ -62,7 +62,7 @@
                                                 </div>
                                             </div> --}}
                                             <div class="price">
-                                                @currency($product->harga)
+                                                @currency($product->harga) 
                                                 {{-- <del>
                                                     €65
                                                 </del>
@@ -108,12 +108,13 @@
                             </div>
                         @empty
                         @endforelse
+
                     </div>
                 </div>
 
             </div>
 
-            <div id="new_arrivals" class="tab-panel">
+            {{-- <div id="new_arrivals" class="tab-panel">
                 <!-- products -->
                 <div class="turan-product">
 
@@ -1760,9 +1761,17 @@
                     </div>
                 </div>
                 <!-- /products -->
-            </div>
+            </div> --}}
 
         </div>
         <!-- /tab content -->
+
+        {{-- @foreach ($products as $product)
+            {{ $product->nama }} <br/>
+            {{ $product->h_nomem }} <br/>
+            <br/>
+        @endforeach --}}
+        
+        {{ $products->links() }}
     </div>
 </div>

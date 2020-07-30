@@ -199,22 +199,22 @@
             <div class="container-wapper">
                 <ul class="clone-main-menu turan-nav main-menu" id="menu-main-menu">
                     <li class="menu-item">
-                        <a href="gridproducts_bannerslider.html" class="kt-item-title" title="Shop">Home</a>
+                        <a href="{{ route('home') }}" class="kt-item-title" title="Shop">Home</a>
                     </li>
                     <li class="menu-item">
-                        <a href="about.html" class="kt-item-title" title="About">Brightening</a>
+                        <a href="{{ route('products.category', 'brightening') }}" class="kt-item-title" title="Brightening">Brightening</a>
                     </li>
                     <li class="menu-item">
-                        <a href="about.html" class="kt-item-title" title="About">Purify</a>
+                        <a href="{{ route('products.category', 'purify') }}" class="kt-item-title" title="Purify">Purify</a>
                     </li>
                     <li class="menu-item">
-                        <a href="about.html" class="kt-item-title" title="About">Decorative</a>
+                        <a href="{{ route('products.category', 'decorative') }}" class="kt-item-title" title="Decorative">Decorative</a>
                     </li>
                     <li class="menu-item">
-                        <a href="about.html" class="kt-item-title" title="About">Extra Care</a>
+                        <a href="{{ route('products.category', 'extra care') }}" class="kt-item-title" title="Extra Care">Extra Care</a>
                     </li>
                     <li class="menu-item">
-                        <a href="about.html" class="kt-item-title" title="About">Series</a>
+                        <a href="{{ route('products.category', 'series') }}" class="kt-item-title" title="About">Series</a>
                     </li>
                 </ul>
             </div>
