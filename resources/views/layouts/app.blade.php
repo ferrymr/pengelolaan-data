@@ -36,14 +36,31 @@
     <!-- header mobile -->
     <x-header-mobile />
 
+    <!-- slide show -->
+    <x-slider />
+
+    <!-- text block -->
+    <x-promo-text-bar>
+        <i class="icon fa fa-flag" aria-hidden="true"></i>Buruan, Beli product <a href="#">Series diskon 30%</a>  & dapetin <a href="#">Serum Anti Flek gratis</a> sekarang!
+    </x-promo-text-bar>
+
+    <!-- products box -->
+    {{-- <x-promo-products-section :products="$products"/> --}}
+
+    <!-- banner newsletter -->
+    <x-newsletter />
+
     <!-- main content -->
-    <div class="main-content">
-        <div class="fullwidth-template">
+    <div class="main-content main-content-product no-sidebar">
+        <div class="container">
 
             @yield('content')
 
         </div>
     </div>
+
+    <!-- blogs -->
+    <x-blogs />
 
     <!-- footer -->
     <x-footer />

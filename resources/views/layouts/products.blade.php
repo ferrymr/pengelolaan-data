@@ -36,6 +36,14 @@
     <!-- header mobile -->
     <x-header-mobile />
 
+     <!-- banner newsletter -->
+    <x-newsletter />
+
+    <!-- text block -->
+    <x-promo-text-bar>
+        <i class="icon fa fa-flag" aria-hidden="true"></i>Buruan, Beli product <a href="#">Series diskon 30%</a>  & dapetin <a href="#">Serum Anti Flek gratis</a> sekarang!
+    </x-promo-text-bar>
+
     <!-- main content -->
     <div class="main-content main-content-product no-sidebar">
         <div class="container">
