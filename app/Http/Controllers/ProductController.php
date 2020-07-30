@@ -91,6 +91,8 @@ class ProductController extends Controller
                         ->where('h_nomem', '!=', 0)
                         ->paginate(20);
 
-        return view('products', compact('products'));
+        $category_name = ucfirst($category_name);
+
+        return view('products', compact('products', 'category_name'));
     }
 }
