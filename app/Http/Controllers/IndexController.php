@@ -24,13 +24,7 @@ class IndexController extends Controller
         //     ->limit(10)
         //     ->get();
 
-        $best_seller_products = DB::table('cn_barang')
-            ->join('tb_det_jual', 'tb_det_jual.kode_barang', '=', 'cn_barang.kode_barang')
-            ->select('cn_barang.kode_barang', 'cn_barang.nama', 'cn_barang.h_nomem as harga', DB::raw('SUM(tb_det_jual.jumlah) as jumlah_jual'))
-            ->groupBy('kode_barang')
-            ->orderByDesc('jumlah_jual')
-            ->limit(16)
-            ->get();
+        $best_seller_products = array();
 
         /* 
         select 

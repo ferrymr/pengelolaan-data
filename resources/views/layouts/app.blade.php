@@ -47,8 +47,9 @@
     <!-- products box -->
     {{-- <x-promo-products-section :products="$products"/> --}}
 
-    <!-- banner newsletter -->
-    <x-newsletter />
+    <x-product-category-section />
+
+    <x-banner-product />
 
     <!-- main content -->
     <div class="main-content main-content-product no-sidebar">
@@ -60,7 +61,10 @@
     </div>
 
     <!-- blogs -->
-    <x-blogs />
+    {{-- <x-blogs /> --}}
+
+    <!-- banner newsletter -->
+    <x-newsletter />
 
     <!-- footer -->
     <x-footer />

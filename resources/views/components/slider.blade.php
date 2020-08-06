@@ -1,34 +1,42 @@
-<div class="home-slider rows-space-50 main-slide">
-    <div class="container">
-        <div class="slider-owl owl-slick equal-container nav-center"  data-slick ='{"autoplay":false, "autoplaySpeed":9000, "arrows":true, "dots":false, "infinite":true, "speed":1000, "rows":1}' data-responsive='[{"breakpoint":"2000","settings":{"slidesToShow":1}}]'>
-            <div class="slider-item style1">
-                <div class="slider-inner equal-element">
+
+<!-- main silde -->
+<div class="home-slider fullwidth rows-space-50">
+    <div class="slider-owl owl-slick equal-container nav-center equal-container"  data-slick ='{"autoplay":false, "autoplaySpeed":10000, "arrows":true, "dots":false, "infinite":true, "speed":800, "rows":1}' data-responsive='[{"breakpoint":"2000","settings":{"slidesToShow":1}}]'>
+        <div class="slider-item style5">
+            <div class="slider-inner equal-element" style="background-image: url({{ asset('assets/images/slider-1.jpg') }});">
+                <div class="container">
                     <div class="slider-infor">
-                        <h5 class="title-small">Get Lipcreams for free!</h5>
-                        <h3 class="title-big">On every purchase above</h3>
-                        <div class="price"><span class="number-price">IDR. 325.00</span></div>
-                        <a href="#" class="button btn-shop-the-look bgroud-style">SHOP NOW</a>
+                        <h5 class="title-small">Start ur weekend off right!</h5>
+                        <h3 class="title-big">Huge sale<br />Sportwear<br />75% OFF</h3>
+                        <div class="when-code">When Use Code:<span class="number-code">Z9QAR25</span></div>
+                        <a href="#" class="button btn-browse">shop now</a>
+                        <a href="#" class="button btn-view-promotion bgroud-style">VIEW PROMOTION</a>
                     </div>
                 </div>
             </div>
-            <div class="slider-item style2">
-                <div class="slider-inner equal-element">
+        </div>
+        <div class="slider-item style4">
+            <div class="slider-inner equal-element" style="background-image: url({{ asset('assets/images/slider-2.jpg') }});">
+                <div class="container">
                     <div class="slider-infor">
-                        <h5 class="title-small">Get Discounts!</h5>
-                        <h3 class="title-big">UP TO <span>70%</span> ON ALL <br/> Series ITEMS</h3>
-                        <a href="#" class="button btn-shop-now">SHOP NOW</a>
+                        <h5 class="title-small">Tailored to suit You!</h5>
+                        <h3 class="title-big">Back in stock with<br />4 colors for you</h3>
+                        <div class="price">New Price:<span class="number-price">€25.00</span></div>
+                        <a href="#" class="button btn-browse">Browse</a>
+                        <a href="#" class="button btn-shop-the-look bgroud-style">Shop The Look</a>
                     </div>
                 </div>
             </div>
-            <div class="slider-item style3">
-                <div class="slider-inner equal-element">
+        </div>
+        <div class="slider-item style6">
+            <div class="slider-inner equal-element" style="background-image: url({{ asset('assets/images/slider-1.jpg') }});">
+                <div class="container">
                     <div class="slider-infor">
-                        <h5 class="title-small">Glow & Moist your skin!</h5>
-                        <h3 class="title-big">Whitening Serum</h3>
-                        <div class="price">Special price at: <span class="number-price">IDR. 75.00</span>
-                        </div>
-                        <a href="#" class="button btn-browse">View</a>
-                        <a href="#" class="button btn-shop-the-look bgroud-style">Add to Cart</a>
+                        <h5 class="title-small">Make your style Difference!</h5>
+                        <h3 class="title-big">Let’s create<br />Your own style</h3>
+                        <div class="price">Template Price: <span class="number-price">€09.00</span></div>
+                        <a href="#" class="button btn-browse">Browse</a>
+                        <a href="#" class="button btn-lets-create bgroud-style">Let’s Create</a>
                     </div>
                 </div>
             </div>
