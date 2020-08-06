@@ -34,8 +34,8 @@
                     <div class="item-banner style6">
                         <div class="inner" style="background-image: url(https://source.unsplash.com/1170x300/?cosmetics);background-position: bottom;">
                             <div class="banner-content">
-                                <h4 class="turan-subtitle">Brightening Day Sale!</h4>
-                                <h3 class="title">Save <span>25%</span> OFF ON ALL <br>Sport Clothing</h3>
+                                {{-- <h4 class="turan-subtitle">Brightening Day Sale!</h4> --}}
+                                <h3 class="title">Brightening Day Sale! <span>25%</span> OFF ON ALL <br>Sport Clothing</h3>
                                 <a href="#" class="button btn-view-promotion">View Product</a>
                             </div>
                         </div>
