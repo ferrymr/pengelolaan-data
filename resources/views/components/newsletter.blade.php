@@ -1,6 +1,6 @@
 <div class="baner-newlestter-wrapp home rows-space-25">
     <div class="container">
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-lg-8 col-md-8 col-sm-12">
                 <!-- banner -->
                 <div class="banner">
