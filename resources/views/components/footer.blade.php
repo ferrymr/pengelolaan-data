@@ -5,7 +5,7 @@
                 <div class="box-footer col-xs-12 col-sm-6 col-md-6 col-lg-4">
                     <div class="widget-box">
                         <div class="single-img">
-                            <a href="index.html"><img src="assets/images/logo-footer.png" alt=""></a>
+                            <a href="index.html"><img src="{{ asset('assets/images/logo-footer') }}.png" alt=""></a>
                         </div>
                         <div class="text-content-elememnt">
                             <p>
@@ -111,7 +111,7 @@
                         <div class="coppyright">Copyright © 2018 <a href="#">TuranOutfit</a>. All rights reserved</div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <div class="turan-payment"><img src="assets/images/payments.png" alt=""></div>
+                        <div class="turan-payment"><img src="{{ asset('assets/images/payments.png') }}" alt=""></div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                         <div class="demos"><a href="#">Demo <span>(01)</span></a></div>
