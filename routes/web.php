@@ -15,10 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'IndexController@index')->name('home');
 
-Route::get('/products/{category}', 'ProductController@category')->name('products.category');
+Route::get('/products/category/{category}', 'ProductController@category')->name('products.category');
 Route::resource('products', 'ProductController');
 
-Route::resource('profiles', 'ProfileController');
 // Route::resource('shoppingcarts', 'ShoppingCartController');
 
 Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
