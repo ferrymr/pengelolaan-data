@@ -42,9 +42,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <x-breadcrumb>
-                        <li class="trail-item trail-begin"><a href="index.html">Home</a></li>
-                        <li class="trail-item"><a href="#">Clothing</a></li>
-                        <li class="trail-item trail-end active">3-pack T-shirts Regular fit</li> 
+                        <li class="trail-item trail-begin"><a href="{{ route('home') }}">Home</a></li>
+                        <li class="trail-item"><a href="{{ route('products.category', $product->kategori) }}">{{ $product->kategori }}</a></li>
+                        <li class="trail-item trail-end active">{{ $product->nama }}</li> 
                     </x-breadcrumb>
                 </div>
             </div>
@@ -60,29 +60,29 @@
                         <div class="details-product single-product-galery">
                             <div class="details-thumd">
                                 <div class="image-preview-container image-thick-box image_preview_container">
-                                    <img id="img_zoom" data-zoom-image="{{ asset('assets/images/details-item-1.jpg') }}" src="assets/images/details-item-1.jpg" alt="">
+                                    <img id="img_zoom" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
                                     <a href="#" class="btn-zoom open_qv"><i class="fa fa-search" aria-hidden="true"></i></a>
                                 </div>
                                 <div class="product_preview image-small">
                                     <div id="thumbnails" class="thumbnails_carousel owl-carousel" data-nav="true" data-autoplay="false" data-dots="false" data-loop="false" data-margin="25" data-responsive='{"0":{"items":3},"480":{"items":3},"600":{"items":3},"1000":{"items":3}}' >
-                                        <a href="#" data-image="{{ asset('assets/images/details-item-1.jpg') }}" data-zoom-image="assets/images/details-item-1.jpg" class="active">
-                                            <img src="{{ asset('assets/images/details-item-1.jpg') }}" data-large-image="assets/images/details-item-1.jpg" alt="">
+                                        <a href="#" data-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" class="active">
+                                            <img src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-large-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
                                         </a>
-                                        <a href="#" data-image="{{ asset('assets/images/details-item-2.jpg') }}" data-zoom-image="assets/images/details-item-2.jpg">
-                                            <img src="{{ asset('assets/images/details-item-2.jpg') }}" data-large-image="assets/images/details-item-2.jpg" alt="">
+                                        <a href="#" data-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}">
+                                            <img src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-large-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
                                         </a>
-                                        <a href="#" data-image="{{ asset('assets/images/details-item-3.jpg') }}" data-zoom-image="assets/images/details-item-3.jpg">
-                                            <img src="{{ asset('assets/images/details-item-3.jpg') }}" data-large-image="assets/images/details-item-3.jpg" alt="">
+                                        <a href="#" data-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}">
+                                            <img src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-large-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
                                         </a>
-                                        <a href="#" data-image="{{ asset('assets/images/details-item-4.jpg') }}" data-zoom-image="assets/images/details-item-4.jpg">
-                                            <img src="{{ asset('assets/images/details-item-4.jpg') }}" data-large-image="assets/images/details-item-4.jpg" alt="">
+                                        <a href="#" data-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}">
+                                            <img src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-large-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
                                         </a>
                                     </div>
                                 </div>
                             </div>
                             <div class="details-infor">
-                                <h1 class="product-title">3-pack T-shirts Regular fit</h1>
-                                <div class="stars-rating">
+                                <h1 class="product-title">{{ $product->nama }}</h1> <br/>
+                                {{-- <div class="stars-rating">
                                     <div class="star-rating">
                                         <span class="star-5"></span>
                                     </div>
@@ -90,19 +90,14 @@
                                         (7)
                                     </div>
                                 </div>
-                                <div class="availability">availability:<a href="#">instock</a></div>
+                                <div class="availability">availability:<a href="#">instock</a></div> --}}
                                 <div class="price">
-                                    <span>€45</span>
+                                    <span>@currency($product->harga)</span>
                                 </div>
                                 <div class="product-details-description">
-                                    <p class="desc">3Pack Tshirt is Crew-neck T-shirts in soft organic cotton jersey. Regular fit.</p>
-                                    <ul>
-                                        <li>100% cotton. Machine wash warm</li>
-                                        <li>Imported</li>
-                                        <li>Art.No. 06-7680</li>
-                                    </ul>
+                                    <p class="desc">{{ $product->deskripsi_lengkap }}</p>
                                 </div>
-                                <div class="variations">
+                                {{-- <div class="variations">
                                     <div class="attribute attribute_color">
                                         <div class="color-text text-attribute">
                                             Color: <span>White/Black/Teal/Brown</span>
@@ -127,9 +122,9 @@
                                             <a href="#" class="">xxl</a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="group-button">
-                                    <div class="yith-wcwl-add-to-wishlist">
+                                    {{-- <div class="yith-wcwl-add-to-wishlist">
                                         <div class="yith-wcwl-add-button">
                                             <a href="#">Add to Wishlist</a>
                                         </div>
@@ -138,7 +133,7 @@
                                         <div class="btn-size-chart">
                                             <a id="size_chart" href="{{ asset('assets/images/size-chart.jpg') }}" class="fancybox">View Size Chart</a>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="quantity-add-to-cart">
                                         <div class="quantity">
                                             <div class="control">
@@ -151,114 +146,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <a href="https://api.whatsapp.com/send?phone=628112288142&text=Halo%0AKak!,%0ASaya%20ingin%20konsultasi%20lebih%20lanjut%20mengenai%20produk%20{{ $product->nama }}" target="_blank" class="single_add_to_cart_button button">Contact Beauty Consultant</a>
+                            <p id="warn">Klik untuk langsung terhubung via WhatssApp </p>
                         </div>
+
+
                         
                         <!-- details atbs -->
                         <div class="tab-details-product">
                             <ul class="tab-link">
-                                <li class="active"><a data-toggle="tab" aria-expanded="true" href="#product-descriptions">Descriptions</a></li>
-                                <li class=""><a data-toggle="tab" aria-expanded="true" href="#information ">Information </a></li>
-                                <li class=""><a data-toggle="tab" aria-expanded="true" href="#reviews">Reviews<span class="count-dex">(3)</span></a></li>
+                                <li class="active"><a data-toggle="tab" aria-expanded="true" href="#product-descriptions">Deskripsi</a></li>
+                                <li class=""><a data-toggle="tab" aria-expanded="true" href="#information ">Cara Pakai</a></li>
                             </ul>
                             <div class="tab-container">
                                 <div id="product-descriptions" class="tab-panel active">
-                                    <p>
-                                        Quisque quis ipsum venenatis, fermentum ante volutpat, ornare enim. Phasellus molestie risus non aliquet cursus. Integer vestibulum mi lorem, id hendrerit ante lobortis non. Nunc ante ante, lobortis non pretium non, vulputate vel nisi. Maecenas dolor elit, fringilla nec turpis ac, auctor vulputate nulla. Phasellus sed laoreet velit.
-                                    </p>
-                                    <p>
-                                        Proin fringilla urna vel mattis euismod. Etiam sodales, massa non tincidunt iaculis, mauris libero scelerisque justo, ut rutrum lectus urna sit amet quam. Nulla maximus vestibulum mi vitae accumsan. Donec sit amet ligula et enim semper viverra a in arcu. Vestibulum enim ligula, varius sed enim vitae, posuere molestie velit. Morbi risus orci, congue in nulla at, sodales fermentum magna.
-                                    </p>
+                                    <p> {{ $product->deskripsi_lengkap }} </p>
                                 </div>
                                 <div id="information" class="tab-panel">
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <td>Size</td>
-                                            <td> XS / S / M / L </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Color</td>
-                                            <td>White/ Black/ Teal/ Brown</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Properties</td>
-                                            <td>Colorful Dress</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div id="reviews" class="tab-panel">
-                                    <div class="reviews-tab">
-                                        <div class="comments">
-                                            <h2 class="reviews-title">1 review for <span>3-pack T-shirts Regular fit</span></h2>
-                                            <ol class="commentlist">
-                                                <li class="conment">
-                                                    <div class="conment-container">
-                                                        <a href="#" class="avatar">
-                                                            <img src="{{ asset('assets/images/avartar.jpeg') }}" alt="">
-                                                        </a>
-                                                        <div class="comment-text">
-                                                            <div class="stars-rating">
-                                                                <div class="star-rating">
-                                                                    <span class="star-5"></span>
-                                                                </div>
-                                                                <div class="count-star">
-                                                                    (1)
-                                                                </div>
-                                                            </div>
-                                                            <p class="meta">
-                                                                <strong class="author">Cobus Bester</strong>
-                                                                <span>-</span>
-                                                                <span class="time">June 7, 2013</span>
-                                                            </p>
-                                                            <div class="description">
-                                                                <p>Simple and effective design. One of my favorites.</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ol>
-                                        </div>
-                                        <div class="review_form_wrapper">
-                                            <div class="review_form">
-                                                <div class="comment-respond">
-                                                    <span class="comment-reply-title">Add a review </span>
-                                                    <form class="comment-form-review">
-                                                        <p class="comment-notes">
-                                                            <span class="email-notes">Your email address will not be published.</span>
-                                                             Required fields are marked 
-                                                             <span class="required">*</span>
-                                                        </p>
-                                                        <div class="comment-form-rating">
-                                                            <label>Your rating</label>
-                                                            <p class="stars">
-                                                                <span>
-                                                                    <a class="star-1" href="#"></a>
-                                                                    <a class="star-2" href="#"></a>
-                                                                    <a class="star-3" href="#"></a>
-                                                                    <a class="star-4" href="#"></a>
-                                                                    <a class="star-5" href="#"></a>
-                                                                </span>
-                                                            </p>
-                                                        </div>
-                                                        <p class="comment-form-author">
-                                                            <label>Name <span class="">*</span></label>
-                                                            <input id="author" name="author" type="text" value="">
-                                                        </p>
-                                                        <p class="comment-form-email">
-                                                            <label>Email <span class="">*</span></label>
-                                                            <input id="email" name="email" type="email" value="" >
-                                                        </p>
-                                                        <p class="comment-form-comment">
-                                                            <label>Your review <span class="required">*</span></label>
-                                                            <textarea id="comment" name="comment" cols="45" rows="8"></textarea>
-                                                        </p>
-                                                        <p class="form-submit">
-                                                            <input name="submit" type="submit" id="submit" class="submit" value="Submit">
-                                                        </p>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <p> {{ $product->cara_pakai }} </p>
                                 </div>
                             </div>
                         </div>
@@ -267,7 +172,7 @@
                         <div class="reset-floatding"></div>
 
                         <!-- realated product -->
-                        <x-related-products />
+                        <x-related-products :related-products="$relatedProducts" />
 
                     </div>
                 </div>
@@ -287,21 +192,21 @@
 
     <a href="#" class="backtotop"><i class="pe-7s-angle-up"></i></a>
 
-    <script src="assets/js/jquery-3.3.1.min.js"></script>	
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/magnific-popup.min.js"></script>
-    <script src="assets/js/isotope.min.js"></script>
-    <script src="assets/js/jquery.mCustomScrollbar.min.js"></script>
-    <script src="assets/js/jquery-ui.min.js"></script>
-    <script src="assets/js/mobilemenu.js"></script>
-    <script src="assets/js/chosen.jquery.min.js"></script>
-    <script src="assets/js/slick.min.js"></script>
-    <script src="assets/js/jquery.elevateZoom.min.js"></script>
-    <script src="assets/js/jquery.actual.min.js"></script>
-    <script src="assets/js/jquery.fancybox.js"></script>
-    <script src="assets/js/lightbox.min.js"></script>
-    <script src="assets/js/jquery.mCustomScrollbar.min.js"></script>
-    <script src="assets/js/frontend-plugin.js"></script>
+    <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>	
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/js/magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets/js/isotope.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.mCustomScrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('assets/js/mobilemenu.js') }}"></script>
+    <script src="{{ asset('assets/js/chosen.jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/slick.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.elevateZoom.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.actual.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.fancybox.js') }}"></script>
+    <script src="{{ asset('assets/js/lightbox.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.mCustomScrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/js/frontend-plugin.js') }}"></script>
 </body>
 </html>
