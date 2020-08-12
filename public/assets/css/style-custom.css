@@ -115,3 +115,32 @@ a:active,
     color: white !important;
     transition: 0.3s;
 }
+
+.btn-google {
+    border: 1px solid #c2c2c2;
+    background-color: white;
+    color: #3f3f3f;
+    display: flex !important;
+    align-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.btn-google:hover {
+    border-color: rgb(212, 212, 212);
+    background-color: rgb(212, 212, 212);
+    color: #3f3f3f;
+    transition: 0.3s;
+}
+
+.btn-google > svg {
+    margin-right: 8px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mb-2 {
+    margin-bottom: 1.2rem;
+}
