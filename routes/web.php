@@ -22,3 +22,14 @@ Route::resource('products', 'ProductController');
 
 Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
 Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');
+
+Route::get('/google', function () {
+    return view('googleLogin');
+});
+
+Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
+Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

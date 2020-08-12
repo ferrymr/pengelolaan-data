@@ -146,38 +146,62 @@
                                         </li>
                                     </ul>
                                     <div class="tab-container">
-                                        <div id="header-tab-login" class="tab-panel active">
-                                            <form method="post" class="login form-login">
-                                                <p class="form-row form-row-wide">
-                                                    <input type="email" placeholder="Email" class="input-text">
-                                                </p>
-                                                <p class="form-row form-row-wide">
-                                                    <input type="password" class="input-text" placeholder="Password">
-                                                </p>
-                                                <p class="form-row">
-                                                    <label class="form-checkbox">
-                                                        <input type="checkbox" class="input-checkbox"><span>Remember me</span>
-                                                    </label>
-                                                    <input type="submit" class="button" value="Login">
-                                                </p>
-                                                <p class="lost_password">
-                                                    <a href="#">Lost your password?</a>
-                                                </p>
+                                        @guest
+                                            <div id="header-tab-login" class="tab-panel active">
+
+                                                <form method="post" class="login form-login">
+                                                    <p class="form-row form-row-wide">
+                                                        <input type="email" placeholder="Email" class="input-text">
+                                                    </p>
+                                                    <p class="form-row form-row-wide">
+                                                        <input type="password" class="input-text" placeholder="Password">
+                                                    </p>
+                                                    <p class="form-row">
+                                                        <label class="form-checkbox">
+                                                            <input type="checkbox" class="input-checkbox"><span>Remember me</span>
+                                                        </label>
+                                                        <input type="submit" class="button" value="Login">
+                                                    </p>
+                                                    <p class="lost_password">
+                                                        <a href="#">Lost your password?</a>
+                                                    </p>
+                                                    <a href="{{ url('auth/google') }}" class="button">Login with google</a>
+                                                </form>
+                                            </div>
+                                        @else
+                                            @if (Auth::user()->photo)
+                                                <img src="{{ Auth::user()->photo }}" width="50">
+                                                <br/>
+                                            @else
+                                                    {{-- <img src="{{ Auth::user()->photo }}" width="50"> --}}
+                                            @endif
+                                            {{ Auth::user()->name }}
+                                            <br/>
+            
+                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a>
+            
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
                                             </form>
-                                        </div>
-                                        <div id="header-tab-rigister" class="tab-panel">
-                                            <form method="post" class="register form-register">
-                                                <p class="form-row form-row-wide">
-                                                    <input type="email" placeholder="Email" class="input-text">
-                                                </p>
-                                                <p class="form-row form-row-wide">
-                                                    <input type="password" class="input-text" placeholder="Password">
-                                                </p>
-                                                <p class="form-row">
-                                                    <input type="submit" class="button" value="Register">
-                                                </p>
-                                            </form>
-                                        </div>
+                                        @endguest
+
+                                        @if (Route::has('register'))
+                                            <div id="header-tab-rigister" class="tab-panel">
+                                                <form method="post" class="register form-register">
+                                                    <p class="form-row form-row-wide">
+                                                        <input type="email" placeholder="Email" class="input-text">
+                                                    </p>
+                                                    <p class="form-row form-row-wide">
+                                                        <input type="password" class="input-text" placeholder="Password">
+                                                    </p>
+                                                    <p class="form-row">
+                                                        <input type="submit" class="button" value="Register">
+                                                    </p>
+                                                </form>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
