@@ -137,6 +137,7 @@
                             </a>
                             <div class="header-account turan-submenu">
                                 <div class="header-user-form-tabs">
+                                    @guest
                                     <ul class="tab-link">
                                         <li class="active">
                                             <a data-toggle="tab" aria-expanded="true" href="#header-tab-login">Login</a>
@@ -145,6 +146,7 @@
                                             <a data-toggle="tab" aria-expanded="true" href="#header-tab-rigister">Register</a>
                                         </li>
                                     </ul>
+                                    @endguest
                                     <div class="tab-container">
                                         @guest
                                             <div id="header-tab-login" class="tab-panel active">
@@ -175,22 +177,25 @@
                                                 </form>
                                             </div>
                                         @else
-                                            @if (Auth::user()->photo)
-                                                <img src="{{ Auth::user()->photo }}" width="50">
-                                                <br/>
-                                            @else
-                                                    {{-- <img src="{{ Auth::user()->photo }}" width="50"> --}}
-                                            @endif
-                                            {{ Auth::user()->name }}
-                                            <br/>
-            
-                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
-                                            </a>
-            
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                @csrf
-                                            </form>
+                                            <div class="d-flex layout-user">
+                                                @if (Auth::user()->photo)
+                                                    <img src="{{ Auth::user()->photo }}" class="img-user">
+                                                @else
+                                                        {{-- <img src="{{ Auth::user()->photo }}" width="50"> --}}
+                                                @endif
+                                                {{ Auth::user()->name }}
+                                            </div>
+                                            <div class="menu-user">
+                                                <a class="dropdown-item" href="#">History Transaksi</a>
+                                                <a class="dropdown-item" href="#">Settings</a>
+                                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    {{ __('Logout') }}
+                                                </a>
+                
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                </form>
+                                            </div>
                                         @endguest
 
                                         @if (Route::has('register'))
