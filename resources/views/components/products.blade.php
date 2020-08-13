@@ -54,7 +54,7 @@
                             <div class="product-thumb">
                                 <div class="thumb-inner">
                                     <a href="{{ route('products.show', $product->kode_barang) }}">
-                                        <img src="{{ asset('assets/images/thumbnails/' . $product->kode_barang . '.jpg')}}" alt="{{ $product->nama }}">
+                                        <img src="{{ asset('assets/images/thumbnails/' . $product->kode_barang . '.jpg') }}" alt="{{ $product->nama }}">
                                     </a>
                                 </div>
                                 {{-- <a href="#" class="button quick-wiew-button">Quick View</a> --}}
