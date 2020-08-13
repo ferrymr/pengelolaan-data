@@ -27,7 +27,8 @@
 <body class="home home-01 home-newletter">
     
     <x-topbar>
-        <a href="#">Menjadi Reseller</a> &nbsp;&nbsp; <a href="#">Konsultasi Kecantikan</a>
+        <a target="_blank" href="https://bellezkin.com/bisnis-bellezkin/">Menjadi Reseller</a> &nbsp;&nbsp; 
+        <a target="_blank" href="https://api.whatsapp.com/send?phone=628112288142&text=Halo%20Kak!%0ASaya%20ingin%20konsultasi%20seputar%20produk%20Bellezkin%20yang%20paling%20cocok%20untuk%20jenis%20kulit%20saya.%0AMohon%20dibantu%20ya%20Kak,%20Terima%20kasih.">Konsultasi Kecantikan</a>
     </x-topbar>
     
     <!-- header -->
@@ -39,32 +40,7 @@
     <!-- slide show -->
     <x-slider />
 
-    <!-- text block -->
-    <x-promo-text-bar>
-        <i class="icon fa fa-flag" aria-hidden="true"></i>Buruan, Beli product <a href="#">Series diskon 30%</a>  & dapetin <a href="#">Serum Anti Flek gratis</a> sekarang!
-    </x-promo-text-bar>
-
-    <!-- products box -->
-    {{-- <x-promo-products-section :products="$products"/> --}}
-
-    <x-product-category-section />
-
-    <x-banner-product />
-
-    <!-- main content -->
-    <div class="main-content main-content-product no-sidebar">
-        <div class="container">
-
-            @yield('content')
-
-        </div>
-    </div>
-
-    <!-- blogs -->
-    {{-- <x-blogs /> --}}
-
-    <!-- banner newsletter -->
-    <x-newsletter />
+    @yield('content')
 
     <!-- footer -->
     <x-footer />

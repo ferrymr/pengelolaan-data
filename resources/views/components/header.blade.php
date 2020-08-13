@@ -7,14 +7,14 @@
                 <div class="col-lg-4 col-sm-6 col-md-6 col-xs-7 col-ts-12 header-element">
                     <div class="turan-socials social-header">
                         <div  class="socials">
-                            <a href="#" class="social-item">
+                            <a href="https://www.facebook.com/bellezkincare.natural/" class="social-item">
                                 <i class="fa fa-facebook-square"></i>
                             </a>
-                            <a href="#" class="social-item">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                            <a href="#" class="social-item">
+                            <a href="https://www.instagram.com/bellezkin/" class="social-item">
                                 <i class="fa fa-instagram"></i>
+                            </a>
+                            <a href="https://www.youtube.com/channel/UCE0Hte0fUMeWhGrVn5zgwRQ" class="social-item">
+                                <i class="fa fa-youtube-square"></i>
                             </a>
                          </div>
                     </div>
