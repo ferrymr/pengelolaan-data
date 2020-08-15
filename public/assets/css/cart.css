@@ -1,0 +1,240 @@
+:root {
+    --main-color: rgb(189, 10, 116);
+}
+
+.card-total-cart {
+    display: block;
+    position: relative;
+    margin-top: 0px;
+    padding-top: 0px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    box-shadow: rgb(202, 211, 225) 0px 1px 4px 0px;
+    background-color: rgb(255, 255, 255);
+    cursor: default;
+}
+@media screen and (max-width: 48em) {
+    .card-total-cart {
+        margin-top: 32px;
+    }
+}
+
+.text-bold-black {
+    color: rgb(108, 114, 124);
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: block;
+}
+
+.title-section-card {
+    color: rgb(108, 114, 124);
+    font-size: 1.6rem;
+    font-weight: bold;
+    display: block;
+}
+
+.text-bold-black::placeholder {
+    opacity: 0.5;
+}
+
+.section-promo {
+    position: relative;
+    border-bottom-width: 6px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(243, 244, 245);
+    padding: 16px;
+}
+
+.widget-promo {
+    min-height: 52px;
+    display: flex;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(219, 222, 226);
+    padding: 8px;
+}
+
+.arrow-right {
+    position: absolute;
+    right: 20px;
+    top: 37%;
+    background-image: url("https://ecs7.tokopedia.net/assets-tokopedia-lite/v2/zeus/production/f384cf28.svg");
+    height: 24px;
+    width: 24px;
+    background-size: contain;
+    background-position-x: center;
+    background-position-y: center;
+    display: inline-block;
+}
+
+.section-total {
+    padding: 16px;
+}
+
+.total-number {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.total-number > .cost {
+    color: var(--main-color);
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.section-total .section-button {
+    margin-top: 16px;
+}
+
+.btn-checkout-cart {
+    color: rgb(255, 255, 255);
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 1.4rem;
+    height: 48px;
+    line-height: 0px;
+    width: 100%;
+    border-radius: 8px;
+    font-weight: 800;
+    outline-color: initial;
+    outline-style: none;
+    outline-width: initial;
+    padding: 16px;
+    transition-duration: 0.8s;
+    transition-timing-function: initial;
+    transition-delay: initial;
+    transition-property: background;
+    cursor: pointer;
+    display: block;
+    background-color: var(--main-color);
+    position: relative;
+}
+
+.cart-item {
+    border-bottom: 1px solid rgb(219, 222, 226);
+    padding-bottom: 16px;
+    padding-top: 16px;
+}
+
+.cart-item:first-child {
+    padding-top: 0px;
+}
+
+.cart-item:last-child {
+    border-bottom: 0px;
+}
+
+.desc-item {
+    position: relative;
+    display: flex;
+    -webkit-box-align: start;
+    align-items: start;
+}
+
+.desc-item .product-img {
+    width: 76px;
+    height: 76px;
+}
+
+.product-img > img {
+    display: block;
+    width: 100%;
+    border-radius: 6px;
+}
+
+.item-detail {
+    padding-left: 16px;
+}
+
+.item-detail .item-name {
+    flex: 1;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: rgb(49, 53, 59);
+    text-decoration-line: none;
+    line-height: 23px;
+    margin-bottom: 6px;
+}
+
+.section-price {
+    display: flex;
+}
+
+.before-discount {
+    text-decoration: line-through;
+    margin-right: 6px;
+}
+
+.item-detail .item-price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--main-color);
+    text-decoration-line: none;
+    line-height: 23px;
+}
+
+.section-bot-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text-promo > span {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--main-color);
+    text-decoration-line: none;
+}
+
+.control-item {
+    display: flex;
+    align-items: center;
+}
+
+.control-item .remove {
+    cursor: pointer;
+    display: block;
+    padding-right: 16px;
+}
+
+.remove::before {
+    content: "\f014";
+    font-family: FontAwesome;
+    font-size: 22px;
+    color: #aaa;
+}
+
+.list-promo .cart-item-promo {
+    display: flex;
+    align-items: center;
+    margin-top: 0px;
+}
+
+@media screen and (max-width: 48em) {
+    .list-promo {
+        margin-top: 16px;
+    }
+}
+
+.list-promo .cart-item-promo ~ .cart-item-promo {
+    margin-top: 16px;
+}
+
+.cart-item-promo > .check-promo {
+    margin: 0px 16px;
+}
+
+.cart-item-promo > .desc-item .product-img {
+    width: 56px;
+    height: 56px;
+}
+
+.promo-item {
+    margin-top: 64px;
+}
