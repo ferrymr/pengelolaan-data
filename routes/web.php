@@ -25,6 +25,9 @@ Route::get('/history-transaction', function () {
 Route::get('/history-transaction-order-list', function () {
     return view('history-transaction-order-list');
 });
+Route::get('/profile', function () {
+    return view('profile');
+});
 
 Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
 Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');
