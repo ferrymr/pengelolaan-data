@@ -19,6 +19,12 @@ Route::get('/products/category/{category}', 'ProductController@category')->name(
 Route::resource('products', 'ProductController');
 
 // Route::resource('shoppingcarts', 'ShoppingCartController');
+Route::get('/history-transaction', function () {
+    return view('history-transaction');
+});
+Route::get('/history-transaction-order-list', function () {
+    return view('history-transaction-order-list');
+});
 
 Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
 Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');

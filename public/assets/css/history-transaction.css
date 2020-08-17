@@ -1,0 +1,130 @@
+/* var(--main-color) berada di file cart .css */
+.tab {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 0.5px solid rgba(49, 53, 59, 0.2);
+    margin-bottom: 32px;
+}
+
+.tab > .item-tab {
+    font-weight: 700;
+    color: rgba(49, 53, 59, 0.44);
+    padding: 16px 0px;
+    cursor: pointer;
+}
+
+.item-tab.active {
+    color: var(--main-color);
+    border-bottom: 2px solid var(--main-color);
+    margin-bottom: -1px;
+    z-index: 1;
+}
+
+.transaction-list-item .item-transaction {
+    text-decoration: none;
+    color: rgba(49, 53, 59, 0.44);
+    border: 0px solid rgba(49, 53, 59, 0.44);
+    border-radius: 8px;
+    box-shadow: rgb(202, 211, 225) 0px 1px 4px 0px;
+    margin-bottom: 30px;
+}
+
+.item-transaction > .header-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 14px;
+}
+
+.header-item > .icon-order {
+    border-radius: 100px;
+    padding: 8px 14px;
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+    margin-right: 8px;
+}
+
+.header-item > .date-order {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-transaction > .hr-item-transaction {
+    border: 1px solid rgb(243, 244, 245);
+}
+
+.item-transaction > .body-item {
+    padding: 16px;
+}
+
+.body-item > .status-order {
+    text-align: center;
+    padding: 8px 0px;
+    border: 1px solid orange;
+    border-radius: 6px;
+    background-color: rgba(255, 165, 0, 0.16);
+    font-weight: 700;
+    color: rgb(111, 111, 111);
+}
+
+.status-order.success {
+    border-color: rgb(0, 255, 132);
+    background-color: rgba(0, 255, 132, 0.09);
+}
+
+.status-order.danger {
+    border-color: rgb(230, 44, 84);
+    background-color: rgba(255, 0, 24, 0.09);
+}
+
+.body-item > .item-detail-order {
+    display: flex;
+    margin-top: 16px;
+}
+
+.item-detail-order > .logo-payment {
+    width: 60px;
+    margin-right: 12px;
+    padding-top: 6px;
+}
+
+.item-detail-order > .detail-order {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+}
+
+@media screen and (min-width: 48em) {
+    .item-detail-order > .detail-order {
+        display: flex;
+        flex: 1;
+        justify-content: space-around;
+    }
+}
+
+.detail-order > .total-order,
+.transfer-order {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 6px;
+}
+
+.label-order {
+    font-size: 1.4rem;
+    color: #a7a7a7;
+    font-weight: 400;
+}
+
+.total-nominal {
+    font-weight: 700;
+    color: var(--main-color);
+}
+
+.norek-order {
+    font-weight: 500;
+    color: rgb(111, 111, 111);
+}
+
+.an-order {
+    font-weight: 700;
+    color: rgb(111, 111, 111);
+}
