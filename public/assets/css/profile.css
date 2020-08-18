@@ -1,0 +1,50 @@
+.card-title-profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.section-title-profile {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-img {
+    width: 60px;
+    margin-right: 16px;
+}
+
+.profile-img > img {
+    border-radius: 100%;
+}
+
+.card-body-profile {
+    margin-bottom: 64px;
+}
+
+.menu-ui {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-ui-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0px;
+    border-bottom: 0.2px solid #d4d4d4;
+}
+
+.title-item-menu {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.desc-item-menu {
+    color: #b8b8b8;
+    font-size: 1.5rem;
+}
+
+.menu-ui-icon {
+    color: #c1c1c1;
+}

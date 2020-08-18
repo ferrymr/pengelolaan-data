@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.without-banner')
 
 @section('content')
 
@@ -28,172 +28,126 @@
 				<!-- main content -->
 				<div class="row">
 					<div class="main-content-cart main-content col-sm-12">
-						<h3 class="custom_blog_title">#Shopping Cart</h3>
-
-						<div class="page-main-content">
-							<div class="shoppingcart-content">
-								<form action="shoppingcart.html" class="cart-form">
-									<table class="shop_table">
-										<thead>
-											<tr>
-												<th class="product-remove"></th>
-												<th class="product-thumbnail"></th>
-												<th class="product-name"></th>
-												<th class="product-price"></th>
-												<th class="product-quantity"></th>
-												<th class="product-subtotal"></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr class="cart_item">
-                                                @foreach($items as $item )
-                                                <td class="product-remove">
-													<a href="{{ url('shoppingcart/delete', $item->id) }}" class="remove"></a>
-												</td>
-												<td class="product-thumbnail">
-													<a href="#">
-														<img src="assets/images/cart-item-2.jpg" alt="" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image">
-													</a>
-												</td>
-												<td class="product-name" data-title="Product">
-													<a href="#" class="title">{{ $item->nama }}</a>
-													<span class="attributes-select attributes-color">{{ $item->jenis }}</span>
-													{{-- <span class="attributes-select attributes-size">XXL</span> --}}
-
-												</td>
-												<td class="product-quantity" data-title="Quantity">
-													<div class="quantity">
-													<div class="control">
-														<a class="btn-number qtyminus quantity-minus" href="#">-</a>
-														<input type="text" data-step="1" data-min="0" value="{{ $item->quantity }}" title="Qty" class="input-qty qty" size="4">
-														<a href="#" class="btn-number qtyplus quantity-plus">+</a>
+						<div class="row">
+							<div class="col-md-8">
+								@foreach([1,2,3] as $data)
+								<div class="cart-item">
+									<div class="desc-item">
+										<div class="product-img">
+											<img src="https://shop.bellezkin.com/api/public/assets/img/thumbnails/19010.jpg" alt="Whitening Day Spray">
+										</div>
+										<div class="item-detail">
+											<div class="item-name">Whitening Day Spray</div>
+											<div class="section-price">
+												<div class="before-discount">Rp. 400.000</div>
+												<div class="item-price">Rp. 400.000</div>
+											</div>
+										</div>
+									</div>
+									<div class="section-bot-item">
+										<div class="text-promo">
+											@if($data == 1)
+											<span>Claim Promo</span>
+											@endif
+										</div>
+										<div class="control-item">
+											<a class="remove"></a>
+											<div class="quantity">
+												<div class="control" style="width: 86px!important;">
+													<div class="btn-number qtyminus quantity-minus">-</div> 
+													<input type="text" data-step="1" min="1" title="Qty" size="4" class="input-qty qty" value="1" style="width: 38px;">
+													<div class="btn-number qtyplus quantity-plus">+</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									@if($data == 1)
+									<div class="list-promo">
+										@foreach([1,2] as $promo)
+										<div class="cart-item-promo">
+											<div class="check-promo">
+												<input type="checkbox" name="" id="">
+											</div>
+											<div class="desc-item">
+												<div class="product-img">
+													<img src="https://shop.bellezkin.com/api/public/assets/img/thumbnails/16010.jpg" alt="Whitening Day Spray">
+												</div>
+												<div class="item-detail">
+													<div class="item-name">Serum Phytocell</div>
+													<div class="section-price">
+														@if($promo == 1)
+														<div class="before-discount">Rp. 400.000</div>
+														<div class="item-price">Rp. 250.000</div>
+														@else
+														<div class="item-price">FREE</div>
+														@endif
 													</div>
 												</div>
-												</td>
-												<td class="product-price" data-title="Price">
-													<span class="woocommerce-Price-amount amount">
-														<span class="woocommerce-Price-currencySymbol">
-															€
-														</span>
-														{{ $item->h_nomem }}
-													</span>
-												</td>
-                                                @endforeach
-                                            </tr>
-                                            <tr>
-												<td class="actions">
-													{{-- <div class="coupon">
-														<label class="coupon_code">Coupon Code:</label>
-														<div class="coupon-wrapp">
-															<input type="text" class="input-text" placeholder="Promotion code here">
-															<a href="#"  class="button"></a>
-														</div>
-													</div> --}}
-													<div class="order-total">
-														<span class="title">
-															Total Price:
-														</span>
-														<span class="total-price">
-															€{{ $totals }}
-														</span>
-													</div>
-												</td>
-											</tr>
-											{{-- <tr class="cart_item">
-												<td class="product-remove">
-													<a href="#" class="remove"></a>
-												</td>
-												<td class="product-thumbnail">
-													<a href="#">
-														<img src="assets/images/cart-item-3.jpg" alt="" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image">
-													</a>
-												</td>
-												<td class="product-name" data-title="Product">
-													<a href="#" class="title">Pecan Coffee Beard Oil – 10ml</a>
-													<span class="attributes-select attributes-color">White,</span>
-													<span class="attributes-select attributes-size">M</span>
+											</div>
+										</div>
+										@endforeach
+									</div>
+									@endif
+								</div>
+								@endforeach
 
-												</td>
-												<td class="product-quantity" data-title="Quantity">
-													<div class="quantity">
-													<div class="control">
-														<a class="btn-number qtyminus quantity-minus" href="#">-</a>
-														<input type="text" data-step="1" data-min="0" value="1" title="Qty" class="input-qty qty" size="4">
-														<a href="#" class="btn-number qtyplus quantity-plus">+</a>
+
+								{{-- promo kelipatan pembelian produk --}}
+								<div class="promo-item">
+									<h3>Beli produk Serum Phytocell + Whitening Day Spray dan dapatkan item di bawah ini</h3>
+									<div class="cart-item">
+										<div class="desc-item">
+											<div class="product-img">
+												<img src="https://shop.bellezkin.com/api/public/assets/img/thumbnails/19010.jpg" alt="Whitening Day Spray">
+											</div>
+											<div class="item-detail">
+												<div class="item-name">Promo item</div>
+												<div class="section-price">
+													<div class="before-discount">Rp. 400.000</div>
+													<div class="item-price">Rp. 400.000</div>
+												</div>
+											</div>
+										</div>
+										<div class="section-bot-item">
+											<div class="text-promo">
+												@if($data == 1)
+												<span>Claim Promo</span>
+												@endif
+											</div>
+											<div class="control-item">
+												<a class="remove"></a>
+												<div class="quantity">
+													<div class="control" style="width: 86px!important;">
+														<div class="btn-number qtyminus quantity-minus">-</div> 
+														<input type="text" data-step="1" min="1" title="Qty" size="4" class="input-qty qty" value="1" style="width: 38px;">
+														<div class="btn-number qtyplus quantity-plus">+</div>
 													</div>
 												</div>
-												</td>
-												<td class="product-price" data-title="Price">
-													<span class="woocommerce-Price-amount amount">
-														<span class="woocommerce-Price-currencySymbol">
-															€
-														</span>
-														45
-													</span>
-												</td>
-											</tr>
-											<tr class="cart_item">
-												<td class="product-remove">
-													<a href="#" class="remove"></a>
-												</td>
-												<td class="product-thumbnail">
-													<a href="#">
-														<img src="assets/images/cart-item-1.jpg" alt="" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image">
-													</a>
-												</td>
-												<td class="product-name" data-title="Product">
-													<a href="#" class="title">Beard Tumbleweed Oil</a>
-													<span class="attributes-select attributes-color">Brown,</span>
-													<span class="attributes-select attributes-size">XS</span>
-
-												</td>
-												<td class="product-quantity" data-title="Quantity">
-													<div class="quantity">
-													<div class="control">
-														<a class="btn-number qtyminus quantity-minus" href="#">-</a>
-														<input type="text" data-step="1" data-min="0" value="1" title="Qty" class="input-qty qty" size="4">
-														<a href="#" class="btn-number qtyplus quantity-plus">+</a>
-													</div>
-												</div>
-												</td>
-												<td class="product-price" data-title="Price">
-													<span class="woocommerce-Price-amount amount">
-														<span class="woocommerce-Price-currencySymbol">
-															€
-														</span>
-														45
-													</span>
-												</td>
-											</tr>
-											<tr>
-												<td class="actions">
-													<div class="coupon">
-														<label class="coupon_code">Coupon Code:</label>
-														<div class="coupon-wrapp">
-															<input type="text" class="input-text" placeholder="Promotion code here">
-															<a href="#"  class="button"></a>
-														</div>
-													</div>
-													<div class="order-total">
-														<span class="title">
-															Total Price:
-														</span>
-														<span class="total-price">
-															€95
-														</span>
-													</div>
-												</td>
-											</tr> --}}
-										</tbody>
-									</table>
-								</form>
-								<div class="control-cart">
-									<button class="button btn-continue-shopping">
-										CONTINUE SHOPPING
-									</button>
-									<button class="button btn-cart-to-checkout">
-										CHECK OUT
-									</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card-total-cart" id="card-cart">
+									<div>
+										<div class="section-promo">
+											<input type="text" class="widget-promo text-bold-black" name="" id="" placeholder="Masukan kode promo disini">
+											<div class="arrow-right"></div>
+										</div>
+										<div class="section-total">
+											<span class="title-section-card">Ringkasan belanja</span>
+											<div class="total-number">
+												<div>Total Harga</div>
+												<div class="cost">Rp. 905.000</div>
+											</div>
+											<div class="section-button">
+												<button class="btn-checkout-cart">
+													<span>Beli</span>
+												</button>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -209,4 +163,16 @@
     <br>
 
     
+@endsection
+
+@section('scripts')
+<script type="text/javascript" src="{{ asset('assets/js/sticky/jquery.sticky.js')}}"></script>
+<script>
+    $(function(){
+		console.warn(window.innerWidth);
+		if(window.innerWidth > 400) {
+			$("#card-cart").sticky({ topSpacing: 50 });
+		}
+    });
+</script>
 @endsection
