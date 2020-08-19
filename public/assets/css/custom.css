@@ -2,6 +2,7 @@
 @import "./history-transaction.css";
 @import "./profile.css";
 @import "./order-history.css";
+@import "./address.css";
 
 .header-top-message {
     background-color: #fddde6;
