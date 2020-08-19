@@ -26,32 +26,32 @@
 </head>
 <body class="home home-01 home-newletter">
     
-    <x-topbar>
-        <a target="_blank" href="https://bellezkin.com/bisnis-bellezkin/">Menjadi Reseller</a> &nbsp;&nbsp; 
-        <a target="_blank" href="https://api.whatsapp.com/send?phone=628112288142&text=Halo%20Kak!%0ASaya%20ingin%20konsultasi%20seputar%20produk%20Bellezkin%20yang%20paling%20cocok%20untuk%20jenis%20kulit%20saya.%0AMohon%20dibantu%20ya%20Kak,%20Terima%20kasih.">Konsultasi Kecantikan</a>
-    </x-topbar>
+    <!-- topbar -->
+    @include('partials.topbar')
     
     <!-- header -->
-    <x-header />
+    @include('partials.header')
 
     <!-- header mobile -->
-    <x-header-mobile />
+    @include('partials.header-mobile')
 
     <!-- slide show -->
-    <x-slider />
-
+    @include('partials.slider')
+    
+    <!-- CONTENT -->
     @yield('content')
 
     <!-- footer -->
-    <x-footer />
+    @include('partials.footer')
+    
 
     <!-- footer mobile -->
-    <x-footer-mobile />
+    @include('partials.footer-mobile')    
 
     <a href="#" class="backtotop"><i class="pe-7s-angle-up"></i></a>
 
     <!-- Popup Newsletter -->
-    <x-popup-newsletter />
+    @include('partials.popup-newsletter')
 
     <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>	
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
