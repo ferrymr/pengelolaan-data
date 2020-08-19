@@ -1,0 +1,143 @@
+figure {
+    display: flex;
+}
+
+.detial-item-history {
+    margin-bottom: 32px;
+}
+
+figure img {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 15%;
+    border: 1px solid #ec209059;
+    margin-right: 1.5rem;
+    padding: 1rem;
+}
+
+figure figcaption {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+figure figcaption h4 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+figure figcaption h2 {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+figure figcaption h6 {
+    font-size: 0.8rem;
+    font-weight: 300;
+}
+
+.order-track {
+    margin-top: 0.7rem;
+    padding: 0 0.7rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-track-step {
+    display: flex;
+    height: 5rem;
+}
+.order-track-step.disabled .order-track-status-dot {
+    background: #dedede;
+}
+.order-track-step.disabled .order-track-status-line {
+    background: #dedede;
+}
+.order-track-step.disabled .order-track-text {
+    opacity: 0.4;
+}
+.order-track-step:last-child {
+    overflow: hidden;
+    height: 4rem;
+}
+.order-track-step:last-child .order-track-status span:last-of-type {
+    display: none;
+}
+
+.order-track-status {
+    margin-right: 1.2rem;
+    position: relative;
+}
+
+.order-track-status-dot {
+    display: block;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    margin-top: 0.4rem;
+    background: #ec2090;
+}
+
+.order-track-status-line {
+    display: block;
+    margin: 0 auto;
+    width: 2px;
+    height: 5rem;
+    background: #ec2090;
+}
+
+.order-track-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-track-text-stat {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.order-track-text-sub {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.order-track {
+    transition: all 0.3s height 0.3s;
+    transform-origin: top center;
+}
+
+.list-order-history {
+    margin-top: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #dedede;
+}
+.list-order-history:last-child {
+    border-bottom: 0px;
+}
+
+.section-desc-order {
+    margin-bottom: 1rem;
+}
+@media screen and (min-width: 48em) {
+    .section-desc-order {
+        display: flex;
+        margin-bottom: 0px;
+    }
+}
+
+.item-order {
+    font-weight: 600;
+}
+.item-order img {
+    width: 60px;
+    margin-right: 1rem;
+}
+@media screen and (max-width: 48em) {
+    .item-order {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .item-order img {
+        width: 80px;
+        margin-bottom: 0.8rem;
+    }
+}

@@ -1,6 +1,7 @@
 @import "./cart.css";
 @import "./history-transaction.css";
 @import "./profile.css";
+@import "./order-history.css";
 
 .header-top-message {
     background-color: #fddde6;

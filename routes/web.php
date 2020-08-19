@@ -22,6 +22,9 @@ Route::resource('products', 'ProductController');
 Route::get('/history-transaction', function () {
     return view('history-transaction');
 });
+Route::get('/detail-history-transaction', function () {
+    return view('detail-history-transaction');
+});
 Route::get('/history-transaction-order-list', function () {
     return view('history-transaction-order-list');
 });
