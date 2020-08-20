@@ -15,10 +15,9 @@ class CreateCnShoppingcartTable extends Migration
     {
         Schema::create('cn_shoppingcart', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('users_id');
             $table->string('kode_barang');
-            $table->string('nama');
-            $table->string('jenis');
-            $table->integer('quantity');
+            $table->integer('qty');
             $table->string('note');
             $table->timestamps();
         });

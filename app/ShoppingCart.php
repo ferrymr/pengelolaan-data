@@ -8,6 +8,10 @@ class ShoppingCart extends Model
 {
     protected $table = 'cn_shoppingcart';
 
+    protected $fillable = [
+        'users_id', 'kode_barang', 'qty', 'note'
+    ];
+
     // protected $hidden = [
 
     // ];

@@ -9,6 +9,9 @@ class Products extends Component
     public $products;
     public $category;
 
+    public $qty = 1;
+    public $note;
+
     public function mount($products, $category = "")
     {
         $this->products = $products;

@@ -39,6 +39,7 @@
             <ul class="row list-products auto-clear equal-container product-grid">
 
                 @forelse ($products as $product)
+                    <a href="{{ route('products.show', $product->kode_barang) }}">
                     <li class="product-item  col-lg-3 col-md-4 col-sm-6 col-xs-6 style-1">
                         <div class="product-inner equal-element">
                             <div class="product-top">
@@ -63,25 +64,27 @@
                                 <h5 class="product-name product_title"><a href="#">{{ $product->nama }}</a></h5>
                                 <div class="group-info">
                                     {{-- <div class="stars-rating"><div class="star-rating"><span class="star-4"></span></div><div class="count-star">(14)</div></div> --}}
-                                    <div class="price"><span>@currency($product->harga)</span></div>
+                                    <div class="price"><span>@currency($product->h_nomem)</span></div>
                                 </div>
                             </div>
-                            <div class="loop-form-add-to-cart">
-                                <form class="cart">
+                            {{-- <div class="loop-form-add-to-cart">
+                                <div class="cart">
                                     <div class="single_variation_wrap">
                                         <div class="quantity">
                                             <div class="control">
                                                 <a class="btn-number qtyminus quantity-minus" href="#">-</a>
-                                                <input type="text" data-step="1" data-min="0" value="1" title="Qty" class="input-qty qty" size="4">
+                                                <input type="text" wire:model="qty" data-step="1" data-min="0" value="1" title="Qty" class="input-qty qty" size="4">
                                                 <a href="#" class="btn-number qtyplus quantity-plus">+</a>
                                             </div>
                                         </div>
-                                        <button class="single_add_to_cart_button button">Add to cart</button>
+                                        <button wire:click="addToCart('{{ $product->kode_barang }}', '{{ $qty }}')" class="single_add_to_cart_button button">Add to cart</button>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </div> --}}
                         </div>
                     </li>
+                    </a>
+
                 @empty
 
                 @endforelse

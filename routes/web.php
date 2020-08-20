@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'IndexController@index')->name('home');
 
+Route::livewire('/products/{productCode}', 'product-detail')->name('products.show');
 Route::get('/products/category/{category}', 'ProductController@category')->name('products.category');
-Route::resource('products', 'ProductController');
+Route::resource('products', 'ProductController')->except(['show']);
+
 
 // Route::resource('shoppingcarts', 'ShoppingCartController');
 Route::get('/history-transaction', function () {

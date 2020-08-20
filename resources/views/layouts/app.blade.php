@@ -31,13 +31,14 @@
     @include('partials.topbar')
     
     {{-- header --}}
-    @include('partials.header')
+    {{-- @include('partials.header') --}}
+    <livewire:header />
 
     {{-- header mobile --}}
     @include('partials.header-mobile')
 
     {{-- slide show --}}
-    @include('partials.slider')
+    {{-- @include('partials.slider') --}}
     
     {{-- CONTENT --}}
     @yield('content')
@@ -52,7 +53,7 @@
     <a href="#" class="backtotop"><i class="pe-7s-angle-up"></i></a>
 
     {{-- Popup Newsletter --}}
-    @include('partials.popup-newsletter')
+    {{-- @include('partials.popup-newsletter') --}}
 
     <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>	
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
@@ -73,5 +74,21 @@
 
     @yield('scripts')
     @livewireScripts
+
+    <script>
+        let logComponentsData = function () {
+            window.livewire.components.components().forEach(component => {
+                console.log(component.name);
+                console.log(component.data);
+            });
+        };
+        document.addEventListener("livewire:load", function(event) {
+            logComponentsData();
+
+            window.livewire.hook('afterDomUpdate', () => {
+                logComponentsData();
+            });
+        });
+    </script>
 </body>
 </html>

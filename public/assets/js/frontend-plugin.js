@@ -9,7 +9,7 @@
             this.turan_general_functions();
             this.better_equal_elems();
             this.turan_product_variation_handle();
-            this.newletter_popup();
+            // this.newletter_popup();
             this.quickview_popup();
             this.turan_mobile_block();
             this.turan_masonry();
