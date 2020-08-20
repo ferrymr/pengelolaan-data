@@ -23,34 +23,35 @@
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 
     @yield('styles')
+    @livewireStyles
 </head>
 <body class="home home-01 home-newletter">
     
-    <!-- topbar -->
+    {{-- topbar  --}}
     @include('partials.topbar')
     
-    <!-- header -->
+    {{-- header --}}
     @include('partials.header')
 
-    <!-- header mobile -->
+    {{-- header mobile --}}
     @include('partials.header-mobile')
 
-    <!-- slide show -->
+    {{-- slide show --}}
     @include('partials.slider')
     
-    <!-- CONTENT -->
+    {{-- CONTENT --}}
     @yield('content')
 
-    <!-- footer -->
+    {{-- footer --}}
     @include('partials.footer')
     
 
-    <!-- footer mobile -->
+    {{-- footer mobile --}}
     @include('partials.footer-mobile')    
 
     <a href="#" class="backtotop"><i class="pe-7s-angle-up"></i></a>
 
-    <!-- Popup Newsletter -->
+    {{-- Popup Newsletter --}}
     @include('partials.popup-newsletter')
 
     <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>	
@@ -71,5 +72,6 @@
     <script src="{{ asset('assets/js/frontend-plugin.js') }}"></script>
 
     @yield('scripts')
+    @livewireScripts
 </body>
 </html>
