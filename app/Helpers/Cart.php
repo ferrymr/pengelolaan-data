@@ -14,9 +14,7 @@ class Cart
 
     public function empty()
     {
-        return [
-            'products' => [],
-        ];
+        return [];
     }
 
     public function get()
@@ -33,30 +31,35 @@ class Cart
     {
         $cart = $this->get();
 
-        $product = (object) array(
-            'kode_barang' => $product->kode_barang,
-            'nama' => $product->nama,
-            'jenis' => $product->jenis,
-            'h_nomem' => $product->h_nomem,
-            'qty' => $product->qty,
-            'note' => ''
-        );
-        
-        array_push($cart['products'], $product);
+        if(!isset($cart[$product->kode_barang])) {
+            $cart[$product->kode_barang] = array(
+                    'kode_barang' => $product->kode_barang,
+                    'nama' => $product->nama,
+                    'jenis' => $product->jenis,
+                    'h_nomem' => $product->h_nomem,
+                    'qty' => $product->qty,
+                    'note' => ''
+                );
+        } else {
+            $cart[$product->kode_barang]['qty'] += $product->qty;
+        }
 
         $this->set($cart);
     }
 
     public function remove($productCode)
     {
-        $cart = $this->get()['products'];
+        $cart = $this->get();
         
-        dd($productCode);
+        unset($cart[$productCode]);
         
-        if (($key = array_search($productCode, $cart)) !== false) {
-            unset($cart[$key]);
-        }
-
         $this->set($cart);
+
+        /* if (count($cart) < 1) {
+            $this->set($this->empty());
+        } else {
+            $this->set($cart);
+        } */
+
     }
 }

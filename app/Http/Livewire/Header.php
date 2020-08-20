@@ -16,12 +16,13 @@ class Header extends Component
 
     public function mount()
     {
-        $this->cartItems = Cart::get()['products'];      
+        $this->cartItems = Cart::get(); 
         $this->cartTotal = count($this->cartItems);      
     }
 
     public function render()
     {
+        // dd($this->cartItems);
         return view('livewire.header');
     }
 
@@ -36,7 +37,7 @@ class Header extends Component
 
     public function updateCartItems()
     {
-        $this->cartItems = Cart::get()['products'];      
+        $this->cartItems = Cart::get();      
         $this->cartTotal = count($this->cartItems);
     }
 }

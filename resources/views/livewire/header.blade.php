@@ -50,21 +50,20 @@
                                 <div class="content-wrap">
                                     <h3 class="title">Shopping Cart</h3>
                                     <ul class="minicart-items">
-                                        @forelse ($cartItems as $item)
+                                        @forelse ($cartItems as $cartItem)
                                             <li class="product-cart mini_cart_item">
                                                 <a href="#" class="product-media">
-                                                    <img src="{{ asset('assets/images/thumbnails/' . $item->kode_barang . '.jpg') }}" alt="">
+                                                    <img src="{{ asset('assets/images/thumbnails/' . $cartItem['kode_barang'] . '.jpg') }}" alt="">
                                                 </a>
                                                 <div class="product-details">
-                                                    <h5 class="product-name"><a href="#">{{ $item->nama }}</a></h5>
+                                                    <h5 class="product-name"><a href="#">{{ $cartItem['nama'] }}</a></h5>
                                                     <div class="variations">
-                                                        <span class="attribute_color"><a href="#">{{ $item->jenis }}</a></span>
-                                                        {{-- <span class="attribute_size"><a href="#">300ml</a></span> --}}
+                                                        <span class="attribute_color"><a href="#">{{ $cartItem['jenis'] }}</a></span>
                                                     </div>
-                                                    <span class="product-price"><span class="price"><span>{{ $item->h_nomem }}</span></span></span>
-                                                    <span class="product-quantity"> x {{ $item->qty }}</span>
+                                                    <span class="product-price"><span class="price"><span>{{ $cartItem['h_nomem'] }}</span></span></span>
+                                                    <span class="product-quantity"> x {{ $cartItem['qty'] }}</span>
                                                     <div class="product-remove">
-                                                        <i wire:click="removeFromCart('{{ $item->kode_barang }}')" class="fa fa-trash-o" aria-hidden="true"></i>
+                                                        <i wire:click="removeFromCart('{{ $cartItem['kode_barang'] }}')" class="fa fa-trash-o" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
                                             </li>
