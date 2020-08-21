@@ -39,7 +39,7 @@ class TransactionController extends Controller
 
             $transactionNumber = "TRX" . date('y') . $alphabet[date('m')-1] . date('d') . rand(1000,9999);
 
-            $spbCode = 00000;
+            $spbCode = '01340';
 
             $a = DB::insert('INSERT INTO cn_transaksi (
                             tgl_transaksi,
@@ -145,13 +145,13 @@ class TransactionController extends Controller
                 }
             } else {
                 foreach($cartItems as $item) {
-                    if ($item['jenis'] == "SERIES") {
+                    if ($item['unit'] == "SERIES") {
 
                         $serieItems = DB::table('tb_det_pack')->select('kode_barang', 'jumlah')->where('kode_pack', $item['kode_barang'])->get();
                         
                         foreach($serieItems as $serieItem) {
                             $currentQuantity = DB::table('tb_produk')->select('stok')->where('kode_barang', $serieItem->kode_barang)->where('no_member', $spbCode)->first()->stok;
-                            DB::table('tb_produk')->where('kode_barang', $serieItem->kode_barang)->where('no_member', $spbCode)->update(['stok' => $currentQuantity - ($serieItems->jumlah * $item['qty'])]);
+                            DB::table('tb_produk')->where('kode_barang', $serieItem->kode_barang)->where('no_member', $spbCode)->update(['stok' => $currentQuantity - ($serieItem->jumlah * $item['qty'])]);
                         }
                     } else {
                         $currentQuantity = DB::table('tb_produk')->select('stok')->where('kode_barang', $item['kode_barang'])->where('no_member', $spbCode)->first()->stok;
