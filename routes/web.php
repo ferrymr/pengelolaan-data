@@ -40,6 +40,9 @@ Route::get('/address-list', function () {
 Route::get('/address-form', function () {
     return view('address-form');
 });
+Route::get('/checkout', function () {
+    return view('checkout');
+});
 
 Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
 Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');

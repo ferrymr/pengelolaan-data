@@ -77,6 +77,10 @@
     padding: 16px;
 }
 
+.section-total div {
+    padding: 4px 0px;
+}
+
 .total-number {
     display: flex;
     justify-content: space-between;
