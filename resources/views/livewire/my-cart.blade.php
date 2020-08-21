@@ -30,17 +30,17 @@
                     <div class="main-content-cart main-content col-sm-12">
                         <div class="row">
                             <div class="col-md-8">
-                                @foreach([1,2,3] as $data)
+                                @foreach($cartItems as $item)
                                 <div class="cart-item">
                                     <div class="desc-item">
                                         <div class="product-img">
-                                            <img src="https://shop.bellezkin.com/api/public/assets/img/thumbnails/19010.jpg" alt="Whitening Day Spray">
+                                            <img src="{{ asset('assets/images/thumbnails/' . $item['kode_barang'] . '.jpg') }}" alt="{{ $item['nama'] }}">
                                         </div>
                                         <div class="item-detail">
-                                            <div class="item-name">Whitening Day Spray</div>
+                                            <div class="item-name">{{ $item['nama'] }}</div>
                                             <div class="section-price">
-                                                <div class="before-discount">Rp. 400.000</div>
-                                                <div class="item-price">Rp. 400.000</div>
+                                                {{-- <div class="before-discount">Rp. 400.000</div> --}}
+                                            <div class="item-price">@currency($item['h_nomem']) </div>
                                             </div>
                                         </div>
                                     </div>
@@ -51,12 +51,12 @@
                                             @endif --}}
                                         </div>
                                         <div class="control-item">
-                                            <a class="remove"></a>
+                                            {{-- <a class="remove"></a> --}}
                                             <div class="quantity">
                                                 <div class="control" style="width: 86px!important;">
-                                                    <div class="btn-number qtyminus quantity-minus">-</div> 
-                                                    <input type="text" data-step="1" min="1" title="Qty" size="4" class="input-qty qty" value="1" style="width: 38px;">
-                                                    <div class="btn-number qtyplus quantity-plus">+</div>
+                                                    {{-- <div class="btn-number qtyminus quantity-minus">-</div>  --}}
+                                                    x<input type="text" disabled wire:model="{{ $item['qty'] }}" data-step="1" min="1" title="Qty" size="4" class="input-qty qty" value="{{ $item['qty'] }}" style="width: 38px;">
+                                                    {{-- <div wire:click="incrementQty({{ $item['kode_barang'] }})" class="btn-number qtyplus quantity-plus">+</div> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -131,10 +131,10 @@
                             <div class="col-md-4">
                                 <div class="card-total-cart" id="card-cart">
                                     <div>
-                                        <div class="section-promo">
+                                        {{-- <div class="section-promo">
                                             <input type="text" class="widget-promo text-bold-black" name="" id="" placeholder="Masukan kode promo disini">
                                             <div class="arrow-right"></div>
-                                        </div>
+                                        </div> --}}
                                         <div class="section-total">
                                             <span class="title-section-card">Ringkasan belanja</span>
                                             <div class="total-number">
