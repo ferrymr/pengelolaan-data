@@ -107,13 +107,17 @@
                                             </div>
                                         </li> --}}
                                     </ul>
-                                    <div class="subtotal">
-                                        <span class="total-title">Subtotal: </span><span class="total-price"><span class="Price-amount">€135</span></span>
-                                    </div>
-                                    <div class="actions">
-                                        <a class="button button-viewcart" href="shoppingcart.html"><span>View Bag</span></a>
-                                        <a href="checkout.html" class="button button-checkout"><span>Checkout</span></a>
-                                    </div>
+                                    {{-- <div class="subtotal">
+                                        <span class="total-title">Subtotal: </span><span class="total-price"><span class="Price-amount">@currency($cartAmount)</span></span>
+                                    </div> --}}
+                                    @if($cartTotal > 0)
+                                        <div class="actions">
+                                            <a class="button button-viewcart" href="shoppingcart.html"><span>View Bag</span></a>
+                                            <a href="checkout.html" class="button button-checkout"><span>Checkout</span></a>
+                                        </div>
+                                    @else
+                                        No item
+                                    @endif
                                 </div>
                             </div>
                         </div>
