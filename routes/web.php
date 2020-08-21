@@ -22,6 +22,8 @@ Route::resource('products', 'ProductController')->except(['show']);
 Route::livewire('/mycart', 'my-cart')->name('mycart');
 
 
+Route::get('/transaction', 'TransactionController@store');
+
 // Route::resource('shoppingcarts', 'ShoppingCartController');
 Route::get('/history-transaction', function () {
     return view('history-transaction');

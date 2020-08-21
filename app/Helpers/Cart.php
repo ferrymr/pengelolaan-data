@@ -36,6 +36,7 @@ class Cart
                     'kode_barang' => $product->kode_barang,
                     'nama' => $product->nama,
                     'jenis' => $product->jenis,
+                    'unit' => $product->unit,
                     'h_nomem' => $product->h_nomem,
                     'qty' => $product->qty,
                     'note' => ''
