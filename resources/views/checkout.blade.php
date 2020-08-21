@@ -22,11 +22,6 @@
 								Checkout
 							</span>
 						</li>
-						<li class="trail-item trail-end">
-							<span>
-								Payment
-							</span>
-						</li>
 					</ul>
 				</div>
 
@@ -36,6 +31,17 @@
 						<div class="row">
 							<div class="col-md-8">
 
+                                <div class="row">
+                                    <div class="col-md-6" style="margin-top:16px">
+                                        <label class="text">Select Bank</label>
+                                        <select tabindex="1" class="input-text" style="width: 100%;">
+                                            <option disabled="disabled" selected="selected">- Choose Bank -</option> 
+                                            <option value="1">BCA</option>
+                                            <option value="1">BNI</option>
+                                            <option value="1">Mandiri</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6" style="margin-top:16px">
                                         <label class="text">Select Sales Point Branch</label>
