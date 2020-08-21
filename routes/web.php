@@ -24,11 +24,23 @@ Route::resource('products', 'ProductController')->except(['show']);
 Route::get('/history-transaction', function () {
     return view('history-transaction');
 });
+Route::get('/detail-history-transaction', function () {
+    return view('detail-history-transaction');
+});
 Route::get('/history-transaction-order-list', function () {
     return view('history-transaction-order-list');
 });
 Route::get('/profile', function () {
     return view('profile');
+});
+Route::get('/edit-profile', function () {
+    return view('edit-profile');
+});
+Route::get('/address-list', function () {
+    return view('address-list');
+});
+Route::get('/address-form', function () {
+    return view('address-form');
 });
 
 Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');

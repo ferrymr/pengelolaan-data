@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3 col-sm-12">
                             <div class="card-profile">
-                                <a href="">
+                                <a href="{{ url('/edit-profile') }}">
                                     <div class="card-title-profile">
                                         <div class="profile-img">
                                             <img src="https://www.fillmurray.com/200/200" alt="">
@@ -66,7 +66,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        <a href="">
+                                        <a href="{{ url('/address-list') }}">
                                             <div class="menu-ui-item">
                                                 <div class="menu-ui-left">
                                                     <div class="title-item-menu">Pengaturan Alamat</div>

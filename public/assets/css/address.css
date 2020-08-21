@@ -1,0 +1,44 @@
+.btn-add-address {
+    padding: 8px;
+    border: 1px solid #d4d4d4;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #d61c82;
+    width: 100%;
+}
+
+.card-address {
+    display: block;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    box-shadow: rgb(202, 211, 225) 0px 1px 4px 0px;
+    padding: 16px;
+    margin: 16px 0px;
+}
+
+.header-address {
+    justify-content: space-between;
+    display: flex;
+}
+
+.default-address {
+    padding: 2px 8px;
+    background: rgb(235, 235, 235);
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.footer-address {
+    border-top: 4px solid #f4f4f4;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 12px;
+}
+
+.btn-change-default {
+    font-weight: bold;
+    color: #ec2090;
+}
