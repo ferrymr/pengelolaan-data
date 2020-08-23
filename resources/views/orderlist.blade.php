@@ -31,8 +31,8 @@
 						<div class="row">
                             <div class="col-md-6 col-md-offset-3 col-sm-12">
                                 <div class="tab">
-                                    <a href="{{ route('history-order.index') }}" class="item-tab active">Menunggu Pembayaran</a>
-                                    <a href="{{ route('history-order.orderlist') }}" class="item-tab">Daftar Transaksi</a>
+                                    <a href="{{ route('history-order.index') }}" class="item-tab">Menunggu Pembayaran</a>
+                                    <a href=""{{ route('history-order.orderlist') }}"" class="item-tab active">Daftar Transaksi</a>
                                 </div>
                                 <div class="transaction-list-item">
                                     @foreach($transactions as $transaction)
@@ -49,7 +49,9 @@
                                             </div>
                                             <div class="hr-item-transaction"></div>
                                             <div class="body-item">
-                                                <div class="status-order">Bayar sebelum 18 Aug 2020, 20:30 WIB</div>
+                                            <div class="status-order">
+                                                {{ $transaction->status_transaksi }}
+                                            </div>
                                                 <div class="item-detail-order">
                                                     <div class="logo-payment">
                                                         <img src="https://qurban.sahabatyatim.com/wp-content/uploads/2019/07/logo-bca.png" alt="">

@@ -21,19 +21,23 @@ Route::resource('products', 'ProductController')->except(['show']);
 
 
 // Route::resource('shoppingcarts', 'ShoppingCartController');
-Route::get('/history-transaction', function () {
-    return view('history-transaction');
-});
-Route::get('/detail-history-transaction', function () {
-    return view('detail-history-transaction');
-});
-Route::get('/history-transaction-order-list', function () {
-    return view('history-transaction-order-list');
-});
+// Route::get('/history-transaction', function () {
+//     return view('history-transaction');
+// });
+// Route::get('/detail-history-transaction', function () {
+//     return view('detail-history-transaction');
+// });
+// Route::get('/history-transaction-order-list', function () {
+//     return view('history-transaction-order-list');
+// });
 
 Route::resource('profile', 'ProfileController');
 
 Route::resource('address', 'AddressController');
+
+Route::resource('history-order', 'HistoryOrderController');
+Route::get('/orderlist', 'HistoryOrderController@orderlist')->name('history-order.orderlist');
+Route::get('/detailhistory', 'HistoryOrderController@detailhistory')->name('history-order.detailhistory');
 
 // Route::get('/address-list', function () {
 //     return view('address-list');
