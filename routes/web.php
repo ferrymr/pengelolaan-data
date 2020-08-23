@@ -23,6 +23,7 @@ Route::livewire('/mycart', 'my-cart')->name('mycart');
 
 
 Route::get('/transaction', 'TransactionController@store');
+Route::get('/transaction/delete', 'TransactionController@destroy');
 
 // Route::resource('shoppingcarts', 'ShoppingCartController');
 Route::get('/history-transaction', function () {
