@@ -35,46 +35,50 @@
             <div class="row">
                 <div class="main-content-cart main-content col-sm-12">
                     <div class="row">
-                        <form action="{{ route('address.store')}}" method="post">
+                        <form action="{{ route('address.update', $shipping->id) }}" method="post">
+                            @method('put')
                             @csrf
                             <div class="col-md-6 col-md-offset-3 col-sm-12">
                                 <div class="form-address" style="margin-bottom: 32px">
                                     <div class="col-12">
                                         <label class="text">Name</label> 
-                                        <input type="text" id="nama" name="nama" class="input-text" style="width: 100%;">
+                                        <input type="text" id="nama" name="nama" value="{{ $shipping->nama }}" class="input-text"  style="width: 100%;">
                                     </div>
                                     <div class="col-12" style="margin-top:16px">
                                         <label class="text">Phone</label> 
-                                        <input type="text" id="telepon" name="telepon" class="input-text" style="width: 100%;">
+                                        <input type="text" id="telepon" name="telepon" value="{{ $shipping->telepon }}" class="input-text" style="width: 100%;">
                                     </div>
                                     <div class="col-12" style="margin-top:16px">
                                         <label for="provinsi">Select Province</label>
-                                        <select class="form-control" id="provinsi" name="provinsi">
-                                            <option value="">-- Pilih Provinsi --</option>
+                                        <select class="form-control"  name="provinsi">
                                             @foreach($daftarProvinsi as $provinsi)
-                                                <option value="{{ $provinsi['province_id'] }}">{{ $provinsi['province'] }}</option>
+                                                <option {{  ($provinsi['province_id']==$shipping->provinsi_id) ? 'selected':'' }} value="{{ $provinsi['province_id'] }}">{{ $provinsi['province'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-12" style="margin-top:16px">
                                         <label for="kota">Select City</label>
-                                        <select class="form-control" id="kota" name="kota">
-                                            <option value=""> -- Pilih Kota -- </option>
+                                        <select class="form-control"  name="kota">
+                                            @foreach($daftarKota as $kota)
+                                                <option {{  ($kota['city_id']==$shipping->kota_id) ? 'selected':'' }} value="{{ $kota['city_id'] }}">{{ $kota['city_name'] }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-12" style="margin-top:16px">
                                         <label for="kecamatan">Select Subdistrict</label>
-                                        <select class="form-control" id="kecamatan" name="kecamatan">
-                                            <option value=""> -- Pilih Kecamatan -- </option>
+                                        <select class="form-control"  name="kecamatan">
+                                            @foreach($daftarKecamatan as $kecamatan)
+                                                <option {{  ($kecamatan['subdistrict_id']==$shipping->kecamatan_id) ? 'selected':'' }} value="{{ $kecamatan['subdistrict_id'] }}">{{ $kecamatan['subdistrict_name'] }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-12" style="margin-top:16px">
                                         <label class="text">Address</label> 
-                                        <textarea id="exampleFormControlTextarea1" name="alamat" rows="3" class="input-text"></textarea>
+                                        <textarea id="alamat" name="alamat" rows="3" class="input-text">{{ $shipping->alamat }}</textarea>
                                     </div>
                                     <div class="col-12" style="margin-top:16px">
                                         <label class="text">Post Code</label> 
-                                        <input type="text" name="kode_pos" class="input-text" style="width: 100%;">
+                                        <input type="text" name="kode_pos" value="{{ $shipping->kode_pos }}" class="input-text" style="width: 100%;">
                                     </div>
                                     <button type="submit" class="button" style="margin-top: 2rem">Add Address</button>
                                 </div>
@@ -124,9 +128,6 @@
                     crossDomain: true,
                     dataType: 'json',
                     success: function(result) {
-
-                        console.log(result);
-                        
                         var select = $('select[name=kecamatan]');
 
                         select.empty();

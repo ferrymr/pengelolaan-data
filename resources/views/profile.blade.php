@@ -1,4 +1,4 @@
-@extends('layouts.without-banner')
+@extends('layouts.app')
 
 @section('content')
 
@@ -31,15 +31,17 @@
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3 col-sm-12">
                             <div class="card-profile">
-                                <a href="{{ url('/edit-profile') }}">
+                                <a href="{{ route('profile.edit', 1) }}">
                                     <div class="card-title-profile">
                                         <div class="profile-img">
                                             <img src="https://www.fillmurray.com/200/200" alt="">
                                         </div>
+                                        @foreach($profiles as $p)
                                         <div class="section-title-profile">
-                                            <span class="text-bold">Ilman Manarul Qori</span>
+                                            <span class="text-bold">{{ $p->nama }}</span>
                                             <span class="">Edit profile</span>
                                         </div>
+                                        @endforeach
                                     </div>
                                 </a>
                                 <div class="card-body-profile">
