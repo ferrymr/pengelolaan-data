@@ -257,4 +257,14 @@ class TransactionController extends Controller
             // return redirect()->back()->with(['error' => $e->getMessage()]);
         }
     }
+
+    public function changeStatus($transactionId, $status)
+    {
+        DB::table('cn_transaksi')->where('id', $transactionId)->update(['status_transaksi' => $status]);
+        DB::insert('INSERT INTO cn_order_history (transaksi_id, tanggal, keterangan ) VALUES (?, ?, ?)', [
+            $transactionId,
+            date('Y-m-d H:i:s'),
+            $status
+        ]);
+    }
 }
