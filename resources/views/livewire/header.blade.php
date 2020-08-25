@@ -159,16 +159,17 @@
                                         @guest
                                             <div id="header-tab-login" class="tab-panel active">
 
-                                                <form method="post" class="login form-login">
+                                                <form method="POST" class="login form-login" action="{{ route('login') }}">
+                                                    @csrf
                                                     <p class="form-row form-row-wide">
-                                                        <input type="email" placeholder="Email" class="input-text">
+                                                        <input type="email" name="email" id="email" placeholder="Email" class="input-text @error('email') is-invalid @enderror" value="{{ old('email') }}" />
                                                     </p>
                                                     <p class="form-row form-row-wide">
-                                                        <input type="password" class="input-text" placeholder="Password">
+                                                        <input type="password" name="password" id="password" class="input-text @error('password') is-invalid @enderror" placeholder="Password">
                                                     </p>
                                                     <p class="form-row">
                                                         <label class="form-checkbox">
-                                                            <input type="checkbox" class="input-checkbox"><span>Remember me</span>
+                                                            <input type="checkbox" name="remember" id="remember" class="input-checkbox" {{ old('remember') ? 'checked' : '' }}><span>Remember me</span>
                                                         </label>
                                                         <input type="submit" class="button" value="Login">
                                                     </p>
@@ -179,9 +180,9 @@
                                                             Login with Google
                                                         </a>
                                                     </p>
-                                                    <p class="lost_password">
+                                                    {{-- <p class="lost_password">
                                                         <a href="#">Lost your password?</a>
-                                                    </p>
+                                                    </p> --}}
                                                 </form>
                                             </div>
                                         @else
@@ -208,12 +209,20 @@
 
                                         @if (Route::has('register'))
                                             <div id="header-tab-rigister" class="tab-panel">
-                                                <form method="post" class="register form-register">
+                                                <form method="POST" action="{{ route('register') }}" class="register form-register">
+                                                    @csrf
+
                                                     <p class="form-row form-row-wide">
-                                                        <input type="email" placeholder="Email" class="input-text">
+                                                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Name" class="input-text @error('name') is-invalid @enderror" />
                                                     </p>
                                                     <p class="form-row form-row-wide">
-                                                        <input type="password" class="input-text" placeholder="Password">
+                                                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Email" class="input-text @error('email') is-invalid @enderror" />
+                                                    </p>
+                                                    <p class="form-row form-row-wide">
+                                                        <input type="password" name="password" class="input-text @error('password') is-invalid @enderror" placeholder="Password">
+                                                    </p>
+                                                    <p class="form-row form-row-wide">
+                                                        <input type="password" name="password_confirmation" class="input-text" placeholder="Re-type Password">
                                                     </p>
                                                     <p class="form-row">
                                                         <input type="submit" class="button" value="Register">
