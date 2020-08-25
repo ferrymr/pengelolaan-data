@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('profile', 'ProfileController');
+    Route::get('address/set-default/{addressId}', 'AddressController@setDefault')->name('address.setdefault');
+    Route::resource('address', 'AddressController');
 });
 
 Route::get('/', 'IndexController@index')->name('home');
@@ -29,7 +31,8 @@ Route::livewire('/mycart', 'my-cart')->name('mycart');
 
 Route::get('/transaction', 'TransactionController@store');
 Route::get('/transaction/delete', 'TransactionController@destroy');
-Route::get('/transaction/checkout', 'TransactionController@checkout')->name('checkout');
+// Route::get('/transaction/checkout', 'TransactionController@checkout')->name('checkout');
+Route::livewire('/transaction/checkout', 'shippingCart')->name('checkout');
 Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus');
 
 Route::get('/spb/check', 'SpbController@check');
@@ -44,8 +47,6 @@ Route::get('/spb/check', 'SpbController@check');
 // Route::get('/history-transaction-order-list', function () {
 //     return view('history-transaction-order-list');
 // });
-
-Route::resource('address', 'AddressController');
 
 Route::resource('history-order', 'HistoryOrderController');
 Route::get('/orderlist', 'HistoryOrderController@orderlist')->name('history-order.orderlist');

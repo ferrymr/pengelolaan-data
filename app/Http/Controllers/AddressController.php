@@ -19,7 +19,9 @@ class AddressController extends Controller
      */
     public function index()
     {
-        $shippings = ShippingAddress::where('customer_id',14)->get();
+        $userId = auth()->user()->id;
+        
+        $shippings = ShippingAddress::where('users_id', $userId)->get();
 
         return view('address-list', compact('shippings'));
     }
@@ -47,34 +49,40 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'title' => 'required|max:255',
-        //     'body' => 'required',
-        // ]);
+        $namaProvinsi    = RajaOngkir::provinsi()->find($request->provinsi)['province'];
+        $namaKota        = RajaOngkir::kota()->find($request->kota)['city_name'];
+        $namaKecamatan = RajaOngkir::kecamatan()->find($request->kecamatan)['subdistrict_name'];
+        $userId = auth()->user()->id;
 
-        $shippings    = ShippingAddress::find([16]);
-        $customerId   = 14;
-
-        $province_name    = RajaOngkir::provinsi()->find($request->provinsi)['province'];
-        $city_name        = RajaOngkir::kota()->find($request->kota)['city_name'];
-        $subdistrict_name = RajaOngkir::kecamatan()->find($request->kecamatan)['subdistrict_name'];
-
-        $shippings = new ShippingAddress;
+        $this->validate($request, [
+            'nama' => 'required|string',
+            'telepon' => 'required|numeric',
+            'provinsi' => 'required|numeric',
+            'kota' => 'required|numeric',
+            'kecamatan' => 'required|numeric',
+            'alamat' => 'required|string',
+            'kode_pos' => 'numeric'
+        ]);
             
-        $shippings->customer_id    = 14;
-        $shippings->nama            = $request->nama;
-        $shippings->telepon         = $request->telepon;
-        $shippings->provinsi_id     = $request->provinsi;
-        $shippings->provinsi_nama   = $province_name;
-        $shippings->kota_id         = $request->kota;
-        $shippings->kota_nama       = $city_name;
-        $shippings->kecamatan_id    = $request->kecamatan;
-        $shippings->kecamatan_nama  = $subdistrict_name;
-        $shippings->alamat          = $request->alamat;
-        $shippings->kode_pos        = $request->kode_pos;
-        $shippings->save();
+        try {
+            $newShippingAddress = ShippingAddress::create([
+                'users_id' => $userId,
+                'nama' => $request->nama,
+                'telepon' => $request->telepon,
+                'provinsi_id' => $request->provinsi,
+                'provinsi_nama' => $namaProvinsi,
+                'kota_id' => $request->kota,
+                'kota_nama' => $namaKota,
+                'kecamatan_id' => $request->kecamatan,
+                'kecamatan_nama' => $namaKecamatan,
+                'alamat' => $request->alamat,
+                'kode_pos' => $request->kode_pos
+            ]);
 
-       return redirect()->route('address.index');
+            return redirect(route('address.index'))->with(['success' => 'Alamat pengiriman berhasil ditambahkan']);
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -164,21 +172,23 @@ class AddressController extends Controller
         return SubdistrictResource::collection($daftarKecamatan);
     }
 
-    public function setDefault($id)
+    public function setDefault($addressId)
     {
         // ambil id shipping address dari url
         // cari customer_id yang mempunyai shipping address tersebut
         // set semua shipping address yang selain id tadi menjadi 0
         // set shipping address id yang bersangutan menjadi 1
 
-        $shipping    =  16;
-        $customerId  =  14;
-
-        $data = ShippingAddress::where('customer_id',$customerId)->where('id', '!=', $shipping)->update(['is_default'=> 0]);
-        
-        $data = ShippingAddress::where('customer_id',$customerId)->where('id', '=', $shipping)->update(['is_default'=> 1]);
-        // dd($data);
-
-        return redirect()->route('shippingaddress.index');
+        try {
+            $userId = auth()->user()->id;
+            
+            ShippingAddress::where('users_id', $userId)->where('id', '!=', $addressId)->update(['is_default'=> 0]);
+            
+            ShippingAddress::where('users_id', $userId)->where('id', $addressId)->update(['is_default'=> 1]);
+            
+            return redirect(route('address.index'))->with(['success' => 'Alamat utama berhasil diubah']);
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
     }
 }

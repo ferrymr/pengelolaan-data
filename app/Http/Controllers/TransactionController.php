@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\Cart;
+use App\ShippingAddress;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -274,7 +275,9 @@ class TransactionController extends Controller
     {
         $bankList = array('BCA', 'BNI', 'BRI', 'MANDIRI');
         $spbList = $this->getSpbList();
-        return view('checkout', compact('bankList', 'spbList'));
+        $user = auth()->user();
+        $defaultShippingAddress = ShippingAddress::where('user_id', $user->id)->where('is_default', 1);
+        return view('checkout', compact('bankList', 'spbList', 'defaultShippingAddress'));
     }
 
     public function getSpbList()
