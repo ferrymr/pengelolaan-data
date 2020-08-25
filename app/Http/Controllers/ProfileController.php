@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Profile;
 use App\ShippingAddress;
+use App\User;
+use Exception;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -16,9 +19,11 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profiles = Profile::find([1]);
+        $user = auth()->user();
 
-        return view('profile', compact('profiles'));
+        $profile = User::find($user->id);
+
+        return view('profile', compact('profile'));
     }
 
     /**
@@ -61,7 +66,9 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $profile = Profile::find($id);
+        $user = auth()->user();
+
+        $profile = User::find($user->id);
 
         return view('edit-profile', compact('profile'));
     }
@@ -75,17 +82,31 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //  $profiles = Profile::find($id);
+        $this->validate($request, [
+            'nik' => 'string',
+            'name' => 'required|string',
+            'birthdate' => 'date',
+            'gender' => 'string',
+            'phone' => 'string'
+        ]);
+            
+        try {
+            $profile = User::find($id);
 
-        //  $profiles->update([
-        //     'nama' => request('nama'),
-        //     'tgl_lahir' => request('tgl_lahir'),
-        //     'telepon' => request('telepon'),
-        //     'email' => request('email'),
+            // JIKA FIELD PASSWORD TIDAK KOSONG MAKA HASH ISI FIELD PASSWORD TERSEBUT
+            // JIKA FIELD PASSWORD KOSONG MAKA HAPUS DARI OBJECT REQUEST
+            if ($request->password != null) {
+                $request->merge(['password' => Hash::make($request->password)]);
+            } else {
+                $request->request->remove('password');
+            }
 
-        // ]);
+            $profile->update($request->all());
 
-        // return redirect()->route('profile.index');
+            return redirect(route('profile.index'))->with(['success' => 'Profil berhasil diubah']);
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
     }
 
     /**

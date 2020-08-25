@@ -190,13 +190,13 @@
                                                 @if (Auth::user()->photo)
                                                     <img src="{{ Auth::user()->photo }}" class="img-user">
                                                 @else
-                                                        {{-- <img src="{{ Auth::user()->photo }}" width="50"> --}}
+                                                    <img src="{{ asset('assets/images/unavailable.png') }}" class="img-user">
                                                 @endif
                                                 {{ Auth::user()->name }}
                                             </div>
                                             <div class="menu-user">
                                                 <a class="dropdown-item" href="#">History Transaksi</a>
-                                                <a class="dropdown-item" href="#">Settings</a>
+                                                <a class="dropdown-item" href="{{ route('profile.index') }}">Settings</a>
                                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                     {{ __('Logout') }}
                                                 </a>

@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('profile', 'ProfileController');
+});
+
 Route::get('/', 'IndexController@index')->name('home');
 
 
@@ -39,8 +43,6 @@ Route::get('/spb/check', 'SpbController@check');
 // Route::get('/history-transaction-order-list', function () {
 //     return view('history-transaction-order-list');
 // });
-
-Route::resource('profile', 'ProfileController');
 
 Route::resource('address', 'AddressController');
 
