@@ -15,10 +15,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'IndexController@index')->name('home');
 
+
 Route::livewire('/products/{productCode}', 'product-detail')->name('products.show');
 Route::get('/products/category/{category}', 'ProductController@category')->name('products.category');
 Route::resource('products', 'ProductController')->except(['show']);
 
+Route::livewire('/mycart', 'my-cart')->name('mycart');
+
+
+Route::get('/transaction', 'TransactionController@store');
+Route::get('/transaction/delete', 'TransactionController@destroy');
+Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus');
+
+Route::get('/spb/check', 'SpbController@check');
 
 // Route::resource('shoppingcarts', 'ShoppingCartController');
 // Route::get('/history-transaction', function () {
@@ -59,6 +68,6 @@ Route::get('/google', function () {
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
 
-Auth::routes();
+Route::get('test', 'TestController@index');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();

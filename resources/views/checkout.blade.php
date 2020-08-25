@@ -1,13 +1,13 @@
-@extends('layouts.without-banner')
+@extends('layouts.app')
 
 @section('content')
 
-    <!-- wrap main content -->
+    {{-- wrap main content --}}
 	<div class="site-content">
 		<main class="site-main  main-container no-sidebar">
 			<div class="container">
 
-				<!-- breadcrumb -->
+				{{-- breadcrumb --}}
 				<div class="breadcrumb-trail breadcrumbs">
 					<ul class="trail-items breadcrumb">
 						<li class="trail-item trail-begin">
@@ -25,7 +25,7 @@
 					</ul>
 				</div>
 
-				<!-- main content -->
+				{{-- main content --}}
 				<div class="row">
 					<div class="main-content-cart main-content col-sm-12">
 						<div class="row">
@@ -136,7 +136,7 @@
 					</div>
 				</div>
 
-				<!-- full width layout have no sidebar-->
+				{{-- full width layout have no sideba --}}
 
 			</div>
 		</main>

@@ -13,9 +13,15 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        // TAMBAHKAN FIELD-FIELD YANG DI CN_CUSTOMERS KE TABLE USERS
+        // CARI CARA SUPAYA BISA PREFIX SEMUA TABLE BIAR GAK LIEUR
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('nik')->nullable();
             $table->string('name');
+            $table->date('birthdate')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
