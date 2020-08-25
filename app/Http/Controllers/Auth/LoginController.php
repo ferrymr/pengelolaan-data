@@ -56,7 +56,7 @@ class LoginController extends Controller
 
             if ($findUser) {
                 Auth::login($findUser);
-                return redirect('/home');
+                return redirect('/');
             } else {
                 $newUser = User::create([
                     'name' => ucwords($user->name),
