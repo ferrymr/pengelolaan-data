@@ -38,3 +38,13 @@
 .slider-item.style2 .slider-inner {
     background-image: url(../images/slider-2.jpg);
 }
+
+.menu-item.mobile-only {
+    display: none;
+    width: 100%;
+}
+@media screen and (max-width: 48em) {
+    .menu-item.mobile-only {
+        display: inline-block;
+    }
+}
