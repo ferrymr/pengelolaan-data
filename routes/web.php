@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'IndexController@index')->name('home');
 
+
 Route::livewire('/products/{productCode}', 'product-detail')->name('products.show');
 Route::get('/products/category/{category}', 'ProductController@category')->name('products.category');
 Route::resource('products', 'ProductController')->except(['show']);
@@ -65,5 +66,3 @@ Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
