@@ -29,6 +29,7 @@ Route::livewire('/mycart', 'my-cart')->name('mycart');
 
 Route::get('/transaction', 'TransactionController@store');
 Route::get('/transaction/delete', 'TransactionController@destroy');
+Route::get('/transaction/checkout', 'TransactionController@checkout')->name('checkout');
 Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus');
 
 Route::get('/spb/check', 'SpbController@check');
@@ -56,9 +57,9 @@ Route::get('/detailhistory', 'HistoryOrderController@detailhistory')->name('hist
 // Route::get('/address-form', function () {
 //     return view('address-form');
 // });
-Route::get('/checkout', function () {
+/* Route::get('/checkout', function () {
     return view('checkout');
-});
+}); */
 
 Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
 Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');

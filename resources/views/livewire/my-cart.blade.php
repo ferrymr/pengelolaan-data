@@ -142,9 +142,9 @@
                                                 <div class="cost">Rp. 905.000</div>
                                             </div>
                                             <div class="section-button">
-                                                <button class="btn-checkout-cart">
-                                                    <span>Beli</span>
-                                                </button>
+                                                <a class="btn-checkout-cart" href="{{ route('checkout') }}">
+                                                    <span>Checkout</span>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

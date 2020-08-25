@@ -112,8 +112,7 @@
                                     </div> --}}
                                     @if($cartTotal > 0)
                                         <div class="actions">
-                                            <a class="button button-viewcart" href="shoppingcart.html"><span>View Bag</span></a>
-                                            <a href="checkout.html" class="button button-checkout"><span>Checkout</span></a>
+                                            <a href="{{ route('mycart') }}" class="button button-checkout"><span>Checkout</span></a>
                                         </div>
                                     @else
                                         No item

@@ -33,23 +33,23 @@
 
                                 <div class="row">
                                     <div class="col-md-6" style="margin-top:16px">
-                                        <label class="text">Select Bank</label>
+                                        <label class="text">Pilih Bank</label>
                                         <select tabindex="1" class="input-text" style="width: 100%;">
-                                            <option disabled="disabled" selected="selected">- Choose Bank -</option> 
-                                            <option value="1">BCA</option>
-                                            <option value="1">BNI</option>
-                                            <option value="1">Mandiri</option>
+                                            <option disabled="disabled" selected="selected">-- Pilih Bank --</option>
+                                            @foreach ($bankList as $bank)
+                                                <option value="{{ $bank }}">{{ $bank }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6" style="margin-top:16px">
-                                        <label class="text">Select Sales Point Branch</label>
+                                        <label class="text">Pilih Sales Point Branch</label>
                                         <select data-placeholder="London" tabindex="1" class="input-text" style="width: 100%;">
-                                            <option disabled="disabled" selected="selected">- Choose SPB -</option> 
-                                            <option value="1">Bali - Kutai</option>
-                                            <option value="1">Bandung - Batununggal</option>
-                                            <option value="1">Bandung - Dago</option>
+                                            <option disabled="disabled" selected="selected">-- Pilih SPB --</option> 
+                                            @foreach ($spbList as $spb)
+                                                <option value="{{ $spb['code'] }}" {{ $spb['disabled'] }}>{{ $spb['city_name'] }} - {{ $spb['subdistrict_name'] }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
