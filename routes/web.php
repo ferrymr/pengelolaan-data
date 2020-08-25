@@ -26,7 +26,7 @@ Route::get('/transaction', 'TransactionController@store');
 Route::get('/transaction/delete', 'TransactionController@destroy');
 Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus');
 
-Route::get('/spb/check/{spbCode}', 'SpbController@check');
+Route::get('/spb/check', 'SpbController@check');
 
 // Route::resource('shoppingcarts', 'ShoppingCartController');
 Route::get('/history-transaction', function () {

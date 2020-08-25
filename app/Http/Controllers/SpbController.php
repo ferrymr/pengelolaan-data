@@ -23,8 +23,8 @@ class SpbController extends Controller
                 'phone' => '+6282119163629',
                 'disabled' => false
             ),
-            'SPB14' => array (
-                'code' => '14',
+            'SPB00014' => array (
+                'code' => '00014',
                 'province_id' => 9,
                 'city_id' => 23,
                 'city_name' => 'BANDUNG',
@@ -167,8 +167,9 @@ class SpbController extends Controller
         );
     }
 
-    public function check($spbCode)
+    public function check()
     {
+        // ---- NOTE: NANTI CEK DI SPB MANA YANG STOKNYA GAADA DAN ITEM APA
         $cartItems = Cart::get();
 
         // TAMPUNG SEMUA ITEM, TERMASUK ISI DARI ITEM SERIES
@@ -199,7 +200,7 @@ class SpbController extends Controller
 
             foreach ($newCartItems as $newCartItem) {
 
-                $spbIndex = 'SPB' . $spbCode;
+                $spbIndex = 'SPB' . $spb['code'];
 
                 if ($spb['code'] == '00000') {
 
@@ -219,7 +220,7 @@ class SpbController extends Controller
                 } else {
 
                     $stockAvailable = DB::table('tb_produk')
-                        ->where('no_member', $spbCode)
+                        ->where('no_member', $spb['code'])
                         ->where('kode_barang', $newCartItem['kode_barang'])
                         ->where('stok', '>=', $newCartItem['qty'])
                         ->count();
@@ -234,6 +235,10 @@ class SpbController extends Controller
                 }
             }
         }
+
+        echo "<pre>";
+        var_dump($newCartItems);
+        echo "</pre>";
 
         echo "<pre>";
         var_dump($this->spbList);
