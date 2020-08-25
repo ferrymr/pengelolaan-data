@@ -58,7 +58,9 @@
                                         <form action="{{ route('address.destroy', $shipping->id) }}" method="post" class="d-inline">
                                             @csrf 
                                             @method('delete')
-                                             <a class="btn-change-address">Hapus</a>
+                                            <button class="btn btn-danger btn-sm">
+                                                <i class="fa fa-trash"></i>
+                                             </button>
                                         </form>
                                        
                                         <a href="" class="btn-change-default">Jadikan alamat utama</>

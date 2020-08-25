@@ -149,7 +149,7 @@ class AddressController extends Controller
         $shipping = ShippingAddress::findOrFail($id);
         $shipping->delete();
 
-       return redirect()->route('shippingaddress.create');
+       return redirect()->route('address.index');
     }
 
     public function getCities($provinceId)
