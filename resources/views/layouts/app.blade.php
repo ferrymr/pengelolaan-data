@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style-custom.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
     @yield('styles')
     @livewireStyles
 </head>
