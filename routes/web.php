@@ -43,6 +43,7 @@ Route::get('/spb/check', 'SpbController@check');
 Route::resource('profile', 'ProfileController');
 
 Route::resource('address', 'AddressController');
+Route::get('address/set_default/{id}', 'AddressController@setDefault')->name('setdefault');
 
 Route::resource('history-order', 'HistoryOrderController');
 Route::get('/orderlist', 'HistoryOrderController@orderlist')->name('history-order.orderlist');
@@ -58,8 +59,17 @@ Route::get('/checkout', function () {
     return view('checkout');
 });
 
+Route::get('/faqs', function () {
+    return view('faqs');
+});
+
+Route::get('/return-policy', function () {
+    return view('return-policy');
+});
+
 Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
 Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');
+
 
 Route::get('/google', function () {
     return view('googleLogin');
