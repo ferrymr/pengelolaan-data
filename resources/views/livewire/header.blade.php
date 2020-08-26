@@ -56,7 +56,7 @@
                                                     <img src="{{ asset('assets/images/thumbnails/' . $cartItem['kode_barang'] . '.jpg') }}" alt="">
                                                 </a>
                                                 <div class="product-details">
-                                                    <h5 class="product-name"><a href="#">{{ $cartItem['nama'] }}</a></h5>
+                                                    <h5 class="product-name"><a href="{{ route('products.show', $cartItem['kode_barang']) }}">{{ $cartItem['nama'] }}</a></h5>
                                                     <div class="variations">
                                                         <span class="attribute_color"><a href="#">{{ $cartItem['jenis'] }}</a></span>
                                                     </div>

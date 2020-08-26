@@ -277,6 +277,9 @@ class TransactionController extends Controller
         $spbList = $this->getSpbList();
         $user = auth()->user();
         $defaultShippingAddress = ShippingAddress::where('user_id', $user->id)->where('is_default', 1);
+
+        dd($defaultShippingAddress);
+        
         return view('checkout', compact('bankList', 'spbList', 'defaultShippingAddress'));
     }
 

@@ -32,7 +32,7 @@ Route::livewire('/mycart', 'my-cart')->name('mycart');
 Route::get('/transaction', 'TransactionController@store');
 Route::get('/transaction/delete', 'TransactionController@destroy');
 // Route::get('/transaction/checkout', 'TransactionController@checkout')->name('checkout');
-Route::livewire('/transaction/checkout', 'shippingCart')->name('checkout');
+Route::livewire('/transaction/checkout', 'checkout')->name('checkout');
 Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus');
 
 Route::get('/spb/check', 'SpbController@check');
@@ -48,7 +48,7 @@ Route::get('/spb/check', 'SpbController@check');
 //     return view('history-transaction-order-list');
 // });
 
-Route::resource('history-order', 'HistoryOrderController');
+Route::resource('order-history', 'HistoryOrderController');
 Route::get('/orderlist', 'HistoryOrderController@orderlist')->name('history-order.orderlist');
 Route::get('/detailhistory', 'HistoryOrderController@detailhistory')->name('history-order.detailhistory');
 

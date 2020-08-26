@@ -19,13 +19,14 @@ class HistoryOrderController extends Controller
 
         // $customerId =  HistoryTransaction::where('customer_id',1)->get();
 
-        $transactions = DB::table('cn_transaksi')
-            ->join('cn_order_history', 'cn_order_history.transaksi_id', '=' ,'cn_transaksi.id')
-            ->select('cn_transaksi.tgl_transaksi', 'cn_transaksi.nomor_transaksi', 'cn_transaksi.grand_total', 'cn_order_history.transaksi_id')
-            ->where('customer_id',1)->get();
+        // $transactions = DB::table('cn_transaksi')
+        //     ->join('cn_order_history', 'cn_order_history.transaksi_id', '=' ,'cn_transaksi.id')
+        //     ->select('cn_transaksi.tgl_transaksi', 'cn_transaksi.nomor_transaksi', 'cn_transaksi.grand_total', 'cn_order_history.transaksi_id')
+        //     ->where('customer_id',1)->get();
 
         // $transactions = HistoryTransaction::find([1]);
 
+        $transactions = array();
         return view('history-transaction', compact('transactions'));
 
     }

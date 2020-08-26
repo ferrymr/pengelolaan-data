@@ -2,33 +2,37 @@
 
 @section('content')
 
-    <!-- wrap main content -->
-	<div class="site-content">
-		<main class="site-main  main-container no-sidebar">
-			<div class="container">
+    {{-- wrap main content --}}
+    <div class="site-content">
+        <main class="site-main  main-container no-sidebar">
+            <div class="container">
 
-				<!-- breadcrumb -->
-				<div class="col-md-8 col-sm-12 breadcrumb-trail breadcrumbs">
-					<ul class="trail-items breadcrumb">
-						<li class="trail-item trail-begin">
-							<a href="">
-								<span>
-									Profile
-								</span>
-							</a>
-						</li>
-						<li class="trail-item trail-end active">
-							<span>
-								History Transaction
-							</span>
-						</li>
-					</ul>
-				</div>
+                {{-- breadcrumb --}}
+                <div class="col-md-8 col-sm-12 breadcrumb-trail breadcrumbs">
+                    <ul class="trail-items breadcrumb">
+                        <li class="trail-item trail-begin">
+                            <a href="">
+                                <span>
+                                    Profile
+                                </span>
+                            </a>
+                        </li>
+                        <li class="trail-item trail-end active">
+                            <span>
+                                History Transaction
+                            </span>
+                        </li>
+                    </ul>
+                </div>
 
-				<!-- main content -->
-				<div class="row">
-					<div class="main-content-cart main-content col-sm-12">
-						<div class="row">
+                @if ($success = Session::get('success'))
+                    <x-alert type="success" :message="$success"/>
+                @endif
+
+                {{-- main content --}}
+                {{-- <div class="row">
+                    <div class="main-content-cart main-content col-sm-12">
+                        <div class="row">
                             <div class="col-md-6 col-md-offset-3 col-sm-12">
                                 <div class="tab">
                                     <a href="{{ route('history-order.index') }}" class="item-tab active">Menunggu Pembayaran</a>
@@ -72,14 +76,14 @@
                                     @endforeach
                                 </div>
                             </div>
-						</div>
-					</div>
-				</div>
+                        </div>
+                    </div>
+                </div> --}}
 
-				<!-- full width layout have no sidebar-->
+                {{-- full width layout have no sideba --}}
 
-			</div>
-		</main>
+            </div>
+        </main>
     </div>
     <br>
     <br>

@@ -3,33 +3,33 @@
 @section('content')
 
     {{-- wrap main content --}}
-	<div class="site-content">
-		<main class="site-main  main-container no-sidebar">
-			<div class="container">
+    <div class="site-content">
+        <main class="site-main  main-container no-sidebar">
+            <div class="container">
 
-				{{-- breadcrumb --}}
-				<div class="breadcrumb-trail breadcrumbs">
-					<ul class="trail-items breadcrumb">
-						<li class="trail-item trail-begin">
-							<a href="">
-								<span>
-									My Cart
-								</span>
-							</a>
-						</li>
-						<li class="trail-item trail-end active">
-							<span>
-								Checkout
-							</span>
-						</li>
-					</ul>
-				</div>
+                {{-- breadcrumb --}}
+                <div class="breadcrumb-trail breadcrumbs">
+                    <ul class="trail-items breadcrumb">
+                        <li class="trail-item trail-begin">
+                            <a href="">
+                                <span>
+                                    My Cart
+                                </span>
+                            </a>
+                        </li>
+                        <li class="trail-item trail-end active">
+                            <span>
+                                Checkout
+                            </span>
+                        </li>
+                    </ul>
+                </div>
 
-				{{-- main content --}}
-				<div class="row">
-					<div class="main-content-cart main-content col-sm-12">
-						<div class="row">
-							<div class="col-md-8">
+                {{-- main content --}}
+                <div class="row">
+                    <div class="main-content-cart main-content col-sm-12">
+                        <div class="row">
+                            <div class="col-md-8">
 
                                 <div class="row">
                                     <div class="col-md-6" style="margin-top:16px">
@@ -45,7 +45,7 @@
                                 <div class="row">
                                     <div class="col-md-6" style="margin-top:16px">
                                         <label class="text">Pilih Sales Point Branch</label>
-                                        <select data-placeholder="London" tabindex="1" class="input-text" style="width: 100%;">
+                                        <select tabindex="1" class="input-text" style="width: 100%;">
                                             <option disabled="disabled" selected="selected">-- Pilih SPB --</option> 
                                             @foreach ($spbList as $spb)
                                                 <option value="{{ $spb['code'] }}" {{ $spb['disabled'] }}>{{ $spb['city_name'] }} - {{ $spb['subdistrict_name'] }}</option>
@@ -73,7 +73,7 @@
                                 <div class="row">
                                     <div class="col-md-6" style="margin-top:16px">
                                         <label class="text">Select Courier</label>
-                                        <select data-placeholder="London" tabindex="1" class="input-text" style="width: 100%;">
+                                        <select tabindex="1" class="input-text" style="width: 100%;">
                                             <option disabled="disabled" selected="selected">- Choose Courier -</option> 
                                             <option value="1">JNE</option>
                                             <option value="1">JNT</option>
@@ -97,10 +97,10 @@
                                     </div>
                                 </div>
                             </div>
-							<div class="col-md-4">
-								<div class="card-total-cart" id="card-cart">
-									<div>
-										<div class="section-total">
+                            <div class="col-md-4">
+                                <div class="card-total-cart" id="card-cart">
+                                    <div>
+                                        <div class="section-total">
                                             <span class="title-section-card"  style="margin-bottom: 1.8rem">Order Summary</span>
                                             <div class="d-flex justify-between">
                                                 <div>Total Items</div>
@@ -110,36 +110,36 @@
                                                 <div>Total Weight</div>
                                                 <div>0.5Kg</div>
                                             </div>
-											<div class="d-flex justify-between">
-												<div>Grand Total</div>
-												<div>Rp. 905.000</div>
-											</div>
+                                            <div class="d-flex justify-between">
+                                                <div>Grand Total</div>
+                                                <div>Rp. 905.000</div>
+                                            </div>
                                             <div class="d-flex justify-between">
                                                 <div>Unique Code</div>
                                                 <div>Rp. 434</div>
                                             </div>
                                             <hr>
-											<div class="total-number">
-												<div>Total Payment</div>
-												<div class="cost">Rp. 905.434</div>
-											</div>
-											<div class="section-button">
-												<button class="btn-checkout-cart">
-													<span>Pay Now</span>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+                                            <div class="total-number">
+                                                <div>Total Payment</div>
+                                                <div class="cost">Rp. 905.434</div>
+                                            </div>
+                                            <div class="section-button">
+                                                <button class="btn-checkout-cart">
+                                                    <span>Pay Now</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-				{{-- full width layout have no sideba --}}
+                {{-- full width layout have no sideba --}}
 
-			</div>
-		</main>
+            </div>
+        </main>
     </div>
     <br>
     <br>
