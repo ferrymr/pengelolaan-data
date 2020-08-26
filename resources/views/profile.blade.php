@@ -34,14 +34,16 @@
                                 <a href="{{ route('profile.edit', 1) }}">
                                     <div class="card-title-profile">
                                         <div class="profile-img">
-                                            <img src="https://www.fillmurray.com/200/200" alt="">
+                                            @if ($profile->photo)
+                                                <img src="{{ $profile->photo }}" />
+                                            @else
+                                                <img src="{{ asset('assets/images/unavailable.png') }}" />
+                                            @endif
                                         </div>
-                                        @foreach($profiles as $p)
                                         <div class="section-title-profile">
-                                            <span class="text-bold">{{ $p->nama }}</span>
+                                            <span class="text-bold">{{ $profile->name }}</span>
                                             <span class="">Edit profile</span>
                                         </div>
-                                        @endforeach
                                     </div>
                                 </a>
                                 <div class="card-body-profile">

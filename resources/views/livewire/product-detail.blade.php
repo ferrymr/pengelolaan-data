@@ -1,3 +1,14 @@
+@section('styles')
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <style>
+        .btn-consultation-wa {
+            align-self: baseline;
+        },
+        a .btn-consultation-wa:hover {
+            color: white!important;
+        }
+    </style>
+@endsection
 {{-- wrap main content --}}
 <div class="main-content main-content-details single no-sidebar">
     <div class="container">
@@ -22,9 +33,10 @@
 
                     {{-- media box --}}
                     <div class="details-product single-product-galery">
-                        <div class="details-thumd">
+                        <div class="details-thumd" style="padding-top: 0px">
                             <div class="image-preview-container image-thick-box image_preview_container">
                                 <img id="img_zoom" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
+                                {{-- <img id="img_zoom" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt=""> --}}
                                 <a href="#" class="btn-zoom open_qv"><i class="fa fa-search" aria-hidden="true"></i></a>
                             </div>
                             <div class="product_preview image-small">
@@ -42,6 +54,20 @@
                                         <img src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-large-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
                                     </a>
                                 </div>
+                                {{-- <div id="thumbnails" class="thumbnails_carousel owl-carousel" data-nav="true" data-autoplay="false" data-dots="false" data-loop="false" data-margin="25" data-responsive='{"0":{"items":3},"480":{"items":3},"600":{"items":3},"1000":{"items":3}}' >
+                                    <a href="#" data-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" class="active">
+                                        <img src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-large-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt="">
+                                    </a>
+                                    <a href="#" data-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg">
+                                        <img src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-large-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt="">
+                                    </a>
+                                    <a href="#" data-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg">
+                                        <img src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-large-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt="">
+                                    </a>
+                                    <a href="#" data-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg">
+                                        <img src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-large-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt="">
+                                    </a>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="details-infor">
@@ -88,30 +114,31 @@
                                 </div>
                             </div> --}}
                             <div class="group-button">
-                                {{-- <div class="yith-wcwl-add-to-wishlist">
-                                    <div class="yith-wcwl-add-button">
-                                        <a href="#">Add to Wishlist</a>
-                                    </div>
-                                </div>
-                                <div class="size-chart-wrapp">
-                                    <div class="btn-size-chart">
-                                        <a id="size_chart" href="{{ asset('assets/images/size-chart.jpg') }}" class="fancybox">View Size Chart</a>
-                                    </div>
-                                </div> --}}
                                 <div class="quantity-add-to-cart">
                                     <div class="quantity">
                                         <div class="control">
-                                            <button wire:click="decrementQty" class="btn-number qtyminus quantity-minus" href="#">-</div>
+                                            <a wire:click="decrementQty" class="btn-number qtyminus quantity-minus" href="#">-</a>
                                             <input type="text" wire:model="qty" data-step="1" data-min="1" value="{{ $qty }}" title="Qty" class="input-qty qty" size="4">
-                                            <button wire:click="incrementQty" href="#" class="btn-number qtyplus quantity-plus">+</div>
+                                            <a wire:click="incrementQty" href="#" class="btn-number qtyplus quantity-plus">+</a>
                                         </div>
                                     </div>
                                     <button wire:click="addToCart" class="single_add_to_cart_button button">Add to cart</button>
                                 </div>
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
+                                <div class="contact-bc">
+                                    <p>Temukan produk perawatan yang sesuai dengan kebutuhanmu hanya Bersama Bellezkin. Dapatkan gratis konsultasi bersama Beauty Consultant kami :)</p> 
+                                </div>
+                                <div style="display: flex;flex-direction: column">
+                                    <a href="https://api.whatsapp.com/send?phone=628112288142&amp;text=Halo!%0ASaya%20ingin%20ingin%20konsultasi%20lebih%20lanjut%20mengenai%20produk%20Bellezkin%0ASource : https://shop.bellezkin.com/products/19004/detail/" target="_blank" class="button btn-consultation-wa"><i class="fab fa-whatsapp logo_bc"></i>&nbsp;
+                                        Contact Beauty Consultant
+                                    </a>
+                                    <p id="warn" style="margin-top: 16px">Klik <i class="fas fa-arrow-up"></i> untuk langsung terhubung via WhatssApp </p>
+                                </div>
+
                             </div>
+
                         </div>
-                        <a href="https://api.whatsapp.com/send?phone=628112288142&text=Halo%0AKak!,%0ASaya%20ingin%20konsultasi%20lebih%20lanjut%20mengenai%20produk%20{{ $product->nama }}" target="_blank" class="single_add_to_cart_button button">Contact Beauty Consultant</a>
-                        <p id="warn">Klik untuk langsung terhubung via WhatssApp </p>
                     </div>
 
 

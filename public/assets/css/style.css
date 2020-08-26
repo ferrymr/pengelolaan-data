@@ -4772,8 +4772,8 @@ ul.list-products {
     z-index: 2;
 }
 .product-item:hover .product-info {
-    opacity: 0;
     filter: alpha(opacity=0);
+    cursor: pointer;
 }
 .product-item .product-top {
     overflow: hidden;

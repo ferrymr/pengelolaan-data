@@ -8,8 +8,11 @@ class ShippingAddress extends Model
 {
     protected $table = 'cn_shipping_address';
 
+    public $timestamps = false;
+
     protected $fillable = [
-        'customer_id',
+        'users_id',
+        'no_member',
         'nama', 
         'telepon', 
         'provinsi_id', 

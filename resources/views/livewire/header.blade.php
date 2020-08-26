@@ -56,14 +56,14 @@
                                                     <img src="{{ asset('assets/images/thumbnails/' . $cartItem['kode_barang'] . '.jpg') }}" alt="">
                                                 </a>
                                                 <div class="product-details">
-                                                    <h5 class="product-name"><a href="#">{{ $cartItem['nama'] }}</a></h5>
+                                                    <h5 class="product-name"><a href="{{ route('products.show', $cartItem['kode_barang']) }}">{{ $cartItem['nama'] }}</a></h5>
                                                     <div class="variations">
                                                         <span class="attribute_color"><a href="#">{{ $cartItem['jenis'] }}</a></span>
                                                     </div>
                                                     <span class="product-price"><span class="price"><span>{{ $cartItem['h_nomem'] }}</span></span></span>
                                                     <span class="product-quantity"> x {{ $cartItem['qty'] }}</span>
                                                     <div class="product-remove">
-                                                        <i wire:click="removeFromCart('{{ $cartItem['kode_barang'] }}')" class="fa fa-trash-o" aria-hidden="true"></i>
+                                                        <i wire:click="removeFromCart('{{ $cartItem['kode_barang'] }}')" class="fa fa-trash" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
                                             </li>
@@ -112,8 +112,7 @@
                                     </div> --}}
                                     @if($cartTotal > 0)
                                         <div class="actions">
-                                            <a class="button button-viewcart" href="shoppingcart.html"><span>View Bag</span></a>
-                                            <a href="checkout.html" class="button button-checkout"><span>Checkout</span></a>
+                                            <a href="{{ route('mycart') }}" class="button button-checkout btn-checkout-overlay"><span>Checkout</span></a>
                                         </div>
                                     @else
                                         No item
@@ -190,13 +189,13 @@
                                                 @if (Auth::user()->photo)
                                                     <img src="{{ Auth::user()->photo }}" class="img-user">
                                                 @else
-                                                        {{-- <img src="{{ Auth::user()->photo }}" width="50"> --}}
+                                                    <img src="{{ asset('assets/images/unavailable.png') }}" class="img-user">
                                                 @endif
                                                 {{ Auth::user()->name }}
                                             </div>
                                             <div class="menu-user">
                                                 <a class="dropdown-item" href="#">History Transaksi</a>
-                                                <a class="dropdown-item" href="#">Settings</a>
+                                                <a class="dropdown-item" href="{{ route('profile.index') }}">Settings</a>
                                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                     {{ __('Logout') }}
                                                 </a>
@@ -267,6 +266,12 @@
                     </li>
                     <li class="menu-item">
                         <a href="{{ route('products.category', 'series') }}" class="kt-item-title" title="About">Series</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('products.category', 'series') }}" class="kt-item-title" title="About">Series</a>
+                    </li>
+                    <li class="menu-item mobile-only" style="margin-top: 16px">
+                        <a href="{{ route('login') }}" class="kt-item-title" title="Login">Login Register</a>
                     </li>
                 </ul>
             </div>

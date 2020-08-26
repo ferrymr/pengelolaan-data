@@ -1,33 +1,30 @@
-@extends('layouts.app')
+{{-- wrap main content  --}}
+<div class="site-content">
+    <main class="site-main  main-container no-sidebar">
+        <div class="container">
 
-@section('content')
-
-    <!-- wrap main content -->
-    <div class="site-content">
-        <main class="site-main  main-container no-sidebar">
-            <div class="container">
-
-                <!-- breadcrumb -->
-                <div class="breadcrumb-trail breadcrumbs">
-                    <ul class="trail-items breadcrumb">
-                        <li class="trail-item trail-begin">
-                            <a href="">
-                                <span>
-                                    Home
-                                </span>
-                            </a>
-                        </li>
-                        <li class="trail-item trail-end active">
+            {{-- breadcrumb  --}}
+            <div class="breadcrumb-trail breadcrumbs">
+                <ul class="trail-items breadcrumb">
+                    <li class="trail-item trail-begin">
+                        <a href="">
                             <span>
-                                Shopping Cart
+                                Home
                             </span>
-                        </li>
-                    </ul>
-                </div>
+                        </a>
+                    </li>
+                    <li class="trail-item trail-end active">
+                        <span>
+                            Shopping Cart
+                        </span>
+                    </li>
+                </ul>
+            </div>
 
-                <!-- main content -->
-                <div class="row">
-                    <div class="main-content-cart main-content col-sm-12">
+            {{-- main content  --}}
+            <div class="row">
+                <div class="main-content-cart main-content col-sm-12">
+                    @if ($cartItems)
                         <div class="row">
                             <div class="col-md-8">
                                 @foreach($cartItems as $item)
@@ -51,7 +48,6 @@
                                             @endif --}}
                                         </div>
                                         <div class="control-item">
-                                            {{-- <a class="remove"></a> --}}
                                             <div class="quantity">
                                                 <div class="control" style="width: 86px!important;">
                                                     {{-- <div class="btn-number qtyminus quantity-minus">-</div>  --}}
@@ -59,6 +55,8 @@
                                                     {{-- <div wire:click="incrementQty({{ $item['kode_barang'] }})" class="btn-number qtyplus quantity-plus">+</div> --}}
                                                 </div>
                                             </div>
+                                            &nbsp;&nbsp;
+                                            <a class="remove" wire:click="removeFromCart('{{ $item['kode_barang'] }}')"></a>
                                         </div>
                                     </div>
                                     {{-- @if($data == 1)
@@ -138,32 +136,36 @@
                                         <div class="section-total">
                                             <span class="title-section-card">Ringkasan belanja</span>
                                             <div class="total-number">
-                                                <div>Total Harga</div>
-                                                <div class="cost">Rp. 905.000</div>
+                                                <div>Jumlah Barang</div>
+                                                <div>{{ $totalItems }}pcs</div>
+                                            </div>
+                                            <div class="total-number">
+                                                <div>Subtotal</div>
+                                                <div class="cost">@currency($subtotal)</div>
                                             </div>
                                             <div class="section-button">
-                                                <button class="btn-checkout-cart">
-                                                    <span>Beli</span>
-                                                </button>
+                                                <a class="btn-checkout-cart" href="{{ route('checkout') }}">
+                                                    <span>Checkout</span>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @else
+                        Tidak ada item
+                    @endif
                 </div>
-
-                <!-- full width layout have no sidebar-->
-
             </div>
-        </main>
-    </div>
-    <br>
-    <br>
 
-    
-@endsection
+            {{-- full width layout have no sidebar --}}
+
+        </div>
+    </main>
+</div>
+<br>
+<br>
 
 @section('scripts')
 <script type="text/javascript" src="{{ asset('assets/js/sticky/jquery.sticky.js')}}"></script>

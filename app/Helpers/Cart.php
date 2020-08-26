@@ -53,12 +53,17 @@ class Cart
                     'jenis' => $product->jenis,
                     'unit' => $product->unit,
                     'h_nomem' => $product->h_nomem,
+                    'berat' => $product->berat,
+                    'total_berat' => $product->qty * $product->berat,
+                    'subtotal' => $product->qty * $product->h_nomem,
                     'qty' => $product->qty,
                     'note' => ''
                 );
 
         } else {
             $cart[$cartIndex]['qty'] += $product->qty;
+            $cart[$cartIndex]['total_berat'] += $product->qty * $product->berat;
+            $cart[$cartIndex]['subtotal'] += $product->qty  * $product->h_nomem;
         }
 
         $this->set($cart);

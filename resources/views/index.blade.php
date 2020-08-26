@@ -16,6 +16,11 @@
     {{-- main content --}}
     <div class="main-content main-content-product no-sidebar">
         <div class="container">
+
+            @if ($success = Session::get('warning'))
+                <x-alert type="warning" :message="$success"/>
+            @endif
+
             {{-- products tabs --}}
             {{-- <x-products :products="$bestSellingProducts" category-name="Terlaris"/> --}}
             <livewire:products :products="$bestSellingProducts" category="Terlaris" />

@@ -13,6 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('profile', 'ProfileController');
+    Route::get('address/set-default/{addressId}', 'AddressController@setDefault')->name('address.setdefault');
+    Route::resource('address', 'AddressController');
+    Route::livewire('/transaction/checkout', 'checkout')->name('checkout');
+
+    Route::resource('order-history', 'HistoryOrderController');
+    Route::get('/orderlist', 'HistoryOrderController@orderlist')->name('history-order.orderlist');
+    Route::get('/detailhistory', 'HistoryOrderController@detailhistory')->name('history-order.detailhistory');
+
+
+    Route::get('/transaction', 'TransactionController@store');
+    Route::get('/transaction/delete', 'TransactionController@destroy');
+    // Route::get('/transaction/checkout', 'TransactionController@checkout')->name('checkout');
+    Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus');
+});
+
 Route::get('/', 'IndexController@index')->name('home');
 
 
@@ -23,9 +40,6 @@ Route::resource('products', 'ProductController')->except(['show']);
 Route::livewire('/mycart', 'my-cart')->name('mycart');
 
 
-Route::get('/transaction', 'TransactionController@store');
-Route::get('/transaction/delete', 'TransactionController@destroy');
-Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus');
 
 Route::get('/spb/check', 'SpbController@check');
 
@@ -40,24 +54,15 @@ Route::get('/spb/check', 'SpbController@check');
 //     return view('history-transaction-order-list');
 // });
 
-Route::resource('profile', 'ProfileController');
-
-Route::resource('address', 'AddressController');
-Route::get('address/set_default/{id}', 'AddressController@setDefault')->name('setdefault');
-
-Route::resource('history-order', 'HistoryOrderController');
-Route::get('/orderlist', 'HistoryOrderController@orderlist')->name('history-order.orderlist');
-Route::get('/detailhistory', 'HistoryOrderController@detailhistory')->name('history-order.detailhistory');
-
 // Route::get('/address-list', function () {
 //     return view('address-list');
 // });
 // Route::get('/address-form', function () {
 //     return view('address-form');
 // });
-Route::get('/checkout', function () {
+/* Route::get('/checkout', function () {
     return view('checkout');
-});
+}); */
 
 Route::get('/faqs', function () {
     return view('faqs');

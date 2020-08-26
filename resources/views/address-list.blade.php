@@ -54,16 +54,19 @@
                                     </div>
                                     <div class="footer-address">
                                         <a href="{{ route('address.edit', $shipping->id) }}" class="btn-change-address">Ubah</a>
+                                        <a href="{{ route('address.destroy', $shipping->id) }}" class="btn-change-address" onclick="event.preventDefault(); document.getElementById('delete-shipping-address').submit();">Hapus</a>
                                        
-                                        <form action="{{ route('address.destroy', $shipping->id) }}" method="post" class="d-inline">
+                                        <form action="{{ route('address.destroy', $shipping->id) }}" method="post" style="display:none;" id="delete-shipping-address">
                                             @csrf 
                                             @method('delete')
-                                            <button class="btn btn-danger btn-sm">
+                                            {{-- <button class="btn btn-danger btn-sm">
                                                 <i class="fa fa-trash"></i>
-                                             </button>
+                                             </button> --}}
                                         </form>
                                        
-                                        <a href="" class="btn-change-default">Jadikan alamat utama</>
+                                        @if($shipping->is_default != 1)
+                                            <a href="{{ route('address.setdefault', $shipping->id) }}" class="btn-change-default">Jadikan alamat utama</a>
+                                        @endif
                                     </div>
                                 </div>
                                 @endforeach
