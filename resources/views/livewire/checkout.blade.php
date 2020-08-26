@@ -7,7 +7,14 @@
             <div class="breadcrumb-trail breadcrumbs">
                 <ul class="trail-items breadcrumb">
                     <li class="trail-item trail-begin">
-                        <a href="">
+                        <a href="{{ route('home') }}">
+                            <span>
+                                Home
+                            </span>
+                        </a>
+                    </li>
+                    <li class="trail-item trail-begin">
+                        <a href="{{ route('mycart') }}">
                             <span>
                                 My Cart
                             </span>
@@ -31,7 +38,7 @@
                                 <div class="col-md-6" style="margin-top:16px">
                                     <label class="text">Pilih Bank</label>
                                     <select wire:model="selectedBank" tabindex="1" class="input-text" style="width: 100%;">
-                                        <option disabled="disabled" selected="selected">-- Pilih Bank --</option>
+                                        <option value="" disabled="disabled" selected="selected">-- Pilih Bank --</option>
                                         @foreach ($bankList as $bank)
                                             <option value="{{ $bank }}">{{ $bank }}</option>
                                         @endforeach
@@ -53,9 +60,9 @@
                                 <div class="col-md-6" style="margin-top:16px">
                                     <label class="text">Terima Barang Dari</label>
                                     <div>
-                                        <input type="radio" wire:model="shippingMethod" name="shipping_method" id="expedition" value="EXPEDITION" style="margin-right: 5px;">
+                                        <input type="radio" wire:model="shippingMethod" {{ !$selectedSpb ? 'disabled' : '' }} name="shipping_method" id="expedition" value="EXPEDITION" style="margin-right: 5px;">
                                         <label for="expedition" style="margin-right: 10px;">Via Kurir</label>
-                                        <input type="radio" wire:model="shippingMethod" name="shipping_method" id="immediate" value="IMMEDIATE" style="margin-right: 5px;">
+                                        <input type="radio" wire:model="shippingMethod" {{ !$selectedSpb ? 'disabled' : '' }} name="shipping_method" id="immediate" value="IMMEDIATE" style="margin-right: 5px;">
                                         <label for="immediate" style="margin-right: 10px;">Ambil ke Tempat</label>
                                     </div>
                                 </div>
@@ -71,7 +78,7 @@
                             <div class="row">
                                 <div class="col-md-6" style="margin-top:16px">
                                     <label class="text">Pilih Kurir</label>
-                                    <select wire:model="courier"  tabindex="1" class="input-text" style="width: 100%;">
+                                    <select wire:model="courier" {{ !$defaultShippingAddress ? 'disabled' : '' }} tabindex="1" class="input-text" style="width: 100%;">
                                         <option value="" disabled="disabled" selected="selected">-- Pilih Kurir --</option> 
                                         <option value="JNE">JNE</option>
                                         <option value="JNT">JNT</option>
@@ -81,6 +88,7 @@
                             <div class="row">
                                 <div class="col-md-6" style="margin-top: 16px">
                                     <label for="deliverto" style="font-weight: bold">Dikirim ke</label>
+                                    @if($defaultShippingAddress)
                                     <div>
                                         <div class="header-address">
                                             <span>{{ $defaultShippingAddress->nama }}</span>
@@ -91,6 +99,15 @@
                                             <p class="detail-address">{{ $defaultShippingAddress->alamat }}</p>
                                         </div>
                                     </div>
+                                    @else
+                                    <div class="header-address">
+                                        <span class="text-danger">
+                                            <b><i>Warning:</i></b> <br/>
+                                            <i>Anda belum mengatur alamat pengiriman utama.</i> <br/>
+                                            <i>Silahkan atur alamat pengiriman utama untuk dapat memilih kurir</i>
+                                        </span>
+                                    </div>
+                                    @endif
                                     <a href="{{ route('address.index') }}">Ubah Alamat Utama</a>
                                 </div>
                             </div>
@@ -129,7 +146,7 @@
                                             <div class="cost">@currency($totalBayar)</div>
                                         </div>
                                         <div class="section-button">
-                                            <button wire:click="saveTransaction" class="btn-checkout-cart">
+                                            <button {{ !$inputsValid ? 'disabled' : '' }} wire:click="saveTransaction" class="btn-checkout-cart">
                                                 <span>Bayar Sekarang</span>
                                             </button>
                                         </div>

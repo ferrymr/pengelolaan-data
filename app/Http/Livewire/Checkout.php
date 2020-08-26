@@ -26,6 +26,7 @@ class Checkout extends Component
     public $cartItems;
     public $note;
     public $user;
+    public $inputsValid;
 
     public function mount()
     {
@@ -42,7 +43,9 @@ class Checkout extends Component
         $this->selectedSpb = "";
         $this->ongkosKirim = 0;
         $this->courier = "";
+        $this->selectedBank = "";
         $this->note = "";
+        $this->validateAllInputs();
     }
 
     public function hydrate()
@@ -75,6 +78,8 @@ class Checkout extends Component
         }
         
         $this->hitungTotalBayar();
+
+        $this->validateAllInputs();
     }
 
     public function render()
@@ -373,11 +378,6 @@ class Checkout extends Component
 
     public function saveTransaction()
     {
-        if (!$this->user->id) {
-            session()->flash('warning', 'Silahkan login untuk melanjutkan!');
-            return redirect()->route('index');
-        }
-
         DB::beginTransaction();
 
         try {
@@ -521,5 +521,30 @@ class Checkout extends Component
             dd($e->getMessage());
             // return redirect()->back()->with(['error' => $e->getMessage()]);
         }
+    }
+
+    public function validateAllInputs()
+    {
+        if (!$this->selectedBank) {
+            $this->inputsValid = false;
+            return;
+        }
+
+        if (!$this->selectedSpb) {
+            $this->inputsValid = false;
+            return;
+        }
+
+        if (!$this->shippingMethod) {
+            $this->inputsValid = false;
+            return;
+        }
+
+        if ($this->shippingMethod == 'EXPEDITION' && !$this->courier) {
+            $this->inputsValid = false;
+            return;
+        }
+
+        $this->inputsValid = true;
     }
 }
