@@ -63,7 +63,7 @@
                                                     <span class="product-price"><span class="price"><span>{{ $cartItem['h_nomem'] }}</span></span></span>
                                                     <span class="product-quantity"> x {{ $cartItem['qty'] }}</span>
                                                     <div class="product-remove">
-                                                        <i wire:click="removeFromCart('{{ $cartItem['kode_barang'] }}')" class="fa fa-trash-o" aria-hidden="true"></i>
+                                                        <i wire:click="removeFromCart('{{ $cartItem['kode_barang'] }}')" class="fa fa-trash" aria-hidden="true"></i>
                                                     </div>
                                                 </div>
                                             </li>
