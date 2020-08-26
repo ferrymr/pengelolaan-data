@@ -373,6 +373,11 @@ class Checkout extends Component
 
     public function saveTransaction()
     {
+        if (!$this->auth->id) {
+            session()->flash('warning', 'Silahkan login untuk melanjutkan!');
+            return redirect()->route('index');
+        }
+
         DB::beginTransaction();
 
         try {
