@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
         // CARI CARA SUPAYA BISA PREFIX SEMUA TABLE BIAR GAK LIEUR
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('no_member')->nullable();
             $table->string('nik')->nullable();
             $table->string('name');
             $table->date('birthdate')->nullable();

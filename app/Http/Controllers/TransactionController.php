@@ -42,6 +42,8 @@ class TransactionController extends Controller
             $spbCode = '00000';
             // $spbCode = '01340';
 
+            $user = auth()->user();
+
             DB::insert('INSERT INTO cn_transaksi (
                             tgl_transaksi,
                             nomor_transaksi,
@@ -64,9 +66,9 @@ class TransactionController extends Controller
                         [
                             date('Y-m-d'),
                             $transactionNumber,
-                            1, //$customer->member_id,
-                            1, //$customer->id,
-                            1, //$customer->name,
+                            $user->no_member, //$customer->member_id,
+                            $user->id, //$customer->id,
+                            $user->name, //$customer->name,
                             1, //$request->shipping_method,
                             1, //$request->courier,
                             1, //$request->shipping_address_id,
