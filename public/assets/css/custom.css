@@ -48,3 +48,14 @@
         display: inline-block;
     }
 }
+
+.btn-checkout-overlay {
+    margin: 20px 8px 20px;
+}
+
+.btn-consultation-wa {
+    align-self: baseline;
+}
+a .btn-consultation-wa:hover {
+    color: white !important;
+}
