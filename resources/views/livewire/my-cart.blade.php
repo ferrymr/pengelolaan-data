@@ -7,7 +7,7 @@
             <div class="breadcrumb-trail breadcrumbs">
                 <ul class="trail-items breadcrumb">
                     <li class="trail-item trail-begin">
-                        <a href="">
+                        <a href="{{ route('home') }}">
                             <span>
                                 Home
                             </span>
@@ -15,7 +15,7 @@
                     </li>
                     <li class="trail-item trail-end active">
                         <span>
-                            Shopping Cart
+                            My Cart
                         </span>
                     </li>
                 </ul>
