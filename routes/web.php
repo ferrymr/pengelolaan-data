@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('address', 'AddressController');
     Route::livewire('/transaction/checkout', 'checkout')->name('checkout');
 
+    Route::get('order-history/waiting-for-payment', 'HistoryOrderController@index')->name('order-history.waiting-for-payment');
     Route::resource('order-history', 'HistoryOrderController');
     Route::get('/orderlist', 'HistoryOrderController@orderlist')->name('history-order.orderlist');
     Route::get('/detailhistory', 'HistoryOrderController@detailhistory')->name('history-order.detailhistory');

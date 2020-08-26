@@ -11,7 +11,7 @@
             <div class="col-md-6 col-md-offset-3 col-sm-12 breadcrumb-trail breadcrumbs">
                 <ul class="trail-items breadcrumb">
                     <li class="trail-item trail-begin">
-                        <a href="">
+                        <a href="{{ route('home') }} ">
                             <span>
                                 Home
                             </span>
@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3 col-sm-12">
                             <div class="card-profile">
-                                <a href="{{ route('profile.edit', 1) }}">
+                                <a href="{{ route('profile.edit', $profile->id) }}">
                                     <div class="card-title-profile">
                                         <div class="profile-img">
                                             @if ($profile->photo)
@@ -48,7 +48,7 @@
                                 </a>
                                 <div class="card-body-profile">
                                     <div class="menu-ui">
-                                        <a href="">
+                                        <a href="{{ route('order-history.waiting-for-payment') }}'">
                                             <div class="menu-ui-item">
                                                 <div class="menu-ui-left">
                                                     <div class="title-item-menu">Menunggu Pembayaran</div>
@@ -59,7 +59,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        <a href="">
+                                        <a href="{{ route('order-history.index') }}">
                                             <div class="menu-ui-item">
                                                 <div class="menu-ui-left">
                                                     <div class="title-item-menu">Histori Transaksi</div>
@@ -70,7 +70,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        <a href="{{ url('/address-list') }}">
+                                        <a href="{{ route('address.index') }}">
                                             <div class="menu-ui-item">
                                                 <div class="menu-ui-left">
                                                     <div class="title-item-menu">Pengaturan Alamat</div>
