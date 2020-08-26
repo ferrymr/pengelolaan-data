@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+{{-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 <style>
     .btn-consultation-wa {
         align-self: baseline;
@@ -6,7 +6,7 @@
     a .btn-consultation-wa:hover {
         color: white!important;
     }
-</style>
+</style> --}}
 {{-- wrap main content --}}
 <div class="main-content main-content-details single no-sidebar">
     <div class="container">
