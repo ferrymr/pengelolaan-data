@@ -373,7 +373,7 @@ class Checkout extends Component
 
     public function saveTransaction()
     {
-        if (!$this->auth->id) {
+        if (!$this->user->id) {
             session()->flash('warning', 'Silahkan login untuk melanjutkan!');
             return redirect()->route('index');
         }
@@ -509,6 +509,10 @@ class Checkout extends Component
             }
 
             DB::commit();
+
+            foreach ($cartItems as $cartItem) {
+                Cart::remove($cartItem['kode_barang']);
+            }
     
             session()->flash('success', 'Transaksi berhasil!');
             return redirect()->route('order-history.index');
