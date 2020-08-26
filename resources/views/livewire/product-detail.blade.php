@@ -1,12 +1,14 @@
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
-<style>
-    .btn-consultation-wa {
-        align-self: baseline;
-    },
-    a .btn-consultation-wa:hover {
-        color: white!important;
-    }
-</style>
+@section('styles')
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <style>
+        .btn-consultation-wa {
+            align-self: baseline;
+        },
+        a .btn-consultation-wa:hover {
+            color: white!important;
+        }
+    </style>
+@endsection
 {{-- wrap main content --}}
 <div class="main-content main-content-details single no-sidebar">
     <div class="container">
@@ -33,12 +35,12 @@
                     <div class="details-product single-product-galery">
                         <div class="details-thumd" style="padding-top: 0px">
                             <div class="image-preview-container image-thick-box image_preview_container">
-                                {{-- <img id="img_zoom" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt=""> --}}
-                                <img id="img_zoom" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt="">
+                                <img id="img_zoom" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
+                                {{-- <img id="img_zoom" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt=""> --}}
                                 <a href="#" class="btn-zoom open_qv"><i class="fa fa-search" aria-hidden="true"></i></a>
                             </div>
                             <div class="product_preview image-small">
-                                {{-- <div id="thumbnails" class="thumbnails_carousel owl-carousel" data-nav="true" data-autoplay="false" data-dots="false" data-loop="false" data-margin="25" data-responsive='{"0":{"items":3},"480":{"items":3},"600":{"items":3},"1000":{"items":3}}' >
+                                <div id="thumbnails" class="thumbnails_carousel owl-carousel" data-nav="true" data-autoplay="false" data-dots="false" data-loop="false" data-margin="25" data-responsive='{"0":{"items":3},"480":{"items":3},"600":{"items":3},"1000":{"items":3}}' >
                                     <a href="#" data-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" class="active">
                                         <img src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-large-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
                                     </a>
@@ -51,8 +53,8 @@
                                     <a href="#" data-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}">
                                         <img src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-large-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
                                     </a>
-                                </div> --}}
-                                <div id="thumbnails" class="thumbnails_carousel owl-carousel" data-nav="true" data-autoplay="false" data-dots="false" data-loop="false" data-margin="25" data-responsive='{"0":{"items":3},"480":{"items":3},"600":{"items":3},"1000":{"items":3}}' >
+                                </div>
+                                {{-- <div id="thumbnails" class="thumbnails_carousel owl-carousel" data-nav="true" data-autoplay="false" data-dots="false" data-loop="false" data-margin="25" data-responsive='{"0":{"items":3},"480":{"items":3},"600":{"items":3},"1000":{"items":3}}' >
                                     <a href="#" data-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" class="active">
                                         <img src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-large-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt="">
                                     </a>
@@ -65,7 +67,7 @@
                                     <a href="#" data-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg">
                                         <img src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-large-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt="">
                                     </a>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="details-infor">
