@@ -35,7 +35,7 @@
     <livewire:header />
 
     {{-- header mobile --}}
-    @include('partials.header-mobile')
+    <livewire:header-mobile />
 
     {{-- slide show --}}
     {{-- @include('partials.slider') --}}
@@ -48,7 +48,7 @@
     
 
     {{-- footer mobile --}}
-    @include('partials.footer-mobile')    
+    <livewire:footer-mobile />
 
     <a href="#" class="backtotop"><i class="pe-7s-angle-up"></i></a>
 

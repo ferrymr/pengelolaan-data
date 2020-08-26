@@ -33,6 +33,7 @@ class Header extends Component
         
         Cart::remove($productCode);
         $this->emit('refreshCartItems');
+        $this->emit('refreshCartItemsMobile');
     }
 
     public function updateCartItems()

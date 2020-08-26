@@ -46,5 +46,6 @@ class ProductDetail extends Component
 
         $this->resetQty();
         $this->emit('refreshCartItems');
+        $this->emit('refreshCartItemsMobile');
     }
 }

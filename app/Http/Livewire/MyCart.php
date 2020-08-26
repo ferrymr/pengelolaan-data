@@ -58,5 +58,6 @@ class MyCart extends Component
         Cart::remove($productCode);
         $this->refreshData();
         $this->emit('refreshCartItems');
+        $this->emit('refreshCartItemsMobile');
     }
 }
