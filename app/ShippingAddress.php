@@ -11,7 +11,7 @@ class ShippingAddress extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'users_id',
+        'user_id',
         'no_member',
         'nama', 
         'telepon', 
@@ -24,5 +24,15 @@ class ShippingAddress extends Model
         'alamat', 
         'kode_pos'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function transaction()
+    {
+        return $this->hasMany(Transaction::class, 'shippind_address_id');
+    }
 
 }

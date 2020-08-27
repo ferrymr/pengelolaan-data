@@ -39,7 +39,7 @@ class Checkout extends Component
         $this->user = auth()->user();
         $this->bankList = array('BCA', 'BNI', 'BRI', 'MANDIRI');
         $this->spbList = $this->getSpbList();
-        $this->defaultShippingAddress = ShippingAddress::where('users_id', $this->user->id)->where('is_default', 1)->first();
+        $this->defaultShippingAddress = ShippingAddress::where('user_id', $this->user->id)->where('is_default', 1)->first();
         $this->selectedSpb = "";
         $this->ongkosKirim = 0;
         $this->courier = "";
@@ -390,8 +390,8 @@ class Checkout extends Component
             DB::insert('INSERT INTO cn_transaksi (
                             tgl_transaksi,
                             nomor_transaksi,
-                            member_id,
-                            customer_id,
+                            no_member,
+                            user_id,
                             nama,
                             metode_pengiriman,
                             kurir,
@@ -409,7 +409,7 @@ class Checkout extends Component
                         [
                             date('Y-m-d'),
                             $transactionNumber,
-                            $this->user->no_member, //$customer->member_id,
+                            $this->user->no_member, //$customer->no_member,
                             $this->user->id, //$customer->id,
                             $this->user->name, //$customer->name,
                             $this->shippingMethod, //$request->shipping_method,

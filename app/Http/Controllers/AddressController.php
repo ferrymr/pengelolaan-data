@@ -21,7 +21,7 @@ class AddressController extends Controller
     {
         $userId = auth()->user()->id;
         
-        $shippings = ShippingAddress::where('users_id', $userId)->get();
+        $shippings = ShippingAddress::where('user_id', $userId)->get();
 
         return view('address-list', compact('shippings'));
     }
@@ -66,7 +66,7 @@ class AddressController extends Controller
             
         try {
             $newShippingAddress = ShippingAddress::create([
-                'users_id' => $userId,
+                'user_id' => $userId,
                 'nama' => $request->nama,
                 'telepon' => $request->telepon,
                 'provinsi_id' => $request->provinsi,
@@ -182,9 +182,9 @@ class AddressController extends Controller
         try {
             $userId = auth()->user()->id;
             
-            ShippingAddress::where('users_id', $userId)->where('id', '!=', $addressId)->update(['is_default'=> 0]);
+            ShippingAddress::where('user_id', $userId)->where('id', '!=', $addressId)->update(['is_default'=> 0]);
             
-            ShippingAddress::where('users_id', $userId)->where('id', $addressId)->update(['is_default'=> 1]);
+            ShippingAddress::where('user_id', $userId)->where('id', $addressId)->update(['is_default'=> 1]);
             
             return redirect(route('address.index'))->with(['success' => 'Alamat utama berhasil diubah']);
         } catch (Exception $e) {
