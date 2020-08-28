@@ -47,9 +47,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6" style="margin-top:16px">
-                                    <label class="text">Pilih Sales Point Branch</label>
+                                    <label class="text">Pilih Lokasi Stockist</label>
                                     <select wire:model="selectedSpb" tabindex="1" class="input-text" style="width: 100%;">
-                                        <option value="" disabled="disabled" selected="selected">-- Pilih SPB --</option> 
+                                        <option value="" disabled="disabled" selected="selected">-- Pilih Lokasi Stockist --</option> 
                                         @foreach ($spbList as $spb)
                                             <option value="{{ $spb['code'] }}" {{ $spb['disabled'] }}>{{ $spb['city_name'] }} - {{ $spb['subdistrict_name'] }}</option>
                                         @endforeach
