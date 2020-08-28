@@ -68,17 +68,20 @@ class MyCart extends Component
     {
         $user = auth()->user();
 
-        $defaultShippingAddress = ShippingAddress::where('user_id', $user->id)->where('is_default', 1)->first();
+        if ($user) {
 
-        if (!$defaultShippingAddress) {
+            $defaultShippingAddress = ShippingAddress::where('user_id', $user->id)->where('is_default', 1)->first();
 
-            $countShippingAddress = ShippingAddress::where('user_id', $user->id)->count();
-            
-            if ($countShippingAddress < 1) {
-                return route('address.new-address-post-cart');
+            if (!$defaultShippingAddress) {
+
+                $countShippingAddress = ShippingAddress::where('user_id', $user->id)->count();
+
+                if ($countShippingAddress < 1) {
+                    return route('address.new-address-post-cart');
+                }
+
+                return route('address.select-address-post-cart');
             }
-
-            return route('address.select-address-post-cart');
         }
 
         return route('checkout');
