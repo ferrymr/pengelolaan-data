@@ -22,7 +22,8 @@ class ShippingAddress extends Model
         'kecamatan_id', 
         'kecamatan_nama', 
         'alamat', 
-        'kode_pos'
+        'kode_pos',
+        'is_default'
     ];
 
     public function user()

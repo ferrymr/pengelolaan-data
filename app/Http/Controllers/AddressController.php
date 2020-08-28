@@ -191,4 +191,79 @@ class AddressController extends Controller
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }
     }
+
+    public function newAddressPostCart()
+    {
+        $daftarProvinsi  = RajaOngkir::provinsi()->all();
+
+        return view('post-checkout.new-address', compact('daftarProvinsi'));
+    }
+
+    public function selectAddressPostCart()
+    {
+        $userId = auth()->user()->id;
+        
+        $shippings = ShippingAddress::where('user_id', $userId)->get();
+
+        return view('post-checkout.select-address', compact('shippings'));
+    }
+
+    public function storePostCart(Request $request)
+    {
+        $namaProvinsi    = RajaOngkir::provinsi()->find($request->provinsi)['province'];
+        $namaKota        = RajaOngkir::kota()->find($request->kota)['city_name'];
+        $namaKecamatan = RajaOngkir::kecamatan()->find($request->kecamatan)['subdistrict_name'];
+        $userId = auth()->user()->id;
+
+        $this->validate($request, [
+            'nama' => 'required|string',
+            'telepon' => 'required|numeric',
+            'provinsi' => 'required|numeric',
+            'kota' => 'required|numeric',
+            'kecamatan' => 'required|numeric',
+            'alamat' => 'required|string',
+            'kode_pos' => 'numeric'
+        ]);
+            
+        try {
+            $newShippingAddress = ShippingAddress::create([
+                'user_id' => $userId,
+                'nama' => $request->nama,
+                'telepon' => $request->telepon,
+                'provinsi_id' => $request->provinsi,
+                'provinsi_nama' => $namaProvinsi,
+                'kota_id' => $request->kota,
+                'kota_nama' => $namaKota,
+                'kecamatan_id' => $request->kecamatan,
+                'kecamatan_nama' => $namaKecamatan,
+                'alamat' => $request->alamat,
+                'kode_pos' => $request->kode_pos,
+                'is_default' => 1
+            ]);
+
+            return redirect(route('checkout'));
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function setDefaultPostCart($addressId)
+    {
+        // ambil id shipping address dari url
+        // cari customer_id yang mempunyai shipping address tersebut
+        // set semua shipping address yang selain id tadi menjadi 0
+        // set shipping address id yang bersangutan menjadi 1
+
+        try {
+            $userId = auth()->user()->id;
+            
+            ShippingAddress::where('user_id', $userId)->where('id', '!=', $addressId)->update(['is_default'=> 0]);
+            
+            ShippingAddress::where('user_id', $userId)->where('id', $addressId)->update(['is_default'=> 1]);
+            
+            return redirect(route('checkout'));
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
+    }
 }

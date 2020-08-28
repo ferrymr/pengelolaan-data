@@ -144,7 +144,7 @@
                                                 <div class="cost">@currency($subtotal)</div>
                                             </div>
                                             <div class="section-button">
-                                                <a class="btn-checkout-cart" href="{{ route('checkout') }}">
+                                                <a class="btn-checkout-cart" href="{{ $nextPageLink }}">
                                                     <span>Checkout</span>
                                                 </a>
                                             </div>

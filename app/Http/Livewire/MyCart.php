@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Facades\Cart;
+use App\ShippingAddress;
 use Livewire\Component;
 
 class MyCart extends Component
@@ -10,9 +11,11 @@ class MyCart extends Component
     public $cartItems;
     public $totalItems;
     public $subtotal;
+    public $nextPageLink;
 
     public function mount()
     {
+        $this->nextPageLink = $this->getNextPageLink();
         $this->refreshData();
     }
 
@@ -59,5 +62,25 @@ class MyCart extends Component
         $this->refreshData();
         $this->emit('refreshCartItems');
         $this->emit('refreshCartItemsMobile');
+    }
+
+    public function getNextPageLink()
+    {
+        $user = auth()->user();
+
+        $defaultShippingAddress = ShippingAddress::where('user_id', $user->id)->where('is_default', 1)->first();
+
+        if (!$defaultShippingAddress) {
+
+            $countShippingAddress = ShippingAddress::where('user_id', $user->id)->count();
+            
+            if ($countShippingAddress < 1) {
+                return route('address.new-address-post-cart');
+            }
+
+            return route('address.select-address-post-cart');
+        }
+
+        return route('checkout');
     }
 }

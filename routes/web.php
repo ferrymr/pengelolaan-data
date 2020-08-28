@@ -18,7 +18,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('address/set-default/{addressId}', 'AddressController@setDefault')->name('address.setdefault');
     Route::resource('address', 'AddressController');
     Route::livewire('/transaction/checkout', 'checkout')->name('checkout');
-
+    
+    Route::get('checkout/new-address', 'AddressController@newAddressPostCart')->name('address.new-address-post-cart');
+    Route::get('checkout/select-address', 'AddressController@selectAddressPostCart')->name('address.select-address-post-cart');
+    Route::post('checkout/save-address-post-cart', 'AddressController@storePostCart')->name('address.save-address-post-cart');
+    Route::get('checkout/set-default-post-cart/{addressId}', 'AddressController@setDefaultPostCart')->name('address.set-default-post-cart');
+    
     Route::get('order-history/waiting-for-payment', 'HistoryOrderController@index')->name('order-history.waiting-for-payment');
     Route::resource('order-history', 'HistoryOrderController');
     Route::get('/orderlist', 'HistoryOrderController@orderlist')->name('history-order.orderlist');
