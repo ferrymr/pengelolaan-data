@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kota extends Model
 {
-    protected $table = 'cities';
+    protected $table = 'ok_cities';
 }
