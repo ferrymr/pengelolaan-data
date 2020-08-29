@@ -121,12 +121,10 @@ class AddressController extends Controller
         // $daftarKecamatan = RajaOngkir::kecamatan()->dariKota($shipping->kota_id)->get();
 
         $daftarProvinsi     = Provinsi::all();
-        // $daftarKota         = Kota::find('province_id',$daftarProvinsi)->where('city_id')->get();
-        // $daftarKecamatan    = Kecamatan::find($shipping->kecamatan_id)->get();
-        // dd($daftarKota);
+        $daftarKota         = Kota::where('province_id', $shipping->provinsi_id)->get();
+        $daftarKecamatan    = Kecamatan::where('city_id', $shipping->kota_id)->get();
 
-
-        return view('address-edit', compact('shipping','daftarProvinsi'));
+        return view('address-edit', compact('shipping', 'daftarProvinsi','daftarKota','daftarKecamatan'));
     }
 
     /**
@@ -138,12 +136,9 @@ class AddressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $shippings = ShippingAddress::findOrFail($id);
-
-        // $province_name    = RajaOngkir::provinsi()->find($request->provinsi)['province'];
-        // $city_name        = RajaOngkir::kota()->find($request->kota)['city_name'];
-        // $subdistrict_name = RajaOngkir::kecamatan()->find($request->kecamatan)['subdistrict_name'];
+        $namaProvinsi   = Provinsi::select('name')->where('province_id',$request->provinsi)->first()['name'];
+        $namaKota       = Kota::select('name')->where('city_id',$request->kota)->first()['name'];
+        $namaKecamatan  = Kecamatan::select('name')->where('subdistrict_id',$request->kecamatan)->first()['name'];
 
         // $daftarProvinsi     = Provinsi::all();
 
@@ -162,16 +157,16 @@ class AddressController extends Controller
         $userId = auth()->user()->id;
 
         try {
-            ShippingAddress::update([
-                'users_id' => $userId,
+            ShippingAddress::find($id)->update([
+                'user_id' => $userId,
                 'nama' => $request->nama,
                 'telepon' => $request->telepon,
-                'provinsi_id' => $provinsi->province_id,
-                'provinsi_nama' => $provinsi->name,
-                'kota_id' => $kota->city_id,
-                'kota_nama' => $kota->name,
-                'kecamatan_id' => $kecamatan->subdistrict_id,
-                'kecamatan_nama' => $kecamatan->name,
+                'provinsi_id' => $request->provinsi,
+                'provinsi_nama' => $namaProvinsi,
+                'kota_id' => $request->kota,
+                'kota_nama' => $namaKota,
+                'kecamatan_id' => $request->kecamatan,
+                'kecamatan_nama' => $namaKecamatan,
                 'alamat' => $request->alamat,
                 'kode_pos' => $request->kode_pos
             ]);

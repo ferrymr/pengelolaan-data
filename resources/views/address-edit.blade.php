@@ -49,6 +49,8 @@
                             @endalert
                             @endif
 
+                            {{-- {{ $daftarKecamatan }} --}}
+
                             <div class="col-md-6 col-md-offset-3 col-sm-12">
                                 <div class="form-address" style="margin-bottom: 32px">
                                     <div class="col-12">
@@ -81,18 +83,18 @@
                                     <div class="col-12" style="margin-top:16px">
                                         <label for="kota">Select City</label>
                                         <select class="form-control"  name="kota">
-                                            {{-- @foreach($daftarKota as $kota)
-                                                <option {{  ($kota['city_id']==$shipping->kota_id) ? 'selected':'' }} value="{{ $kota['city_id'] }}">{{ $kota['city_name'] }}</option>
-                                            @endforeach --}}
+                                            @foreach($daftarKota as $kota)
+                                                <option {{  ($kota->city_id == $shipping->kota_id) ? 'selected':'' }} value="{{ $kota->city_id }}">{{ $kota->type . ' '. $kota->name }}</option>
+                                            @endforeach
                                         </select>
                                         @error('kota') <div class="text-muted">{{ $errors }}</div> @enderror
                                     </div>
                                     <div class="col-12" style="margin-top:16px">
                                         <label for="kecamatan">Select Subdistrict</label>
                                         <select class="form-control"  name="kecamatan">
-                                            {{-- @foreach($daftarKecamatan as $kecamatan)
-                                                <option {{  ($kecamatan['subdistrict_id']==$shipping->kecamatan_id) ? 'selected':'' }} value="{{ $kecamatan['subdistrict_id'] }}">{{ $kecamatan['subdistrict_name'] }}</option>
-                                            @endforeach --}}
+                                            @foreach($daftarKecamatan as $kecamatan)
+                                                <option {{  ($kecamatan->subdistrict_id == $shipping->kecamatan_id) ? 'selected':'' }} value="{{ $kecamatan->subdistrict_id }}">{{ $kecamatan->name }}</option>
+                                            @endforeach
                                         </select>
                                         @error('kecamatan') <div class="text-muted">{{ $errors }}</div> @enderror
                                     </div>
