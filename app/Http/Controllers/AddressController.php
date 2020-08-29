@@ -240,7 +240,7 @@ class AddressController extends Controller
 
     public function newAddressPostCart()
     {
-        $daftarProvinsi  = RajaOngkir::provinsi()->all();
+        $daftarProvinsi  = $this->getProvinces();
 
         return view('post-checkout.new-address', compact('daftarProvinsi'));
     }
@@ -256,9 +256,10 @@ class AddressController extends Controller
 
     public function storePostCart(Request $request)
     {
-        $namaProvinsi    = RajaOngkir::provinsi()->find($request->provinsi)['province'];
-        $namaKota        = RajaOngkir::kota()->find($request->kota)['city_name'];
-        $namaKecamatan = RajaOngkir::kecamatan()->find($request->kecamatan)['subdistrict_name'];
+        $namaProvinsi   = Provinsi::select('name')->where('province_id',$request->provinsi)->first()['name'];
+        $namaKota       = Kota::select('name')->where('city_id',$request->kota)->first()['name'];
+        $namaKecamatan  = Kecamatan::select('name')->where('subdistrict_id',$request->kecamatan)->first()['name'];
+
         $userId = auth()->user()->id;
 
         $this->validate($request, [
