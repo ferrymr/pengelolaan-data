@@ -38,6 +38,17 @@
                         <form action="{{ route('address.update', $shipping->id) }}" method="post">
                             @method('put')
                             @csrf
+
+                            @if ($errors->any())
+                            @alert(['type' => 'danger'])
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li> {{ $error }} </li>
+                                    @endforeach
+                                </ul>
+                            @endalert
+                            @endif
+
                             <div class="col-md-6 col-md-offset-3 col-sm-12">
                                 <div class="form-address" style="margin-bottom: 32px">
                                     <div class="col-12">
