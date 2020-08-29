@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ShippingAddress;
 use Illuminate\Http\Request;
-use DB;
+// use DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 // use Kavist\RajaOngkir\Facades\RajaOngkir;
@@ -120,8 +120,10 @@ class AddressController extends Controller
         // $daftarKota      = RajaOngkir::kota()->dariProvinsi($shipping->provinsi_id)->get();
         // $daftarKecamatan = RajaOngkir::kecamatan()->dariKota($shipping->kota_id)->get();
 
-        $daftarProvinsi     = Provinsi::where($shipping->provinsi_id)->get();
-        dd($daftarProvinsi);
+        $daftarProvinsi     = Provinsi::all();
+        // $daftarKota         = Kota::find('province_id',$daftarProvinsi)->where('city_id')->get();
+        // $daftarKecamatan    = Kecamatan::find($shipping->kecamatan_id)->get();
+        // dd($daftarKota);
 
 
         return view('address-edit', compact('shipping','daftarProvinsi'));
@@ -143,20 +145,44 @@ class AddressController extends Controller
         // $city_name        = RajaOngkir::kota()->find($request->kota)['city_name'];
         // $subdistrict_name = RajaOngkir::kecamatan()->find($request->kecamatan)['subdistrict_name'];
 
-        $shippings->nama            = $request->nama;
-        $shippings->telepon         = $request->telepon;
-        $shippings->provinsi_id     = $request->provinsi;
-        $shippings->provinsi_nama   = $province_name;
-        $shippings->kota_id         = $request->kota;
-        $shippings->kota_nama       = $city_name;
-        $shippings->kecamatan_id    = $request->kecamatan;
-        $shippings->kecamatan_nama  = $subdistrict_name;
-        $shippings->alamat          = $request->alamat;
-        $shippings->kode_pos        = $request->kode_pos;
-        $shippings->save();
+        // $daftarProvinsi     = Provinsi::all();
+
+        // $shippings->nama            = $request->nama;
+        // $shippings->telepon         = $request->telepon;
+        // $shippings->provinsi_id     = $request->provinsi_id;
+        // $shippings->provinsi_nama   = $request->provinsi_nama;
+        // $shippings->kota_id         = $request->kota_id;
+        // $shippings->kota_nama       = $request->kota_nama;
+        // $shippings->kecamatan_id    = $request->kecamatan_id;
+        // $shippings->kecamatan_nama  = $request->kecamatan_nama;
+        // $shippings->alamat          = $request->alamat;
+        // $shippings->kode_pos        = $request->kode_pos;
+        // $shippings->save();
+
+        $userId = auth()->user()->id;
+
+        try {
+            ShippingAddress::update([
+                'users_id' => $userId,
+                'nama' => $request->nama,
+                'telepon' => $request->telepon,
+                'provinsi_id' => $provinsi->province_id,
+                'provinsi_nama' => $provinsi->name,
+                'kota_id' => $kota->city_id,
+                'kota_nama' => $kota->name,
+                'kecamatan_id' => $kecamatan->subdistrict_id,
+                'kecamatan_nama' => $kecamatan->name,
+                'alamat' => $request->alamat,
+                'kode_pos' => $request->kode_pos
+            ]);
+
+            return redirect(route('address.index'))->with(['success' => 'Alamat pengiriman berhasil dirubah']);
+        } catch (Exception $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
         
 
-        return redirect()->route('address.index');
+        // return redirect()->route('address.index');
 
     }
 

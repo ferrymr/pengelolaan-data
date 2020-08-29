@@ -249,7 +249,7 @@
                         <a href="{{ route('products.category', 'extra care') }}" class="kt-item-title" title="Extra Care">Extra Care</a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('products.category', 'series') }}" class="kt-item-title" title="About">Series</a>
+                        <a href="{{ route('products.category', 'series') }}" class="kt-item-title" title="Series">Series</a>
                     </li>
                 </ul>
             </div>

@@ -73,7 +73,7 @@
                                         <label for="provinsi">Select Province</label>
                                         <select class="form-control"  name="provinsi">
                                             @foreach($daftarProvinsi as $provinsi)
-                                                <option {{  ($provinsi['province_id']==$shipping->provinsi_id) ? 'selected':'' }} value="{{ $provinsi['province_id'] }}">{{ $provinsi['province'] }}</option>
+                                                <option {{  ($provinsi['province_id']==$shipping->provinsi_id) ? 'selected':'' }} value="{{ $provinsi['province_id'] }}">{{ $provinsi['name'] }}</option>
                                             @endforeach
                                         </select>
                                         @error('provinsi') <div class="text-muted">{{ $errors }}</div> @enderror
@@ -81,18 +81,18 @@
                                     <div class="col-12" style="margin-top:16px">
                                         <label for="kota">Select City</label>
                                         <select class="form-control"  name="kota">
-                                            @foreach($daftarKota as $kota)
+                                            {{-- @foreach($daftarKota as $kota)
                                                 <option {{  ($kota['city_id']==$shipping->kota_id) ? 'selected':'' }} value="{{ $kota['city_id'] }}">{{ $kota['city_name'] }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                         @error('kota') <div class="text-muted">{{ $errors }}</div> @enderror
                                     </div>
                                     <div class="col-12" style="margin-top:16px">
                                         <label for="kecamatan">Select Subdistrict</label>
                                         <select class="form-control"  name="kecamatan">
-                                            @foreach($daftarKecamatan as $kecamatan)
+                                            {{-- @foreach($daftarKecamatan as $kecamatan)
                                                 <option {{  ($kecamatan['subdistrict_id']==$shipping->kecamatan_id) ? 'selected':'' }} value="{{ $kecamatan['subdistrict_id'] }}">{{ $kecamatan['subdistrict_name'] }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                         @error('kecamatan') <div class="text-muted">{{ $errors }}</div> @enderror
                                     </div>
