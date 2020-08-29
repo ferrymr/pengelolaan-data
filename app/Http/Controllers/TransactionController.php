@@ -508,4 +508,11 @@ class TransactionController extends Controller
 
         return $spbList;
     }
+
+        public function payment()
+    {
+        $bankList = array('BCA', 'BNI', 'BRI', 'MANDIRI');
+
+        return view('payment', compact('bankList'));
+    }
 }

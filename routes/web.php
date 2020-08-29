@@ -64,6 +64,10 @@ Route::get('/spb/check', 'SpbController@check');
     return view('checkout');
 }); */
 
+Route::get('/payment', function () {
+    return view('payment');
+});
+
 Route::get('/faqs', function () {
     return view('faqs');
 });
