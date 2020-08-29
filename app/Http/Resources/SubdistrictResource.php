@@ -20,7 +20,7 @@ class SubdistrictResource extends JsonResource
     {
         return [
             'subdistrict_id' => $this->subdistricts['subdistrict_id'],
-            'subdistrict_name' => $this->subdistricts['type'] . ' ' . $this->subdistricts['subdistrict_name']
+            'subdistrict_name' => $this->subdistricts['name']
         ];
     }
 }

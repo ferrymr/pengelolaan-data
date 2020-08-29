@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CityResource extends JsonResource
+class provinceResource extends JsonResource
 {
     public function __construct($cities)
     {
@@ -20,8 +20,8 @@ class CityResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'city_id' => $this->cities['city_id'],
-            'city_name' => $this->cities['type'] . ' ' . $this->cities['name']
+            'province_id' => $this->cities['province_id'],
+            'province_name' => $this->cities['province']
         ];
     }
 }

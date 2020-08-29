@@ -267,9 +267,9 @@
                     <li class="menu-item">
                         <a href="{{ route('products.category', 'series') }}" class="kt-item-title" title="About">Series</a>
                     </li>
-                    <li class="menu-item">
+                    {{-- <li class="menu-item">
                         <a href="{{ route('products.category', 'series') }}" class="kt-item-title" title="About">Series</a>
-                    </li>
+                    </li> --}}
                     <li class="menu-item mobile-only" style="margin-top: 16px">
                         <a href="{{ route('login') }}" class="kt-item-title" title="Login">Login Register</a>
                     </li>

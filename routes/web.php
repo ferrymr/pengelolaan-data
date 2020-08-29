@@ -71,8 +71,21 @@ Route::get('/spb/check', 'SpbController@check');
     return view('checkout');
 }); */
 
+Route::get('/payment', function () {
+    return view('payment');
+});
+
+Route::get('/faqs', function () {
+    return view('faqs');
+});
+
+Route::get('/return-policy', function () {
+    return view('return-policy');
+});
+
 Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
 Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');
+
 
 Route::get('/google', function () {
     return view('googleLogin');

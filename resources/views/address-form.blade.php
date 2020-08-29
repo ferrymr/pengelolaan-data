@@ -53,27 +53,32 @@
                                         <label class="text">Phone</label> 
                                         <input type="text" id="telepon" name="telepon" class="input-text {{ $errors->has('telepon') ? 'is-invalid':'' }}" value="{{ old('telepon') }}" style="width: 100%;">
                                     </div>
+
                                     <div class="col-12" style="margin-top:16px">
                                         <label for="provinsi">Pilih Provinsi</label>
-                                        <select class="form-control" id="provinsi" name="provinsi">
+                                        <select class="form-control @error('provinsi') is-invalid @enderror" id="provinsi" name="provinsi">
                                             <option value="" selected disabled>-- Pilih Provinsi --</option>
                                             @foreach($daftarProvinsi as $provinsi)
-                                                <option value="{{ $provinsi['province_id'] }}">{{ $provinsi['province'] }}</option>
+                                                <option value="{{ $provinsi->id }}">{{ $provinsi->name }}</option>
                                             @endforeach
                                         </select>
-                                    </div>
+                                    </div> 
+                                    
                                     <div class="col-12" style="margin-top:16px">
                                         <label for="kota">Pilih Kota</label>
-                                        <select class="form-control" id="kota" name="kota">
+                                        <select class="form-control @error('kota') is-invalid @enderror" id="kota" name="kota">
                                             <option value="" selected disabled> -- Pilih Kota -- </option>
                                         </select>
                                     </div>
+
                                     <div class="col-12" style="margin-top:16px">
                                         <label for="kecamatan">Pilih Kecamatan</label>
-                                        <select class="form-control" id="kecamatan" name="kecamatan">
+                                        <select class="form-control @error('kecamatan') is-invalid @enderror" id="kecamatan" name="kecamatan">
                                             <option value="" selected disabled> -- Pilih Kecamatan -- </option>
                                         </select>
-                                    </div>
+                                    </div> 
+
+
                                     <div class="col-12" style="margin-top:16px">
                                         <label class="text">Address</label> 
                                         <textarea id="exampleFormControlTextarea1" name="alamat" rows="3" class="input-text {{ $errors->has('alamat') ? 'is-invalid':'' }}" value="{{ old('alamat') }}" ></textarea>
@@ -146,7 +151,7 @@
                         });
                     }
                 });
-            });
+            }); 
         });
     </script>
 @endsection
