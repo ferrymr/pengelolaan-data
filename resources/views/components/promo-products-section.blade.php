@@ -11,9 +11,9 @@
                                 {{-- <div class="yith-wcwl-add-to-wishlist"><div class="yith-wcwl-add-button"><a href="#">Add to Wishlist</a></div></div> --}}
                             </div>
                             <div class="thumb-inner">
-                                <a href="#"><img src="{{ asset('assets/images/thumbnails/' . $product->kode_barang . '.jpg')}}" alt=""></a>
+                                <a href="{{ route('products.show', $product->kode_barang) }}"><img src="{{ asset('assets/images/thumbnails/' . $product->kode_barang . '.jpg')}}" alt=""></a>
                             </div>
-                            <a href="#" class="button quick-wiew-button">Quick View</a>
+                            {{-- <a href="#" class="button quick-wiew-button">Quick View</a> --}}
                         </div>
                         <div class="product-info">
                             <h5 class="product-name product_title"><a href="#">{{ $product->nama }} </a></h5>
@@ -22,7 +22,7 @@
                                 <div class="desc">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</div>
                             </div>
                             <div class="group-buttons">
-                                <div class="price"><span>@currency($product->h_nomem)</span></div>
+                                <div class="price"><span>@currency($product->harga)</span></div>
                                 <button class="add_to_cart_button button" tabindex="0">SHOP NOW</button>
                             </div>
                         </div>
