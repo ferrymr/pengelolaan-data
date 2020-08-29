@@ -12,4 +12,9 @@ class TransactionDetail extends Model
     {
         return $this->belongsTo(Transaction::class, 'transaksi_id');
     }
+
+    public function itemDetail()
+    {
+        return $this->belongsTo(Product::class, 'kode_barang');
+    }
 }

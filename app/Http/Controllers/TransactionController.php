@@ -263,12 +263,19 @@ class TransactionController extends Controller
 
     public function changeStatus($transactionId, $status)
     {
+        if ($status == 'CANCELLED') {
+            $this->cancel($transactionId);
+        }
+
         DB::table('cn_transaksi')->where('id', $transactionId)->update(['status_transaksi' => $status]);
         DB::insert('INSERT INTO cn_order_history (transaksi_id, tanggal, keterangan ) VALUES (?, ?, ?)', [
             $transactionId,
             date('Y-m-d H:i:s'),
             $status
         ]);
+
+        return redirect()->route('order-history.index')->with(['success' => 'Informasi transaksi berhasil diubah!']);
+
     }
 
     public function checkout()
@@ -507,5 +514,89 @@ class TransactionController extends Controller
         }
 
         return $spbList;
+    }
+
+    public function cancel($transactionId)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $spbCode = DB::table('cn_transaksi')->select('kode_spb')->where('id', $transactionId)->first()->kode_spb;
+
+            //  1
+            // di inner join barang yang muncul cuman 1
+            // mungkin gara-gara ada kode barang yang awalnya 0 jadinya pas di join on nggak exact perbandingannya
+            $orderedItems = DB::table('cn_transaksi_detail')
+                                ->join('cn_barang', 'cn_barang.kode_barang', '=', 'cn_transaksi_detail.kode_barang')
+                                ->select('cn_transaksi_detail.kode_barang', 'cn_transaksi_detail.qty', 'cn_barang.unit')
+                                ->where('transaksi_id', $transactionId)
+                                ->get();
+
+            if ($spbCode == "00000") {
+                
+                foreach($orderedItems as $orderedItem) {
+                    
+                    if ($orderedItem->unit == "SERIES") {
+                        
+                        $serieItems = DB::table('tb_det_pack')->select('kode_barang', 'jumlah')->where('kode_pack', $orderedItem->kode_barang)->get();
+                        
+                        foreach($serieItems as $serieItem) {
+                            $currentQuantity = DB::table('tb_barang')->select('stok')->where('kode_barang', $serieItem->kode_barang)->first()->stok;
+                            DB::table('tb_barang')->where('kode_barang', $serieItem->kode_barang)->update(['stok' => $currentQuantity + ($serieItem->jumlah * $orderedItem->qty)]);
+                        }
+
+                    } else {
+                        $currentQuantity = DB::table('tb_barang')->select('stok')->where('kode_barang', $orderedItem->kode_barang)->first()->stok;
+                        DB::table('tb_barang')->where('kode_barang', $orderedItem->kode_barang)->update(['stok' => $currentQuantity + $orderedItem->qty]);
+                    }
+
+                }
+                
+                // 2
+                // TEST DULU GAN KALO DAH BERHASIL BARU LANJUT KE YANG LAIN
+                // HAPUS DARI DETAIL KE MASTER
+                // SING SABAR BESOK BERES MAH JONGJON
+
+            } else {
+
+                foreach($orderedItems as $orderedItem) {
+                    
+                    if ($orderedItem->unit == "SERIES") {
+                        
+                        $serieItems = DB::table('tb_det_pack')->select('kode_barang', 'jumlah')->where('kode_pack', $orderedItem->kode_barang)->get();
+                        
+                        foreach($serieItems as $serieItem) {
+                            $currentQuantity = DB::table('tb_produk')->select('stok')->where('kode_barang', $serieItem->kode_barang)->where('no_member', $spbCode)->first()->stok;
+
+                            DB::table('tb_produk')->where('kode_barang', $serieItem->kode_barang)->where('no_member', $spbCode)->update(['stok' => $currentQuantity + ($serieItem->jumlah * $orderedItem->qty)]);
+                        }
+
+                    } else {
+                        $currentQuantity = DB::table('tb_produk')->select('stok')->where('kode_barang', $orderedItem->kode_barang)->where('no_member', $spbCode)->first()->stok;
+                        DB::table('tb_produk')->where('kode_barang', $orderedItem->kode_barang)->where('no_member', $spbCode)->update(['stok' => $currentQuantity + $orderedItem->qty]);
+                    }
+
+                }
+            }
+
+            DB::table('cn_transaksi')->where('id', $transactionId)->delete();
+            
+            DB::table('cn_transaksi_detail')->where('transaksi_id', $transactionId)->delete();
+            
+
+
+
+            DB::table('cn_order_history')->where('transaksi_id', $transactionId)->delete();
+
+
+            DB::commit();
+    
+            // return redirect()->route('officer.index')->with(['success' => 'Transaksi berhasil']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e->getMessage());
+            // return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
     }
 }

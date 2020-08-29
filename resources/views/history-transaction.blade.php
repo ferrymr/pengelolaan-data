@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="transaction-list-item">
                                     @foreach($transactions as $transaction)
-                                    <a href="">
+                                    <a href="{{ route('order-history.detail', $transaction->id) }}">
                                         <div class="item-transaction">
                                             <div class="header-item">
                                                 <div class="icon-order">

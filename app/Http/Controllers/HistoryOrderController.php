@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\HistoryTransaction;
 use App\ShippingAddress;
+use App\Transaction;
 use App\User;
 
 // use App\DetailTransaksi;
@@ -155,23 +156,23 @@ class HistoryOrderController extends Controller
         return view('orderlist', compact('transactions'));
     }
 
-    public function detailhistory()
+    public function detail($transactionId)
     {
-        // $transaction = DB::table('cn_transaksi')
-        //     ->join('cn_shipping_address', 'cn_shipping_address.customer_id', '=' ,'cn_transaksi.id')
-        //     ->select('cn_transaksi.grand_total', 'cn_transaksi.kode_spb', 'cn_shipping_address.alamat')
-        //     ->where('customer_id',1)->get();
+        $transaction = Transaction::find($transactionId)->with(
+            [
+                'items' => function($item) {
+                    $item->select('transaksi_id', 'kode_barang', 'harga', 'qty', 'subtotal');
+                },
+                'history' => function($history) {
+                    $history->select('transaksi_id', 'tanggal', 'keterangan');
+                },
+                'shippingAddress' => function($address) {
+                    $address->select('cn_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');
+                }
+            ]
+        )->first();
 
-        // $detailtransaksi = DetailTransaksi::where('transaksi_id',153)->get();
-
-        $detailtransaksi = DB::table('cn_transaksi_detail')
-            ->join('cn_barang', 'cn_barang.kode_barang', 'cn_transaksi_detail.id')
-            ->select('cn_transaksi_detail.harga', 'cn_transaksi_detail.qty', 'cn_barang.nama')
-            ->get();
-
-
-
-        return view('detailhistory', compact('detailtransaksi'));
+        return view('detail-history-transaction', compact('transaction'));
     }
 
     public function waitingForPayment()

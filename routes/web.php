@@ -27,13 +27,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('order-history/waiting-for-payment', 'HistoryOrderController@waitingForPayment')->name('order-history.waiting-for-payment');
     Route::resource('order-history', 'HistoryOrderController');
     Route::get('/orderlist', 'HistoryOrderController@orderlist')->name('history-order.orderlist');
-    Route::get('/detailhistory', 'HistoryOrderController@detailhistory')->name('history-order.detailhistory');
+    // Route::get('/order-history/{transactionId}/detail', 'HistoryOrderController@detail')->name('order-history.detail');
+    Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');
 
 
     Route::get('/transaction', 'TransactionController@store');
     Route::get('/transaction/delete', 'TransactionController@destroy');
     // Route::get('/transaction/checkout', 'TransactionController@checkout')->name('checkout');
-    Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus');
+    Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus')->name('transaction.change-status');
 });
 
 Route::get('/', 'IndexController@index')->name('home');

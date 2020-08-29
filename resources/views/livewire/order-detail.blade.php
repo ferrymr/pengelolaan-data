@@ -1,13 +1,8 @@
-@extends('layouts.app')
-
-@section('content')
-
 {{-- wrap main content --}}
 <div class="site-content">
     <main class="site-main  main-container no-sidebar">
         <div class="container">
 
-            {{ $items }}
             {{-- breadcrumb --}}
             <div class="col-md-8 col-sm-12 breadcrumb-trail breadcrumbs">
                 <ul class="trail-items breadcrumb">
@@ -34,10 +29,9 @@
             </div>
             
             {{-- main content --}}
-            {{-- <div class="row">
+            <div class="row">
                 <div class="main-content-cart main-content col-sm-12 detial-item-history">
                     <div class="row">
-
                         {{-- {{ $transaction }} --}}
                         <div class="col-md-9">
                             <table>
@@ -52,7 +46,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($transaction->items as $item)
+                                    @foreach($items as $item)
                                     <tr>
                                         <td class="item-order">
                                             <div class="row">
@@ -60,9 +54,9 @@
                                                     <img src="{{ asset('assets/images/thumbnails/' . $item->kode_barang . '.jpg') }}" alt="{{ $item->nama }}">
                                                 </div>
                                                 <div class="col-md-10">
-                                                    {{ $item->nama }}
+                                                    {{ $item->itemDetail->nama }}
                                                     <div>
-                                                        <span>{{ $item->qty }}x</span> 
+                                                        <span>{{ $item->qty }} x</span> 
                                                         <span>@currency($item->harga)</span>
                                                     </div>
                                                 </div>
@@ -114,7 +108,7 @@
                                         <br/>
                                         <br/>
                                         <br/>
-                                    @foreach ($transaction->shippingAddress as $address)
+                                    @foreach ($shippingAddress as $address)
                                     <div class="col-md-9">
                                         <span>
                                             <b>Dikirim ke:</b> 
@@ -135,10 +129,10 @@
 
                                 <div class="col-md-3 text-right" style="display: flex; flex-direction: column; justify-content: space-between;">
                                     <div>
-                                        <button class="btn btn-link">Cancel Order</button>
+                                        <a href="{{ route('transaction.change-status', [$transaction->id , 'CANCELLED']) }}" class="btn btn-link">Batalkan Pesanan</a>
                                     </div>
                                     <div>
-                                        <button class="btn btn-success">Confirm payment</button>
+                                        <a href="{{ route('transaction.change-status', [$transaction->id , 'TRANSFERRED']) }}" class="btn btn-success">Konfirmasi Pembayaran</a>
                                     </div>
                                 </div>
                             </div>
@@ -208,11 +202,7 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
 </div>
-@endsection
-
-@section('scripts')
-@endsection
