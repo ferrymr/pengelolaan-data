@@ -2,17 +2,16 @@
 
 @section('content')
 
-    {{-- text block --}}
-    {{-- <x-promo-text-bar>
+     <x-promo-text-bar>
         <i class="icon fa fa-flag" aria-hidden="true"></i>Buruan, Beli product <a href="#">Series diskon 30%</a> & dapetin <a href="#">Serum Anti Flek gratis</a> sekarang!
-    </x-promo-text-bar> --}}
+    </x-promo-text-bar>
 
     {{-- products box --}}
-    {{-- <x-promo-products-section :products="$products"/> --}}
+    <x-promo-products-section :products="$bestOfPieces"/>
 
-    {{-- <x-product-category-section :best-of-pieces="$bestOfPieces" :best-of-series="$bestOfSeries" /> --}}
+    <x-product-category-section :best-of-pieces="$bestOfPieces" :best-of-series="$bestOfSeries" />
 
-    {{-- <x-banner-product/> --}}
+    <x-banner-product/>
 
     {{-- main content --}}
     <div class="main-content main-content-product no-sidebar">
