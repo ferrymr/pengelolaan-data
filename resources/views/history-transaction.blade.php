@@ -29,14 +29,22 @@
                     <x-alert type="success" :message="$success"/>
                 @endif
 
+                {{-- @foreach ($transactions as $transaction)
+                    <div>
+                        {{ $transaction }}
+                        <br>
+                        <br>
+                    </div>
+                @endforeach --}}
+
                 {{-- main content --}}
-                {{-- <div class="row">
+                <div class="row">
                     <div class="main-content-cart main-content col-sm-12">
                         <div class="row">
                             <div class="col-md-6 col-md-offset-3 col-sm-12">
                                 <div class="tab">
-                                    <a href="{{ route('history-order.index') }}" class="item-tab active">Menunggu Pembayaran</a>
-                                    <a href="{{ route('history-order.orderlist') }}" class="item-tab">Daftar Transaksi</a>
+                                    <a href="{{ route('order-history.waiting-for-payment') }}" class="item-tab active">Menunggu Pembayaran</a>
+                                    <a href="{{ route('order-history.index') }}" class="item-tab">Semua Transaksi</a>
                                 </div>
                                 <div class="transaction-list-item">
                                     @foreach($transactions as $transaction)
@@ -61,7 +69,7 @@
                                                     <div class="detail-order">
                                                         <div class="total-order">
                                                             <span class="label-order">Total</span>
-                                                            <span class="total-nominal">{{ $transaction->grand_total }}</span>
+                                                            <span class="total-nominal">@currency($transaction->grand_total)</span>
                                                         </div>
                                                         <div class="transfer-order">
                                                             <span class="label-order">Rekening Tujuan</span>
@@ -78,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
 
                 {{-- full width layout have no sideba --}}
 

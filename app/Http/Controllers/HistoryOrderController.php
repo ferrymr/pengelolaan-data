@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\HistoryTransaction;
+use App\ShippingAddress;
+use App\User;
+
 // use App\DetailTransaksi;
 
 class HistoryOrderController extends Controller
@@ -26,8 +29,53 @@ class HistoryOrderController extends Controller
 
         // $transactions = HistoryTransaction::find([1]);
 
-        $transactions = array();
-        return view('history-transaction', compact('transactions'));
+        // $transactions = array();
+        // return view('history-transaction', compact('transactions'));
+
+        $userId = auth()->user()->id;
+
+        // \DB::connection()->enableQueryLog();
+
+        /* $transactions = User::whereHas('transactions')->where('id', $userId)->with(
+            [
+                'transactions' => function ($transaction) {
+                    $transaction->select('id', 'user_id', 'tgl_transaksi', 'nomor_transaksi', 'metode_pengiriman', 'kurir', 'subtotal', 'shipping_fee', 'grand_total', 'total_berat', 'note', 'bank');
+                    $transaction->with(
+                        [
+                            'items' => function($item) {
+                                $item->select('transaksi_id', 'kode_barang', 'harga', 'qty', 'subtotal');
+                            },
+                            'history' => function($history) {
+                                $history->select('transaksi_id', 'tanggal', 'keterangan');
+                            },
+                            'shippingAddress' => function($address) {
+                                $address->select('cn_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');
+                            }
+                        ]
+                    );
+                }
+            ]
+        )->get(); */
+
+        $user = User::find($userId);
+        $transactions = $user->transactions()->with(
+            [
+                'items' => function($item) {
+                    $item->select('transaksi_id', 'kode_barang', 'harga', 'qty', 'subtotal');
+                },
+                'history' => function($history) {
+                    $history->select('transaksi_id', 'tanggal', 'keterangan');
+                },
+                'shippingAddress' => function($address) {
+                    $address->select('cn_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');
+                }
+            ]
+        )->get();
+
+        // $queries = \DB::getQueryLog();
+        // return dd($queries);
+        
+        return view('history-transaction-order-list', compact('transactions'));
 
     }
 
@@ -124,5 +172,27 @@ class HistoryOrderController extends Controller
 
 
         return view('detailhistory', compact('detailtransaksi'));
+    }
+
+    public function waitingForPayment()
+    {
+        $userId = auth()->user()->id;
+
+        $user = User::find($userId);
+        $transactions = $user->transactions()->with(
+            [
+                'items' => function($item) {
+                    $item->select('transaksi_id', 'kode_barang', 'harga', 'qty', 'subtotal');
+                },
+                'history' => function($history) {
+                    $history->select('transaksi_id', 'tanggal', 'keterangan');
+                },
+                'shippingAddress' => function($address) {
+                    $address->select('cn_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');
+                }
+            ]
+        )->where('status_transaksi', 'PLACE ORDER')->get();
+
+        return view('history-transaction', compact('transactions'));
     }
 }

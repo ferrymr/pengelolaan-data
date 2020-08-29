@@ -33,7 +33,7 @@ class ShippingAddress extends Model
 
     public function transaction()
     {
-        return $this->hasMany(Transaction::class, 'shippind_address_id');
+        return $this->hasMany(Transaction::class, 'shipping_address_id');
     }
 
 }

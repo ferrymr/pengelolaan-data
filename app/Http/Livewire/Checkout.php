@@ -414,7 +414,7 @@ class Checkout extends Component
                             $this->user->name, //$customer->name,
                             $this->shippingMethod, //$request->shipping_method,
                             $this->courier, //$request->courier,
-                            $this->defaultShippingAddress->id, //$request->shipping_address_id,
+                            $this->shippingMethod == 'EXPEDITION' ? $this->defaultShippingAddress->id : null, //$request->shipping_address_id,
                             $this->subtotal, //$request->subtotal,
                             $this->ongkosKirim, //$request->request->shipping_fee,
                             $this->totalBayar, //$request->grand_total,
@@ -423,7 +423,7 @@ class Checkout extends Component
                             $this->selectedSpb, //$request->kode_spb,
                             'SHOP',
                             $this->selectedBank, //$request->bank,
-                            'PLACEORDER',
+                            'PLACE ORDER',
                         ]
             );
     
