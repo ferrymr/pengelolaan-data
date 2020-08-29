@@ -26,15 +26,18 @@
 </head>
 <body class="productsgrid-page">
     
-    <x-topbar>
+    {{-- <x-topbar>
         <a href="#">Menjadi Reseller</a> &nbsp;&nbsp; <a href="#">Konsultasi Kecantikan</a>
-    </x-topbar>
+    </x-topbar> --}}
+    @include('partials.topbar')
     
     <!-- header -->
-    <x-header />
+    {{-- <x-header /> --}}
+    <livewire:header />
 
     <!-- header mobile -->
-    <x-header-mobile />
+    {{-- <x-header-mobile /> --}}
+    @include('partials.header-mobile')
 
      <!-- banner newsletter -->
     <x-newsletter />
@@ -54,10 +57,12 @@
     </div>
 
     <!-- footer -->
-    <x-footer />
+    {{-- <x-footer /> --}}
+    @include('partials.footer')
 
     <!-- footer mobile -->
-    <x-footer-mobile />
+    {{-- <x-footer-mobile /> --}}
+    @include('partials.footer-mobile') 
 
     <a href="#" class="backtotop"><i class="pe-7s-angle-up"></i></a>
 
