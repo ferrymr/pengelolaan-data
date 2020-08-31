@@ -61,9 +61,21 @@ class Cart
                 );
 
         } else {
-            $cart[$cartIndex]['qty'] += $product->qty;
+            /* $cart[$cartIndex]['qty'] += $product->qty;
             $cart[$cartIndex]['total_berat'] += $product->qty * $product->berat;
-            $cart[$cartIndex]['subtotal'] += $product->qty  * $product->h_nomem;
+            $cart[$cartIndex]['subtotal'] += $product->qty  * $product->h_nomem; */
+
+            $currentCartQty = $cart[$cartIndex]['qty'];
+            $currentTotalBerat = $currentCartQty * $product->berat;
+            $currentSubtotal = $currentCartQty * $product->h_nomem;
+
+            $newCartQty = $currentCartQty + $product->qty;
+            $newTotalBerat = $newCartQty * $product->berat;
+            $newSubtotal = $newCartQty * $product->h_nomem;
+
+            $cart[$cartIndex]['qty'] = $newCartQty;
+            $cart[$cartIndex]['total_berat'] = $newTotalBerat;
+            $cart[$cartIndex]['subtotal'] = $newSubtotal;
         }
 
         $this->set($cart);

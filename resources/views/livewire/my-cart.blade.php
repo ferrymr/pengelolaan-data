@@ -50,9 +50,9 @@
                                         <div class="control-item">
                                             <div class="quantity">
                                                 <div class="control" style="width: 86px!important;">
-                                                    {{-- <div class="btn-number qtyminus quantity-minus">-</div>  --}}
-                                                    x<input type="text" disabled wire:model="{{ $item['qty'] }}" data-step="1" min="1" title="Qty" size="4" class="input-qty qty" value="{{ $item['qty'] }}" style="width: 38px;">
-                                                    {{-- <div wire:click="incrementQty({{ $item['kode_barang'] }})" class="btn-number qtyplus quantity-plus">+</div> --}}
+                                                    <div wire:click="updateQty('{{ $item['kode_barang'] }}', 'decrement')" class="btn-number qtyminus quantity-minus">-</div> 
+                                                    <input type="text" disabled wire:model="{{ $item['qty'] }}" data-step="1" min="1" title="Qty" size="4" class="input-qty qty" value="{{ $item['qty'] }}" style="width: 38px;">
+                                                    <div wire:click="updateQty('{{ $item['kode_barang'] }}', 'increment')" class="btn-number qtyplus quantity-plus">+</div>
                                                 </div>
                                             </div>
                                             &nbsp;&nbsp;
