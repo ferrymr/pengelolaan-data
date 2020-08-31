@@ -124,7 +124,7 @@
                                             <a wire:click="incrementQty" href="#" class="btn-number qtyplus quantity-plus">+</a>
                                         </div>
                                     </div>
-                                    <button wire:click="addToCart" class="single_add_to_cart_button button" onclick="tampilkanNotifikasi()">Add to cart</button>
+                                    <button wire:click="addToCart" class="single_add_to_cart_button button" onclick="tampilkanNotifikasi('{{ $product->nama }}', {{ $qty }})">Add to cart</button>
                                 </div>
                                 <p>&nbsp;</p>
                                 <p>&nbsp;</p>
@@ -180,17 +180,16 @@
 @section('scripts')
     <script src="{{ asset('assets/js/snackbar.min.js') }}"></script>
     <script>
-        function tampilkanNotifikasi() {
+        function tampilkanNotifikasi(namaBarang, qty) {
             Snackbar.show({
                 pos: 'top-center',
-                text: `{{ $qty }}X {{ $product->nama }} ditambahkan!`,
+                text: `${qty}X ${namaBarang} ditambahkan!`,
                 actionText: 'Lihat',
                 actionTextColor: '#bd0a74',
                 duration: 2000,
                 onActionClick: function(element) {
                     //Set opacity of element to 0 to close Snackbar
                     $(element).css('opacity', 0);
-                    // alert('Clicked Called!');
                     window.location.href = "{{ route('mycart') }}"
               }
             });
