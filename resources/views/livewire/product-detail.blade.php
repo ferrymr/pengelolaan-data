@@ -1,4 +1,5 @@
 @section('styles')
+    <link rel="stylesheet" href="{{ asset('assets/css/snackbar.min.css') }}" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
     <style>
         .btn-consultation-wa {
@@ -9,6 +10,7 @@
         }
     </style>
 @endsection
+
 {{-- wrap main content --}}
 <div class="main-content main-content-details single no-sidebar">
     <div class="container">
@@ -122,7 +124,7 @@
                                             <a wire:click="incrementQty" href="#" class="btn-number qtyplus quantity-plus">+</a>
                                         </div>
                                     </div>
-                                    <button wire:click="addToCart" class="single_add_to_cart_button button">Add to cart</button>
+                                    <button wire:click="addToCart" class="single_add_to_cart_button button" onclick="tampilkanNotifikasi()">Add to cart</button>
                                 </div>
                                 <p>&nbsp;</p>
                                 <p>&nbsp;</p>
@@ -174,3 +176,24 @@
 
     </div>
 </div>
+
+@section('scripts')
+    <script src="{{ asset('assets/js/snackbar.min.js') }}"></script>
+    <script>
+        function tampilkanNotifikasi() {
+            Snackbar.show({
+                pos: 'top-center',
+                text: `{{ $qty }}X {{ $product->nama }} ditambahkan!`,
+                actionText: 'Lihat',
+                actionTextColor: '#bd0a74',
+                duration: 2000,
+                onActionClick: function(element) {
+                    //Set opacity of element to 0 to close Snackbar
+                    $(element).css('opacity', 0);
+                    // alert('Clicked Called!');
+                    window.location.href = "{{ route('mycart') }}"
+              }
+            });
+        }
+    </script>
+@endsection
