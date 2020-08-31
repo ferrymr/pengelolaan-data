@@ -16,8 +16,7 @@ class FooterMobile extends Component
 
     public function mount()
     {
-        $this->cartItems = Cart::get(); 
-        $this->cartTotal = count($this->cartItems);      
+        $this->updateCartItemsMobile();
     }
  
     public function render()
@@ -27,7 +26,14 @@ class FooterMobile extends Component
 
     public function updateCartItemsMobile()
     {
-        $this->cartItems = Cart::get();      
-        $this->cartTotal = count($this->cartItems);
+        $this->cartItems = Cart::get();
+
+        $itemCount = 0;
+
+        foreach ($this->cartItems as $cartItem) {
+            $itemCount += $cartItem['qty'];
+        }
+
+        $this->cartTotal = $itemCount;
     }
 }
