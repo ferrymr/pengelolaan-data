@@ -30,7 +30,7 @@
                                 <a href="{{ route('products.category', 'decorative') }}">Decorative</a>
                             </li>
                             <li class="menu-item">
-                                <a href="{{ route('products.category', 'extra care') }}">Decorative</a>
+                                <a href="{{ route('products.category', 'extra care') }}">Extra Care</a>
                             </li>
                             <li class="menu-item">
                                 <a href="{{ route('products.category', 'series') }}">Series</a>
