@@ -69,7 +69,7 @@ class LoginController extends Controller
                 return redirect()->back();
             }
         } catch (Exception $e) {
-            dd($e->getMessage());
+            // dd($e->getMessage());
             return redirect('auth/google');
         }
     }
