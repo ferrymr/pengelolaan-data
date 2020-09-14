@@ -16,13 +16,16 @@ class Header extends Component
 
     public function mount()
     {
-        $this->cartItems = Cart::get(); 
-        $this->cartTotal = count($this->cartItems);      
+        $this->updateCartItems();
+    }
+
+    public function hydrate()
+    {
+        $this->updateCartItems();
     }
 
     public function render()
     {
-        // dd($this->cartItems);
         return view('livewire.header');
     }
 
@@ -32,13 +35,20 @@ class Header extends Component
         // ShoppingCart::where('users_id', '=', $user_id)->where('kode_barang', '=', $product->kode_barang)->delete();
         
         Cart::remove($productCode);
-        $this->emit('refreshCartItems');
+        $this->updateCartItems();
         $this->emit('refreshCartItemsMobile');
     }
 
     public function updateCartItems()
     {
-        $this->cartItems = Cart::get();      
-        $this->cartTotal = count($this->cartItems);
+        $this->cartItems = Cart::get();
+
+        $itemCount = 0;
+
+        foreach ($this->cartItems as $cartItem) {
+            $itemCount += $cartItem['qty'];
+        }
+
+        $this->cartTotal = $itemCount;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Facades\Cart;
+use App\Product;
 use App\ShippingAddress;
 use Livewire\Component;
 
@@ -24,11 +25,35 @@ class MyCart extends Component
         return view('livewire.my-cart');
     }
 
+    public function hydrate()
+    {
+        $this->refreshData();
+    }
+
     public function refreshData()
     {
         $this->cartItems = Cart::get();
         $this->hitungSubtotal();
         $this->hitungTotalItems();
+    }
+
+    public function updateQty($productCode, $type)
+    {
+        $product = Product::find($productCode);
+
+        if ($type == 'increment') {
+            $product->qty = 1;
+        } elseif ($type == 'decrement') {
+            $product->qty = -1;
+        }
+
+        Cart::add($product);
+
+        $this->refreshData();
+
+        $this->emit('refreshCartItems');
+
+        $this->emit('refreshCartItemsMobile');
     }
 
     public function hitungSubtotal()
