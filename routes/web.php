@@ -2,16 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+// =============================== FRONTEND ===============================
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('profile', 'ProfileController');
@@ -30,7 +21,6 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('/order-history/{transactionId}/detail', 'HistoryOrderController@detail')->name('order-history.detail');
     Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');
 
-
     Route::get('/transaction', 'TransactionController@store');
     Route::get('/transaction/delete', 'TransactionController@destroy');
     // Route::get('/transaction/checkout', 'TransactionController@checkout')->name('checkout');
@@ -39,14 +29,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::get('/', 'IndexController@index')->name('home');
 
-
 Route::livewire('/products/{productCode}', 'product-detail')->name('products.show');
 Route::get('/products/category/{category}', 'ProductController@category')->name('products.category');
 Route::resource('products', 'ProductController')->except(['show']);
 
 Route::livewire('/mycart', 'my-cart')->name('mycart');
-
-
 
 Route::get('/spb/check', 'SpbController@check');
 
@@ -97,3 +84,7 @@ Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
 Route::get('test', 'TestController@index');
 
 Auth::routes();
+
+// =============================== BACKEND ===============================
+
+
