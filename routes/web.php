@@ -87,4 +87,11 @@ Auth::routes();
 
 // =============================== BACKEND ===============================
 
+// 'middleware' => ['permission:access-dashboard'],
+
+// Dashboard
+Route::group(['prefix' => '/admin/dashboard/', 'as' => 'admin.dashboard.'], function()
+{
+    Route::get('/', 'DashboardController@index')->name('index');
+});
 
