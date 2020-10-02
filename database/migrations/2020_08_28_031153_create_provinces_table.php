@@ -13,7 +13,7 @@ class CreateProvincesTable extends Migration
      */
     public function up()
     {
-        Schema::create('provinces', function (Blueprint $table) {
+        Schema::create('ok_provinces', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('province_id');
             $table->string('name');
@@ -28,6 +28,6 @@ class CreateProvincesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('provinces');
+        Schema::dropIfExists('ok_provinces');
     }
 }

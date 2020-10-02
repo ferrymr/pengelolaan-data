@@ -37,6 +37,9 @@ Route::livewire('/mycart', 'my-cart')->name('mycart');
 
 Route::get('/spb/check', 'SpbController@check');
 
+Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
+Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');
+
 // Route::resource('shoppingcarts', 'ShoppingCartController');
 // Route::get('/history-transaction', function () {
 //     return view('history-transaction');
@@ -58,6 +61,8 @@ Route::get('/spb/check', 'SpbController@check');
     return view('checkout');
 }); */
 
+// static page
+
 Route::get('/payment', function () {
     return view('payment');
 });
@@ -70,9 +75,7 @@ Route::get('/return-policy', function () {
     return view('return-policy');
 });
 
-Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
-Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');
-
+// authentication google
 
 Route::get('/google', function () {
     return view('googleLogin');
@@ -80,8 +83,6 @@ Route::get('/google', function () {
 
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
-
-Route::get('test', 'TestController@index');
 
 Auth::routes();
 

@@ -13,7 +13,7 @@ class CreateCitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {
+        Schema::create('ok_cities', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('province_id');
             $table->unsignedInteger('city_id');
@@ -30,6 +30,6 @@ class CreateCitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cities');
+        Schema::dropIfExists('ok_cities');
     }
 }
