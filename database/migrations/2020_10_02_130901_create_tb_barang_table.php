@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubdistrictsTable extends Migration
+class CreateTbBarangTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateSubdistrictsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ok_subdistricts', function (Blueprint $table) {
+        Schema::create('tb_barang', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('province_id');
-            $table->unsignedInteger('city_id');
-            $table->unsignedInteger('subdistrict_id');
-            $table->string('name');
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreateSubdistrictsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ok_subdistricts');
+        Schema::dropIfExists('tb_barang');
     }
 }
