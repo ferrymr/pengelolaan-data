@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\barangController;
 use Illuminate\Support\Facades\Route;
 
 // =============================== FRONTEND ===============================
@@ -27,7 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus')->name('transaction.change-status');
 });
 
-Route::get('/', 'IndexController@index')->name('home');
+// Route::get('/', 'IndexController@index')->name('home');
 
 Route::livewire('/products/{productCode}', 'product-detail')->name('products.show');
 Route::get('/products/category/{category}', 'ProductController@category')->name('products.category');
@@ -90,8 +91,14 @@ Auth::routes();
 // 'middleware' => ['permission:access-dashboard'],
 
 // Dashboard
-Route::group(['prefix' => '/admin/dashboard/', 'as' => 'admin.dashboard.'], function()
+Route::group(['prefix' => '/', 'as' => 'admin.dashboard.'], function()
 {
     Route::get('/', 'DashboardController@index')->name('index');
+
+// Master-barang
+    Route::get('/barang', 'barangController@show');
+
 });
+
+
 

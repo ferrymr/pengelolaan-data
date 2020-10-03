@@ -254,51 +254,185 @@ return [
 
         ['header' => 'MAIN MENU'],
         [
-            'text' => 'Dashboard',
-            'url'  => 'admin/dashboard',
+            'text' => 'Master',
+            'url'  => 'admin/master',
             'icon' => 'fas fa-fw fa-home',
-        ],
-        [
-            'text' => 'Slider',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-image',
-        ],
-        [
-            'text' => 'Banner',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-tag',
-        ],
-
-        ['header' => 'PRODUCT'],
-        [
-            'text' => 'Products',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-shopping-bag',
             'submenu' => [
                 [
-                    'text' => 'Category',
-                    'url'  => 'admin/settings',
+                    'text' => 'Barang',
+                    'url' => 'barang'
+                ],
+                [
+                    'text' => 'Member',
+                    'url' => 'member'
+                ],
+                [
+                    'text' => 'Supplier',
+                    'url' => 'supplier'
+                ],
+                [
+                    'text' => 'Series',
+                    'url' => 'series'
+                ],
+                [
+                    'text' => 'Referral',
+                    'url' => 'referral'
                 ],
             ],
         ],
         [
-            'text' => 'Transaksi',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-shopping-cart',
+            'text' => 'Order',
+            'url'  => 'admin/master',
+            'icon' => 'fas fa-fw fa-shopping-bag',
+            'submenu' => [
+                [
+                    'text' => 'Penjualan',
+                    'url' => 'penjualan'
+                ],
+                [
+                    'text' => 'Pembelian',
+                    'url' => 'pembelian'
+                ],
+                [
+                    'text' => 'Movement',
+                    'url' => 'movement'
+                ],
+                [
+                    'text' => 'Pemesanan',
+                    'url' => 'pemesanan'
+                ],
+                
+            ],
         ],
+        [
+            'text' => 'Bonus',
+            'url'  => 'admin/master',
+            'icon' => 'fas fa-fw fa-money-bill',
+            'submenu' => [
+                [
+                    'text' => 'Bonus Qualified',
+                    'url' => 'qualified'
+                ],
+                [
+                    'text' => 'Cashback Member',
+                    'url' => 'cashback'
+                ],
+                [
+                    'text' => 'Bonus Reward',
+                    'url' => 'reward'
+                ],
+                [
+                    'text' => 'Bonus Rabat',
+                    'url' => 'rabat'
+                ],
+                [
+                    'text' => 'Leader Building',
+                    'url' => 'leaderbuilding'
+                ],
+                [
+                    'text' => 'Free Merchandise',
+                    'url' => 'merchandise'
+                ],
+                
+            ],
+        ],
+        [
+            'text' => 'Finance',
+            'url'  => 'admin/master',
+            'icon' => 'fas fa-fw fa-dollar-sign',
+            'submenu' => [
+                [
+                    'text' => 'Cashbook',
+                    'url' => 'cashbook'
+                ],
+                [
+                    'text' => 'Pembayaran',
+                    'url' => 'pembayaran'
+                ],
+                [
+                    'text' => 'Saldo Member',
+                    'url' => 'saldomember'
+                ],
+                
+                
+            ],
+        ],
+        [
+            'text' => 'Retur',
+            'url'  => 'admin/master',
+            'icon' => 'fas fa-fw fa-retweet',
+            'submenu' => [
+                [
+                    'text' => 'Penjualan',
+                    'url' => 'returpenjualan'
+                ],
+                [
+                    'text' => 'Pembelian',
+                    'url' => 'returpembelian'
+                ],
+                [
+                    'text' => 'Movement',
+                    'url' => 'returmovement'
+                ],
+                
+                
+            ],
+        ],
+        [
+            'text' => 'Report',
+            'url'  => 'admin/master',
+            'icon' => 'fas fa-fw fa-book-open',
+            'submenu' => [
+                [
+                    'text' => 'Release Bonus',
+                    'url' => 'release'
+                ],
+                [
+                    'text' => 'Daily sales & Recruitment',
+                    'url' => 'dailysales'
+                ],
+                
+            ],
+        ],
+
+        
+        
         
         ['header' => 'SETTINGS'],
         [
-            'text' => 'Users',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-users',
-        ],
-        [
-            'text' => 'Settings',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-cogs',
-        ],
+            'text' => 'Tools',
+            'url'  => 'admin/master',
+            'icon' => 'fas fa-fw fa-tools',
+            'submenu' => [
+                [
+                    'text' => 'Adjusment',
+                    'url' => 'adjusment'
+                ],
+                [
+                    'text' => 'SPB kontrol',
+                    'url' => 'spbkontrol'
+                ],
+                [
+                    'text' => 'Calculate (barang)',
+                    'url' => 'calculate'
+                ],
+                [
+                    'text' => 'History Barang',
+                    'url' => 'history'
+                ],
+                [
+                    'text' => 'Send Email',
+                    'url' => 'sendemail'
+                ],
+                [
+                    'text' => 'Fix Columns',
+                    'url' => 'fixcolumns'
+                ],
+            ],
 
+        ],
+        
+        
         ['header' => 'PROFILE'],
         [
             'text' => 'Logout',
