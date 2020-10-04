@@ -57,10 +57,13 @@
     
 @stop
 
-@section('plugins.Datatables', true)
+{{-- @section('plugins.Datatables', true) --}}
 
 @section('js')
     <script src="{{ asset('vendor/boostrap-filestyle/boostrap-filestyle.min.js') }}"></script>
+    {{-- <script src="https://unpkg.com/popper.js@1.14.4/dist/umd/popper.js"></script>
+    <script src="{{ asset('vendor/bootstrap-confirmation/popper.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"></script> --}}    
     {{-- <script src="{{ asset('vendor/datatable-editor/dttable-editor.js') }}"></script> --}}
 
     <script type="text/javascript">
@@ -86,7 +89,6 @@
                 $('#form-slider-store').submit();
             })
 
-            // todo cofirmation
             // $('body').confirmation({
             //     selector: '[data-toggle="confirmation"]'
             // });

@@ -114,4 +114,20 @@ Route::group([
     Route::get('shortable', 'SliderController@updateOrder')->name('shortable');
 });
 
+// User
+Route::group([
+    // 'middleware' => ['permission:access-user'], 
+    'prefix' => '/admin/user/', 
+    'as' => 'admin.user.'
+], function(){
+    Route::get('', 'UserController@index')->name('index');
+    Route::get('datatable', 'UserController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'UserController@edit')->name('edit');
+    Route::get('view/{id}', 'UserController@view')->name('view');
+    Route::get('delete/{id}', 'UserController@destroy')->name('delete');
+    Route::get('add', 'UserController@create')->name('add');
+    Route::post('store', 'UserController@store')->name('store');
+    Route::post('update/{id}', 'UserController@update')->name('update');
+});
+
 
