@@ -89,17 +89,29 @@ Auth::routes();
 
 // =============================== BACKEND ===============================
 
-// 'middleware' => ['permission:access-dashboard'],
-
 // Dashboard
-Route::group(['prefix' => '/', 'as' => 'admin.dashboard.'], function()
+Route::group(['prefix' => '/admin/dashboard/', 'as' => 'admin.dashboard.'], function()
 {
-    Route::get('/', 'DashboardController@index')->name('index');
-
-// Master-barang
-    Route::get('/barang', 'barangController@show');
-
+    Route::get('', 'DashboardController@index')->name('index');
 });
 
+// Master Barang
+Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
+{
+    Route::get('', 'barangController@show')->name('index');
+});
+
+// Slider
+Route::group([
+    // 'middleware' => ['permission:access-slider'], 
+    'prefix' => '/admin/slider/', 
+    'as' => 'admin.slider.'
+], function(){
+    Route::get('', 'SliderController@index')->name('index');
+    Route::get('datatable', 'SliderController@datatable')->name('datatable');
+    Route::get('delete/{id}', 'SliderController@destroy')->name('delete');    
+    Route::post('store', 'SliderController@store')->name('store');
+    Route::get('shortable', 'SliderController@updateOrder')->name('shortable');
+});
 
 

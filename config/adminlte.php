@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '&nbsp;<b>Bellezkin</b> Shop',
+    'logo' => '&nbsp;<b>Bellezkin</b> Store',
     'logo_img' => 'assets/images/logo_b.png', 
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -101,12 +101,12 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
+    'classes_auth_card' => 'bg-gradient-dark',
     'classes_auth_header' => '',
-    'classes_auth_body' => '',
-    'classes_auth_footer' => '',
-    'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_body' => 'bg-gradient-dark',
+    'classes_auth_footer' => 'text-center',
+    'classes_auth_icon' => 'text-light',
+    'classes_auth_btn' => 'btn-flat btn-light',
 
     /*
     |--------------------------------------------------------------------------
@@ -231,6 +231,12 @@ return [
     */
 
     'menu' => [
+
+        [
+            'text' => 'Dashboard',
+            'url'  => 'admin/dashboard',
+            'icon' => 'fas fa-fw fa-globe',
+        ],
 
         // [
         //     'text' => 'search',
@@ -394,8 +400,6 @@ return [
                 
             ],
         ],
-
-        
         
         
         ['header' => 'SETTINGS'],
@@ -431,7 +435,23 @@ return [
             ],
 
         ],
-        
+
+        ['header' => 'STORE'],
+        [
+            'text' => 'Slider',
+            'url'  => 'admin/slider',
+            'icon' => 'fas fa-fw fa-image',
+        ],
+        [
+            'text' => 'Banner',
+            'url'  => 'admin/banner',
+            'icon' => 'fas fa-fw fa-tag',
+        ],
+        [
+            'text' => 'Users',
+            'url'  => 'admin/user',
+            'icon' => 'fas fa-fw fa-users',
+        ],
         
         ['header' => 'PROFILE'],
         [

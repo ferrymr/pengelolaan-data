@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class provinceResource extends JsonResource
+class ProvinceResource extends JsonResource
 {
     public function __construct($cities)
     {
