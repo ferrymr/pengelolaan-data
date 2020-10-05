@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTbBarangTable extends Migration
+class CreateSliderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateTbBarangTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_barang', function (Blueprint $table) {
-            $table->id();
+        Schema::create('slider', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');        
+            $table->string('category');        
+            $table->integer('order');    
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateTbBarangTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_barang');
+        Schema::dropIfExists('slider');
     }
 }
