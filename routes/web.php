@@ -137,4 +137,5 @@ Route::group([
     'as'     => 'admin.penjualan.'
 ], function () {
     Route::get('', 'PenjualanController@index')->name('index');
+    Route::get('datatable', 'PenjualanController@datatable')->name('datatable');
 });
