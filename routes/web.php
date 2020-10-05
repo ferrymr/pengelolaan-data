@@ -131,3 +131,10 @@ Route::group([
 });
 
 
+// ORDER
+Route::group([
+    'prefix' => '/admin/penjualan/',
+    'as'     => 'admin.penjualan.'
+], function () {
+    Route::get('', 'PenjualanController@index')->name('index');
+});
