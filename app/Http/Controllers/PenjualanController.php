@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
+use DB;
+use Carbon\Carbon;
 
 use App\Models\TbHeadJual;
 use App\Models\TbDetJual;
@@ -17,12 +19,13 @@ class PenjualanController extends Controller
     {
 
         $items = TbHeadJual::with('detjual')->get();
-       
-        // dd($items);
+        // $items = TbHeadJual::all();
 
-        return view('backend.order.penjualan.index')->with([
-            'items' => $items,
-        ]);
+        dd($items);
+       
+       
+
+         return view('backend.order.penjualan.index', compact('items'));
     }
 
     public function datatable() {
@@ -46,6 +49,51 @@ class PenjualanController extends Controller
             ->make(true);
 
         // return Datatables::of(TbHeadJual::query())->make(true);
+
+    }
+
+    public function create()
+    {
+        // $dates = Carbon::now();
+        // $index = $dates->format('Y') . '/INV' . '/' . substr(rand(),0,5); 
+
+
+        return view("backend.order.penjualan.create");
+    }
+
+    public function store(Request $request)
+    {
+        $dates = Carbon::now();
+        $index = $dates->format('Y') . '/INV' . '/' . substr(rand(),0,5); 
+
+        $this->validate($request, [
+            'no_do' => 'required|string',
+        ]);
+
+        $newPenjualan = TbHeadJual::create([
+            'no_do' => $request->no_do
+        ]);
+        
+
+        return view('backend.order.penjualan.index');
+        
+
+    }
+
+    // ====================================GET NAMA MEMBER===========================================
+    public function getNama(Request $request)
+    {
+        $no_member = $request->get('no_member');
+        if($request->ajax()) {
+            $data = '';
+            $qry = DB::select("SELECT * FROM tb_member where no_member='$no_member'");
+            foreach ($qry as $q) {
+                $data = array(
+                        'nama'  =>  $q->nama,
+                    );
+            }
+            echo json_encode($data);
+        }
 
     }
 }
