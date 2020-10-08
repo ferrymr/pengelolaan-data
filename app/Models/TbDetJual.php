@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TbDetJual extends Model
 {
     protected $table = 'tb_det_jual';
-
+    public $incrementing = false;
     protected $primaryKey = 'no_do';
 
     protected $fillable = [
@@ -18,8 +18,8 @@ class TbDetJual extends Model
         'nama'
     ];
 
-    // public function headjual()
-    // {
-    //    return $this->belongsTo('App\Models\TbHeadJual','no_do'); 
-    // }
+    public function headjual()
+    {
+       return $this->belongsTo(TbHeadJual::class,'kode_barang'); 
+    }
 }

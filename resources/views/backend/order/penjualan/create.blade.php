@@ -10,10 +10,12 @@
     @include('flash::message')
 
     {!! Form::open([
-        'url' => route('admin.penjualan.store'),
+        // 'url' => route('admin.penjualan.store'),
         'method'=>'POST',
         'class'=>'form-horizontal',
-        'id'=>'form-penjualan'
+        'id'=>'form-penjualan',
+        'onsubmit' => 'return create_invoice(this)'
+
     ]) !!}
 
     <div class="card col-12">
@@ -25,7 +27,7 @@
                 <div class="form-group col-md-6 @if($errors->has('no_do')) has-error @endif">
                 <label for="no_do" class="col-sm-12 control-label">No Invoice *</label>    
                 <div class="col-sm-10">
-                    <input type="text" name="no_do" class="form-control" id="" required>
+                    <input type="text" name="no_do" class="form-control" id="">
                     @if($errors->has('no_do'))
                         <span class="text-danger">{{ $errors->first('no_do') }}</span>
                     @endif
@@ -43,7 +45,7 @@
             <div class="form-group col-md-6 @if($errors->has('no_member')) has-error @endif">
                 <label for="no_member" class="col-sm-12 control-label">No Member *</label>    
                 <div class="col-sm-10">
-                    <input type="text" name="no_member" class="form-control" id="no_member" placeholder="No Member" required>
+                    <input type="text" name="no_member" class="form-control" id="no_member" placeholder="No Member" >
                     @if($errors->has('no_member'))
                         <span class="text-danger">{{ $errors->first('no_member') }}</span>
                     @endif
@@ -52,19 +54,19 @@
             <div class="form-group col-md-6 @if($errors->has('nama')) has-error @endif">
                 <label for="nama" class="col-sm-12 control-label">Nama *</label>    
                 <div class="col-sm-10">
-                    <input type="text" name="nama" class="form-control" id="nama" placeholder="Nama" readonly="true" required>
+                    <input type="text" name="nama" class="form-control" id="nama" placeholder="Nama" readonly="true" >
                     @if($errors->has('nama'))
                         <span class="text-danger">{{ $errors->first('nama') }}</span>
                     @endif
                 </div>
             </div>
-            <div class="form-group col-md-4 @if($errors->has('jenis')) has-error @endif">
+            {{-- <div class="form-group col-md-4 @if($errors->has('jenis')) has-error @endif">
                 <label for="jenis" class="col-sm-12 control-label">Jenis *</label>    
                 <div class="col-sm-9">
                     <select name="jenis" id="jenis" class="form-control select2">
                         <option value="">Pilih Jenis </option>
-                        <option value="">Satuan</option>
-                        <option value="">Series</option>
+                        <option value="1">Satuan</option>
+                        <option value="2">Series</option>
                     </select>
                     @if($errors->has('jenis'))
                         <span class="text-danger">{{ $errors->first('jenis') }}</span>
@@ -74,7 +76,7 @@
             <div class="form-group col-md-4 @if($errors->has('kode_barang')) has-error @endif">
                 <label for="kode_barang" class="col-sm-12 control-label">Kode Barang *</label>    
                 <div class="col-sm-9">
-                    <input type="text" name="kode_barang" class="form-control" id="" placeholder="Kode Barang">
+                    <input type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode Barang">
                     @if($errors->has('kode_barang'))
                         <span class="text-danger">{{ $errors->first('kode_barang') }}</span>
                     @endif
@@ -88,7 +90,7 @@
                         <span class="text-danger">{{ $errors->first('jumlah') }}</span>
                     @endif
                 </div>
-            </div>
+            </div> --}}
             <div class="form-group col-md-4 @if($errors->has('kode_barang')) has-error @endif">
                 <label for="kode_barang" class="col-sm-12 control-label">Pilih Jenis Ongkir *</label>    
                 <div class="col-sm-9">
@@ -178,6 +180,48 @@
             <button type="submit" class="btn btn-info">Create</button>
             <a href="{{ route("admin.penjualan.add") }}" class="btn btn-default float-right">Cancel</a>
         </div>
+        <table class="table table-hovered table-striped table-bordered form-table" id="">
+            <thead>
+                <tr>
+                    <th width="200px">Kode Barang</th>
+                    <th width="350px">Nama</th>
+                    <th widht="200px">Jenis</th>
+                    <th width="100px">Quantity</th>
+                    <th width="150px">Harga</th>
+                    <th width="170px">Total</th>
+                    <th style="text-align: center"><a href="#" class="btn btn-info addRow">+</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="detailLine">
+                    <td>
+                        <input type="text" name="kode_barang[]" class="form-control" id="kode_barang" placeholder="Kode Barang" >
+                    </td>
+                    <td>
+                        {{-- <select name="jenis[]" id="jenis" class="form-control select2">
+                            <option value="">Pilih Jenis </option>
+                            <option value="1">Satuan</option>
+                            <option value="2">Series</option>
+                        </select> --}}
+                        <input type="text" name="nama[]" class="form-control" id="nama_p" placeholder="Nama" readonly="true" >
+
+                    </td>
+                    <td>
+                        <input type="text" name="jenis[]" class="form-control" id="jenis" placeholder="Jenis" readonly="true" >
+                    </td>
+                    <td>
+                        <input type="text" name="jumlah" class="form-control" id="jumlah" placeholder="Qty" >
+                    </td>
+                    <td>
+                        <input type="text" name="harga[]" class="form-control" id="harga" placeholder="Harga" readonly="true" >
+                    </td>
+                    <td>
+                        <input type="text" name="total" class="form-control" id="total" placeholder="Total" >
+                    </td>
+                    <td style="text-align: center"><a href="#" class="btn btn-danger">-</a></td>
+                </tr>
+            </tbody>
+        </table>        
     </div>    
 
     {!! Form::close() !!}
@@ -225,5 +269,118 @@
             format: 'dd/mm/yyyy',
             autoclose: true
         })
+
+
+        function create_invoice(form) {
+            console.log(form);
+            $.ajax({
+                    url: "{{ route('admin.penjualan.create.invoice') }}",
+                    method:'POST',
+                    // data:"no_member="+no_member , 
+                success: function(data){
+                    console.log(data);
+                    var no_invoice = data;
+                    $('[name=no_do]').val(no_invoice); 
+                            // var json = data,
+                            // obj = JSON.parse(json);
+                            // console.log(json);
+                            // $('#nama').val(obj.nama);
+                        
+                }});
+            
+            var no_invoice = '2020/INV/00001';
+            $('[name=no_do]').val(no_invoice); 
+            return (false);
+        }
+        
+        // $("#kode_barang").keyup(function () {
+        //     var kode_barang = $(this).val();
+        //     $.ajax({
+        //             url: "{{ route('admin.penjualan.create.kode') }}",
+        //             method:'POST',
+        //             data:"kode_barang="+kode_barang , 
+        //         success: function(data){
+        //             if(data == 1){
+        //                 $("#jenis").select2("val", "1");
+        //             }else{
+        //                 $("#jenis").select2("val", "2");
+        //             }
+        //             console.log(data);
+        //             // var no_invoice = data;
+        //             // $('[name=no_do]').val(no_invoice); 
+                        
+        //         }});
+        // });
+        initKodeBarang();
+            function initKodeBarang(){
+                console.log('initKodeBarang');
+            $('[name="kode_barang[]"]').keyup(function () {
+                var self = $(this);
+                var kode_barang = $(this).val();
+                console.log(kode_barang);
+            delay(function () {
+               
+                $.ajax({
+                    url: "{{ route('admin.penjualan.create.kode') }}",
+                    method:'POST',
+                    data:"kode_barang="+kode_barang , 
+                success: function(data){
+                        var json = data,
+                        obj = JSON.parse(json);
+                        console.log(obj.nama);
+                        console.log(json);
+                        self.parents('.detailLine').find('[name="nama[]"]').val(obj.nama);
+                        self.parents('.detailLine').find('[name="jenis[]"]').val(obj.jenis);
+                        self.parents('.detailLine').find('[name="harga[]"]').val(obj.h_member);
+                        //$('#nama_p').val(obj.nama);
+                        //$('#jenis').val(obj.jenis);
+                        //$('#harga').val(obj.h_member);
+                        
+                }});
+            }, 100);
+        });
+    }
+        $('.addRow').on('click',function(){
+            addRow();
+        });
+
+        function addRow(){
+            var tr = '<tr class="detailLine">'+
+                             '<td>'+
+                                    ' <input type="text" name="kode_barang[]" class="form-control" id="kode_barang" placeholder="Kode Barang" >'+
+                              '</td>'+
+                              '<td>'+
+                                    // '<select name="jenis" id="jenis" class="form-control select2">'+
+                                    //     '<option value="">Pilih Jenis </option>'+
+                                    //     '<option value="1">Satuan</option>'+
+                                    //     '<option value="2">Series</option>'+
+                                    // '</select>'+
+                                    '<input type="text" name="nama[]" class="form-control" id="nama" placeholder="Nama" readonly="true" >'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<input type="text" name="jenis[]" class="form-control" id="jenis" placeholder="Jenis" readonly="true" >'+
+                                        '</td>'+
+                                        '<td>'+
+                                            ' <input type="text" name="jumlah" class="form-control" id="jumlah" placeholder="Qty" >'+
+                                        '</td>'+
+                                        '<td>'+
+                                            ' <input type="text" name="harga[]" class="form-control" id="harga" placeholder="Harga" readonly="true" >'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<input type="text" name="total" class="form-control" id="total" placeholder="Total"'+
+                                        '</td>'+
+                                        '<td style="text-align: center"><a href="#" class="btn btn-danger remove">-</a>'
+                                        '</td>'+
+                     '</tr>'+
+                $('tbody').append(tr);
+                initKodeBarang();
+            };
+
+           $('tbody').on('click', '.remove', function(){
+               $(this).parent().parent().remove();
+           })
+
+
+        
     </script>
 @stop
