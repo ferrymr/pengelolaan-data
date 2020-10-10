@@ -85,7 +85,7 @@ Route::get('/google', function () {
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
 
-Auth::routes();
+// Auth::routes();
 
 // =============================== BACKEND ===============================
 
@@ -98,7 +98,28 @@ Route::group(['prefix' => '/admin/dashboard/', 'as' => 'admin.dashboard.'], func
 // Master Barang
 Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
 {
-    Route::get('', 'barangController@show')->name('index');
+    Route::get('', 'BarangController@index')->name('index');
+    Route::get('datatable', 'BarangController@datatable')->name('datatable');
+    Route::get('edit/{kode_barang}', 'BarangController@edit')->name('edit');
+    Route::get('view/{kode_barang}', 'BarangController@view')->name('view');
+    Route::get('delete/{kode_barang}', 'BarangController@destroy')->name('delete');
+    Route::get('add', 'BarangController@create')->name('add');
+    Route::post('store', 'BarangController@store')->name('store');
+    Route::post('update/{kode_barang}', 'BarangController@update')->name('update');
+});
+
+// Master Gallery
+Route::group(['prefix' => '/admin/gallery/', 'as' => 'admin.gallery.'], function()
+{
+    Route::get('', 'GalleryController@index')->name('index');
+    Route::get('datatable', 'GalleryController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'GalleryController@edit')->name('edit');
+    Route::get('view/{id}', 'GalleryController@view')->name('view');
+    Route::get('delete/{id}', 'GalleryController@destroy')->name('delete');
+    Route::get('add', 'GalleryController@create')->name('add');
+    Route::post('store', 'GalleryController@store')->name('store');
+    Route::post('update/{id}', 'GalleryController@update')->name('update');
+    
 });
 
 // Slider
@@ -130,4 +151,18 @@ Route::group([
     Route::post('update/{id}', 'UserController@update')->name('update');
 });
 
-
+// Series
+Route::group([
+    // 'middleware' => ['permission:access-user'], 
+    'prefix' => '/admin/series/', 
+    'as' => 'admin.series.'
+], function(){
+    Route::get('', 'SeriesController@index')->name('index');
+    Route::get('datatable', 'SeriesController@datatable')->name('datatable');
+    Route::get('edit/{kode_pack}', 'SeriesController@edit')->name('edit');
+    Route::get('view/{kode_pack}', 'SeriesController@view')->name('view');
+    Route::get('delete/{kode_pack}', 'SeriesController@destroy')->name('delete');
+    Route::get('add', 'SeriesController@create')->name('add');
+    Route::post('store', 'SeriesController@store')->name('store');
+    Route::post('update/{kode_pack}', 'SeriesController@update')->name('update');
+});
