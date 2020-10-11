@@ -50,11 +50,20 @@
                                 <div class="col-md-4" style="margin-bottom: 50px;">
                                     <div class="card-address">
                                         <div class="body-address">
-                                            <p>
-                                                <b>Penerima: </b>{{ $shipping->nama }}<br>
-                                                <b>Telepon: </b>{{ $shipping->telepon }}<br>
-                                                <b>Alamat: </b><br>{{ $shipping->alamat }}
-                                            </p>
+                                            <div class="row">
+                                                <div class="@if($shipping->is_default) col-md-8 @else col-md-12 @endif">
+                                                    <p>
+                                                        <b>Penerima: </b>{{ $shipping->nama }}<br>
+                                                        <b>Telepon: </b>{{ $shipping->telepon }}<br>
+                                                        <b>Alamat: </b><br>{{ $shipping->alamat }}
+                                                    </p>
+                                                </div>
+                                                @if($shipping->is_default)
+                                                    <div class="col-md-4">
+                                                        <button>Utama</button>
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
                                         <div class="footer-address">
                                             <a href="{{ route('address.edit', $shipping->id) }}" class="btn-change-address">Ubah</a>
@@ -63,9 +72,6 @@
                                             <form action="{{ route('address.destroy', $shipping->id) }}" method="post" style="display:none;" id="delete-shipping-address">
                                                 @csrf 
                                                 @method('delete')
-                                                {{-- <button class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-trash"></i>
-                                                </button> --}}
                                             </form>
                                         
                                             @if($shipping->is_default != 1)

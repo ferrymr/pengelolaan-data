@@ -7,19 +7,14 @@ Auth::routes();
 // Homepage
 Route::get('/', 'IndexController@index')->name('home');
 
-// Payment
-Route::get('/payment', function () {
-    return view('payment');
-});
-
 // Faqs
 Route::get('/faqs', function () {
-    return view('faqs');
+    return view('frontend.faqs');
 });
 
 // Privacy policy
 Route::get('/return-policy', function () {
-    return view('return-policy');
+    return view('frontend.return-policy');
 });
 
 // Detail product
@@ -48,7 +43,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('address', 'AddressController');    
     
     Route::get('/order-history/{status?}', 'HistoryOrderController@index')->name('order-history-status');
-    Route::get('/orderlist', 'HistoryOrderController@orderlist')->name('history-order.orderlist');
     // Route::get('/order-history/{transactionId}/detail', 'HistoryOrderController@detail')->name('order-history.detail');
     Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');
 
@@ -63,31 +57,10 @@ Route::get('/spb/check', 'SpbController@check');
 Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
 Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');
 
-// Route::resource('shoppingcarts', 'ShoppingCartController');
-// Route::get('/history-transaction', function () {
-//     return view('history-transaction');
-// });
-// Route::get('/detail-history-transaction', function () {
-//     return view('detail-history-transaction');
-// });
-// Route::get('/history-transaction-order-list', function () {
-//     return view('history-transaction-order-list');
-// });
-
-// Route::get('/address-list', function () {
-//     return view('address-list');
-// });
-// Route::get('/address-form', function () {
-//     return view('address-form');
-// });
-/* Route::get('/checkout', function () {
-    return view('checkout');
-}); */
-
 // authentication google
 
 Route::get('/google', function () {
-    return view('googleLogin');
+    return view('frontend.googleLogin');
 });
 
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');

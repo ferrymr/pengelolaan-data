@@ -83,7 +83,7 @@ class HistoryOrderController extends Controller
         $totalMenungguPembayaran = $totalPlaceOrder + $totalTransfered;
         $totalPesananDiproses = $totalPaymentConfirmed + $totalPacked + $totalShipped;
 
-        return view('history-transaction-order-list', 
+        return view('frontend.history-transaction-order-list', 
                 compact(
                     'transactions',
                     'totalMenungguPembayaran',
@@ -92,16 +92,6 @@ class HistoryOrderController extends Controller
                     'status'
                 ));
 
-    }
-
-    public function orderlist()
-    {
-        $transactions = DB::table('cn_transaksi')
-                            ->join('cn_order_history', 'cn_order_history.transaksi_id', '=' ,'cn_transaksi.id')
-                            ->select('cn_transaksi.tgl_transaksi', 'cn_transaksi.nomor_transaksi', 'cn_transaksi.grand_total', 'cn_transaksi.status_transaksi', 'cn_order_history.transaksi_id')
-                            ->where('customer_id',1)->get();
-
-        return view('orderlist', compact('transactions'));
     }
 
     public function detail($transactionId)
@@ -120,6 +110,6 @@ class HistoryOrderController extends Controller
             ]
         )->first();
 
-        return view('detail-history-transaction', compact('transaction'));
+        return view('frontend.detail-history-transaction', compact('transaction'));
     }
 }

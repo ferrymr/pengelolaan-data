@@ -37,7 +37,6 @@
                         <div class="details-thumd" style="padding-top: 0px">
                             <div class="image-preview-container image-thick-box image_preview_container">
                                 <img id="img_zoom" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
-                                {{-- <img id="img_zoom" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt=""> --}}
                                 <a href="#" class="btn-zoom open_qv"><i class="fa fa-search" aria-hidden="true"></i></a>
                             </div>
                             <div class="product_preview image-small">
@@ -55,20 +54,6 @@
                                         <img src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-large-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
                                     </a>
                                 </div>
-                                {{-- <div id="thumbnails" class="thumbnails_carousel owl-carousel" data-nav="true" data-autoplay="false" data-dots="false" data-loop="false" data-margin="25" data-responsive='{"0":{"items":3},"480":{"items":3},"600":{"items":3},"1000":{"items":3}}' >
-                                    <a href="#" data-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" class="active">
-                                        <img src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-large-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt="">
-                                    </a>
-                                    <a href="#" data-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg">
-                                        <img src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-large-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt="">
-                                    </a>
-                                    <a href="#" data-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg">
-                                        <img src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-large-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt="">
-                                    </a>
-                                    <a href="#" data-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-zoom-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg">
-                                        <img src="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" data-large-image="https://shop.bellezkin.com/api/public/assets/img/products/19004.jpg" alt="">
-                                    </a>
-                                </div> --}}
                             </div>
                         </div>
                         <div class="details-infor">
@@ -88,32 +73,6 @@
                             <div class="product-details-description">
                                 <p class="desc">{{ $product->deskripsi_lengkap }}</p>
                             </div>
-                            {{-- <div class="variations">
-                                <div class="attribute attribute_color">
-                                    <div class="color-text text-attribute">
-                                        Color: <span>White/Black/Teal/Brown</span>
-                                    </div>
-                                    <div class="list-color list-item">
-                                        <a href="#" class="color1"></a>
-                                        <a href="#" class="color2"></a>
-                                        <a href="#" class="color3 active"></a>
-                                        <a href="#" class="color4"></a>
-                                    </div>
-                                </div>
-                                <div class="attribute attribute_size">
-                                    <div class="size-text text-attribute">
-                                        Size: <span>Please select the size below</span> 
-                                    </div>
-                                    <div class="list-size list-item">
-                                        <a href="#" class="">xs</a>
-                                        <a href="#" class="">s</a>
-                                        <a href="#" class="active">m</a>
-                                        <a href="#" class="">l</a>
-                                        <a href="#" class="">xl</a>
-                                        <a href="#" class="">xxl</a>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <div class="group-button">
                                 <div class="quantity-add-to-cart">
                                     <div class="quantity">
@@ -139,9 +98,7 @@
                                         untuk langsung terhubung via WhatssApp 
                                     </p>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
                     

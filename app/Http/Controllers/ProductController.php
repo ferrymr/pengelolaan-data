@@ -14,8 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('index', compact('products'));
+        //
     }
 
     /**
@@ -47,18 +46,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $product = \DB::table('cn_barang')
-                ->leftJoin('cn_des_pro', 'cn_barang.kode_barang', '=', 'cn_des_pro.kode')
-                ->select('kode_barang', 'cn_barang.nama', 'h_nomem AS harga', 'jenis AS kategori', 'des1 AS deskripsi_lengkap', 'des_singkat AS deskripsi_singkat', 'pakai AS cara_pakai', 'manfaat')
-                ->where('cn_barang.kode_barang', $product->kode_barang)
-                ->first();
-
-        $relatedProducts = Product::select(\DB::raw('CONVERT(kode_barang, CHAR) AS kode'), 'nama', 'h_nomem AS harga')
-                ->where('jenis', $product->kategori)
-                ->limit(10)
-                ->get();
-
-        return view('product-detail', compact('product', 'relatedProducts'));
+        //
     }
 
     /**

@@ -29,7 +29,7 @@ class AddressController extends Controller
         
         $shippings = ShippingAddress::where('user_id', $userId)->get();
 
-        return view('address-list', compact('shippings'));
+        return view('frontend.address-list', compact('shippings'));
     }
 
     /**
@@ -40,7 +40,7 @@ class AddressController extends Controller
     public function create()
     {
         $daftarProvinsi  = $this->getProvinces();
-        return view('address-form', compact('daftarProvinsi'));        
+        return view('frontend.address-form', compact('daftarProvinsi'));        
     }
     
 
@@ -74,6 +74,10 @@ class AddressController extends Controller
         ]);
             
         try {
+
+            // check if there is default address 
+            $isAvaiable = ShippingAddress::where('user_id', $userId)->count();
+
             $newShippingAddress = ShippingAddress::create([
                 'user_id' => $userId,
                 'nama' => $request->nama,
@@ -85,7 +89,8 @@ class AddressController extends Controller
                 'kecamatan_id' => $kecamatan->subdistrict_id,
                 'kecamatan_nama' => $kecamatan->name,
                 'alamat' => $request->alamat,
-                'kode_pos' => $request->kode_pos
+                'kode_pos' => $request->kode_pos,
+                'is_default' => ($isAvaiable > 0) ? 0 : 1
             ]);
 
             return redirect(route('address.index'))->with(['success' => 'Alamat pengiriman berhasil ditambahkan']);
@@ -123,7 +128,7 @@ class AddressController extends Controller
         $daftarKota         = Kota::where('province_id', $shipping->provinsi_id)->get();
         $daftarKecamatan    = Kecamatan::where('city_id', $shipping->kota_id)->get();
 
-        return view('address-edit', compact('shipping', 'daftarProvinsi','daftarKota','daftarKecamatan'));
+        return view('frontend.address-edit', compact('shipping', 'daftarProvinsi','daftarKota','daftarKecamatan'));
     }
 
     /**

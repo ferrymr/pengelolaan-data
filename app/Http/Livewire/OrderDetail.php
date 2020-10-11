@@ -40,7 +40,7 @@ class OrderDetail extends Component
         $this->history = $detail->history;
         $this->shippingAddress = $detail->shippingAddress;
 
-        return view('detail-history-transaction');
+        return view('frontend.detail-history-transaction');
     }
 
     public function render()
