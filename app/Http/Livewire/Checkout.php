@@ -515,7 +515,7 @@ class Checkout extends Component
             }
     
             session()->flash('success', 'Transaksi berhasil!');
-            return redirect()->route('order-history.index');
+            return redirect()->route('order-history-status');
         } catch (\Exception $e) {
             DB::rollback();
             dd($e->getMessage());

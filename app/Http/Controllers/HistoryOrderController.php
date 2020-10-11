@@ -18,46 +18,10 @@ class HistoryOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($status = '')
     {
 
-        // $customerId =  HistoryTransaction::where('customer_id',1)->get();
-
-        // $transactions = DB::table('cn_transaksi')
-        //     ->join('cn_order_history', 'cn_order_history.transaksi_id', '=' ,'cn_transaksi.id')
-        //     ->select('cn_transaksi.tgl_transaksi', 'cn_transaksi.nomor_transaksi', 'cn_transaksi.grand_total', 'cn_order_history.transaksi_id')
-        //     ->where('customer_id',1)->get();
-
-        // $transactions = HistoryTransaction::find([1]);
-
-        // $transactions = array();
-        // return view('history-transaction', compact('transactions'));
-
         $userId = auth()->user()->id;
-
-        // \DB::connection()->enableQueryLog();
-
-        /* $transactions = User::whereHas('transactions')->where('id', $userId)->with(
-            [
-                'transactions' => function ($transaction) {
-                    $transaction->select('id', 'user_id', 'tgl_transaksi', 'nomor_transaksi', 'metode_pengiriman', 'kurir', 'subtotal', 'shipping_fee', 'grand_total', 'total_berat', 'note', 'bank');
-                    $transaction->with(
-                        [
-                            'items' => function($item) {
-                                $item->select('transaksi_id', 'kode_barang', 'harga', 'qty', 'subtotal');
-                            },
-                            'history' => function($history) {
-                                $history->select('transaksi_id', 'tanggal', 'keterangan');
-                            },
-                            'shippingAddress' => function($address) {
-                                $address->select('cn_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');
-                            }
-                        ]
-                    );
-                }
-            ]
-        )->get(); */
-
         $user = User::find($userId);
         $transactions = $user->transactions()->with(
             [
@@ -71,87 +35,71 @@ class HistoryOrderController extends Controller
                     $address->select('cn_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');
                 }
             ]
-        )->get();
-
-        // $queries = \DB::getQueryLog();
-        // return dd($queries);
+        );
         
-        return view('history-transaction-order-list', compact('transactions'));
+        if($status == 'waiting') {
+            $transactions = $transactions
+                            ->whereIn('status_transaksi', ['PLACE ORDER', 'TRANSFERRED']);
+        }  else if ($status == 'process') {
+            $transactions = $transactions
+                            ->whereIn('status_transaksi', ['PAYMENT CONFIRMED', 'PACKED', 'SHIPPED']);        
+        } else if ($status == 'done') {
+            $transactions = $transactions
+                            ->whereIn('status_transaksi', ['RECEIVED']);
+        }
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
+        $transactions = $transactions->get();
         
-    }
+        // Place order
+        $totalPlaceOrder = $user->transactions()
+                                ->where('status_transaksi', 'PLACE ORDER')
+                                ->count();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // Transfered
+        $totalTransfered = $user->transactions()
+                                ->where('status_transaksi', 'TRANSFERRED')
+                                ->count();
+        
+        // Payment confirmed
+        $totalPaymentConfirmed = $user->transactions()
+                                    ->where('status_transaksi', 'PAYMENT CONFIRMED')
+                                    ->count();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-      
-    }
+        // Packed
+        $totalPacked = $user->transactions()
+                                    ->where('status_transaksi', 'PACKED')
+                                    ->count();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        // Shipped
+        $totalShipped = $user->transactions()
+                                    ->where('status_transaksi', 'SHIPPED')
+                                    ->count();
+        
+        // Pesanan selesai
+        $totalPesananSelesai = $user->transactions()
+                                    ->where('status_transaksi', 'RECEIVED')
+                                    ->count();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $totalMenungguPembayaran = $totalPlaceOrder + $totalTransfered;
+        $totalPesananDiproses = $totalPaymentConfirmed + $totalPacked + $totalShipped;
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('history-transaction-order-list', 
+                compact(
+                    'transactions',
+                    'totalMenungguPembayaran',
+                    'totalPesananDiproses',
+                    'totalPesananSelesai',
+                    'status'
+                ));
+
     }
 
     public function orderlist()
     {
         $transactions = DB::table('cn_transaksi')
-        ->join('cn_order_history', 'cn_order_history.transaksi_id', '=' ,'cn_transaksi.id')
-        ->select('cn_transaksi.tgl_transaksi', 'cn_transaksi.nomor_transaksi', 'cn_transaksi.grand_total', 'cn_transaksi.status_transaksi', 'cn_order_history.transaksi_id')
-        ->where('customer_id',1)->get();
+                            ->join('cn_order_history', 'cn_order_history.transaksi_id', '=' ,'cn_transaksi.id')
+                            ->select('cn_transaksi.tgl_transaksi', 'cn_transaksi.nomor_transaksi', 'cn_transaksi.grand_total', 'cn_transaksi.status_transaksi', 'cn_order_history.transaksi_id')
+                            ->where('customer_id',1)->get();
 
         return view('orderlist', compact('transactions'));
     }
@@ -173,27 +121,5 @@ class HistoryOrderController extends Controller
         )->first();
 
         return view('detail-history-transaction', compact('transaction'));
-    }
-
-    public function waitingForPayment()
-    {
-        $userId = auth()->user()->id;
-
-        $user = User::find($userId);
-        $transactions = $user->transactions()->with(
-            [
-                'items' => function($item) {
-                    $item->select('transaksi_id', 'kode_barang', 'harga', 'qty', 'subtotal');
-                },
-                'history' => function($history) {
-                    $history->select('transaksi_id', 'tanggal', 'keterangan');
-                },
-                'shippingAddress' => function($address) {
-                    $address->select('cn_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');
-                }
-            ]
-        )->where('status_transaksi', 'PLACE ORDER')->get();
-
-        return view('history-transaction', compact('transactions'));
     }
 }

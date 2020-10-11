@@ -33,18 +33,21 @@ Route::get('/products/category/{category}', 'ProductController@category')->name(
 Route::livewire('/mycart', 'my-cart')->name('mycart');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('profile', 'ProfileController');
-    Route::get('address/set-default/{addressId}', 'AddressController@setDefault')->name('address.setdefault');
-    Route::resource('address', 'AddressController');
+
+    // Checkout
     Route::livewire('/transaction/checkout', 'checkout')->name('checkout');
     
+    // Add address
     Route::get('checkout/new-address', 'AddressController@newAddressPostCart')->name('address.new-address-post-cart');
     Route::get('checkout/select-address', 'AddressController@selectAddressPostCart')->name('address.select-address-post-cart');
     Route::post('checkout/save-address-post-cart', 'AddressController@storePostCart')->name('address.save-address-post-cart');
     Route::get('checkout/set-default-post-cart/{addressId}', 'AddressController@setDefaultPostCart')->name('address.set-default-post-cart');
+
+    Route::resource('profile', 'ProfileController');
+    Route::get('address/set-default/{addressId}', 'AddressController@setDefault')->name('address.setdefault');
+    Route::resource('address', 'AddressController');    
     
-    Route::get('order-history/waiting-for-payment', 'HistoryOrderController@waitingForPayment')->name('order-history.waiting-for-payment');
-    Route::resource('order-history', 'HistoryOrderController');
+    Route::get('/order-history/{status?}', 'HistoryOrderController@index')->name('order-history-status');
     Route::get('/orderlist', 'HistoryOrderController@orderlist')->name('history-order.orderlist');
     // Route::get('/order-history/{transactionId}/detail', 'HistoryOrderController@detail')->name('order-history.detail');
     Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');

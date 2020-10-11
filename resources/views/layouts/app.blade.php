@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style-custom.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 
     @yield('styles')
     @livewireStyles
@@ -71,6 +72,7 @@
     <script src="{{ asset('assets/js/mobilemenu.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.mCustomScrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/js/frontend-plugin.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
     @yield('scripts')
     @livewireScripts

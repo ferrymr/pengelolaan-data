@@ -40,9 +40,7 @@ class AddressController extends Controller
     public function create()
     {
         $daftarProvinsi  = $this->getProvinces();
-
-        return view('address-form', compact('daftarProvinsi'));
-        
+        return view('address-form', compact('daftarProvinsi'));        
     }
     
 
@@ -237,7 +235,6 @@ class AddressController extends Controller
     public function newAddressPostCart()
     {
         $daftarProvinsi  = $this->getProvinces();
-
         return view('post-checkout.new-address', compact('daftarProvinsi'));
     }
 

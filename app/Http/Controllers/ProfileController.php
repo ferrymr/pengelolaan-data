@@ -20,10 +20,10 @@ class ProfileController extends Controller
     public function index()
     {
         $user = auth()->user();
-
         $profile = User::find($user->id);
 
-        return view('profile', compact('profile'));
+        return view('profile', 
+            compact('profile'));
     }
 
     /**
@@ -67,7 +67,6 @@ class ProfileController extends Controller
     public function edit($id)
     {
         $user = auth()->user();
-
         $profile = User::find($user->id);
 
         return view('edit-profile', compact('profile'));

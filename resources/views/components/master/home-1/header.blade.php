@@ -37,7 +37,7 @@
                 <div class="col-lg-4 col-sm-6 col-md-6 col-xs-5 col-ts-12">
                     <div class="logo">
                         <a href="index.html">
-                            <img src="assets/images/logo.png" alt="">
+                            <img src="{{ asset('assets/images/logo.png') }}" alt="">
                         </a>
                     </div>
                 </div>

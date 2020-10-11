@@ -15,7 +15,7 @@
                     </li>
                     <li class="trail-item trail-end active">
                         <span>
-                            Shopping Cart
+                            My Cart
                         </span>
                     </li>
                 </ul>
@@ -24,7 +24,7 @@
             {{-- main content --}}
             <div class="row">
                 <div class="main-content-cart main-content col-sm-12">
-                    <h3 class="custom_blog_title">#Shopping Cart</h3>
+                    <h3 class="custom_blog_title">#My Cart</h3>
 
                     <div class="page-main-content">
                         <div class="shoppingcart-content">
@@ -136,9 +136,9 @@
                                     Kembali belanja
                                 </a>
                                 @if(!empty($cartItems))
-                                    <button class="button btn-cart-to-checkout">
+                                    <a href="{{ $nextPageLink }}" class="button btn-cart-to-checkout">
                                         Checkout
-                                    </button>
+                                    </a>
                                 @endif
                             </div>
                         </div>
