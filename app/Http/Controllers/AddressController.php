@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\ShippingAddress;
+use App\Models\ShippingAddress;
+use App\Models\Provinsi;
+use App\Models\Kota;
+use App\Models\Kecamatan;
+use App\Models\User;
 use Illuminate\Http\Request;
 // use DB;
 use Illuminate\Support\Facades\Http;
@@ -11,10 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ProvinceResource;
 use App\Http\Resources\CityResource;
 use App\Http\Resources\SubdistrictResource;
-use App\Provinsi;
-use App\Kota;
-use App\Kecamatan;
-use App\User;
+
 class AddressController extends Controller
 {
     /**

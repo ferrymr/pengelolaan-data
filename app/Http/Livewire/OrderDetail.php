@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Transaction;
+use App\Models\Transaction;
 use Livewire\Component;
 
 class OrderDetail extends Component

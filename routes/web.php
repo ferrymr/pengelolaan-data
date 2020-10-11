@@ -1,9 +1,36 @@
 <?php
 
-use App\Http\Controllers\barangController;
-use Illuminate\Support\Facades\Route;
+Auth::routes();
 
 // =============================== FRONTEND ===============================
+
+// Homepage
+Route::get('/', 'IndexController@index')->name('home');
+
+// Payment
+Route::get('/payment', function () {
+    return view('payment');
+});
+
+// Faqs
+Route::get('/faqs', function () {
+    return view('faqs');
+});
+
+// Privacy policy
+Route::get('/return-policy', function () {
+    return view('return-policy');
+});
+
+// Detail product
+Route::resource('products', 'ProductController')->except(['show']);
+Route::livewire('/products/{productCode}', 'product-detail')->name('products.show');
+
+// List product by category
+Route::get('/products/category/{category}', 'ProductController@category')->name('products.category');
+
+// Cart
+Route::livewire('/mycart', 'my-cart')->name('mycart');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('profile', 'ProfileController');
@@ -27,14 +54,6 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::get('/transaction/checkout', 'TransactionController@checkout')->name('checkout');
     Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus')->name('transaction.change-status');
 });
-
-// Route::get('/', 'IndexController@index')->name('home');
-
-Route::livewire('/products/{productCode}', 'product-detail')->name('products.show');
-Route::get('/products/category/{category}', 'ProductController@category')->name('products.category');
-Route::resource('products', 'ProductController')->except(['show']);
-
-Route::livewire('/mycart', 'my-cart')->name('mycart');
 
 Route::get('/spb/check', 'SpbController@check');
 
@@ -62,20 +81,6 @@ Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('
     return view('checkout');
 }); */
 
-// static page
-
-Route::get('/payment', function () {
-    return view('payment');
-});
-
-Route::get('/faqs', function () {
-    return view('faqs');
-});
-
-Route::get('/return-policy', function () {
-    return view('return-policy');
-});
-
 // authentication google
 
 Route::get('/google', function () {
@@ -84,8 +89,6 @@ Route::get('/google', function () {
 
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
-
-Auth::routes();
 
 // =============================== BACKEND ===============================
 

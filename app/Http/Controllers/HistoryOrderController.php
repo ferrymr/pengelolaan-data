@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\HistoryTransaction;
-use App\ShippingAddress;
-use App\Transaction;
-use App\User;
+use App\Models\HistoryTransaction;
+use App\Models\ShippingAddress;
+use App\Models\Transaction;
+use App\Models\User;
 
 // use App\DetailTransaksi;
 

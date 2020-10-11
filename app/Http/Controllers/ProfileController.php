@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Profile;
-use App\ShippingAddress;
-use App\User;
+use App\Models\Profile;
+use App\Models\ShippingAddress;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 

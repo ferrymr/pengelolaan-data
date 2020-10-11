@@ -3,9 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Facades\Cart;
-use App\Product;
-use App\ShippingAddress;
 use Livewire\Component;
+use App\Models\Product;
+use App\Models\ShippingAddress;
 
 class MyCart extends Component
 {

@@ -1,6 +1,5 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/snackbar.min.css') }}" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
     <style>
         .btn-consultation-wa {
             align-self: baseline;
@@ -132,18 +131,19 @@
                                     <p>Temukan produk perawatan yang sesuai dengan kebutuhanmu hanya Bersama Bellezkin. Dapatkan gratis konsultasi bersama Beauty Consultant kami :)</p> 
                                 </div>
                                 <div style="display: flex;flex-direction: column">
-                                    <a href="https://api.whatsapp.com/send?phone=628112288142&amp;text=Halo!%0ASaya%20ingin%20ingin%20konsultasi%20lebih%20lanjut%20mengenai%20produk%20Bellezkin%0ASource : https://shop.bellezkin.com/products/19004/detail/" target="_blank" class="button btn-consultation-wa"><i class="fab fa-whatsapp logo_bc"></i>&nbsp;
-                                        Contact Beauty Consultant
+                                    <a href="https://api.whatsapp.com/send?phone=628112288142&amp;text=Halo!%0ASaya%20ingin%20ingin%20konsultasi%20lebih%20lanjut%20mengenai%20produk%20Bellezkin%0ASource : https://shop.bellezkin.com/products/19004/detail/" target="_blank" class="button btn-consultation-wa">
+                                        <i class="fa fa-whatsapp logo_bc"></i>&nbsp; Contact Beauty Consultant
                                     </a>
-                                    <p id="warn" style="margin-top: 16px">Klik <i class="fas fa-arrow-up"></i> untuk langsung terhubung via WhatssApp </p>
+                                    <p id="warn" style="margin-top: 16px">
+                                        Klik <i class="fa fa-arrow-up"></i> 
+                                        untuk langsung terhubung via WhatssApp 
+                                    </p>
                                 </div>
 
                             </div>
 
                         </div>
                     </div>
-
-
                     
                     {{-- details atbs --}}
                     <div class="tab-details-product">

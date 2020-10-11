@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Facades\Cart;
-use App\ShippingAddress;
+use App\Models\ShippingAddress;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
 use Livewire\Component;
 use DB;
