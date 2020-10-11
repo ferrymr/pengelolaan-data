@@ -5,7 +5,7 @@
                 <!-- banner -->
                 <div class="banner">
                     <div class="item-banner style3">
-                        <div class="inner">
+                        <div class="inner" style="background-image: url(https://source.unsplash.com/770x300/?cosmetics)">
                             <div class="banner-content">
                                 <h4 class="turan-subtitle">Beard Essential!</h4>
                                 <h3 class="title">Grow a Beard</h3>
@@ -21,7 +21,7 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12">
                 <!-- newsletter -->
-                <div class="turan-newsletter  default">
+                <div class="turan-newsletter  default" style="background-image: url(https://source.unsplash.com/370x300/?cosmetics)">
                     <div class="newsletter-head">
                         <h3 class="title">Subscribe now!</h3>
                         <div class="subtitle">Get more special Deals, Events<br>& Promotions</div>

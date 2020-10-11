@@ -187,7 +187,7 @@
                                             </div>
                                             <div class="menu-user">
                                                 <a class="dropdown-item" href="#">History Transaksi</a>
-                                                <a class="dropdown-item" href="#">Settings</a>
+                                                <a class="dropdown-item" href="{{ route('profile.index') }}">Settings</a>
                                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                     {{ __('Logout') }}
                                                 </a>

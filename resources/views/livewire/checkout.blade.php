@@ -31,14 +31,18 @@
             {{-- main content --}}
             <div class="row">
                 <div class="main-content-cart main-content col-sm-12">
+                    <div class="payment-method-form checkout-form">
                     <div class="row">
+
+                        {{-- left side --}}
                         <div class="col-md-8">
+                            <h3 class="title-form">Metode pembayaran & pengiriman</h3>
 
                             <div class="row">
-                                <div class="col-md-6" style="margin-top:16px">
-                                    <label class="text">Pilih Bank</label>
-                                    <select wire:model="selectedBank" tabindex="1" class="input-text" style="width: 100%;">
-                                        <option value="" disabled="disabled" selected="selected">-- Pilih Bank --</option>
+                                <div class="col-md-6" style="margin-top:10px">
+                                    <label class="text">Bank Account</label>
+                                    <select wire:model="selectedBank" tabindex="1" class="input-text select2" style="width: 100%;">
+                                        <option value="" disabled="disabled" selected="selected">Pilih Bank</option>
                                         @foreach ($bankList as $bank)
                                             <option value="{{ $bank }}">{{ $bank }}</option>
                                         @endforeach
@@ -47,9 +51,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6" style="margin-top:16px">
-                                    <label class="text">Pilih Lokasi Stockist</label>
-                                    <select wire:model="selectedSpb" tabindex="1" class="input-text" style="width: 100%;">
-                                        <option value="" disabled="disabled" selected="selected">-- Pilih Lokasi Stockist --</option> 
+                                    <label class="text">Lokasi Stockist</label>
+                                    <select wire:model="selectedSpb" tabindex="1" class="input-text select2" style="width: 100%;">
+                                        <option value="" disabled="disabled" selected="selected">Pilih Lokasi Stockist</option> 
                                         @foreach ($spbList as $spb)
                                             <option value="{{ $spb['code'] }}" {{ $spb['disabled'] }}>{{ $spb['city_name'] }} - {{ $spb['subdistrict_name'] }}</option>
                                         @endforeach
@@ -58,12 +62,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6" style="margin-top:16px">
-                                    <label class="text">Terima Barang Dari</label>
+                                    <label class="text">Metode pengiriman</label>
                                     <div>
                                         <input type="radio" wire:model="shippingMethod" {{ !$selectedSpb ? 'disabled' : '' }} name="shipping_method" id="expedition" value="EXPEDITION" style="margin-right: 5px;">
                                         <label for="expedition" style="margin-right: 10px;">Via Kurir</label>
                                         <input type="radio" wire:model="shippingMethod" {{ !$selectedSpb ? 'disabled' : '' }} name="shipping_method" id="immediate" value="IMMEDIATE" style="margin-right: 5px;">
-                                        <label for="immediate" style="margin-right: 10px;">Ambil ke Tempat</label>
+                                        <label for="immediate" style="margin-right: 10px;">Ambil di Tempat</label>
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +83,7 @@
                                 <div class="col-md-6" style="margin-top:16px">
                                     <label class="text">Pilih Kurir</label>
                                     <select wire:model="courier" {{ !$defaultShippingAddress ? 'disabled' : '' }} tabindex="1" class="input-text" style="width: 100%;">
-                                        <option value="" disabled="disabled" selected="selected">-- Pilih Kurir --</option> 
+                                        <option value="" disabled="disabled" selected="selected">Pilih Jasa Pengiriman</option> 
                                         <option value="JNE">JNE</option>
                                         <option value="JNT">JNT</option>
                                     </select>
@@ -87,32 +91,33 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6" style="margin-top: 16px">
-                                    <label for="deliverto" style="font-weight: bold">Dikirim ke</label>
+                                    <label for="deliverto" style="font-weight: bold">Dikirim ke alamat:</label>
                                     @if($defaultShippingAddress)
-                                    <div>
-                                        <div class="header-address">
-                                            <span>{{ $defaultShippingAddress->nama }}</span>
+                                        <div class="payment-method-form checkout-form" style="padding: 18px 0px 0px 27px">
+                                            <div class="body-address">
+                                                <p class="receiver-name">
+                                                    <b>Penerima:</b> {{ $defaultShippingAddress->nama }}<br>
+                                                    <b>Telepon:</b> {{ $defaultShippingAddress->telepon }}<br>
+                                                    <b>Alamat:</b> {{ $defaultShippingAddress->alamat }}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="body-address">
-                                            <p class="receiver-name">{{ $defaultShippingAddress->nama }}</p>
-                                            <p class="receiver-phone">{{ $defaultShippingAddress->telepon }}</p>
-                                            <p class="detail-address">{{ $defaultShippingAddress->alamat }}</p>
-                                        </div>
-                                    </div>
                                     @else
-                                    <div class="header-address">
-                                        <span class="text-danger">
-                                            <b><i>Warning:</i></b> <br/>
-                                            <i>Anda belum mengatur alamat pengiriman utama.</i> <br/>
-                                            <i>Silahkan atur alamat pengiriman utama untuk dapat memilih kurir</i>
-                                        </span>
-                                    </div>
+                                        <div class="header-address">
+                                            <span class="text-danger">
+                                                <b><i>Warning:</i></b> <br/>
+                                                <i>Anda belum mengatur alamat pengiriman utama.</i> <br/>
+                                                <i>Silahkan atur alamat pengiriman utama untuk dapat memilih kurir</i>
+                                            </span>
+                                        </div>
                                     @endif
-                                    <a href="{{ route('address.index') }}">Ubah Alamat Utama</a>
+                                    <a class="button btn-pay-now" href="{{ route('address.index') }}">Pilih alamat lain</a>
                                 </div>
                             </div>
                             @endif
                         </div>
+
+                        {{-- right side --}}
                         <div class="col-md-4">
                             <div class="card-total-cart" id="card-cart">
                                 <div>
@@ -154,6 +159,8 @@
                                 </div>
                             </div>
                         </div>
+
+                    </div>
                     </div>
                 </div>
             </div>
@@ -165,3 +172,12 @@
 </div>
 <br>
 <br>
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            // activate select2
+            // $(".select2").select2();
+        });
+    </script>
+@endsection

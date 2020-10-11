@@ -201,7 +201,7 @@ class User extends Authenticatable
         $role_user = array(
             'role_id' => $role_id,
             'user_id' => $id,
-            'user_type' => 'App\User'
+            'user_type' => 'App\Models\User'
         );
         return DB::table('role_user')->insert($role_user);
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use DB;
 
@@ -37,9 +37,17 @@ class IndexController extends Controller
         //                 ->limit(16)
         //                 ->get()->toArray();
 
-        $bestSellingProducts = Product::select('kode_barang', 'nama', 'h_nomem')->where('unit', 'SERIES')->limit(8)->get();
+        $bestSellingProducts = Product::select('kode_barang', 'nama', 'h_nomem')
+                                ->where('unit', 'SERIES')
+                                ->limit(8)
+                                ->get();
 
-        return view('index', compact('bestSellingProducts', 'bestOfPieces', 'bestOfSeries'));
+        return view('frontend.index', 
+                compact(
+                    'bestSellingProducts', 
+                    'bestOfPieces', 
+                    'bestOfSeries')
+                );
     }
 
     public function category($category = "*") {
