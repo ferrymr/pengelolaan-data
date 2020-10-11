@@ -9,6 +9,8 @@ use Yajra\DataTables\DataTables;
 use App\Models\Gallery;
 use App\Models\User;
 use App\Models\Role;
+use File;
+use Illuminate\Http\Response;
 
 class GalleryController extends Controller
 {
@@ -35,9 +37,9 @@ class GalleryController extends Controller
         $gallery = $this->galleryRepo->getAll();
 
         return Datatables::of($gallery)
-        ->addColumn('image', function ($gallery){
-            return route('admin.gallery.index', $gallery->id);
-        })
+            ->editColumn('image', function($gallery) {
+                return route('admin.gallery.getGambar', $gallery->id);                
+            })
             ->addColumn('action', function ($gallery){
                 return [
                     'edit' => route('admin.gallery.edit', $gallery->id),
@@ -69,19 +71,18 @@ class GalleryController extends Controller
 
         $gallery->kategori = $request->input('kategori');
         $gallery->nama_produk = $request->input('nama_produk');
-        $gallery->jenis = $request->input('jenis');
-        $gallery->nama_file = $request->input('nama_file');
+        $gallery->jenis = $request->input('jenis');        
 
-        if($request->hasFile('gambar')) {
+        if(!empty($request->file('gambar'))) {
+            // upload file
             $file = $request->file('gambar');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
-            $file->move('assets/images', $filename);
-            $gallery->gambar = $filename;
-        }else{
-            return $request;
-            $gallery->gambar = '';
+            $filename = 'product-' . date('YmdHis') . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('public/product', $filename);
+        }  else {
+            $filename = '';
         }
+
+        $gallery->gambar = $gallery->nama_file = $filename;
 
         $gallery->save();
         return redirect()->route('admin.gallery.index')->with('success', 'Data berhasil diupload');
@@ -139,6 +140,24 @@ class GalleryController extends Controller
             flash()->success('<i class="fa fa-info"></i>&nbsp; <strong>Data Tidak Ditemukan</strong>');
             return redirect()->route('admin.gallery.index');
         }
+        
+    }
+
+    public function getGambar($id) {
+
+        // get icon
+        $gambar = $this->galleryRepo->findId($id);
+        
+        // Access local storage
+        $path = storage_path('app/public/product/' . $gambar->gambar);
+
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        // Return file
+        return (new Response(File::get($path), 200))
+              ->header('Content-Type', File::mimeType($path));
         
     }
 

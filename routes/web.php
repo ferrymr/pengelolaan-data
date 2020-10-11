@@ -98,7 +98,12 @@ Route::group(['prefix' => '/admin/gallery/', 'as' => 'admin.gallery.'], function
     Route::get('add', 'GalleryController@create')->name('add');
     Route::post('store', 'GalleryController@store')->name('store');
     Route::post('update/{id}', 'GalleryController@update')->name('update');
-    
+});
+
+Route::group(['prefix' => '/admin/gallery/', 'as' => 'admin.gallery.'], function()
+{
+    // gambar
+    Route::get('/gambar/{id}', 'GalleryController@getGambar')->name('getGambar');
 });
 
 // Slider

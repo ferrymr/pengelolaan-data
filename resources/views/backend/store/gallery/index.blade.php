@@ -114,10 +114,10 @@
                 },
                
                 {
-                data: "gambar",
-                name: "gambar",
+                data: "image",
+                name: "image",
                 render: function (data) {
-                    return '<img class="img-fluid thumbnail" style="width:50%" src="images"'+ data +'/>';
+                    return '<img class="img-fluid thumbnail" style="width:50%" src="'+ data +'"/>';
                     }
                 },
 
