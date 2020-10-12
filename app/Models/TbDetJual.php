@@ -13,9 +13,11 @@ class TbDetJual extends Model
     protected $fillable = [
         'no_do',
         'kode_barang',
+        'jenis',
         'jumlah',
         'harga',
-        'nama'
+        'nama',
+        'total'
     ];
 
     public function headjual()

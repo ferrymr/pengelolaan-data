@@ -11,7 +11,7 @@ class TbHeadJual extends Model
     protected $primaryKey = 'no_do';
 
     protected $fillable = [
-        'no_do','tanggal','no_member','name','trans','bayar','cc','sub_total','note'
+        'no_do','tanggal','no_member','nama','trans','bayar','cc','sub_total','note'
     ];
 
     public function detjual()

@@ -24,7 +24,7 @@ class PenjualanController extends Controller
         $items = TbHeadJual::with('detjual')->get();
         // $items = TbHeadJual::all();
 
-        dd($items);
+        // dd($items);
        
        
 
@@ -36,18 +36,6 @@ class PenjualanController extends Controller
         $items = TbHeadJual::with('detjual')->get();
 
         return Datatables::of($items)
-            ->editColumn('role', function($user) {
-                return $user->roles[0]->display_name;
-            })
-            ->editColumn('created_at', function($user) {
-                return date('d F Y', strtotime($user->created_at));
-            })
-            ->addColumn('action', function ($user){
-                return [
-                    'edit' => route('admin.user.edit', $user->id),
-                    'hapus' => route('admin.user.delete', $user->id),
-                ];
-            })
             ->escapeColumns([])
             ->make(true);
 
@@ -76,6 +64,17 @@ class PenjualanController extends Controller
 
         return view('backend.order.penjualan.index');
         
+
+    }
+
+    public function update(Request $request, $no_do)
+    {
+        TbHeadJual::find($no_do)->update([
+            'tanggal'   => $request->tanggal,
+            'no_member' => $request->no_member,
+            'nama'      => $request->nama
+        ]);
+
 
     }
 
@@ -110,10 +109,6 @@ class PenjualanController extends Controller
             $create = TbHeadJual::create([
                 'no_do' => $index
             ]);
-
-            $create = TbDetJual::create([
-                'no_do' => $index
-            ]);
             return $index; 
         } else {
             $dates = Carbon::now();
@@ -123,9 +118,6 @@ class PenjualanController extends Controller
                 'no_do' => $index
             ]);
 
-            $create = TbDetJual::create([
-                'no_do' => $index
-            ]);
             return $index; 
         }
         
@@ -158,4 +150,69 @@ class PenjualanController extends Controller
         }
     }
 
+    public function update_penjualan(Request $request)
+    {
+        $headJual = TbHeadJual::find($request['no_invoice']);
+        if($headJual){
+            $headJual->tanggal = date('Y-m-d',strtotime($request['tanggal']));
+            $headJual->kode_cust = $request['no_member'];
+            $headJual->nama = $request['nama'];
+            $headJual->sub_total= $request['sub_total'];
+            $headJual->trans = $request['trans'];
+            $headJual->bayar = $request['bayar'];
+            $headJual->cc = $request['cc'];
+            $headJual->note = $request['note'];
+
+            
+
+            if($headJual->save()){
+                foreach($request['detail_barang'] as $row){
+                    $data[] = explode(',',$row);
+                }
+                unset($data[0]);
+               
+                foreach($data as $row){
+                    $kode_barang = str_replace('undefined','',$row[0]);
+                    $nama       = $row[1];
+                    $jenis      = $row[2];
+                    $jumlah     = $row[3];
+                    $harga      = $row[4];
+                    $total      = $row[5];
+    
+                        $detJual = TbDetJual::create([
+                        'no_do'       => $request['no_invoice'],
+                        'kode_barang' => $kode_barang,
+                        'nama'        => $nama,
+                        'jenis'       => $jenis,
+                        'jumlah'      => $jumlah,
+                        'harga'       => $harga,
+                        'total'       => $total
+                        ]);
+                        if ($detJual){
+                            $barang = TbBarang::find($kode_barang);
+                            $barang->stok = $barang->stok-$jumlah;
+                            $barang->save();
+                        }
+    
+                }
+
+                if($request['ongkir'] == 'OK001'){
+                    $nama_ongkir = "ONGKIR DALAM KOTA";
+                }else{
+                    $nama_ongkir = "ONGKIR LUAR KOTA";
+                }
+                $ongkir = TbDetJual::create([
+                    'no_do'       => $request['no_invoice'],
+                    'kode_barang' => $request['ongkir'],
+                    'nama'        => $nama_ongkir,
+                    'jenis'       => 'BIAYA LAIN-LAIN',
+                    'jumlah'      => '1',
+                    'harga'       => $request['harga'],
+                    'total'       => $request['harga']
+                    ]);
+            }
+            return redirect()->route('admin.penjualan.index');
+        }
+
+    }
 }

@@ -94,7 +94,7 @@
             <div class="form-group col-md-4 @if($errors->has('kode_barang')) has-error @endif">
                 <label for="kode_barang" class="col-sm-12 control-label">Pilih Jenis Ongkir *</label>    
                 <div class="col-sm-9">
-                    <select name="kode_barang" id="" class="form-control select2">
+                    <select name="kode_barang" id="" class="form-control select2 ongkir">
                         <option value="">Pilih Jenis Ongkir</option>
                         <option value="">OK001</option>
                         <option value="">OK002</option>
@@ -122,10 +122,10 @@
                     @endif
                 </div>
             </div>
-            <div class="form-group col-md-3 @if($errors->has('trans')) has-error @endif">
-                <label for="trans" class="col-sm-12 control-label">Pilih Jenis Pembayaran *</label>    
-                <div class="col-sm-8">
-                    <select name="trans" id="" class="form-control select2">
+            <div class="form-group col-md-4 @if($errors->has('trans')) has-error @endif">
+                <label for="trans" class="col-sm-9 control-label">Pilih Jenis Pembayaran *</label>    
+                <div class="col-sm-9">
+                    <select name="trans" id="" class="form-control select2 jenis-bayar">
                         <option value="">Pilih Jenis Pembayar</option>
                         <option value="">CREDIT</option>
                         <option value="">COD</option>
@@ -137,10 +137,10 @@
                     @endif
                 </div>
             </div>
-            <div class="form-group col-md-3 @if($errors->has('bayar')) has-error @endif">
-                <label for="bayar" class="col-sm-12 control-label">Type Pembayaran *</label>    
-                <div class="col-sm-8">
-                    <select name="bayar" id="" class="form-control select2">
+            <div class="form-group col-md-4 @if($errors->has('bayar')) has-error @endif">
+                <label for="bayar" class="col-sm-9 control-label">Type Pembayaran *</label>    
+                <div class="col-sm-9">
+                    <select name="bayar" id="" class="form-control select2 type-bayar">
                         <option value="">Type Pembayaran</option>
                         <option value="">DEBIT</option>
                         <option value="">CREDIT</option>
@@ -150,10 +150,10 @@
                     @endif
                 </div>
             </div>
-            <div class="form-group col-md-3 @if($errors->has('cc')) has-error @endif">
-                <label for="cc" class="col-sm-12 control-label">Pilih Jenis Bank *</label>    
-                <div class="col-sm-8">
-                    <select name="cc" id="" class="form-control select2">
+            <div class="form-group col-md-4 @if($errors->has('cc')) has-error @endif">
+                <label for="cc" class="col-sm-9 control-label">Pilih Jenis Bank *</label>    
+                <div class="col-sm-9">
+                    <select name="cc" id="" class="form-control select2 jenis-bank">
                         <option value="">Pilih Jenis Bank</option>
                         <option value="">BCA</option>
                         <option value="">BNI</option>
@@ -165,7 +165,7 @@
                     @endif
                 </div>
             </div>
-            <div class="form-group col-md-3 @if($errors->has('sub_total')) has-error @endif">
+            {{-- <div class="form-group col-md-3 @if($errors->has('sub_total')) has-error @endif">
                 <label for="sub_total" class="col-sm-12 control-label">Sub Total *</label>    
                 <div class="col-sm-8">
                     <input type="text" name="sub_total" class="form-control" id="" placeholder="Sub Total">
@@ -173,14 +173,14 @@
                         <span class="text-danger">{{ $errors->first('sub_total') }}</span>
                     @endif
                 </div>
-            </div>
+            </div> --}}
             </div>
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-info">Create</button>
             <a href="{{ route("admin.penjualan.add") }}" class="btn btn-default float-right">Cancel</a>
         </div>
-        <table class="table table-hovered table-striped table-bordered form-table" id="">
+        <table class="table table-hovered table-striped table-bordered form-table" id="penjualan-add">
             <thead>
                 <tr>
                     <th width="200px">Kode Barang</th>
@@ -198,29 +198,34 @@
                         <input type="text" name="kode_barang[]" class="form-control" id="kode_barang" placeholder="Kode Barang" >
                     </td>
                     <td>
-                        {{-- <select name="jenis[]" id="jenis" class="form-control select2">
-                            <option value="">Pilih Jenis </option>
-                            <option value="1">Satuan</option>
-                            <option value="2">Series</option>
-                        </select> --}}
                         <input type="text" name="nama[]" class="form-control" id="nama_p" placeholder="Nama" readonly="true" >
-
                     </td>
                     <td>
                         <input type="text" name="jenis[]" class="form-control" id="jenis" placeholder="Jenis" readonly="true" >
                     </td>
                     <td>
-                        <input type="text" name="jumlah" class="form-control" id="jumlah" placeholder="Qty" >
+                        <input type="text" name="jumlah[]" class="form-control input-jumlah" id="jumlah" placeholder="Qty" >
                     </td>
                     <td>
-                        <input type="text" name="harga[]" class="form-control" id="harga" placeholder="Harga" readonly="true" >
+                        <input type="text" name="harga[]" class="form-control input-harga" id="harga" placeholder="Harga" readonly="true" >
                     </td>
                     <td>
-                        <input type="text" name="total" class="form-control" id="total" placeholder="Total" >
+                        <input type="text" name="total[]" class="form-control input-total" id="total" readonly="true" placeholder="Total" value="0">
                     </td>
                     <td style="text-align: center"><a href="#" class="btn btn-danger">-</a></td>
                 </tr>
             </tbody>
+            <tfoot>
+                <tr class="grandTotal">
+                    <td style="border: none"></td>
+                    <td style="border: none"></td>
+                    <td style="border: none"></td>
+                    <td style="border: none"></td>
+                    <td>Total</td>
+                    <td><input type="text" name="sub_total" class="grand-total" value="0"></td>
+                    <td style="text-align: center"><a href="#" class="btn btn-primary update-data">Update</a></td>
+                </tr>
+            </tfoot>
         </table>        
     </div>    
 
@@ -233,6 +238,7 @@
 
 @section('js')
     <script>
+        // ===========================GET NAMA MEMBER========================================================
         var delay = (function () {
         var timer = 0;
         return function (callback, ms) {
@@ -271,6 +277,7 @@
         })
 
 
+        // ===========================================MEMBUAT NO INVOICE OTOMATIS===========================================
         function create_invoice(form) {
             console.log(form);
             $.ajax({
@@ -311,6 +318,7 @@
                         
         //         }});
         // });
+        // =====================================ADD ROW TABEL==================================================
         initKodeBarang();
             function initKodeBarang(){
                 console.log('initKodeBarang');
@@ -331,17 +339,14 @@
                         console.log(json);
                         self.parents('.detailLine').find('[name="nama[]"]').val(obj.nama);
                         self.parents('.detailLine').find('[name="jenis[]"]').val(obj.jenis);
-                        self.parents('.detailLine').find('[name="harga[]"]').val(obj.h_member);
-                        //$('#nama_p').val(obj.nama);
-                        //$('#jenis').val(obj.jenis);
-                        //$('#harga').val(obj.h_member);
-                        
+                        self.parents('.detailLine').find('[name="harga[]"]').val(obj.h_member);                        
                 }});
             }, 100);
         });
     }
         $('.addRow').on('click',function(){
             addRow();
+            grandTotal();
         });
 
         function addRow(){
@@ -350,27 +355,22 @@
                                     ' <input type="text" name="kode_barang[]" class="form-control" id="kode_barang" placeholder="Kode Barang" >'+
                               '</td>'+
                               '<td>'+
-                                    // '<select name="jenis" id="jenis" class="form-control select2">'+
-                                    //     '<option value="">Pilih Jenis </option>'+
-                                    //     '<option value="1">Satuan</option>'+
-                                    //     '<option value="2">Series</option>'+
-                                    // '</select>'+
-                                    '<input type="text" name="nama[]" class="form-control" id="nama" placeholder="Nama" readonly="true" >'+
-                                        '</td>'+
-                                        '<td>'+
-                                            '<input type="text" name="jenis[]" class="form-control" id="jenis" placeholder="Jenis" readonly="true" >'+
-                                        '</td>'+
-                                        '<td>'+
-                                            ' <input type="text" name="jumlah" class="form-control" id="jumlah" placeholder="Qty" >'+
-                                        '</td>'+
-                                        '<td>'+
-                                            ' <input type="text" name="harga[]" class="form-control" id="harga" placeholder="Harga" readonly="true" >'+
-                                        '</td>'+
-                                        '<td>'+
-                                            '<input type="text" name="total" class="form-control" id="total" placeholder="Total"'+
-                                        '</td>'+
-                                        '<td style="text-align: center"><a href="#" class="btn btn-danger remove">-</a>'
-                                        '</td>'+
+                                '<input type="text" name="nama[]" class="form-control" id="nama" placeholder="Nama" readonly="true" >'+
+                                '</td>'+
+                                '<td>'+
+                                    '<input type="text" name="jenis[]" class="form-control" id="jenis" placeholder="Jenis" readonly="true" >'+
+                                '</td>'+
+                                '<td>'+
+                                    ' <input type="text" name="jumlah[]" class="form-control input-jumlah" id="jumlah" placeholder="Qty" >'+
+                                '</td>'+
+                                '<td>'+
+                                    ' <input type="text" name="harga[]" class="form-control input-harga" id="harga" placeholder="Harga" readonly="true" >'+
+                                '</td>'+
+                                '<td>'+
+                                    '<input type="text" name="total[]" class="form-control input-total" id="total" readonly="true" placeholder="Total" value="0"'+
+                                '</td>'+
+                                '<td style="text-align: center"><a href="#" class="btn btn-danger remove">-</a>'
+                                '</td>'+
                      '</tr>'+
                 $('tbody').append(tr);
                 initKodeBarang();
@@ -378,9 +378,102 @@
 
            $('tbody').on('click', '.remove', function(){
                $(this).parent().parent().remove();
-           })
+               grandTotal();
+           });
+
+        $(document).on('change keyup', '.input-jumlah', function() {
+            var qty   = $(this).val();
+            var harga = $(this).closest('.detailLine').find('.input-harga').val();
+            var total = qty * harga;
+
+            $(this).closest('.detailLine').find('.input-total').val( total );
+            grandTotal();
+       
+        });
 
 
+        function grandTotal(){
+            var grandTotal = 0;
+            $('.detailLine').find('input[name="total[]"]').each(function(){
+                grandTotal += parseInt($(this).val());  
+               
+            });
+            $('.grand-total').val(grandTotal);  
+        }
+
+        // ==============================UPDATE=====================================================
+
+        $('.update-data').on('click',function(){
+            updateData();
+        });
+        function updateData(){
+            var no_invoice = $('input[name="no_do"]').val();
+            var tanggal = $('input[name="tanggal"]').val();
+            var no_member = $('input[name="no_member"]').val();
+            var nama = $('input[name="nama"]').val();
+            var ongkir = $('.ongkir').find(':selected').text();
+            var harga  = $('input[name="harga"]').val();
+            var note = $('input[name="note"]').val();
+            var trans = $('.jenis-bayar').find(':selected').text();
+            var bayar =  $('.type-bayar').find(':selected').text();
+            var cc =  $('.jenis-bank').find(':selected').text();
+            
+            //table detail penjualan
+            var kd_barang = [];
+            var test =[];
+            var i =1;
+            var a =1;
+            var b = 1;
+            var first = 7;
+            var cek = 7;
+            $('#penjualan-add').find('.detailLine input').each(function(){
+                if(cek == 7){
+                    b=0;
+                }
+
+                if(i++ == (first * a) - b){
+                   b++;
+                   a++;
+                   cek = first * a;
+                }
+                kd_barang[a] += $(this).val()+',';
+               
+            });
+            var detail_barang = kd_barang;
+            
+            
+
+            var grandTotal = 0;
+            $('.detailLine').find('input[name="total[]"]').each(function(){
+                grandTotal += parseInt($(this).val());  
+               
+            });
+            var sub_total = grandTotal;
+
+            $.ajax({
+                method: "POST",
+                url: "{{ route('admin.penjualan.update_penjualan') }}",
+                data: { 
+                    _token :"{{ csrf_token() }}",
+                    no_invoice: no_invoice, 
+                    tanggal: tanggal,
+                    no_member : no_member,
+                    nama    : nama,
+                    ongkir  : ongkir,
+                    harga : harga,
+                    note  : note,
+                    trans : trans,
+                    bayar : bayar,
+                    cc  : cc,
+                    detail_barang : detail_barang,
+                    sub_total : sub_total, 
+                     }
+            })
+            .done(function( msg ) {
+                console.log(msg);
+            });
+            
+        }
         
     </script>
 @stop
