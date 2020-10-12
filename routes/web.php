@@ -85,7 +85,7 @@ Route::get('/google', function () {
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
 
-Auth::routes();
+// Auth::routes();
 
 // =============================== BACKEND ===============================
 
@@ -130,4 +130,18 @@ Route::group([
     Route::post('update/{id}', 'UserController@update')->name('update');
 });
 
-
+// Series
+Route::group([
+    // 'middleware' => ['permission:access-user'], 
+    'prefix' => '/admin/series/', 
+    'as' => 'admin.series.'
+], function(){
+    Route::get('', 'SeriesController@index')->name('index');
+    Route::get('datatable', 'SeriesController@datatable')->name('datatable');
+    Route::get('edit/{kode_pack}', 'SeriesController@edit')->name('edit');
+    Route::get('view/{kode_pack}', 'SeriesController@view')->name('view');
+    Route::get('delete/{kode_pack}', 'SeriesController@destroy')->name('delete');
+    Route::get('add', 'SeriesController@create')->name('add');
+    Route::post('store', 'SeriesController@store')->name('store');
+    Route::post('update/{kode_pack}', 'SeriesController@update')->name('update');
+});
