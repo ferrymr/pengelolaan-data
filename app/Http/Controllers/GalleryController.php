@@ -100,7 +100,8 @@ class GalleryController extends Controller
             "kategori" => $request->input('kategori'),
             "nama_produk" => $request->input('nama_produk'),
             "jenis" => $request->input('jenis'),
-            // "nama_file" => $request->input('nama_file'),
+            
+            
         );
     
         $gallery = $this->galleryRepo->editGallery($param, $id, $request->input('role_id'));

@@ -44,6 +44,7 @@ class BarangController extends Controller
             // })
             ->addColumn('action', function ($barang){
                 return [
+                    'view' => route('admin.barang.view', $barang->kode_barang),
                     'edit' => route('admin.barang.edit', $barang->kode_barang),
                     'hapus' => route('admin.barang.delete', $barang->kode_barang),
                 ];
@@ -80,26 +81,25 @@ class BarangController extends Controller
         }
     }
 
-    public function show($kode_barang)
+    public function view($kode_barang)
     {
-        // wait.....
+        $user = Auth::user();
+        $barang = Barang::where('kode_barang', $kode_barang)->first();
+        $roles = $this->roleRepo->getAll();
+
+        return view('backend.store.barang.view')->with([
+            'user' => $user,
+            'roles' => $roles,
+            'barang' =>$barang
+        ]);
     }
 
     public function edit($kode_barang)
     {
-        // $data = DB::table('tb_barang')->where('kode_barang', $kode_barang)->first();
-        // return view('backend.store.barang.edit', compact('data'));
+        
         $user = Auth::user();
         $barang = Barang::where('kode_barang', $kode_barang)->first();
         $roles = $this->roleRepo->getAll();
-        
-        // return view('backend.store.barang.edit')->with([
-        //     'user' => $user,
-        //     'roles' => $roles,
-        // ]);
-        // $barang = Auth::Barang();
-        // $currentBarang = $this->barangRepo->findId($kode_barang);
-        // // $roles = $this->roleRepo->getAll();
 
         return view('backend.store.barang.edit')->with([
             'user' => $user,
@@ -110,7 +110,6 @@ class BarangController extends Controller
     
     public function update(CreateBarangRequest $request, $kode_barang)
     {
-        // dd($request->all());
 
         // password kosong
         $param = array(

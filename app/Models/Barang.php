@@ -122,6 +122,16 @@ class Barang extends Model
         }
     }
 
+    public function viewBarang($request, $kode_barang) {
+        $data = Barang::where('kode_barang', $kode_barang)->view($request);
+
+        if(!empty($data)) {
+            return $data;
+        } else {
+            return false;
+        }
+    }
+
 
 
 

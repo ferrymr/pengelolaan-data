@@ -3,7 +3,7 @@
 @section('title', 'Tambah Gallery')
 
 @section('content_header')
-    <h1>Tambah Gallery</h1>
+    <h1>Gallery</h1>
 @stop
 
 @section('content')
@@ -19,7 +19,7 @@
 
 <div class="card col-6">
     <div class="card-header">
-        <h3 class="card-title">Tambah Gambar</h3>
+        <h3 class="card-title">Tambah Data</h3>
     </div>
 <div class="card-body">
     {{ csrf_field() }}

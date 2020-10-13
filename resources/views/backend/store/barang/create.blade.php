@@ -3,7 +3,7 @@
 @section('title', 'Tambah Barang')
 
 @section('content_header')
-    <h1>Tambah Barang</h1>
+    <h1>Barang</h1>
 @stop
 
 @section('content')
@@ -18,7 +18,7 @@
 
 <div class="card col-6">
     <div class="card-header">
-        <h3 class="card-title">Tambah Barang</h3>
+        <h3 class="card-title">Tambah Data Barang</h3>
     </div>
     <div class="card-body">
         <div class="form-group @if($errors->has('no_member')) has-error @endif">

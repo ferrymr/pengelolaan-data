@@ -42,7 +42,7 @@
 
             <div id="action-template" style="display:none">
                 <div class="action-content">
-                    <a href="#" class="btn btn-sm btn-info btn-detail" title="Detail" style="display: none;">
+                    <a href="#" class="btn btn-warning btn-sm btn-info btn-detail" title="View" style="display: none; color: white">
                     <i class="fa fa-eye"></i>
                     </a>
                     <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
@@ -74,8 +74,8 @@
             function renderAction(data) {
                 var wrapper = $('<p></p>').append($('#action-template .action-content').clone());
 
-                if(data.action.detail) {
-                    wrapper.find('.btn-detail').attr('href', data.action.detail).show();
+                if(data.action.view) {
+                    wrapper.find('.btn-detail').attr('href', data.action.view).show();
                 }
                             
                 if(data.action.edit) {
