@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Profile;
-use App\ShippingAddress;
-use App\User;
+use App\Models\Profile;
+use App\Models\ShippingAddress;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,10 +20,10 @@ class ProfileController extends Controller
     public function index()
     {
         $user = auth()->user();
-
         $profile = User::find($user->id);
 
-        return view('profile', compact('profile'));
+        return view('frontend.profile', 
+            compact('profile'));
     }
 
     /**
@@ -67,10 +67,10 @@ class ProfileController extends Controller
     public function edit($id)
     {
         $user = auth()->user();
-
         $profile = User::find($user->id);
 
-        return view('edit-profile', compact('profile'));
+        return view('frontend.edit-profile', 
+                compact('profile'));
     }
 
     /**

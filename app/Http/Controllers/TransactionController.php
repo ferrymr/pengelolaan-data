@@ -274,7 +274,7 @@ class TransactionController extends Controller
             $status
         ]);
 
-        return redirect()->route('order-history.index')->with(['success' => 'Informasi transaksi berhasil diubah!']);
+        return redirect()->route('order-history-status')->with(['success' => 'Informasi transaksi berhasil diubah!']);
 
     }
 

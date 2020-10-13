@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Facades\Cart;
-use App\ShippingAddress;
+use App\Models\ShippingAddress;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
 use Livewire\Component;
 use DB;
@@ -515,7 +515,7 @@ class Checkout extends Component
             }
     
             session()->flash('success', 'Transaksi berhasil!');
-            return redirect()->route('order-history.index');
+            return redirect()->route('order-history-status');
         } catch (\Exception $e) {
             DB::rollback();
             dd($e->getMessage());

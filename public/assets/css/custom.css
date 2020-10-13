@@ -3,7 +3,7 @@
 @import "./profile.css";
 @import "./order-history.css";
 @import "./address.css";
-@import "./checkout.css";
+/* @import "./checkout.css"; */
 
 .d-flex {
     display: flex;

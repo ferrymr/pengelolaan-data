@@ -61,7 +61,11 @@
                                 {{-- <a href="#" class="button quick-wiew-button">Quick View</a> --}}
                             </div>
                             <div class="product-info">
-                                <h5 class="product-name product_title"><a href="#">{{ $product->nama }}</a></h5>
+                                <h5 class="product-name product_title">
+                                    <a href="{{ route('products.show', $product->kode_barang) }}">
+                                        {{ $product->nama }}
+                                    </a>
+                                </h5>
                                 <div class="group-info">
                                     {{-- <div class="stars-rating"><div class="star-rating"><span class="star-4"></span></div><div class="count-star">(14)</div></div> --}}
                                     <div class="price"><span>@currency($product->h_nomem)</span></div>

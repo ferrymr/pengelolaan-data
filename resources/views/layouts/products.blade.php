@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Shop</title>
+    <title>Bellezkin Store</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,8 +39,8 @@
     {{-- <x-header-mobile /> --}}
     @include('partials.header-mobile')
 
-     <!-- banner newsletter -->
-    <x-newsletter />
+    <!-- banner newsletter -->
+    {{-- <x-newsletter /> --}}
 
     <!-- text block -->
     <x-promo-text-bar>

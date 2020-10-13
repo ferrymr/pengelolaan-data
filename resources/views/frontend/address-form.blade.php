@@ -34,14 +34,8 @@
                             <div class="col-md-offset-2 col-lg-8 col-md-8 col-sm-12">
                                 <div class="login-item">
                                     <h5 class="title-login">Tambahkan alamat</h5>
-                                    <form action="{{ route('address.save-address-post-cart')}}" method="post" class="register">
+                                    <form action="{{ route('address.store')}}" method="post" class="register">
                                         @csrf
-                                        <div class="alert alert-warning" role="alert">
-                                            Silahkan tambahkan alamat pengiriman baru
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
 
                                         {{-- print error --}}
                                         @if ($errors->any())

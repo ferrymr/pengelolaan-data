@@ -12,7 +12,7 @@
                 <div class="breadcrumb-trail breadcrumbs">
                     <ul class="trail-items breadcrumb">
                         <li class="trail-item trail-begin"><a href="index.html">Home</a></li>
-                        <li class="trail-item trail-end active">Tambah alamat pengiriman</li>
+                        <li class="trail-item trail-end active">Edit alamat pengiriman</li>
                     </ul>
                 </div>
             </div>
@@ -33,66 +33,82 @@
 
                             <div class="col-md-offset-2 col-lg-8 col-md-8 col-sm-12">
                                 <div class="login-item">
-                                    <h5 class="title-login">Tambahkan alamat</h5>
-                                    <form action="{{ route('address.save-address-post-cart')}}" method="post" class="register">
+                                    <h5 class="title-login">Edit alamat</h5>
+                                    <form action="{{ route('address.update', $shipping->id) }}" method="post" class="register">
+                                        @method('put')
                                         @csrf
-                                        <div class="alert alert-warning" role="alert">
-                                            Silahkan tambahkan alamat pengiriman baru
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
 
-                                        {{-- print error --}}
                                         @if ($errors->any())
-                                            <x-alert type="danger" :message="$errors"/>
+                                            @alert(['type' => 'danger'])
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li> {{ $error }} </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endalert
                                         @endif
 
                                         <p class="form-row form-row-wide">
                                             <label class="text">Nama Lengkap <span style="color:red">*</span></label> 
-                                            <input type="text" id="nama" name="nama" class="input-text {{ $errors->has('nama') ? 'is-invalid':'' }}" value="{{ old('nama') }}" required>
+                                            <input type="text" 
+                                               id="nama" 
+                                               name="nama" 
+                                               value="{{ old('nama') ? old('nama') : $shipping->nama }}" 
+                                               class="input-text {{ $errors->has('nama') ? 'is-invalid':'' }}"  
+                                               style="width: 100%;"/>
                                         </p>
                                         <p class="form-row form-row-wide">
                                             <label class="text">Telepon <span style="color:red">*</span></label> 
-                                            <input type="text" id="telepon" name="telepon" class="input-text {{ $errors->has('telepon') ? 'is-invalid':'' }}" value="{{ old('telepon') }}" required>
+                                            <input type="text" 
+                                               id="telepon"
+                                               name="telepon" 
+                                               value="{{ old('telepon') ? old('telepon') : $shipping->telepon }}" 
+                                               class="input-text {{ $errors->has('telepon') ? 'is-invalid':'' }}" 
+                                               style="width: 100%;">
                                         </p>
                                         <p class="form-row form-row-wide">
                                             <label for="provinsi">Provinsi <span style="color:red">*</span></label>
-                                            <select class="form-control select2" id="provinsi" name="provinsi" {{ $errors->has('provinsi') ? 'is-invalid':'' }}" required>
-                                                <option value="" selected disabled>Pilih Provinsi</option>
+                                            <select class="form-control select2"  name="provinsi">
                                                 @foreach($daftarProvinsi as $provinsi)
-                                                    <option value="{{ $provinsi['province_id'] }}">{{ $provinsi['name'] }}</option>
+                                                    <option {{  ($provinsi['province_id']==$shipping->provinsi_id) ? 'selected':'' }} value="{{ $provinsi['province_id'] }}">{{ $provinsi['name'] }}</option>
                                                 @endforeach
                                             </select>
+                                            @error('provinsi') <div class="text-muted">{{ $errors }}</div> @enderror
                                         </p>
                                         <p class="form-row form-row-wide">
                                             <label for="kota">Kota <span style="color:red">*</span></label>
-                                            <select class="form-control select2" id="kota" name="kota" {{ $errors->has('kota') ? 'is-invalid':'' }}" required>
-                                                <option value="" selected disabled>Pilih Kota</option>
+                                            <select class="form-control select2"  name="kota">
+                                                @foreach($daftarKota as $kota)
+                                                    <option {{  ($kota->city_id == $shipping->kota_id) ? 'selected':'' }} value="{{ $kota->city_id }}">{{ $kota->type . ' '. $kota->name }}</option>
+                                                @endforeach
                                             </select>
+                                            @error('kota') <div class="text-muted">{{ $errors }}</div> @enderror
                                         </p>
                                         <p class="form-row form-row-wide">
                                             <label for="kecamatan">Kecamatan <span style="color:red">*</span></label>
-                                            <select class="form-control select2" id="kecamatan" name="kecamatan" {{ $errors->has('kecamatan') ? 'is-invalid':'' }}" required>
-                                                <option value="" selected disabled>Pilih Kecamatan</option>
+                                            <select class="form-control select2"  name="kecamatan">
+                                                @foreach($daftarKecamatan as $kecamatan)
+                                                    <option {{  ($kecamatan->subdistrict_id == $shipping->kecamatan_id) ? 'selected':'' }} value="{{ $kecamatan->subdistrict_id }}">{{ $kecamatan->name }}</option>
+                                                @endforeach
                                             </select>
+                                            @error('kecamatan') <div class="text-muted">{{ $errors }}</div> @enderror
                                         </p>
                                         <p class="form-row form-row-wide">
                                             <label class="text">Alamat Lengkap <span style="color:red">*</span></label> 
-                                            <textarea  name="alamat" 
-                                                        rows="3" 
-                                                        class="input-text {{ $errors->has('alamat') ? 'is-invalid':'' }}" 
-                                                        value="{{ old('alamat') }}" required></textarea>
+                                            <textarea id="alamat" 
+                                                  name="alamat" rows="3" 
+                                                  class="input-text">{{ old('alamat') ? old('alamat') : $shipping->alamat }}></textarea>
                                         </p>
                                         <p class="form-row form-row-wide">
                                             <label class="text">Kodepos</label> 
                                             <input type="text" 
-                                                name="kode_pos" 
-                                                class="input-text {{ $errors->has('kode_pos') ? 'is-invalid':'' }}" 
-                                                value="{{ old('kode_pos') }}">
+                                               name="kode_pos" 
+                                               id="kode_pos" 
+                                               value="{{ old('kode_pos') ? old('kode_pos') : $shipping->kode_pos }}" 
+                                               class="input-text  {{ $errors->has('kode_pos') ? 'is-invalid':'' }}" style="width: 100%;">
                                         </p>
                                         <p class="">
-                                            <input type="submit" class="button-submit" value="Tambah Alamat">
+                                            <input type="submit" class="button-submit" value="Update Alamat">
                                         </p>
                                     </form>
                                 </div>
@@ -106,7 +122,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('scripts')
@@ -131,8 +146,6 @@
 
                         select.empty();
 
-                        select.append('<option selected disabled>Pilih Kota</option>');
-
                         $.each(result.data,function(key, value) {
                             select.append('<option value=' + value.city_id + '>' + value.city_name + '</option>');
                         });
@@ -151,12 +164,9 @@
                     crossDomain: true,
                     dataType: 'json',
                     success: function(result) {
-                        
                         var select = $('select[name=kecamatan]');
 
                         select.empty();
-
-                        select.append('<option selected disabled>Pilih Kecamatan</option>');
 
                         $.each(result.data,function(key, value) {
                             select.append('<option value=' + value.subdistrict_id + '>' + value.subdistrict_name + '</option>');
