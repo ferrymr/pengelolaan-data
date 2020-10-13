@@ -131,7 +131,7 @@ Route::group([
 });
 
 
-// ORDER
+// ORDER.PENJUALAN
 Route::group([
     'prefix' => '/admin/penjualan/',
     'as'     => 'admin.penjualan.'
