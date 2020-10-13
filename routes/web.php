@@ -127,19 +127,3 @@ Route::group([
     Route::post('store', 'SeriesController@store')->name('store');
     Route::post('update/{kode_pack}', 'SeriesController@update')->name('update');
 });
-
-// ORDER
-Route::group([
-    'prefix' => '/admin/penjualan/',
-    'as'     => 'admin.penjualan.'
-], function () {
-    Route::get('index', 'PenjualanController@index')->name('index');
-    Route::get('', 'PenjualanController@getNama')->name('get.nama');
-    Route::get('datatable', 'PenjualanController@datatable')->name('datatable');
-    Route::get('add', 'PenjualanController@create')->name('add');
-    Route::post('add', 'PenjualanController@create')->name('add');
-    Route::post('store', 'PenjualanController@store')->name('store');
-    Route::post('create_invoice', 'PenjualanController@create_invoice')->name('create.invoice');
-    Route::post('create_kode', 'PenjualanController@create_kode')->name('create.kode');
-    Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('update_penjualan');
-});
