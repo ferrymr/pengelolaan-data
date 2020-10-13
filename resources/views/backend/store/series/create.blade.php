@@ -89,7 +89,7 @@
                 <h3 class="card-title">Komposisi Series</h3>
             </div>
             <div class="card-body">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-bordered form-table">
                     <thead>
                         <tr>
                             <th style="width: 120px;">Barang</th>
@@ -101,12 +101,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="detailItem">
                             <td>
-                                <input type="text" maxlength="5" name="kode_barang[]" id="kode_barang" class="form-control" required>
+                                <input type="text" name="kode_barang[]" class="form-control" id="kode_barang" placeholder="Kode" >
                             </td>
                             <td>
-                                <input type="text" name="nama[]" id="nama" class="form-control" required>
+                                <input type="text" name="nama[]" class="form-control" id="nama_p" placeholder="Nama Barang" readonly="true" >
                             </td>
                             <td>
                                 <input type="number" name="jumlah[]" id="jumlah" min="1" class="form-control" required>
@@ -130,8 +130,8 @@
 
 @section('js')
     <script>
-        // select2
-        $('.kode_barang').select2();
+        // // select2
+        $('.select2').select2();
 
         // date picker
         $('.datepicker').datepicker({
@@ -139,19 +139,61 @@
             autoclose: true
         });
 
+        var delay = (function () {
+            var timer = 0;
+
+            return function (callback, ms) {
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        // komposisi barang
+        initKodeBarang();
+
+        function initKodeBarang(){
+            console.log('initKodeBarang');
+            
+            $('[name="kode_barang[]"]').keyup(function () {
+                var self = $(this);
+                var kode_barang = $(this).val();
+                console.log(kode_barang);
+            
+                delay(function () {
+                    $.ajax({
+                        url: "{{ route('admin.series.komposisi') }}",
+                        method:'POST',
+                        data:"kode_barang="+kode_barang , 
+                        success: function(data){
+                            var json = data,
+                            obj = JSON.parse(json);
+                            console.log(obj.nama);
+                            console.log(json);
+                            self.parents('.detailItem').find('[name="nama[]"]').val(obj.nama);                     
+                        }
+                    });
+                }, 100);
+            });
+        }
+
         $('.addRow').on('click', function(){
             addRow();
         })
 
-        // dynamic column
         function addRow(){
             var tr = 
-                '<tr>'+
+                '<tr class="detailItem">'+
                     '<td>'+
-                        '<input type="text" maxlength="5" name="kode_barang[]" id="kode_barang" class="form-control" required>'+
+                        '<input type="text" name="kode_barang[]" id="kode_barang" class="form-control" required>'+
                     '</td>'+
                     '<td>'+
-                        '<input type="text" name="nama[]" id="nama" class="form-control" required>'+
+                        '<input type="text" name="nama[]" id="nama" class="form-control" readonly>'+
                     '</td>'+
                     '<td>'+
                         '<input type="number" name="jumlah[]" id="jumlah" min="1" class="form-control" required>'+
@@ -162,16 +204,11 @@
                 '</tr>';
 
             $('tbody').append(tr);
+            initKodeBarang();
         };
 
         $('tbody').on('click', '.remove', function(){
             $(this).parent().parent().remove();
-        });
-
-        // selected
-        $('#kode_barang').on('change', function(){
-            var nama = $(this).children('option:selected').data('nama');
-            $('#nama').val(nama);
         });
     </script>
 @stop

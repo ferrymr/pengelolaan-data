@@ -124,5 +124,6 @@ Route::group([
     Route::get('delete/{kode_pack}', 'SeriesController@destroy')->name('delete');
     Route::get('add', 'SeriesController@create')->name('add');
     Route::post('store', 'SeriesController@store')->name('store');
+    Route::post('komposisi', 'SeriesController@komposisi')->name('komposisi');
     Route::post('update/{kode_pack}', 'SeriesController@update')->name('update');
 });

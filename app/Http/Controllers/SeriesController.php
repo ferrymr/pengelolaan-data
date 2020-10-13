@@ -184,4 +184,20 @@ class SeriesController extends Controller
             return redirect()->route('admin.series.index');
         }
     }
+
+    public function komposisi(Request $request)
+    {
+        $kode_barang = $request->get('kode_barang');
+
+        if($request->ajax()) {
+            $data = '';
+            $qry = Barang::where('kode_barang', $kode_barang)->get();
+            foreach ($qry as $value) {
+                $data = array(
+                    'nama'  =>  $value->nama,
+                );
+            }
+            echo json_encode($data);
+        }
+    }
 }

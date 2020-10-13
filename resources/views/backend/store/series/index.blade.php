@@ -42,12 +42,6 @@
 
             <div id="action-template" style="display:none">
                 <div class="action-content">
-                    <a class="btn btn-sm btn-warning btn-tampil" title="View" 
-                        data-toggle="modal" 
-                        data-target="#myModal" 
-                        style="color: white; display: none;">
-                        <i class="fa fa-eye"></i>
-                    </a>
                     <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
                         <i class="fa fa-edit"></i>
                     </a>
@@ -105,13 +99,6 @@
                         .attr('href', data.action.hapus)
                         .attr('data-id', data.kode_pack)
                         .attr('data-title', 'Delete ' + data.kode_pack + '?').show();
-                }
-
-                if(data.action.tampil) {
-                    wrapper.find('.btn-tampil')
-                        .attr('href', data.action.tampil)
-                        .attr('data-id', data.kode_pack)
-                        .attr('data-title', 'View ' + data.kode_pack + '?').show();
                 }
                 
                 return wrapper.html();

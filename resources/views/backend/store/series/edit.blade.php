@@ -102,12 +102,12 @@
                     </thead>
                     <tbody>
                         @foreach($detail as $value)
-                            <tr>
+                            <tr class="detailItem">
                                 <td>
                                     <input type="text" maxlength="5" name="kode_barang[]" id="kode_barang" value="{{ $value->kode_barang }}" class="form-control" required>
                                 </td>
                                 <td>
-                                    <input type="text" name="nama[]" id="nama" class="form-control" value="{{ $value->nama }}" required>
+                                    <input type="text" name="nama[]" id="nama" class="form-control" value="{{ $value->nama }}" readonly>
                                 </td>
                                 <td>
                                     <input type="number" name="jumlah[]" id="jumlah" min="1" class="form-control" value="{{ $value->jumlah }}" required>
@@ -141,18 +141,61 @@
             autoclose: true
         });
 
+        var delay = (function () {
+            var timer = 0;
+
+            return function (callback, ms) {
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         $('.addRow').on('click', function(){
             addRow();
         })
 
+        // komposisi barang
+        initKodeBarang();
+
+        function initKodeBarang(){
+            console.log('initKodeBarang');
+            
+            $('[name="kode_barang[]"]').keyup(function () {
+                var self = $(this);
+                var kode_barang = $(this).val();
+                console.log(kode_barang);
+            
+                delay(function () {
+                    $.ajax({
+                        url: "{{ route('admin.series.komposisi') }}",
+                        method:'POST',
+                        data:"kode_barang="+kode_barang , 
+                        success: function(data){
+                            var json = data,
+                            obj = JSON.parse(json);
+                            console.log(obj.nama);
+                            console.log(json);
+                            self.parents('.detailItem').find('[name="nama[]"]').val(obj.nama);                     
+                        }
+                    });
+                }, 100);
+            });
+        }
+
         function addRow(){
             var tr = 
-                '<tr>'+
+                '<tr class="detailItem">'+
                     '<td>'+
                         '<input type="text" maxlength="5" name="kode_barang[]" id="kode_barang" class="form-control" required>'+
                     '</td>'+
                     '<td>'+
-                        '<input type="text" name="nama[]" id="nama" class="form-control" required>'+
+                        '<input type="text" name="nama[]" id="nama" class="form-control" readonly>'+
                     '</td>'+
                     '<td>'+
                         '<input type="number" name="jumlah[]" id="jumlah" min="1" class="form-control" required>'+
@@ -163,6 +206,7 @@
                 '</tr>';
 
             $('tbody').append(tr);
+            initKodeBarang();
         };
 
         $('tbody').on('click', '.remove', function(){
