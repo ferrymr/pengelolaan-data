@@ -127,7 +127,7 @@ Route::group([
     Route::post('update/{kode_pack}', 'SeriesController@update')->name('update');
 });
 
-// ORDER
+// ORDER.PENJUALAN
 Route::group([
     'prefix' => '/admin/penjualan/',
     'as'     => 'admin.penjualan.'
