@@ -111,7 +111,6 @@ Route::group([
     Route::post('update/{id}', 'UserController@update')->name('update');
 });
 
-<<<<<<< routes/web.php
 // Series
 Route::group([
     // 'middleware' => ['permission:access-user'], 
