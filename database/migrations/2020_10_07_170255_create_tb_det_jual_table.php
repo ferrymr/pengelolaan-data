@@ -26,7 +26,7 @@ class CreateTbDetJualTable extends Migration
             $table->string('no_ref', 5);
             $table->integer('bpom');
             $table->timestamps();
-            $table->primary(['no_do','kode_barang']);
+            $table->primary(['no_do','kode_barang','nama','jenis']);
         });
     }
 
