@@ -66,6 +66,8 @@ Route::get('/google', function () {
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
 
+Auth::routes();
+
 // =============================== BACKEND ===============================
 
 // Dashboard
@@ -109,19 +111,18 @@ Route::group([
     Route::post('update/{id}', 'UserController@update')->name('update');
 });
 
-
-// ORDER
+// Series
 Route::group([
-    'prefix' => '/admin/penjualan/',
-    'as'     => 'admin.penjualan.'
-], function () {
-    Route::get('index', 'PenjualanController@index')->name('index');
-    Route::get('', 'PenjualanController@getNama')->name('get.nama');
-    Route::get('datatable', 'PenjualanController@datatable')->name('datatable');
-    Route::get('add', 'PenjualanController@create')->name('add');
-    Route::post('add', 'PenjualanController@create')->name('add');
-    Route::post('store', 'PenjualanController@store')->name('store');
-    Route::post('create_invoice', 'PenjualanController@create_invoice')->name('create.invoice');
-    Route::post('create_kode', 'PenjualanController@create_kode')->name('create.kode');
-    Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('update_penjualan');
+    // 'middleware' => ['permission:access-user'], 
+    'prefix' => '/admin/series/', 
+    'as' => 'admin.series.'
+], function(){
+    Route::get('', 'SeriesController@index')->name('index');
+    Route::get('datatable', 'SeriesController@datatable')->name('datatable');
+    Route::get('edit/{kode_pack}', 'SeriesController@edit')->name('edit');
+    Route::get('view/{kode_pack}', 'SeriesController@view')->name('view');
+    Route::get('delete/{kode_pack}', 'SeriesController@destroy')->name('delete');
+    Route::get('add', 'SeriesController@create')->name('add');
+    Route::post('store', 'SeriesController@store')->name('store');
+    Route::post('update/{kode_pack}', 'SeriesController@update')->name('update');
 });
