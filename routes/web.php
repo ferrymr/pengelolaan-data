@@ -85,7 +85,7 @@ Route::get('/google', function () {
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
 
-// Auth::routes();
+Auth::routes();
 
 // =============================== BACKEND ===============================
 
