@@ -22,6 +22,6 @@ class TbDetJual extends Model
 
     public function headjual()
     {
-       return $this->belongsTo(TbHeadJual::class,'kode_barang'); 
+        return $this->belongsTo(TbHeadJual::class, 'no_do');
     }
 }

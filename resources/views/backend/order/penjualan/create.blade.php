@@ -259,10 +259,8 @@
                     method:'GET',
                     data:"no_member="+no_member , 
                 success: function(data){
-                        var json = data,
-                        obj = JSON.parse(json);
-                        console.log(json);
-                        $('#nama').val(obj.nama);
+                        
+                        $('#nama').val(data.nama);
                         
                 }});
             }, 1000);
@@ -326,21 +324,28 @@
                 var self = $(this);
                 var kode_barang = $(this).val();
                 console.log(kode_barang);
+                var no_member = $('#no_member').val();
             delay(function () {
                
                 $.ajax({
                     url: "{{ route('admin.penjualan.create.kode') }}",
                     method:'POST',
-                    data:"kode_barang="+kode_barang , 
-                success: function(data){
-                        var json = data,
-                        obj = JSON.parse(json);
-                        console.log(obj.nama);
-                        console.log(json);
+                    data: {
+                        'kode_barang': kode_barang,
+                        'no_member' : no_member
+                    },
+                success: function(obj){
                         self.parents('.detailLine').find('[name="nama[]"]').val(obj.nama);
                         self.parents('.detailLine').find('[name="jenis[]"]').val(obj.jenis);
                         self.parents('.detailLine').find('[name="harga[]"]').val(obj.h_member);                        
-                }});
+                },
+                error: function(data){
+                    var err = JSON.parse(data.responseText);
+                    alert(err.msg);   
+                    $('#kode_barang').val('');
+                },
+                }
+                );
             }, 100);
         });
     }
@@ -469,8 +474,9 @@
                     sub_total : sub_total, 
                      }
             })
-            .done(function( msg ) {
-                console.log(msg);
+            .done(function( data ) {
+                console.log(data);
+                window.location.href=data.redirect_url;
             });
             
         }
