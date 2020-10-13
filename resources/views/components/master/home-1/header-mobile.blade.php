@@ -3,7 +3,7 @@
         <div class="item mobile-logo">
             <div class="logo">
                 <a href="#">
-                    <img src="assets/images/logo.png" alt="">
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="">
                 </a>
             </div>
         </div>

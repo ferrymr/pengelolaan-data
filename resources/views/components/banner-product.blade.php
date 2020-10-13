@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="banner">
-                    <div class="item-banner style4">
+                    <div class="item-banner style5">
                         <div class="inner" style="background-image: url(https://source.unsplash.com/570x300/?cosmetics)">
                             <div class="banner-content">
-                                <h3 class="title">Brightening</h3>
-                                <div class="description">Hot Marines Tee-top are now available in our stock.</div>
+                                <h3 class="title">Purify
+                                <span class="code">Use code:<span>Z13D79</span>Get<span>25% Off</span><br>for all Accessories items!</span>
                                 <a href="#" class="button btn-shop-now">SHOP NOW</a>
                             </div>
                         </div>

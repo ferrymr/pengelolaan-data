@@ -37,10 +37,10 @@
 
 .header-item > .icon-order {
     border-radius: 100px;
-    padding: 8px 14px;
+    padding: 8px 13px;
     border: 1px solid var(--main-color);
     color: var(--main-color);
-    margin-right: 8px;
+    margin-right: 15px;
 }
 
 .header-item > .date-order {

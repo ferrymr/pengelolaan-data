@@ -1,24 +1,48 @@
 <?php
 
-use App\Http\Controllers\barangController;
-use Illuminate\Support\Facades\Route;
+Auth::routes();
 
 // =============================== FRONTEND ===============================
 
+// Homepage
+Route::get('/', 'IndexController@index')->name('home');
+
+// Faqs
+Route::get('/faqs', function () {
+    return view('frontend.faqs');
+});
+
+// Privacy policy
+Route::get('/return-policy', function () {
+    return view('frontend.return-policy');
+});
+
+// Detail product
+Route::resource('products', 'ProductController')->except(['show']);
+Route::livewire('/products/{productCode}', 'product-detail')->name('products.show');
+
+// List product by category
+Route::get('/products/category/{category}', 'ProductController@category')->name('products.category');
+
+// Cart
+Route::livewire('/mycart', 'my-cart')->name('mycart');
+
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('profile', 'ProfileController');
-    Route::get('address/set-default/{addressId}', 'AddressController@setDefault')->name('address.setdefault');
-    Route::resource('address', 'AddressController');
+
+    // Checkout
     Route::livewire('/transaction/checkout', 'checkout')->name('checkout');
     
+    // Add address
     Route::get('checkout/new-address', 'AddressController@newAddressPostCart')->name('address.new-address-post-cart');
     Route::get('checkout/select-address', 'AddressController@selectAddressPostCart')->name('address.select-address-post-cart');
     Route::post('checkout/save-address-post-cart', 'AddressController@storePostCart')->name('address.save-address-post-cart');
     Route::get('checkout/set-default-post-cart/{addressId}', 'AddressController@setDefaultPostCart')->name('address.set-default-post-cart');
+
+    Route::resource('profile', 'ProfileController');
+    Route::get('address/set-default/{addressId}', 'AddressController@setDefault')->name('address.setdefault');
+    Route::resource('address', 'AddressController');    
     
-    Route::get('order-history/waiting-for-payment', 'HistoryOrderController@waitingForPayment')->name('order-history.waiting-for-payment');
-    Route::resource('order-history', 'HistoryOrderController');
-    Route::get('/orderlist', 'HistoryOrderController@orderlist')->name('history-order.orderlist');
+    Route::get('/order-history/{status?}', 'HistoryOrderController@index')->name('order-history-status');
     // Route::get('/order-history/{transactionId}/detail', 'HistoryOrderController@detail')->name('order-history.detail');
     Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');
 
@@ -28,58 +52,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus')->name('transaction.change-status');
 });
 
-// Route::get('/', 'IndexController@index')->name('home');
-
-Route::livewire('/products/{productCode}', 'product-detail')->name('products.show');
-Route::get('/products/category/{category}', 'ProductController@category')->name('products.category');
-Route::resource('products', 'ProductController')->except(['show']);
-
-Route::livewire('/mycart', 'my-cart')->name('mycart');
-
 Route::get('/spb/check', 'SpbController@check');
 
 Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.index');
 Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');
 
-// Route::resource('shoppingcarts', 'ShoppingCartController');
-// Route::get('/history-transaction', function () {
-//     return view('history-transaction');
-// });
-// Route::get('/detail-history-transaction', function () {
-//     return view('detail-history-transaction');
-// });
-// Route::get('/history-transaction-order-list', function () {
-//     return view('history-transaction-order-list');
-// });
-
-// Route::get('/address-list', function () {
-//     return view('address-list');
-// });
-// Route::get('/address-form', function () {
-//     return view('address-form');
-// });
-/* Route::get('/checkout', function () {
-    return view('checkout');
-}); */
-
-// static page
-
-Route::get('/payment', function () {
-    return view('payment');
-});
-
-Route::get('/faqs', function () {
-    return view('faqs');
-});
-
-Route::get('/return-policy', function () {
-    return view('return-policy');
-});
-
 // authentication google
 
 Route::get('/google', function () {
-    return view('googleLogin');
+    return view('frontend.googleLogin');
 });
 
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');

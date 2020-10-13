@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Facades\Cart;
-use App\Product;
+use App\Models\Product;
 use Livewire\Component;
 
 class ProductDetail extends Component

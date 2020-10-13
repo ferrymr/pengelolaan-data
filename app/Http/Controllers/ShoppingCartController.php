@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Product;
-use App\ShoppingCart;
+use App\Models\Product;
+use App\Models\ShoppingCart;
 use DB;
 
 class ShoppingCartController extends Controller

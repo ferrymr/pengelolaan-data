@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Transaction;
+use App\Models\Transaction;
 use Livewire\Component;
 
 class OrderDetail extends Component
@@ -40,7 +40,7 @@ class OrderDetail extends Component
         $this->history = $detail->history;
         $this->shippingAddress = $detail->shippingAddress;
 
-        return view('detail-history-transaction');
+        return view('frontend.detail-history-transaction');
     }
 
     public function render()

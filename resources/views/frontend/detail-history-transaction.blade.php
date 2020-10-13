@@ -19,7 +19,7 @@
                         </a>
                     </li>
                     <li class="trail-item">
-                        <a href="{{ route('order-history.index') }}">
+                        <a href="{{ route('order-history-status') }}">
                             <span>
                                 Histori Transaksi
                             </span>
