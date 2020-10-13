@@ -222,7 +222,7 @@
                     <td style="border: none"></td>
                     <td style="border: none"></td>
                     <td>Total</td>
-                    <td><input type="text" name="sub_total" class="grand-total" value="0"></td>
+                    <td><input type="text" name="sub_total" class=" form-control grand-total" value="0"></td>
                     <td style="text-align: center"><a href="#" class="btn btn-primary update-data">Update</a></td>
                 </tr>
             </tfoot>

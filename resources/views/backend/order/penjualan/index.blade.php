@@ -9,7 +9,7 @@
         </div>
         <div class="col-6">
             <div class="float-right">
-                <a href="" class="btn btn-block btn-info">
+                <a href="{{ route('admin.penjualan.add') }}" class="btn btn-block btn-info">
                     <i class="fa fa-plus-square"></i>&nbsp;Tambah
                 </a>
             </div>

@@ -67,16 +67,16 @@ class PenjualanController extends Controller
 
     }
 
-    public function update(Request $request, $no_do)
-    {
-        TbHeadJual::find($no_do)->update([
-            'tanggal'   => $request->tanggal,
-            'no_member' => $request->no_member,
-            'nama'      => $request->nama
-        ]);
+    // public function update(Request $request, $no_do)
+    // {
+    //     TbHeadJual::find($no_do)->update([
+    //         'tanggal'   => $request->tanggal,
+    //         'no_member' => $request->no_member,
+    //         'nama'      => $request->nama
+    //     ]);
 
 
-    }
+    // }
 
     // ====================================GET NAMA MEMBER===========================================
     public function getNama(Request $request)
