@@ -48,7 +48,8 @@
                                                 <div class="price"><ins>@currency($item->harga)</ins></div>
                                             </div>
                                         </div>
-                                        <div class="loop-form-add-to-cart">
+                                        {{-- button add to cart directly --}}
+                                        {{-- <div class="loop-form-add-to-cart">
                                             <form class="cart">
                                                 <input type="hidden" name="attribute_pa_size"  value="M">
                                                 <input type="hidden" name="attribute_pa_color" value="hunter_green">
@@ -64,7 +65,7 @@
                                                     <button class="single_add_to_cart_button button">Add to cart</button>
                                                 </div>
                                             </form>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             @empty

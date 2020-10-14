@@ -41,9 +41,9 @@ class UserController extends Controller
         $users = $this->userRepo->getAll();
 
         return Datatables::of($users)
-            ->editColumn('role', function($user) {
-                return $user->roles[0]->display_name;
-            })
+            // ->editColumn('role', function($user) {
+            //     return $user->roles[0]->display_name;
+            // })
             ->editColumn('created_at', function($user) {
                 return date('d F Y', strtotime($user->created_at));
             })

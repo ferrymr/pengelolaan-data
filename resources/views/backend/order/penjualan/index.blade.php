@@ -1,15 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'User')
+@section('title', 'Penjualan')
 
 @section('content_header')
     <div class="row">
         <div class="col-6">
-            <h1>User</h1>
+            <h1>Penjualan</h1>
         </div>
         <div class="col-6">
             <div class="float-right">
-                <a href="{{ route('admin.user.add') }}" class="btn btn-block btn-info">
+                <a href="{{ route('admin.penjualan.add') }}" class="btn btn-block btn-info">
                     <i class="fa fa-plus-square"></i>&nbsp;Tambah
                 </a>
             </div>
@@ -22,19 +22,22 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Data User</h3>
+            <h3 class="card-title">Data Penjualan</h3>
         </div>
         <div class="card-body">
-            <table class="table table-bordered table-hover" id='user-table'>
+            <table class="table table-bordered table-hover" id='penjualan-table'>
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Nama Pengguna</th>
-                        <th>Email</th>
-                        {{-- <th>Role</th> --}}
-                        <th>Phone</th>
-                        <th>Tanggal Pembuatan</th>
-                        <th>Action</th>
+                        <th>No Invoice</th>
+                        <th>Tanggal</th>
+                        <th>No Member</th>
+                        <th>Nama</th>
+                        <th>Keterangan</th>
+                        <th>Jenis Pembayaran</th>
+                        <th>Type Pembayaran</th>
+                        <th>Bank</th>
+                        <th>Sub Total</th>
+                       
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -74,27 +77,27 @@
 
                 var wrapper = $('<p></p>').append($('#action-template .action-content').clone());
                             
-                if(data.action.edit) {
-                    wrapper.find('.btn-edit').attr('href', data.action.edit).show();
-                }
+                // if(data.action.edit) {
+                //     wrapper.find('.btn-edit').attr('href', data.action.edit).show();
+                // }
 
-                if(data.action.hapus) {
-                    wrapper.find('.btn-hapus')
-                        .attr('href', data.action.hapus)
-                        .attr('data-id', data.id)
-                        .attr('data-title', 'Delete ' + data.id + '?').show();
-                }
+                // if(data.action.hapus) {
+                //     wrapper.find('.btn-hapus')
+                //         .attr('href', data.action.hapus)
+                //         .attr('data-id', data.no_do)
+                //         .attr('data-title', 'Delete ' + data.no_do + '?').show();
+                // }
 
                 //return the buttons
                 return wrapper.html();
             }
 
-            dataTable = $('#user-table').DataTable({
+            dataTable = $('#penjualan-table').DataTable({
                 processing: true,
                 serverSide: true,
                 stateSave: false,
                 // dom: '<"top">rt<"bottom"ilp><"clear">',
-                ajax: '{!! route('admin.user.datatable') !!}',
+                ajax: '{!! route('admin.penjualan.datatable') !!}',
                 orderCellsTop: true,
                 columns: [
                     {
@@ -104,11 +107,14 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    { data: 'name', name: 'name' },
-                    { data: 'email', name: 'email' },
-                    // { data: 'role', name: 'role' },
-                    { data: 'phone', name: 'phone' },
-                    { data: 'created_at', name: 'created_at' },
+                    { data: 'tanggal', name: 'tanggal' },
+                    { data: 'kode_cust', name: 'kode_cust' },
+                    { data: 'nama', name: 'nama' },
+                    { data: 'note', name: 'note' },
+                    { data: 'trans', name: 'trans' },
+                    { data: 'bayar', name: 'bayar' },
+                    { data: 'cc', name: 'cc' },
+                    { data: 'sub_total', name: 'sub_total' },
                     {
                         // Define the action column
                         data: null,
@@ -117,7 +123,7 @@
                         className: 'dt-body-center',
                         render: renderAction
                     },
-                    { data: 'id', name: 'id', visible: false },
+                    { data: 'no_do', name: 'no_do', visible: false },
                 ],
                 order: [[ 5, 'desc' ]]
             });

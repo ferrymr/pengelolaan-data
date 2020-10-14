@@ -278,7 +278,7 @@ return [
                 ],
                 [
                     'text' => 'Series',
-                    'url' => 'series'
+                    'url' => 'admin/series'
                 ],
                 [
                     'text' => 'Referral',
