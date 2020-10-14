@@ -14,8 +14,8 @@ class TbBarang extends Model
     //     'no_do','tanggal','no_member','name','trans','bayar','cc','sub_total','note'
     // ];
 
-    // public function detjual()
-    // {
-    //    return $this->hasMany('App\Models\TbDetJual'); 
-    // }
+    public function detjual()
+    {
+        return $this->hasMany('App\Models\TbDetJual', 'kode_barang', 'kode_barang');
+    }
 }

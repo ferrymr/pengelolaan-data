@@ -35,10 +35,14 @@ class OrderDetail extends Component
             ]
         )->first();
 
+        $transactionNew = Transaction::where('id', $transactionId)->with('items.itemDetail', 'shippingAddress')->first();
+
+        // dd($transactionNew->shippingAddress);
+
         $this->transaction = $transaction;
-        $this->items = $detail->items;
+        $this->items = $transactionNew->items;
         $this->history = $detail->history;
-        $this->shippingAddress = $detail->shippingAddress;
+        $this->shippingAddress = $transactionNew->shippingAddress;
 
         return view('frontend.detail-history-transaction');
     }
