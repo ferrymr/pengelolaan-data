@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Checkout
     Route::livewire('/transaction/checkout', 'checkout')->name('checkout');
-    
+
     // Add address
     Route::get('checkout/new-address', 'AddressController@newAddressPostCart')->name('address.new-address-post-cart');
     Route::get('checkout/select-address', 'AddressController@selectAddressPostCart')->name('address.select-address-post-cart');
@@ -40,8 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('profile', 'ProfileController');
     Route::get('address/set-default/{addressId}', 'AddressController@setDefault')->name('address.setdefault');
-    Route::resource('address', 'AddressController');    
-    
+    Route::resource('address', 'AddressController');
+
     Route::get('/order-history/{status?}', 'HistoryOrderController@index')->name('order-history-status');
     // Route::get('/order-history/{transactionId}/detail', 'HistoryOrderController@detail')->name('order-history.detail');
     Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');
@@ -71,26 +71,24 @@ Auth::routes();
 // =============================== BACKEND ===============================
 
 // Dashboard
-Route::group(['prefix' => '/admin/dashboard/', 'as' => 'admin.dashboard.'], function()
-{
+Route::group(['prefix' => '/admin/dashboard/', 'as' => 'admin.dashboard.'], function () {
     Route::get('', 'DashboardController@index')->name('index');
 });
 
 // Master Barang
-Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
-{
+Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function () {
     Route::get('', 'barangController@show')->name('index');
 });
 
 // Slider
 Route::group([
     // 'middleware' => ['permission:access-slider'], 
-    'prefix' => '/admin/slider/', 
+    'prefix' => '/admin/slider/',
     'as' => 'admin.slider.'
-], function(){
+], function () {
     Route::get('', 'SliderController@index')->name('index');
     Route::get('datatable', 'SliderController@datatable')->name('datatable');
-    Route::get('delete/{id}', 'SliderController@destroy')->name('delete');    
+    Route::get('delete/{id}', 'SliderController@destroy')->name('delete');
     Route::post('store', 'SliderController@store')->name('store');
     Route::get('shortable', 'SliderController@updateOrder')->name('shortable');
 });
@@ -98,9 +96,9 @@ Route::group([
 // User
 Route::group([
     // 'middleware' => ['permission:access-user'], 
-    'prefix' => '/admin/user/', 
+    'prefix' => '/admin/user/',
     'as' => 'admin.user.'
-], function(){
+], function () {
     Route::get('', 'UserController@index')->name('index');
     Route::get('datatable', 'UserController@datatable')->name('datatable');
     Route::get('edit/{id}', 'UserController@edit')->name('edit');
@@ -114,9 +112,9 @@ Route::group([
 // Series
 Route::group([
     // 'middleware' => ['permission:access-user'], 
-    'prefix' => '/admin/series/', 
+    'prefix' => '/admin/series/',
     'as' => 'admin.series.'
-], function(){
+], function () {
     Route::get('', 'SeriesController@index')->name('index');
     Route::get('datatable', 'SeriesController@datatable')->name('datatable');
     Route::get('edit/{kode_pack}', 'SeriesController@edit')->name('edit');
