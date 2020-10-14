@@ -266,7 +266,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Barang',
-                    'url' => 'barang'
+                    'url' => 'admin/barang'
                 ],
                 [
                     'text' => 'Member',
@@ -283,6 +283,10 @@ return [
                 [
                     'text' => 'Referral',
                     'url' => 'referral'
+                ],
+                [
+                    'text' => 'Gallery',
+                    'url' => 'admin/gallery'
                 ],
             ],
         ],
