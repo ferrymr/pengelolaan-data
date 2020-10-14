@@ -70,7 +70,8 @@
                                     <div class="price"><span>@currency($product->harga)</span></div>
                                 </div>
                             </div>
-                            <div class="loop-form-add-to-cart">
+                            {{-- button add to cart directly --}}
+                            {{-- <div class="loop-form-add-to-cart">
                                 <form class="cart">
                                     <div class="single_variation_wrap">
                                         <div class="quantity">
@@ -83,7 +84,7 @@
                                         <button class="single_add_to_cart_button button">Add to cart</button>
                                     </div>
                                 </form>
-                            </div>
+                            </div> --}}
                         </div>
                     </li>
                 @empty

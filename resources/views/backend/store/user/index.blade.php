@@ -31,7 +31,7 @@
                         <th>No</th>
                         <th>Nama Pengguna</th>
                         <th>Email</th>
-                        <th>Role</th>
+                        {{-- <th>Role</th> --}}
                         <th>Phone</th>
                         <th>Tanggal Pembuatan</th>
                         <th>Action</th>
@@ -106,7 +106,7 @@
                     },
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
-                    { data: 'role', name: 'role' },
+                    // { data: 'role', name: 'role' },
                     { data: 'phone', name: 'phone' },
                     { data: 'created_at', name: 'created_at' },
                     {
