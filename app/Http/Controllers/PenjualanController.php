@@ -23,11 +23,6 @@ class PenjualanController extends Controller
     {
 
         $items = TbHeadJual::with('detjual')->get();
-        // $items = TbHeadJual::all();
-
-        // dd($items);
-
-
 
         return view('backend.order.penjualan.index', compact('items'));
     }
@@ -40,9 +35,6 @@ class PenjualanController extends Controller
         return Datatables::of($items)
             ->escapeColumns([])
             ->make(true);
-
-        // return Datatables::of(TbHeadJual::query())->make(true);
-
     }
 
     public function create()
@@ -67,16 +59,6 @@ class PenjualanController extends Controller
         return view('backend.order.penjualan.index');
     }
 
-    // public function update(Request $request, $no_do)
-    // {
-    //     TbHeadJual::find($no_do)->update([
-    //         'tanggal'   => $request->tanggal,
-    //         'no_member' => $request->no_member,
-    //         'nama'      => $request->nama
-    //     ]);
-
-
-    // }
 
     // ====================================GET NAMA MEMBER===========================================
     public function getNama(Request $request)
