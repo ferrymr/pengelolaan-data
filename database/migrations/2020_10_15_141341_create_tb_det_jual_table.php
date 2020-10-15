@@ -14,7 +14,6 @@ class CreateTbDetJualTable extends Migration
     public function up()
     {
         Schema::create('tb_det_jual', function (Blueprint $table) {
-            $table->id();
             $table->string('no_do', 15);
             $table->string('kode_barang', 6);
             $table->string('nama', 50);
@@ -27,6 +26,8 @@ class CreateTbDetJualTable extends Migration
             $table->string('no_ref', 5);
             $table->integer('bpom');
             $table->timestamps();
+
+            $table->primary(['no_do', 'kode_barang', 'nama', 'jenis']);
         });
     }
 
