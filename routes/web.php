@@ -153,6 +153,23 @@ Route::group([
     Route::post('update/{kode_pack}', 'SeriesController@update')->name('update');
 });
 
+// Referral
+Route::group([
+    // 'middleware' => ['permission:access-user'], 
+    'prefix' => '/admin/referral/', 
+    'as' => 'admin.referral.'
+], function(){
+    Route::get('', 'ReferralController@index')->name('index');
+    Route::get('datatable', 'ReferralController@datatable')->name('datatable');
+    Route::get('edit/{kode_pack}', 'ReferralController@edit')->name('edit');
+    Route::get('view/{kode_pack}', 'ReferralController@view')->name('view');
+    Route::get('delete/{kode_pack}', 'ReferralController@destroy')->name('delete');
+    Route::get('add', 'ReferralController@create')->name('add');
+    Route::post('store', 'ReferralController@store')->name('store');
+    Route::post('komposisi', 'ReferralController@komposisi')->name('komposisi');
+    Route::post('update/{kode_pack}', 'ReferralController@update')->name('update');
+});
+
 // ORDER.PENJUALAN
 Route::group([
     'prefix' => '/admin/penjualan/',

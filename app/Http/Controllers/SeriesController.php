@@ -30,7 +30,7 @@ class SeriesController extends Controller
         $user = Auth::user();
         $series = $this->seriesRepo->getAll();
 
-        return view('backend.store.series.index')->with([
+        return view('backend.master.series.index')->with([
             'user' => $user,
             'series' => $series
         ]);
@@ -59,7 +59,7 @@ class SeriesController extends Controller
         $barang = $this->barangRepo->getAll();
         $roles = $this->roleRepo->getAll();
         
-        return view('backend.store.series.create')->with([
+        return view('backend.master.series.create')->with([
             'user' => $user,
             'barang' => $barang,
             'roles' => $roles,
@@ -114,7 +114,7 @@ class SeriesController extends Controller
         $barang = $this->barangRepo->getAll();
         $roles = $this->roleRepo->getAll();
 
-        return view('backend.store.series.edit')->with([
+        return view('backend.master.series.edit')->with([
             'user' => $user,
             'series' => $series,
             'detail' => $detail,

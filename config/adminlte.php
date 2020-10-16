@@ -282,7 +282,7 @@ return [
                 ],
                 [
                     'text' => 'Referral',
-                    'url' => 'referral'
+                    'url' => 'admin/referral'
                 ],
                 [
                     'text' => 'Gallery',
