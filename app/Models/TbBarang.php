@@ -10,9 +10,7 @@ class TbBarang extends Model
     public $incrementing = false;
     protected $primaryKey = 'kode_barang';
     protected $guarded = [];
-    // protected $fillable = [
-    //     'no_do','tanggal','no_member','name','trans','bayar','cc','sub_total','note'
-    // ];
+
 
     public function detjual()
     {

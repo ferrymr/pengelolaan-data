@@ -28,6 +28,7 @@
             <table class="table table-bordered table-hover" id='penjualan-table'>
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>No Invoice</th>
                         <th>Tanggal</th>
                         <th>No Member</th>
@@ -37,7 +38,6 @@
                         <th>Type Pembayaran</th>
                         <th>Bank</th>
                         <th>Sub Total</th>
-                       
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -107,6 +107,7 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
+                    { data: 'no_do', name: 'no_do' },
                     { data: 'tanggal', name: 'tanggal' },
                     { data: 'kode_cust', name: 'kode_cust' },
                     { data: 'nama', name: 'nama' },

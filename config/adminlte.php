@@ -46,7 +46,7 @@ return [
     */
 
     'logo' => '&nbsp;<b>Bellezkin</b> Store',
-    'logo_img' => 'assets/images/logo_b.png', 
+    'logo_img' => 'assets/images/logo_b.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -297,7 +297,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Penjualan',
-                    'url' => 'penjualan'
+                    'url' => 'admin/penjualan/index'
                 ],
                 [
                     'text' => 'Pembelian',
@@ -311,7 +311,7 @@ return [
                     'text' => 'Pemesanan',
                     'url' => 'pemesanan'
                 ],
-                
+
             ],
         ],
         [
@@ -343,7 +343,7 @@ return [
                     'text' => 'Free Merchandise',
                     'url' => 'merchandise'
                 ],
-                
+
             ],
         ],
         [
@@ -363,8 +363,8 @@ return [
                     'text' => 'Saldo Member',
                     'url' => 'saldomember'
                 ],
-                
-                
+
+
             ],
         ],
         [
@@ -384,8 +384,8 @@ return [
                     'text' => 'Movement',
                     'url' => 'returmovement'
                 ],
-                
-                
+
+
             ],
         ],
         [
@@ -401,11 +401,11 @@ return [
                     'text' => 'Daily sales & Recruitment',
                     'url' => 'dailysales'
                 ],
-                
+
             ],
         ],
-        
-        
+
+
         ['header' => 'SETTINGS'],
         [
             'text' => 'Tools',
@@ -456,7 +456,7 @@ return [
             'url'  => 'admin/user',
             'icon' => 'fas fa-fw fa-users',
         ],
-        
+
         ['header' => 'PROFILE'],
         [
             'text' => 'Logout',
