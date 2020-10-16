@@ -16,7 +16,7 @@ class CreateGalleryRequest extends FormRequest
     {
         $arrays = [
             "id"          => "required",
-            "gambar" => "required",
+            "gambar" => "required|image",
             "kategori"       => "required",
             "nama_produk"         => "required",
             "jenis"         => "nullable",

@@ -274,7 +274,7 @@ return [
                 ],
                 [
                     'text' => 'Supplier',
-                    'url' => 'supplier'
+                    'url' => 'admin/supplier'
                 ],
                 [
                     'text' => 'Series',

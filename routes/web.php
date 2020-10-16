@@ -85,6 +85,7 @@ Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
     Route::get('add', 'BarangController@create')->name('add');
     Route::post('store', 'BarangController@store')->name('store');
     Route::post('update/{kode_barang}', 'BarangController@update')->name('update');
+    
 });
 
 // Master Gallery
@@ -98,13 +99,26 @@ Route::group(['prefix' => '/admin/gallery/', 'as' => 'admin.gallery.'], function
     Route::get('add', 'GalleryController@create')->name('add');
     Route::post('store', 'GalleryController@store')->name('store');
     Route::post('update/{id}', 'GalleryController@update')->name('update');
-});
-
-Route::group(['prefix' => '/admin/gallery/', 'as' => 'admin.gallery.'], function()
-{
-    // gambar
     Route::get('/gambar/{id}', 'GalleryController@getGambar')->name('getGambar');
 });
+
+// Master Supplier
+Route::group(['prefix' => '/admin/supplier/', 'as' => 'admin.supplier.'], function()
+{
+    Route::get('', 'SupplierController@index')->name('index');
+    Route::get('add', 'SupplierController@create')->name('add');
+    Route::post('store', 'SupplierController@store')->name('store');
+    Route::get('datatable', 'SupplierController@datatable')->name('datatable');
+    Route::get('edit/{kode_supp}', 'SupplierController@edit')->name('edit');
+    Route::get('delete/{kode_supp}', 'SupplierController@destroy')->name('delete');
+    Route::post('update/{kode_supp}', 'SupplierController@update')->name('update');
+});
+
+// Route::group(['prefix' => '/admin/gallery/', 'as' => 'admin.gallery.'], function()
+
+    // gambar
+    
+
 
 // Slider
 Route::group([

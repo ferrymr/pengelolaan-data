@@ -255,6 +255,7 @@
                     @endif
                 </div>
             </div>
+            {{-- <img src="{{ url($barang->gambar) }}" alt=""/> --}}
         </div>
         <div class="card-footer">
             <a href="{{ route("admin.barang.index") }}" class="btn btn-default float-right">Cancel</a>
