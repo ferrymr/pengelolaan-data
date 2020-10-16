@@ -69,8 +69,8 @@ class AddressController extends Controller
             'provinsi' => 'required|numeric',
             'kota' => 'required|numeric',
             'kecamatan' => 'required|numeric',
-            'alamat' => 'required|string',
-            'kode_pos' => 'numeric'
+            'alamat' => 'required|string'
+            // 'kode_pos' => 'numeric'
         ]);
             
         try {
@@ -266,8 +266,8 @@ class AddressController extends Controller
             'provinsi' => 'required|numeric',
             'kota' => 'required|numeric',
             'kecamatan' => 'required|numeric',
-            'alamat' => 'required|string',
-            'kode_pos' => 'numeric'
+            'alamat' => 'required|string'
+            // 'kode_pos' => 'numeric'
         ]);
             
         try {

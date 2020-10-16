@@ -29,8 +29,11 @@ Route::livewire('/mycart', 'my-cart')->name('mycart');
 
 Route::group(['middleware' => 'auth'], function () {
 
-    // Checkout
+    // Checkout - choose shipment method
     Route::livewire('/transaction/checkout', 'checkout')->name('checkout');
+
+    // Checkout - choose payment method
+    Route::livewire('/transaction/checkout-payment', 'checkout-payment')->name('checkout-payment');
 
     // Add address
     Route::get('checkout/new-address', 'AddressController@newAddressPostCart')->name('address.new-address-post-cart');
@@ -43,12 +46,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('address', 'AddressController');
 
     Route::get('/order-history/{status?}', 'HistoryOrderController@index')->name('order-history-status');
-    // Route::get('/order-history/{transactionId}/detail', 'HistoryOrderController@detail')->name('order-history.detail');
     Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');
 
     Route::get('/transaction', 'TransactionController@store');
     Route::get('/transaction/delete', 'TransactionController@destroy');
-    // Route::get('/transaction/checkout', 'TransactionController@checkout')->name('checkout');
     Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus')->name('transaction.change-status');
 });
 
@@ -58,15 +59,12 @@ Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.i
 Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');
 
 // authentication google
-
 Route::get('/google', function () {
     return view('frontend.googleLogin');
 });
 
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
-
-Auth::routes();
 
 // =============================== BACKEND ===============================
 
@@ -86,6 +84,7 @@ Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
     Route::get('add', 'BarangController@create')->name('add');
     Route::post('store', 'BarangController@store')->name('store');
     Route::post('update/{kode_barang}', 'BarangController@update')->name('update');
+    
 });
 
 // Master Gallery
@@ -99,13 +98,26 @@ Route::group(['prefix' => '/admin/gallery/', 'as' => 'admin.gallery.'], function
     Route::get('add', 'GalleryController@create')->name('add');
     Route::post('store', 'GalleryController@store')->name('store');
     Route::post('update/{id}', 'GalleryController@update')->name('update');
-});
-
-Route::group(['prefix' => '/admin/gallery/', 'as' => 'admin.gallery.'], function()
-{
-    // gambar
     Route::get('/gambar/{id}', 'GalleryController@getGambar')->name('getGambar');
 });
+
+// Master Supplier
+Route::group(['prefix' => '/admin/supplier/', 'as' => 'admin.supplier.'], function()
+{
+    Route::get('', 'SupplierController@index')->name('index');
+    Route::get('add', 'SupplierController@create')->name('add');
+    Route::post('store', 'SupplierController@store')->name('store');
+    Route::get('datatable', 'SupplierController@datatable')->name('datatable');
+    Route::get('edit/{kode_supp}', 'SupplierController@edit')->name('edit');
+    Route::get('delete/{kode_supp}', 'SupplierController@destroy')->name('delete');
+    Route::post('update/{kode_supp}', 'SupplierController@update')->name('update');
+});
+
+// Route::group(['prefix' => '/admin/gallery/', 'as' => 'admin.gallery.'], function()
+
+    // gambar
+    
+
 
 // Slider
 Route::group([

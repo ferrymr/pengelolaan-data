@@ -134,7 +134,7 @@
                                     $transaction->status_transaksi != "RECEIVED"
                                     )
                                         <a href="{{ route('transaction.change-status', [$transaction->id , 'TRANSFERRED']) }}" class="btn btn-success pull-right">Konfirmasi Pembayaran</a>
-                                        <a href="{{ route('transaction.change-status', [$transaction->id , 'CANCELLED']) }}" class="btn btn-link pull-right">Batalkan Pesanan</a>
+                                        {{-- <a href="{{ route('transaction.change-status', [$transaction->id , 'CANCELLED']) }}" class="btn btn-link pull-right">Batalkan Pesanan</a> --}}
                                     @endif
                                 </div>
                             </div>

@@ -9,6 +9,7 @@ use Yajra\DataTables\DataTables;
 use App\Models\Barang;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Gallery;
 use Illuminate\Support\Facades\DB;
 
 class BarangController extends Controller
@@ -25,7 +26,7 @@ class BarangController extends Controller
         $user = Auth::user();
         $barang = $this->barangRepo->getAll();
 
-        return view('backend.store.barang.index')->with([
+        return view('backend.master.barang.index')->with([
             'user' => $user,
             'barang' => $barang
         ]);
@@ -36,15 +37,9 @@ class BarangController extends Controller
         $barang = $this->barangRepo->getAll();
 
         return Datatables::of($barang)
-            // ->editColumn('role', function($user) {
-            //     return $user->roles[0]->display_name;
-            // })
-            // ->editColumn('created_at', function($user) {
-            //     return date('d F Y', strtotime($user->created_at));
-            // })
             ->addColumn('action', function ($barang){
                 return [
-                    'view' => route('admin.barang.view', $barang->kode_barang),
+                    // 'view' => route('admin.barang.view', $barang->kode_barang),
                     'edit' => route('admin.barang.edit', $barang->kode_barang),
                     'hapus' => route('admin.barang.delete', $barang->kode_barang),
                 ];
@@ -62,24 +57,42 @@ class BarangController extends Controller
         $user = Auth::user();
         $roles = $this->userRepo->getAll();
         
-        return view('backend.store.barang.create')->with([
+        return view('backend.master.barang.create')->with([
             'user' => $user,
             'roles' => $roles,
         ]);
     }
 
-    public function store(CreateBarangRequest $request)
+    public function store(Request $request)
     {
-        $barang = $this->barangRepo->addBarang($request->all());
+        $barang = new Barang();
 
-        if(!$this->barangRepo->error) {
-            flash('<i class="fa fa-info"></i>&nbsp; <strong>Barang Berhasil Ditambah</strong>')->success();
+        $barang->kode_barang = $request->input('kode_barang');
+        $barang->nama = $request->input('nama');
+        $barang->jenis = $request->input('jenis');
+        $barang->poin = $request->input('poin');
+        $barang->h_nomem = $request->input('h_nomem');
+        $barang->h_member = $request->input('h_member');
+        $barang->berat = $request->input('berat');
+        $barang->bpom = $request->input('bpom');
+        $barang->tgl_eks = $request->input('tgl_eks');
+        $barang->stats = $request->input('stats');
+        $barang->deskripsi = $request->input('deskripsi');
+        $barang->cara_pakai = $request->input('cara_pakai'); 
+        $jumlah = DB::table('tb_barang')->where('kode_barang', $barang->kode_barang)->count(); 
+        if ($jumlah>0){
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Kode barang sudah ada</strong>')->error()->important();
             return redirect()->route('admin.barang.index');
-        } else {
-            flash('<i class="fa fa-info"></i>&nbsp; <strong>User </strong> ' . $this->barangRepo->error)->error()->important();
-            return redirect()->route('admin.barang.add')->withInput()->withError();
-        }
+            
+        } else{
+            $barang->save();
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Data barang berhasil ditambah</strong>')->success()->important();
+            return redirect()->route('admin.barang.index');
+
+        }  
+        
     }
+    
 
     public function view($kode_barang)
     {
@@ -87,7 +100,7 @@ class BarangController extends Controller
         $barang = Barang::where('kode_barang', $kode_barang)->first();
         $roles = $this->roleRepo->getAll();
 
-        return view('backend.store.barang.view')->with([
+        return view('backend.master.barang.view')->with([
             'user' => $user,
             'roles' => $roles,
             'barang' =>$barang
@@ -101,7 +114,7 @@ class BarangController extends Controller
         $barang = Barang::where('kode_barang', $kode_barang)->first();
         $roles = $this->roleRepo->getAll();
 
-        return view('backend.store.barang.edit')->with([
+        return view('backend.master.barang.edit')->with([
             'user' => $user,
             'roles' => $roles,
             'barang' =>$barang
@@ -123,7 +136,7 @@ class BarangController extends Controller
         $barang = $this->barangRepo->editBarang($param, $kode_barang, $request->input('role_id'));
 
         if(!$this->barangRepo->error) {
-            flash('<i class="fa fa-info"></i>&nbsp; <strong>Barang berhasil diupdate</strong>')->success();
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Barang berhasil diupdate</strong>')->success()->important();
             return redirect()->route('admin.barang.index');
         } else {
             flash('<i class="fa fa-info"></i>&nbsp; <strong>User </strong> ' . $this->barangRepo->error)->error()->important();
@@ -135,11 +148,26 @@ class BarangController extends Controller
     {
         $barang = Barang::where('kode_barang', $kode_barang)->delete();
         if(!empty($barang)) {
-            flash()->success('<i class="fa fa-info"></i>&nbsp; <strong>Barang berhasil dihapus</strong>');
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Data Barang berhasil dihapus</strong>')->error()->important();
             return redirect()->route('admin.barang.index');
         } else {
-            flash()->success('<i class="fa fa-info"></i>&nbsp; <strong>Barang Tidak Ditemukan</strong>');
+            flash()->error('<i class="fa fa-info"></i>&nbsp; <strong>Data Barang Tidak Ditemukan</strong>');
             return redirect()->route('admin.barang.index');
         }
     }
+
+    // public function gallery(Request $request, $kode_barang)
+    // {
+    //     $barang = Barang::findorFail($kode_barang);
+    //     $items = Gallery::with('barang')
+    //         ->where('kategori', $kode_barang)
+    //         ->get();
+    //     return view('backend.store.barang.view')->with([
+    //         'barang' => $barang,
+    //         'items' => $items
+    //     ]);
+
+    // }
+
+    
 }

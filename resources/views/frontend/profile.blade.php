@@ -35,6 +35,12 @@
                         <div class="card-profile">
                             <div class="row">
                                 <div class="col-md-offset-2 col-md-3 col-12">
+                                    <div class="row">
+                                        <div class="col-md-12">                                                
+                                            <button>User Standar</button>
+                                        </div>
+                                    </div>
+                                    <br><br> 
                                     <a href="{{ route('profile.edit', $profile->id) }}">
                                         <div class="card-title-profile">
                                             <div class="profile-img">
@@ -47,7 +53,7 @@
                                             <div class="section-title-profile">
                                                 <span class="text-bold">{{ $profile->name }}</span>
                                                 <span class="">Edit profile</span>
-                                            </div>
+                                            </div>                                            
                                         </div>
                                     </a>
                                 </div>
@@ -70,6 +76,17 @@
                                                     <div class="menu-ui-left">
                                                         <div class="title-item-menu">Pengaturan alamat pengiriman</div>
                                                         <div class="desc-item-menu">Alamat untuk pengiriman barang</div>
+                                                    </div>
+                                                    <div class="menu-ui-icon">
+                                                        <i class="fa fa-chevron-right"></i>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a href="#">
+                                                <div class="menu-ui-item">
+                                                    <div class="menu-ui-left">
+                                                        <div class="title-item-menu">Yuk daftar jadi member!</div>
+                                                        <div class="desc-item-menu">Lihat syarat-syarat dan daftar sebagai member</div>
                                                     </div>
                                                     <div class="menu-ui-icon">
                                                         <i class="fa fa-chevron-right"></i>

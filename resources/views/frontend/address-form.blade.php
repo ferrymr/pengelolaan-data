@@ -48,7 +48,7 @@
                                         </p>
                                         <p class="form-row form-row-wide">
                                             <label class="text">Telepon <span style="color:red">*</span></label> 
-                                            <input type="text" id="telepon" name="telepon" class="input-text {{ $errors->has('telepon') ? 'is-invalid':'' }}" value="{{ old('telepon') }}" required>
+                                            <input type="tel" placeholder="Contoh: 085642274427" id="telepon" name="telepon" class="input-text {{ $errors->has('telepon') ? 'is-invalid':'' }}" value="{{ old('telepon') }}" required>
                                         </p>
                                         <p class="form-row form-row-wide">
                                             <label for="provinsi">Provinsi <span style="color:red">*</span></label>
@@ -59,13 +59,13 @@
                                                 @endforeach
                                             </select>
                                         </p>
-                                        <p class="form-row form-row-wide">
+                                        <p class="form-row form-row-wide" id="block-kota" style="display: none;">
                                             <label for="kota">Kota <span style="color:red">*</span></label>
                                             <select class="form-control select2" id="kota" name="kota" {{ $errors->has('kota') ? 'is-invalid':'' }}" required>
                                                 <option value="" selected disabled>Pilih Kota</option>
                                             </select>
                                         </p>
-                                        <p class="form-row form-row-wide">
+                                        <p class="form-row form-row-wide" id="block-kecamatan" style="display: none;">
                                             <label for="kecamatan">Kecamatan <span style="color:red">*</span></label>
                                             <select class="form-control select2" id="kecamatan" name="kecamatan" {{ $errors->has('kecamatan') ? 'is-invalid':'' }}" required>
                                                 <option value="" selected disabled>Pilih Kecamatan</option>
@@ -112,6 +112,8 @@
 
             $('select[name=provinsi]').change(function() {
 
+                $("#loading").show();
+
                 $.ajax({
                     url: '{{ env('APP_API_URL') }}cities/' + $(this).val(),
                     type: 'GET',
@@ -122,19 +124,24 @@
                     dataType: 'json',
                     success: function(result) {
                         var select = $('select[name=kota]');
-
                         select.empty();
 
+                        // show kota
+                        $("#block-kota").show();
                         select.append('<option selected disabled>Pilih Kota</option>');
 
                         $.each(result.data,function(key, value) {
                             select.append('<option value=' + value.city_id + '>' + value.city_name + '</option>');
                         });
+
+                        $("#loading").hide();
                     }
                 });
             });
 
             $('select[name=kota]').change(function() {
+
+                $("#loading").show();
 
                 $.ajax({
                     url: '{{ env('APP_API_URL') }}subdistricts/' + $(this).val(),
@@ -147,14 +154,17 @@
                     success: function(result) {
                         
                         var select = $('select[name=kecamatan]');
-
                         select.empty();
 
+                        // show kecamatan
+                        $("#block-kecamatan").show();
                         select.append('<option selected disabled>Pilih Kecamatan</option>');
 
                         $.each(result.data,function(key, value) {
                             select.append('<option value=' + value.subdistrict_id + '>' + value.subdistrict_name + '</option>');
                         });
+
+                        $("#loading").hide();
                     }
                 });
             });

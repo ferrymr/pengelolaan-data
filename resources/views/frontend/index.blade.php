@@ -3,12 +3,12 @@
 @section('content')
 
 
-<x-promo-text-bar>
-    <i class="icon fa fa-flag" aria-hidden="true"></i>
-    Buruan, Beli product 
-    <a href="#">Series diskon 30%</a> & dapetin 
-    <a href="#">Serum Anti Flek gratis</a> sekarang!
-</x-promo-text-bar>
+    <x-promo-text-bar>
+        <i class="icon fa fa-flag" aria-hidden="true"></i>
+        Buruan, Beli product 
+        <a href="#">Series diskon 30%</a> & dapetin 
+        <a href="#">Serum Anti Flek gratis</a> sekarang!
+    </x-promo-text-bar>
 
     {{-- slider homepage --}}
     <div class="home-slider rows-space-50 main-slide">
@@ -38,16 +38,13 @@
         </div>
     </div>
 
-
     {{-- products box --}}
-    <x-promo-products-section 
+    {{-- <x-promo-products-section 
         :products="$bestOfPieces"/>
 
     <x-product-category-section 
         :best-of-pieces="$bestOfPieces" 
-        :best-of-series="$bestOfSeries" />
-
-    <x-banner-product/>
+        :best-of-series="$bestOfSeries" /> --}}    
 
     {{-- main content --}}
     <div class="main-content main-content-product no-sidebar">
@@ -63,6 +60,8 @@
             </div> --}}
         </div>
     </div>
+
+    <x-banner-product/>
 
     {{-- blogs --}}
     {{-- <x-blogs /> --}}

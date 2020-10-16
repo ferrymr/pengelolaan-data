@@ -144,7 +144,7 @@
                 },
                 { data: 'id', name: 'id', visible: false },
             ],
-            order: [[ 0, 'asc' ]]
+            order: [[ 2, 'asc' ]]
         });
     });
 </script>

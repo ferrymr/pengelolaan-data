@@ -56,25 +56,25 @@ class Barang extends Model
             'jenis' => $request['jenis'],
             // 'stok' => $request['stok'], 
             'poin' => $request['poin'],
-            'h_hpb' => $request['h_hpb'],
-            'h_ppnj' => $request['h_ppnj'],
+            // 'h_hpb' => $request['h_hpb'],
+            // 'h_ppnj' => $request['h_ppnj'],
             'h_nomem' => $request['h_nomem'],
             'h_member' => $request['h_member'],
-            'h_beli' => $request['h_beli'],
-            'h_ppnb' => $request['h_ppnb'],
-            'h_hpp' => $request['h_hpp'],
+            // 'h_beli' => $request['h_beli'],
+            // 'h_ppnb' => $request['h_ppnb'],
+            // 'h_hpp' => $request['h_hpp'],
             'berat' => $request['berat'],
-            'satuan' => $request['satuan'],
+            // 'satuan' => $request['satuan'],
             'bpom' => $request['bpom'],
             'tgl_eks' => $request['tgl_eks'],
             'stats' => $request['stats'],
-            'stok_his' => $request['stok_his'],
-            'log_his' => $request['log_his'],
-            'pic' => $request['pic'],
-            'cat' => $request['cat'],
-            'diskon' => $request['diskon'],
+            // 'stok_his' => $request['stok_his'],
+            // 'log_his' => $request['log_his'],
+            // 'pic' => $request['pic'],
+            // 'cat' => $request['cat'],
+            // 'diskon' => $request['diskon'],
             'deskripsi' => $request['deskripsi'],
-            'cara_pakai' => $request['cara_pakai'],
+            'cara_pakai' => $request['cara_pakai']
         );
 
         $barang = Barang::create($barang);
@@ -131,6 +131,10 @@ class Barang extends Model
             return false;
         }
     }
+
+    // public function galleries() {
+    //     return $this->hasMany(Gallery::class);
+    // }
 
 
 

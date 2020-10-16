@@ -42,9 +42,9 @@
 
             <div id="action-template" style="display:none">
                 <div class="action-content">
-                    <a href="#" class="btn btn-warning btn-sm btn-info btn-detail" title="View" style="display: none; color: white">
+                    {{-- <a href="#" class="btn btn-warning btn-sm btn-info btn-detail" title="View" style="display: none; color: white">
                     <i class="fa fa-eye"></i>
-                    </a>
+                    </a> --}}
                     <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
                         <i class="fa fa-edit"></i>
                     </a>

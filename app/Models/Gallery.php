@@ -90,6 +90,12 @@ class Gallery extends Model
         }
     }
 
+    // public function barang() {
+    //     return $this->belongsTo(Barang::class, 'kategori', 'kode_barang');
+    // }
+
+    
+
     
 
 }
