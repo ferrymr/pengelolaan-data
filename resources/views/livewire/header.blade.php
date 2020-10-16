@@ -52,15 +52,23 @@
                                                     </span>
                                                     <span class="product-quantity"> x {{ $cartItem['qty'] }}</span>
                                                     <div class="product-remove">
-                                                        <a href="#" wire:click="removeFromCart('{{ $cartItem['kode_barang'] }}')"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                                        <a href="#" wire:click="removeFromCart('{{ $cartItem['kode_barang'] }}')">
+                                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </li>
                                         @endforeach
                                     </ul>
                                     @if($cartTotal > 0)
-                                        <div class="actions">
-                                            <a href="{{ route('mycart') }}" class="button button-checkout btn-checkout-overlay"><span>View Cart</span></a>
+                                        <div class="actions">    
+                                            <br>                                        
+                                            <a href="{{ route('mycart') }}" class="button button-viewcart">
+                                                <span>View Cart</span>
+                                            </a>
+                                            <a href="{{ route('checkout') }}" class="button button-checkout">
+                                                <span>Checkout</span>
+                                            </a>
                                         </div>
                                     @else
                                         <div class="actions">

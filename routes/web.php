@@ -29,8 +29,11 @@ Route::livewire('/mycart', 'my-cart')->name('mycart');
 
 Route::group(['middleware' => 'auth'], function () {
 
-    // Checkout
+    // Checkout - choose shipment method
     Route::livewire('/transaction/checkout', 'checkout')->name('checkout');
+
+    // Checkout - choose payment method
+    Route::livewire('/transaction/checkout-payment', 'checkout-payment')->name('checkout-payment');
 
     // Add address
     Route::get('checkout/new-address', 'AddressController@newAddressPostCart')->name('address.new-address-post-cart');
@@ -43,12 +46,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('address', 'AddressController');
 
     Route::get('/order-history/{status?}', 'HistoryOrderController@index')->name('order-history-status');
-    // Route::get('/order-history/{transactionId}/detail', 'HistoryOrderController@detail')->name('order-history.detail');
     Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');
 
     Route::get('/transaction', 'TransactionController@store');
     Route::get('/transaction/delete', 'TransactionController@destroy');
-    // Route::get('/transaction/checkout', 'TransactionController@checkout')->name('checkout');
     Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus')->name('transaction.change-status');
 });
 
@@ -58,15 +59,12 @@ Route::get('shoppingcart', 'ShoppingCartController@index')->name('shoppingcart.i
 Route::get('shoppingcart/delete/{id}', 'ShoppingCartController@destroy')->name('shoppingcart.destroy');
 
 // authentication google
-
 Route::get('/google', function () {
     return view('frontend.googleLogin');
 });
 
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
-
-Auth::routes();
 
 // =============================== BACKEND ===============================
 

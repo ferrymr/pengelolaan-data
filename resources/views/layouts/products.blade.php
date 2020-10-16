@@ -25,6 +25,9 @@
     @yield('styles')
 </head>
 <body class="productsgrid-page">
+    <div id="loading" style="display: none;">
+        <img id="loading-image" src="{{ asset('assets/images/loader.gif') }}" alt="Loading..." />
+    </div>
     
     {{-- <x-topbar>
         <a href="#">Menjadi Reseller</a> &nbsp;&nbsp; <a href="#">Konsultasi Kecantikan</a>
