@@ -152,21 +152,28 @@ class PenjualanController extends Controller
                     $harga      = $row[4];
                     $total      = $row[5];
 
-                    $detail = TbDetJual::where('no_do', $request['no_invoice'])
-                        ->where('kode_barang', $kode_barang)
-                        ->whereNotIn('kode_barang', ['OK001', 'OK002'])
-                        ->whereMonth('created_at', date('m'))
+                    $detail = TbDetJual::select('tb_det_jual.*')
+                        ->join('tb_head_jual', 'tb_head_jual.no_do', 'tb_det_jual.no_do')
+                        ->where('tb_det_jual.no_do', $request['no_invoice'])
+                        ->where('tb_det_jual.kode_barang', $kode_barang)
+                        ->where('tb_head_jual.kode_cust', $request['no_member'])
+                        ->whereNotIn('tb_det_jual.kode_barang', ['OK001', 'OK002'])
+                        ->whereMonth('tb_det_jual.created_at', date('m'))
                         ->get();
 
-                    $detail2 = TbDetJual::where('kode_barang', $kode_barang)
-                        ->whereNotIn('kode_barang', ['OK001', 'OK002'])
-                        ->whereMonth('created_at', date('m'))
+                    $detail2 = TbDetJual::select('tb_det_jual.*')
+                        ->join('tb_head_jual', 'tb_head_jual.no_do', 'tb_det_jual.no_do')
+                        ->where('tb_det_jual.kode_barang', $kode_barang)
+                        ->where('tb_head_jual.kode_cust', $request['no_member'])
+                        ->whereNotIn('tb_det_jual.kode_barang', ['OK001', 'OK002'])
+                        ->whereMonth('tb_det_jual.created_at', date('m'))
                         ->get();
 
                     if ($detail->count() != 0) {
                         foreach ($detail as $cek) {
 
                             if ($cek->jumlah + $jumlah > 2) {
+                                TbHeadJual::find($headJual->no_do)->delete();
                                 abort(404);
                                 // return response()->json([
                                 //     'msg' => 'member telah membeli barang ini sebanyak 2x dalam sebulan'
@@ -187,7 +194,8 @@ class PenjualanController extends Controller
                         foreach ($detail2 as $cek) {
 
                             if ($cek->jumlah + $jumlah > 2) {
-                                // abort(404);
+                                TbHeadJual::find($headJual->no_do)->delete();
+                                abort(404);
                                 // return response()->json([
                                 //     'msg' => 'member telah melebihi batas pembelian 2x dalam sebulan'
                                 // ], 400);
@@ -199,7 +207,7 @@ class PenjualanController extends Controller
                         TbHeadJual::find($headJual->no_do)->delete();
                         // abort(404);
                         return response()->json([
-                            'msg' => 'member telah membeli barang sebelumnya & tidak bisa membeli lebih dari 2x pembelian'
+                            'msg' => 'member telah membeli barang sebelumnya & tidak bisa membeli lebih dari 2x'
                         ], 400);
                     }
 
