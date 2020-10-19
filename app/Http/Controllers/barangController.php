@@ -98,8 +98,8 @@ class BarangController extends Controller
     {
         $user = Auth::user();
         $barang = Barang::where('kode_barang', $kode_barang)->first();
+        // $barang = Barang::with('gallery')->get();
         $roles = $this->roleRepo->getAll();
-
         return view('backend.master.barang.view')->with([
             'user' => $user,
             'roles' => $roles,
@@ -156,18 +156,6 @@ class BarangController extends Controller
         }
     }
 
-    // public function gallery(Request $request, $kode_barang)
-    // {
-    //     $barang = Barang::findorFail($kode_barang);
-    //     $items = Gallery::with('barang')
-    //         ->where('kategori', $kode_barang)
-    //         ->get();
-    //     return view('backend.store.barang.view')->with([
-    //         'barang' => $barang,
-    //         'items' => $items
-    //     ]);
-
-    // }
-
+    
     
 }
