@@ -55,7 +55,7 @@
             <div class="form-group @if($errors->has('poin')) has-error @endif">
                 <label for="poin" class="col-sm-12 control-label">Poin</label>    
                 <div class="col-sm-12">
-                    <input type="number" name="poin" class="form-control" id="poin" placeholder="poin" required>
+                    <input type="number" name="poin" class="form-control" id="poin" placeholder="poin" min="0" required>
                     @if($errors->has('poin'))
                         <span class="text-danger">{{ $errors->first('poin') }}</span>
                     @endif
@@ -64,7 +64,7 @@
             <div class="form-group @if($errors->has('berat')) has-error @endif">
                 <label for="berat" class="col-sm-12 control-label">Berat</label>    
                 <div class="col-sm-12">
-                    <input type="number" name="berat" class="form-control" id="berat" placeholder="berat">
+                    <input type="number" name="berat" class="form-control" id="berat" placeholder="berat" min="0">
                     @if($errors->has('berat'))
                         <span class="text-danger">{{ $errors->first('berat') }}</span>
                     @endif
@@ -76,7 +76,7 @@
             <div class="form-group @if($errors->has('h_nomem')) has-error @endif">
                 <label for="h_nomem" class="col-sm-12 control-label">Harga Katalog</label>    
                 <div class="col-sm-12">
-                    <input type="number" name="h_nomem" class="form-control" id="h_nomem" placeholder="katalog">
+                    <input type="number" name="h_nomem" class="form-control" id="h_nomem" placeholder="katalog" min="0">
                     @if($errors->has('h_nomem'))
                         <span class="text-danger">{{ $errors->first('h_nomem') }}</span>
                     @endif
@@ -85,26 +85,22 @@
             <div class="form-group @if($errors->has('h_member')) has-error @endif">
                 <label for="h_member" class="col-sm-12 control-label">Harga Member</label>    
                 <div class="col-sm-12">
-                    <input type="number" name="h_member" class="form-control" id="h_member" placeholder="harga member">
+                    <input type="number" name="h_member" class="form-control" id="h_member" placeholder="harga member" min="0">
                     @if($errors->has('h_member'))
                         <span class="text-danger">{{ $errors->first('h_member') }}</span>
                     @endif
                 </div>
             </div>
         </div>
-        <div class="form-group @if($errors->has('bpom')) has-error @endif">
-             <label for="bpom" class="col-sm-12 control-label">Bpom</label>
-             <div class="col-sm-12">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="bpom" value="0" id="bpom">
-                <label class="form-check-label" for="bpom">0</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="bpom" value="1" id="bpom">
-                <label class="form-check-label" for="bpom">1</label>
-            </div>
+        <div class="form-grup @if($errors->has('bpom')) has-error @endif">
+            <div class="col-sm-6">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="bpom" id="bpom" value="1">
+                    <label class="custom-control-label" for="bpom">BPOM</label>
+                </div>
             </div>
         </div>
+        &nbsp;
         <div class="form-group @if($errors->has('tgl_eks')) has-error @endif">
             <label for="tgl_eks" class="col-sm-12 control-label">Tanggal Expired</label>    
             <div class="col-sm-6">
@@ -114,19 +110,15 @@
                 @endif
             </div>
         </div>
-        <div class="form-group @if($errors->has('stats')) has-error @endif">
-            <label for="stats" class="col-sm-12 control-label">Status</label>
-            <div class="col-sm-12">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="stats" value="0" id="stats">
-                <label class="form-check-label" for="stats">0</label>
+        <div class="form-grup @if($errors->has('stats')) has-error @endif">
+            <div class="col-sm-6">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="stats" value="1" id="stats">
+                    <label class="custom-control-label" for="stats">Status</label>
+                </div>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="stats" value="1" id="stats">
-                <label class="form-check-label" for="stats">1</label>
-            </div>
-            </div>
-        </div>    
+        </div>
+           &nbsp;
         <div class="form-group @if($errors->has('deskripsi')) has-error @endif">
             <label for="deskripsi" class="col-sm-12 control-label">Deskripsi</label>    
             <div class="col-sm-12">
