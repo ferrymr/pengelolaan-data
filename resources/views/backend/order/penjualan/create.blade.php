@@ -277,9 +277,31 @@
                         'no_member' : no_member
                     },
                 success: function(obj){
-                        self.parents('.detailLine').find('[name="nama[]"]').val(obj.nama);
-                        self.parents('.detailLine').find('[name="jenis[]"]').val(obj.jenis);
-                        self.parents('.detailLine').find('[name="harga[]"]').val(obj.h_member);                        
+                        // self.parents('.detailLine').find('[name="nama[]"]').val(obj.nama);
+                        // self.parents('.detailLine').find('[name="jenis[]"]').val(obj.jenis);
+                        // self.parents('.detailLine').find('[name="harga[]"]').val(obj.h_member);
+                        var contents = {},
+                            duplicates = false;
+                
+                            $('[name="kode_barang[]"]').each(function() {
+                                var hasil = this.value;
+
+                                if (contents[hasil]) {
+                                    duplicates = true;
+                                    return false;
+                                }
+                                    
+                                contents[hasil] = true;
+                            }); 
+
+                            if (duplicates) {
+                                alert("There were duplicates.");
+                            } else {
+                                self.parents('.detailLine').find('[name="nama[]"]').val(obj.nama);
+                                self.parents('.detailLine').find('[name="jenis[]"]').val(obj.jenis);
+                                self.parents('.detailLine').find('[name="harga[]"]').val(obj.h_member);
+                            }
+                            
                 },
                 error: function(data){
                     var err = JSON.parse(data.responseText);
