@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use Carbon\Carbon;
+use App\Models\Barang;
 
 class Gallery extends Model
 {
@@ -89,6 +90,12 @@ class Gallery extends Model
             return false;
         }
     }
+
+    public function barang() {
+        return $this->belongsTo(Barang::class,'kategori');
+    }
+
+    
 
     
 

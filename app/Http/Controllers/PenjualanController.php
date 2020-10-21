@@ -23,11 +23,6 @@ class PenjualanController extends Controller
     {
 
         $items = TbHeadJual::with('detjual')->get();
-        // $items = TbHeadJual::all();
-
-        // dd($items);
-
-
 
         return view('backend.order.penjualan.index', compact('items'));
     }
@@ -40,9 +35,6 @@ class PenjualanController extends Controller
         return Datatables::of($items)
             ->escapeColumns([])
             ->make(true);
-
-        // return Datatables::of(TbHeadJual::query())->make(true);
-
     }
 
     public function create()
@@ -67,16 +59,6 @@ class PenjualanController extends Controller
         return view('backend.order.penjualan.index');
     }
 
-    // public function update(Request $request, $no_do)
-    // {
-    //     TbHeadJual::find($no_do)->update([
-    //         'tanggal'   => $request->tanggal,
-    //         'no_member' => $request->no_member,
-    //         'nama'      => $request->nama
-    //     ]);
-
-
-    // }
 
     // ====================================GET NAMA MEMBER===========================================
     public function getNama(Request $request)
@@ -169,6 +151,65 @@ class PenjualanController extends Controller
                     $jumlah     = $row[3];
                     $harga      = $row[4];
                     $total      = $row[5];
+
+                    $detail = TbDetJual::select('tb_det_jual.*')
+                        ->join('tb_head_jual', 'tb_head_jual.no_do', 'tb_det_jual.no_do')
+                        ->where('tb_det_jual.no_do', $request['no_invoice'])
+                        ->where('tb_det_jual.kode_barang', $kode_barang)
+                        ->where('tb_head_jual.kode_cust', $request['no_member'])
+                        ->whereNotIn('tb_det_jual.kode_barang', ['OK001', 'OK002'])
+                        ->whereMonth('tb_det_jual.created_at', date('m'))
+                        ->get();
+
+                    $detail2 = TbDetJual::select('tb_det_jual.*')
+                        ->join('tb_head_jual', 'tb_head_jual.no_do', 'tb_det_jual.no_do')
+                        ->where('tb_det_jual.kode_barang', $kode_barang)
+                        ->where('tb_head_jual.kode_cust', $request['no_member'])
+                        ->whereNotIn('tb_det_jual.kode_barang', ['OK001', 'OK002'])
+                        ->whereMonth('tb_det_jual.created_at', date('m'))
+                        ->get();
+
+                    if ($detail->count() != 0) {
+                        foreach ($detail as $cek) {
+
+                            if ($cek->jumlah + $jumlah > 2) {
+                                TbHeadJual::find($headJual->no_do)->delete();
+                                abort(404);
+                                // return response()->json([
+                                //     'msg' => 'member telah membeli barang ini sebanyak 2x dalam sebulan'
+                                // ], 400);
+                            }
+                        }
+                    }
+
+                    if ($jumlah > 2) {
+                        TbHeadJual::find($headJual->no_do)->delete();
+                        // abort(404);
+                        return response()->json([
+                            'msg' => 'member telah melebihi batas pembelian sebanyak 2x dalam sebulan'
+                        ], 400);
+                    }
+
+                    if ($detail2->count() != 0) {
+                        foreach ($detail2 as $cek) {
+
+                            if ($cek->jumlah + $jumlah > 2) {
+                                TbHeadJual::find($headJual->no_do)->delete();
+                                abort(404);
+                                // return response()->json([
+                                //     'msg' => 'member telah melebihi batas pembelian 2x dalam sebulan'
+                                // ], 400);
+                            }
+                        }
+                    }
+
+                    if ($jumlah > 2) {
+                        TbHeadJual::find($headJual->no_do)->delete();
+                        // abort(404);
+                        return response()->json([
+                            'msg' => 'member telah membeli barang sebelumnya & tidak bisa membeli lebih dari 2x'
+                        ], 400);
+                    }
 
                     $detJual = TbDetJual::create([
                         'no_do'       => $request['no_invoice'],

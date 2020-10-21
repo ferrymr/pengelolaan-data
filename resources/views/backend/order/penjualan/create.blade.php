@@ -27,7 +27,7 @@
                 <div class="form-group col-md-6 @if($errors->has('no_do')) has-error @endif">
                 <label for="no_do" class="col-sm-12 control-label">No Invoice *</label>    
                 <div class="col-sm-10">
-                    <input type="text" name="no_do" class="form-control" id="">
+                    <input type="text" name="no_do" class="form-control" readonly="true" id="">
                     @if($errors->has('no_do'))
                         <span class="text-danger">{{ $errors->first('no_do') }}</span>
                     @endif
@@ -36,7 +36,7 @@
             <div class="form-group col-md-6 @if($errors->has('tanggal')) has-error @endif">
                 <label for="tanggal" class="col-sm-12 control-label">Tanggal *</label>    
                 <div class="col-sm-10">
-                    <input type="text" name="tanggal" class="form-control datepicker" placeholder="Tanggal Input">
+                    <input type="text" name="tanggal" class="form-control datepicker" readonly="true" placeholder="Tanggal Input" value="<?php echo date('Y-m-d') ?>" >
                     @if($errors->has('tanggal'))
                         <span class="text-danger">{{ $errors->first('tanggal') }}</span>
                     @endif
@@ -60,37 +60,6 @@
                     @endif
                 </div>
             </div>
-            {{-- <div class="form-group col-md-4 @if($errors->has('jenis')) has-error @endif">
-                <label for="jenis" class="col-sm-12 control-label">Jenis *</label>    
-                <div class="col-sm-9">
-                    <select name="jenis" id="jenis" class="form-control select2">
-                        <option value="">Pilih Jenis </option>
-                        <option value="1">Satuan</option>
-                        <option value="2">Series</option>
-                    </select>
-                    @if($errors->has('jenis'))
-                        <span class="text-danger">{{ $errors->first('jenis') }}</span>
-                    @endif
-                </div>
-            </div>
-            <div class="form-group col-md-4 @if($errors->has('kode_barang')) has-error @endif">
-                <label for="kode_barang" class="col-sm-12 control-label">Kode Barang *</label>    
-                <div class="col-sm-9">
-                    <input type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode Barang">
-                    @if($errors->has('kode_barang'))
-                        <span class="text-danger">{{ $errors->first('kode_barang') }}</span>
-                    @endif
-                </div>
-            </div>
-            <div class="form-group col-md-4 @if($errors->has('jumlah')) has-error @endif">
-                <label for="jumlah" class="col-sm-12 control-label">Qty *</label>    
-                <div class="col-sm-9">
-                    <input type="text" name="jumlah" class="form-control" id="" placeholder="Qty">
-                    @if($errors->has('jumlah'))
-                        <span class="text-danger">{{ $errors->first('jumlah') }}</span>
-                    @endif
-                </div>
-            </div> --}}
             <div class="form-group col-md-4 @if($errors->has('kode_barang')) has-error @endif">
                 <label for="kode_barang" class="col-sm-12 control-label">Pilih Jenis Ongkir *</label>    
                 <div class="col-sm-9">
@@ -165,15 +134,6 @@
                     @endif
                 </div>
             </div>
-            {{-- <div class="form-group col-md-3 @if($errors->has('sub_total')) has-error @endif">
-                <label for="sub_total" class="col-sm-12 control-label">Sub Total *</label>    
-                <div class="col-sm-8">
-                    <input type="text" name="sub_total" class="form-control" id="" placeholder="Sub Total">
-                    @if($errors->has('sub_total'))
-                        <span class="text-danger">{{ $errors->first('sub_total') }}</span>
-                    @endif
-                </div>
-            </div> --}}
             </div>
         </div>
         <div class="card-footer">
@@ -204,7 +164,7 @@
                         <input type="text" name="jenis[]" class="form-control" id="jenis" placeholder="Jenis" readonly="true" >
                     </td>
                     <td>
-                        <input type="text" name="jumlah[]" class="form-control input-jumlah" id="jumlah" placeholder="Qty" >
+                        <input type="number" name="jumlah[]" class="form-control input-jumlah" id="jumlah" min="1" placeholder="Qty" >
                     </td>
                     <td>
                         <input type="text" name="harga[]" class="form-control input-harga" id="harga" placeholder="Harga" readonly="true" >
@@ -221,8 +181,8 @@
                     <td style="border: none"></td>
                     <td style="border: none"></td>
                     <td style="border: none"></td>
-                    <td>Total</td>
-                    <td><input type="text" name="sub_total" class=" form-control grand-total" value="0"></td>
+                    <td>Total :</td>
+                    <td><input type="text" name="sub_total" class=" form-control grand-total" value="0" readonly="true"></td>
                     <td style="text-align: center"><a href="#" class="btn btn-primary update-data">Update</a></td>
                 </tr>
             </tfoot>
@@ -269,12 +229,12 @@
         $('.select2').select2();
 
         // date picker
-        $('.datepicker').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true
-        })
+        // $('.datepicker').datepicker({
+        //     format: 'dd/mm/yyyy',
+        //     autoclose: true
+        // })
 
-
+// 
         // ===========================================MEMBUAT NO INVOICE OTOMATIS===========================================
         function create_invoice(form) {
             console.log(form);
@@ -298,24 +258,6 @@
             return (false);
         }
         
-        // $("#kode_barang").keyup(function () {
-        //     var kode_barang = $(this).val();
-        //     $.ajax({
-        //             url: "{{ route('admin.penjualan.create.kode') }}",
-        //             method:'POST',
-        //             data:"kode_barang="+kode_barang , 
-        //         success: function(data){
-        //             if(data == 1){
-        //                 $("#jenis").select2("val", "1");
-        //             }else{
-        //                 $("#jenis").select2("val", "2");
-        //             }
-        //             console.log(data);
-        //             // var no_invoice = data;
-        //             // $('[name=no_do]').val(no_invoice); 
-                        
-        //         }});
-        // });
         // =====================================ADD ROW TABEL==================================================
         initKodeBarang();
             function initKodeBarang(){
@@ -335,9 +277,31 @@
                         'no_member' : no_member
                     },
                 success: function(obj){
-                        self.parents('.detailLine').find('[name="nama[]"]').val(obj.nama);
-                        self.parents('.detailLine').find('[name="jenis[]"]').val(obj.jenis);
-                        self.parents('.detailLine').find('[name="harga[]"]').val(obj.h_member);                        
+                        // self.parents('.detailLine').find('[name="nama[]"]').val(obj.nama);
+                        // self.parents('.detailLine').find('[name="jenis[]"]').val(obj.jenis);
+                        // self.parents('.detailLine').find('[name="harga[]"]').val(obj.h_member);
+                        var contents = {},
+                            duplicates = false;
+                
+                            $('[name="kode_barang[]"]').each(function() {
+                                var hasil = this.value;
+
+                                if (contents[hasil]) {
+                                    duplicates = true;
+                                    return false;
+                                }
+                                    
+                                contents[hasil] = true;
+                            }); 
+
+                            if (duplicates) {
+                                alert("There were duplicates.");
+                            } else {
+                                self.parents('.detailLine').find('[name="nama[]"]').val(obj.nama);
+                                self.parents('.detailLine').find('[name="jenis[]"]').val(obj.jenis);
+                                self.parents('.detailLine').find('[name="harga[]"]').val(obj.h_member);
+                            }
+                            
                 },
                 error: function(data){
                     var err = JSON.parse(data.responseText);
@@ -366,7 +330,7 @@
                                     '<input type="text" name="jenis[]" class="form-control" id="jenis" placeholder="Jenis" readonly="true" >'+
                                 '</td>'+
                                 '<td>'+
-                                    ' <input type="text" name="jumlah[]" class="form-control input-jumlah" id="jumlah" placeholder="Qty" >'+
+                                    ' <input type="number" name="jumlah[]" min="1" class="form-control input-jumlah" id="jumlah" placeholder="Qty" >'+
                                 '</td>'+
                                 '<td>'+
                                     ' <input type="text" name="harga[]" class="form-control input-harga" id="harga" placeholder="Harga" readonly="true" >'+

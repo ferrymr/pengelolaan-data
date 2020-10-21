@@ -16,25 +16,25 @@ class Barang extends Model
         'jenis', 
         'stok', 
         'poin', 
-        'h_hpb', 
-        'h_ppnj', 
+        // 'h_hpb', 
+        // 'h_ppnj', 
         'h_nomem', 
         'h_member', 
-        'h_beli',
-        'h_ppnb',
-        'h_hpp',
+        // 'h_beli',
+        // 'h_ppnb',
+        // 'h_hpp',
         'berat',
-        'satuan',
+        // 'satuan',
         'bpom',
-        'tgl_eks',
+        // 'tgl_eks',
         'stats',
-        'stok_his',
-        'log_his',
-        'pic',
-        'cat',
-        'diskon',
+        // 'stok_his',
+        // 'log_his',
+        // 'pic',
+        // 'cat',
+        // 'diskon',
         'deskripsi',
-        'cara_pakai'
+        'cara_pakai',
     ];
 
     public function getAll() {
@@ -56,25 +56,25 @@ class Barang extends Model
             'jenis' => $request['jenis'],
             // 'stok' => $request['stok'], 
             'poin' => $request['poin'],
-            'h_hpb' => $request['h_hpb'],
-            'h_ppnj' => $request['h_ppnj'],
+            // 'h_hpb' => $request['h_hpb'],
+            // 'h_ppnj' => $request['h_ppnj'],
             'h_nomem' => $request['h_nomem'],
             'h_member' => $request['h_member'],
-            'h_beli' => $request['h_beli'],
-            'h_ppnb' => $request['h_ppnb'],
-            'h_hpp' => $request['h_hpp'],
+            // 'h_beli' => $request['h_beli'],
+            // 'h_ppnb' => $request['h_ppnb'],
+            // 'h_hpp' => $request['h_hpp'],
             'berat' => $request['berat'],
-            'satuan' => $request['satuan'],
+            // 'satuan' => $request['satuan'],
             'bpom' => $request['bpom'],
             'tgl_eks' => $request['tgl_eks'],
             'stats' => $request['stats'],
-            'stok_his' => $request['stok_his'],
-            'log_his' => $request['log_his'],
-            'pic' => $request['pic'],
-            'cat' => $request['cat'],
-            'diskon' => $request['diskon'],
+            // 'stok_his' => $request['stok_his'],
+            // 'log_his' => $request['log_his'],
+            // 'pic' => $request['pic'],
+            // 'cat' => $request['cat'],
+            // 'diskon' => $request['diskon'],
             'deskripsi' => $request['deskripsi'],
-            'cara_pakai' => $request['cara_pakai'],
+            'cara_pakai' => $request['cara_pakai']
         );
 
         $barang = Barang::create($barang);
@@ -132,6 +132,13 @@ class Barang extends Model
         }
     }
 
+    public function gallery() {
+        return $this->hasMany(Gallery::class, 'id');
+    }
+    // public function detjual()
+    //     {
+    //         return $this->hasMany('App\Models\TbDetJual', 'kode_barang', 'kode_barang');
+    //     }
 
 
 
