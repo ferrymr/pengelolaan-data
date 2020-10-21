@@ -48,6 +48,7 @@ class CheckoutPayment extends Component
         $this->subtotal = session('subtotal');
         $this->totalBayar = session('totalBayar');
         $this->totalBerat = session('totalBerat');
+        $this->totalItems = session('totalItems');
         $this->validateAllInputs();
     }
 
