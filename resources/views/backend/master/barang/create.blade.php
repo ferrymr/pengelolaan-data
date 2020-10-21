@@ -44,10 +44,10 @@
             <div class="input-group col-sm-8">
                 <select name="jenis" class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                   <option selected></option>
-                  <option value="Brightening" name="brightening" id="satuan">Brightening</option>
-                  <option value="Purifying" name="purifying" id="series">Purifying</option>
-                  <option value="Other" name="other" id="satuan">Other</option>
-                  <option value="Accesories" name="accesories" id="satuan">Accesories</option>
+                  <option value="WHITENING" name="brightening" id="satuan">Whitening</option>
+                  <option value="PURIFYING" name="purifying" id="series">Purifying</option>
+                  <option value="OTHER" name="other" id="satuan">Other</option>
+                  <option value="ACCESORIES" name="accesories" id="satuan">Accesories</option>
                 </select>
               </div>
         </div>

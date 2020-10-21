@@ -51,9 +51,9 @@
 
         <div id="action-template" style="display:none">
             <div class="action-content">
-                <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
+                {{-- <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
                     <i class="fa fa-edit"></i>
-                </a>
+                </a> --}}
                 <a class="btn btn-danger btn-sm btn-hapus actDelete" 
                     data-placement="left" 
                     data-toggle="confirmation" 
@@ -81,9 +81,9 @@
         function renderAction(data) {
             var wrapper = $('<p></p>').append($('#action-template .action-content').clone());
                         
-            if(data.action.edit) {
-                wrapper.find('.btn-edit').attr('href', data.action.edit).show();
-            }
+            // if(data.action.edit) {
+            //     wrapper.find('.btn-edit').attr('href', data.action.edit).show();
+            // }
 
             if(data.action.hapus) {
                 wrapper.find('.btn-hapus')
@@ -97,6 +97,7 @@
         }
 
         dataTable = $('#gallery-table').DataTable({
+            "pageLength": 25,
             processing: true,
             serverSide: true,
             stateSave: false,

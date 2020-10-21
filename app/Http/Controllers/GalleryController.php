@@ -136,11 +136,14 @@ class GalleryController extends Controller
         $user = Auth::user();
         $gallery = Gallery::where('id', $id)->first();
         $roles = $this->roleRepo->getAll();
+        $gambar = $this->galleryRepo->findId($id);
+        $path = storage_path('app/public/product/' . $gambar->gambar);
 
         return view('backend.master.gallery.edit')->with([
             'user' => $user,
             'roles' => $roles,
-            'gallery' =>$gallery
+            'gallery' =>$gallery,
+            'path' =>$path
         ]);
     }
 
