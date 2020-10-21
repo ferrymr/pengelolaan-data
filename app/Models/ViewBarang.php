@@ -1,15 +1,12 @@
 <?php
 
-namespace App;
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Barang extends Model
+class ViewBarang extends Model
 {
-    protected $table = 'tb_barang';
-    protected $primarykey = 'kode_barang';
-    public $incrementing = false;
+    protected $table = 'view_barang';
     protected $fillable = [
         'kode_barang', 
         'nama', 
@@ -35,22 +32,27 @@ class Barang extends Model
         // 'diskon',
         'deskripsi',
         'cara_pakai',
+        'gambar'
     ];
 
+    // public function barang() {
+    //     return $this->belongsTo(Barang::class);
+    // }
+
     public function getAll() {
-        return Barang::all();
+        return ViewBarang::all();
     }
 
-    public function getBarang($roleId) {
-        return Barang::whereHas('roles', function($q) use ($roleId)
+    public function getViewBarang($roleId) {
+        return ViewBarang::whereHas('roles', function($q) use ($roleId)
         {
             $q->where('kode_barang', $roleId);
         })->get();
     }
 
-    public function addBarang($request) 
+    public function addViewBarang($request) 
     {
-        $barang = array(
+        $viewbarang = array(
             'kode_barang' => $request['kode_barang'],
             'nama' => $request['nama'],
             'jenis' => $request['jenis'],
@@ -78,12 +80,12 @@ class Barang extends Model
             'gambar' => $request['gambar']
         );
 
-        $barang = Barang::create($barang);
-        return $barang;
+        $viewbarang = ViewBarang::create($viewbarang);
+        return $viewbarang;
     }
 
-    public function deleteBarang($kode_barang) {
-        $data = Barang::find($kode_barang);
+    public function deleteViewBarang($kode_barang) {
+        $data = ViewBarang::find($kode_barang);
         
         if(!empty($data)) {
             $data->delete();
@@ -94,7 +96,7 @@ class Barang extends Model
     }
 
     public function findId($kode_barang) {
-        $data = Barang::find($kode_barang);
+        $data = ViewBarang::find($kode_barang);
         if(!empty($data)) {
             return $data;
         } else {
@@ -102,9 +104,9 @@ class Barang extends Model
         }
     }
 
-    public function editBarang($request, $kode_barang) {
+    public function editViewBarang($request, $kode_barang) {
         
-        $data = Barang::where('kode_barang', $kode_barang)->update($request);
+        $data = ViewBarang::where('kode_barang', $kode_barang)->update($request);
 
         if(!empty($data)) {
             return $data;
@@ -114,7 +116,7 @@ class Barang extends Model
     }
 
     public function editUserMobile($request, $kode_barang) {
-        $data = Barang::where('kode_barang', $kode_barang)->update($request);
+        $data = ViewBarang::where('kode_barang', $kode_barang)->update($request);
 
         if(!empty($data)) {
             return $data;
@@ -122,5 +124,4 @@ class Barang extends Model
             return false;
         }
     }
-    
 }

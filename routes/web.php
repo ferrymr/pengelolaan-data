@@ -179,3 +179,9 @@ Route::group([
     Route::post('create_kode', 'PenjualanController@create_kode')->name('create.kode');
     Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('update_penjualan');
 });
+
+Route::group(['prefix' => '/admin/viewbarang/', 'as' => 'admin.viewbarang.'], function()
+{
+    Route::get('', 'ViewBarangController@index')->name('index');
+
+});

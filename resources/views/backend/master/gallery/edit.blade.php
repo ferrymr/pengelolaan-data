@@ -58,7 +58,7 @@
     </div>
     <div class="col">
         <div class="form-group @if($errors->has('gambar')) has-error @endif">
-            <img  src="{{ storage_path('app.public.product') }}/{{ $gallery->gambar }}" class="img-fluid thumbnail" style="max-height: 50px;">
+            <img  src="{{ url('storage/product/'.$gallery->gambar) }}" class="img-fluid thumbnail" style="max-height: 50px;">
         </div>
        
     </div>

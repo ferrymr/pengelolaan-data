@@ -92,7 +92,7 @@ class Gallery extends Model
     }
 
     public function barang() {
-        return $this->belongsTo(Barang::class,'kategori');
+        return $this->belongsTo(Barang::class, 'kode_barang');
     }
 
     

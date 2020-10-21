@@ -10,6 +10,7 @@ use App\Models\Barang;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Gallery;
+use App\Models\ViewBarang;
 use Illuminate\Support\Facades\DB;
 
 class BarangController extends Controller
@@ -39,7 +40,7 @@ class BarangController extends Controller
         return Datatables::of($barang)
             ->addColumn('action', function ($barang){
                 return [
-                    // 'view' => route('admin.barang.view', $barang->kode_barang),
+                    'view' => route('admin.barang.view', $barang->kode_barang),
                     'edit' => route('admin.barang.edit', $barang->kode_barang),
                     'hapus' => route('admin.barang.delete', $barang->kode_barang),
                 ];
@@ -98,12 +99,13 @@ class BarangController extends Controller
     {
         $user = Auth::user();
         $barang = Barang::where('kode_barang', $kode_barang)->first();
-        // $barang = Barang::with('gallery')->get();
+        $viewbarang = ViewBarang::where('kode_barang', $kode_barang)->get();
         $roles = $this->roleRepo->getAll();
         return view('backend.master.barang.view')->with([
             'user' => $user,
             'roles' => $roles,
-            'barang' =>$barang
+            'barang' =>$barang,
+            'viewbarang' =>$viewbarang
         ]);
     }
 
@@ -131,12 +133,18 @@ class BarangController extends Controller
             "jenis" => $request->input('jenis'),
             "stok" => $request->input('stok'),
             "poin" => $request->input('poin'),
+            "berat" => $request->input('berat'),
+            "satuan" => $request->input('satuan'),
+            "h_nomem" => $request->input('h_nomem'),
+            "h_member" => $request->input('h_member'),
+            "deskripsi" => $request->input('deskripsi'),
+            "cara_pakai" => $request->input('cara_pakai')
         );
     
         $barang = $this->barangRepo->editBarang($param, $kode_barang, $request->input('role_id'));
 
         if(!$this->barangRepo->error) {
-            flash('<i class="fa fa-info"></i>&nbsp; <strong>Barang berhasil diupdate</strong>')->success()->important();
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Data barang berhasil diupdate</strong>')->success()->important();
             return redirect()->route('admin.barang.index');
         } else {
             flash('<i class="fa fa-info"></i>&nbsp; <strong>User </strong> ' . $this->barangRepo->error)->error()->important();
