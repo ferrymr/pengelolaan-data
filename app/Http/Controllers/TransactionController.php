@@ -121,7 +121,7 @@ class TransactionController extends Controller
                 );
             }
 
-            DB::insert('INSERT INTO cn_order_history (
+            DB::insert('INSERT INTO tb_order_history (
                     transaksi_id,
                     tanggal,
                     keterangan
@@ -248,7 +248,7 @@ class TransactionController extends Controller
 
 
 
-            // DB::table('cn_order_history')->where('transaksi_id', $transactionId)->delete();
+            // DB::table('tb_order_history')->where('transaksi_id', $transactionId)->delete();
 
 
             DB::commit();
@@ -268,7 +268,7 @@ class TransactionController extends Controller
         }
 
         DB::table('cn_transaksi')->where('id', $transactionId)->update(['status_transaksi' => $status]);
-        DB::insert('INSERT INTO cn_order_history (transaksi_id, tanggal, keterangan ) VALUES (?, ?, ?)', [
+        DB::insert('INSERT INTO tb_order_history (transaksi_id, tanggal, keterangan ) VALUES (?, ?, ?)', [
             $transactionId,
             date('Y-m-d H:i:s'),
             $status
@@ -587,7 +587,7 @@ class TransactionController extends Controller
 
 
 
-            DB::table('cn_order_history')->where('transaksi_id', $transactionId)->delete();
+            DB::table('tb_order_history')->where('transaksi_id', $transactionId)->delete();
 
 
             DB::commit();

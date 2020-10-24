@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShippingAddress extends Model
 {
-    protected $table = 'cn_shipping_address';
+    protected $table = 'tb_shipping_address';
 
     public $timestamps = false;
 

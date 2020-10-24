@@ -45,6 +45,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('address/set-default/{addressId}', 'AddressController@setDefault')->name('address.setdefault');
     Route::resource('address', 'AddressController');
 
+    // Daftar jadi member
+    Route::get('member/signup', 'MemberController@signup')->name('member.signup');
+
     Route::get('/order-history/{status?}', 'HistoryOrderController@index')->name('order-history-status');
     Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');
 

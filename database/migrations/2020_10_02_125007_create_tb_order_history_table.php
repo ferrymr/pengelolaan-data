@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCnBarangTable extends Migration
+class CreateTbOrderHistoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateCnBarangTable extends Migration
      */
     public function up()
     {
-        Schema::create('cn_barang', function (Blueprint $table) {
+        Schema::create('tb_order_history', function (Blueprint $table) {
             $table->id();
+            $table->integer('tb_head_jual_id');
+            $table->datetime('tanggal');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateCnBarangTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cn_barang');
+        Schema::dropIfExists('tb_order_history');
     }
 }

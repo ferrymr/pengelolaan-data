@@ -642,7 +642,7 @@ class Checkout extends Component
                 );
             }
 
-            DB::insert('INSERT INTO cn_order_history (
+            DB::insert('INSERT INTO tb_order_history (
                     transaksi_id,
                     tanggal,
                     keterangan
