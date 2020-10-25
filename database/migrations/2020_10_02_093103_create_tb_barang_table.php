@@ -14,12 +14,14 @@ class CreateTbBarangTable extends Migration
     public function up()
     {
         Schema::create('tb_barang', function (Blueprint $table) {
-            $table->string('kode_barang', 6)->primary();
+            $table->id();
+            $table->string('kode_barang', 6)->unique();
             $table->string('nama', 35)->nullable();
             $table->string('jenis', 25)->nullable();
-            $table->integer('stok');
-            $table->string('poin', 11);
-            // $table->double('h_hpb');
+            $table->integer('stok')->nullable()->default(0);
+            $table->string('poin', 11)->nullable()->default(0);
+            $table->string('tipe_kulit', 11)->nullable(); // shop
+            // $table->double('h_hpb'); // shop g d pakai lg
             // $table->double('h_ppnj');
             $table->double('h_nomem')->nullable();
             $table->double('h_member')->nullable();
@@ -27,15 +29,16 @@ class CreateTbBarangTable extends Migration
             // $table->double('h_ppnb');
             // $table->double('h_hpp')->nullable();
             $table->float('berat')->nullable();
-            // $table->string('satuan', 5)->nullable();
-            $table->integer('bpom');
-            $table->date('tgl_eks');
-            $table->string('stats', 1);
+            $table->string('satuan', 10)->nullable(); // shop
+            $table->integer('bpom')->nullable();
+            $table->date('tgl_eks')->comment('Tanggal expired');
+            $table->string('stats')->nullable()->comment('Status publish atau tidak');
             // $table->integer('stok_his');
             // $table->longText('log_his');
-            // $table->string('pic', 10);
-            // $table->integer('cat');
-            // $table->integer('diskon');
+            $table->string('pic', 50)->nullable(); // shop
+            $table->integer('cat')->nullable()->comment('Produk non-bpom tidak ditampilkan')->default(1); // shop 
+            $table->integer('diskon')->nullable(); // shop
+            $table->string('unit')->default('PIECES'); // shop
             $table->text('deskripsi')->nullable();
             $table->text('cara_pakai')->nullable();
             $table->timestamps();

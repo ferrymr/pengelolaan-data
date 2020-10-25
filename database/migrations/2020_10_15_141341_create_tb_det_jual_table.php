@@ -14,20 +14,24 @@ class CreateTbDetJualTable extends Migration
     public function up()
     {
         Schema::create('tb_det_jual', function (Blueprint $table) {
-            $table->string('no_do', 15);
+            $table->id();
+            $table->integer('tb_head_jual_id');
+            $table->string('no_do', 15);            
             $table->string('kode_barang', 6);
-            $table->string('nama', 50);
-            $table->string('jenis', 50);
-            $table->integer('jumlah')->nullable();
+            $table->string('nama', 50); // plan to remove
+            $table->string('jenis', 50); // plan to remove
+            $table->integer('jumlah')->nullable(); // qty
             $table->double('harga')->nullable();
-            $table->double('total')->nullable();
-            $table->double('t_hpb');
-            $table->integer('poin');
-            $table->string('no_ref', 5);
-            $table->integer('bpom');
+            $table->double('total')->nullable(); // subtotal
+            $table->double('t_hpb')->comment('not used'); // not used
+            $table->integer('poin'); // total_point
+            $table->string('no_ref', 5); // plan to remove
+            $table->integer('bpom'); // plan to remove
+            $table->text('note'); // additional
+            $table->integer('promo'); // additional
             $table->timestamps();
 
-            $table->primary(['no_do', 'kode_barang', 'nama', 'jenis']);
+            // $table->primary(['no_do', 'kode_barang', 'nama', 'jenis']);
         });
     }
 

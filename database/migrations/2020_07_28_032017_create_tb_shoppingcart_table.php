@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCnDesProTable extends Migration
+class CreateTbShoppingcartTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateCnDesProTable extends Migration
      */
     public function up()
     {
-        Schema::create('cn_des_pro', function (Blueprint $table) {
-            $table->id();
+        Schema::create('tb_shoppingcart', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('users_id');
+            $table->string('kode_barang');
+            $table->integer('qty');
+            $table->string('note');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateCnDesProTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cn_des_pro');
+        Schema::dropIfExists('tb_shoppingcart');
     }
 }

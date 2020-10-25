@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCnBarangTable extends Migration
+class CreateTbBarangImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateCnBarangTable extends Migration
      */
     public function up()
     {
-        Schema::create('cn_barang', function (Blueprint $table) {
+        Schema::create('tb_barang_images', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_file');
+            $table->integer('tb_barang_id');
+            $table->boolean('flag')->default(1);
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateCnBarangTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cn_barang');
+        Schema::dropIfExists('tb_barang_images');
     }
 }

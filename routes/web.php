@@ -47,6 +47,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('address/set-default/{addressId}', 'AddressController@setDefault')->name('address.setdefault');
     Route::resource('address', 'AddressController');
 
+    // Daftar jadi member
+    Route::get('member/signup', 'MemberController@signup')->name('member.signup');
+
     Route::get('/order-history/{status?}', 'HistoryOrderController@index')->name('order-history-status');
     Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');
 
@@ -80,11 +83,11 @@ Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function (
     Route::get('', 'BarangController@index')->name('index');
     Route::get('datatable', 'BarangController@datatable')->name('datatable');
     Route::get('edit/{kode_barang}', 'BarangController@edit')->name('edit');
-    Route::get('view/{kode_barang}', 'BarangController@view')->name('view');
     Route::get('delete/{kode_barang}', 'BarangController@destroy')->name('delete');
     Route::get('add', 'BarangController@create')->name('add');
     Route::post('store', 'BarangController@store')->name('store');
     Route::post('update/{kode_barang}', 'BarangController@update')->name('update');
+<<<<<<< HEAD
 });
 
 // Master Gallery
@@ -98,6 +101,17 @@ Route::group(['prefix' => '/admin/gallery/', 'as' => 'admin.gallery.'], function
     Route::post('store', 'GalleryController@store')->name('store');
     Route::post('update/{id}', 'GalleryController@update')->name('update');
     Route::get('/gambar/{id}', 'GalleryController@getGambar')->name('getGambar');
+=======
+
+    Route::post('store-image', 'BarangController@storeBarangImage')->name('store-image');
+    Route::get('delete-barang-image/{barangId?}/{id?}', 'BarangController@deleteBarangImage')->name('detele-barang-image');
+});
+
+Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
+{
+    Route::get('barang-image/{id?}', 'BarangController@getBarangImage')->name('barang-image');
+
+>>>>>>> dev
 });
 
 // Master Supplier
@@ -110,12 +124,6 @@ Route::group(['prefix' => '/admin/supplier/', 'as' => 'admin.supplier.'], functi
     Route::get('delete/{kode_supp}', 'SupplierController@destroy')->name('delete');
     Route::post('update/{kode_supp}', 'SupplierController@update')->name('update');
 });
-
-// Route::group(['prefix' => '/admin/gallery/', 'as' => 'admin.gallery.'], function()
-
-// gambar
-
-
 
 // Slider
 Route::group([

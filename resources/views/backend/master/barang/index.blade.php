@@ -29,6 +29,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Foto</th>
                         <th>Kode Barang</th>
                         <th>Nama Barang</th>
                         <th>Jenis</th>
@@ -42,9 +43,9 @@
 
             <div id="action-template" style="display:none">
                 <div class="action-content">
-                    {{-- <a href="#" class="btn btn-warning btn-sm btn-info btn-detail" title="View" style="display: none; color: white">
+                    <a href="#" class="btn btn-warning btn-sm btn-info btn-detail" title="View" style="display: none; color: white">
                     <i class="fa fa-eye"></i>
-                    </a> --}}
+                    </a>
                     <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
                         <i class="fa fa-edit"></i>
                     </a>
@@ -94,6 +95,7 @@
             }
 
             dataTable = $('#barang-table').DataTable({
+                "pageLength": 25,
                 processing: true,
                 serverSide: true,
                 stateSave: false,
@@ -106,6 +108,13 @@
                         orderable: false,
                         render: function (data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {
+                        data: 'image', 
+                        name: 'image', 
+                        render: function(data) {
+                            return '<img class="img-fluid thumbnail" style="width:50%" src="' + data + '">';
                         }
                     },
                     { data: 'kode_barang', name: 'kode_barang'},
@@ -124,6 +133,7 @@
                     { data: 'nama', name: 'nama', visible: false },
                 ],
                 order: [[ 1, 'asc' ]]
+               
             });
         });
     </script>
