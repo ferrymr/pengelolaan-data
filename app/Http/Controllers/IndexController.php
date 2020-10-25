@@ -11,18 +11,18 @@ class IndexController extends Controller
     public function index()
     {
 
-        $bestOfPieces = Barang::join('tb_det_jual', 'tb_det_jual.kode_barang', '=', 'cn_barang.kode_barang')
-                        ->select('cn_barang.kode_barang', 'cn_barang.nama', 'cn_barang.h_nomem AS harga', DB::raw('SUM(tb_det_jual.jumlah) as jumlah_jual'))
-                        ->where('cn_barang.unit', 'PIECES')
-                        ->groupBy('cn_barang.kode_barang', 'cn_barang.nama')
+        $bestOfPieces = Barang::join('tb_det_jual', 'tb_det_jual.kode_barang', '=', 'tb_barang.kode_barang')
+                        ->select('tb_barang.kode_barang', 'tb_barang.nama', 'tb_barang.h_nomem AS harga', DB::raw('SUM(tb_det_jual.jumlah) as jumlah_jual'))
+                        ->where('tb_barang.unit', 'PIECES')
+                        ->groupBy('tb_barang.kode_barang', 'tb_barang.nama')
                         ->orderBy('jumlah_jual', 'desc')
                         ->limit(5)
                         ->get();
 
-        $bestOfSeries = Barang::join('tb_det_jual', 'tb_det_jual.kode_barang', '=', 'cn_barang.kode_barang')
-                        ->select('cn_barang.kode_barang', 'cn_barang.nama', 'cn_barang.h_nomem AS harga', DB::raw('SUM(tb_det_jual.jumlah) as jumlah_jual'))
-                        ->where('cn_barang.unit', 'SERIES')
-                        ->groupBy('cn_barang.kode_barang', 'cn_barang.nama')
+        $bestOfSeries = Barang::join('tb_det_jual', 'tb_det_jual.kode_barang', '=', 'tb_barang.kode_barang')
+                        ->select('tb_barang.kode_barang', 'tb_barang.nama', 'tb_barang.h_nomem AS harga', DB::raw('SUM(tb_det_jual.jumlah) as jumlah_jual'))
+                        ->where('tb_barang.unit', 'SERIES')
+                        ->groupBy('tb_barang.kode_barang', 'tb_barang.nama')
                         ->orderBy('jumlah_jual', 'desc')
                         ->limit(5)
                         ->get();

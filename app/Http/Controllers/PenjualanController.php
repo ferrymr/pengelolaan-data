@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use App\Models\TbHeadJual;
 use App\Models\TbDetJual;
 use App\Models\TbMember;
-use App\Models\TbBarang;
+use App\Models\Barang;
 use App\Models\TbHeadPack;
 use App\Models\User;
 
@@ -115,7 +115,7 @@ class PenjualanController extends Controller
                 ], 400);
             }
 
-            $data = TbBarang::select('nama', 'jenis', 'h_member')->where('kode_barang', $kode_barang)->first();
+            $data = Barang::select('nama', 'jenis', 'h_member')->where('kode_barang', $kode_barang)->first();
             if ($data == null) {
                 $data = TbHeadPack::select('nama_pack as nama', 'jenis_pack as jenis', 'h_member')->where('kode_pack', $kode_barang)->first();
             }
@@ -221,7 +221,7 @@ class PenjualanController extends Controller
                         'total'       => $total
                     ]);
                     if ($detJual) {
-                        $barang = TbBarang::find($kode_barang);
+                        $barang = Barang::find($kode_barang);
                         if ($barang == null) {
                             $barang = TbHeadPack::findOrFail($kode_barang);
                         }

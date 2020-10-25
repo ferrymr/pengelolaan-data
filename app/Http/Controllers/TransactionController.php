@@ -190,8 +190,8 @@ class TransactionController extends Controller
             // di inner join barang yang muncul cuman 1
             // mungkin gara-gara ada kode barang yang awalnya 0 jadinya pas di join on nggak exact perbandingannya
             $orderedItems = DB::table('cn_transaksi_detail')
-                                ->join('cn_barang', 'cn_barang.kode_barang', '=', 'cn_transaksi_detail.kode_barang')
-                                ->select('cn_transaksi_detail.kode_barang', 'cn_transaksi_detail.qty', 'cn_barang.unit')
+                                ->join('tb_barang', 'tb_barang.kode_barang', '=', 'cn_transaksi_detail.kode_barang')
+                                ->select('cn_transaksi_detail.kode_barang', 'cn_transaksi_detail.qty', 'tb_barang.unit')
                                 ->where('transaksi_id', $transactionId)
                                 ->get();
 
@@ -528,8 +528,8 @@ class TransactionController extends Controller
             // di inner join barang yang muncul cuman 1
             // mungkin gara-gara ada kode barang yang awalnya 0 jadinya pas di join on nggak exact perbandingannya
             $orderedItems = DB::table('cn_transaksi_detail')
-                                ->join('cn_barang', 'cn_barang.kode_barang', '=', 'cn_transaksi_detail.kode_barang')
-                                ->select('cn_transaksi_detail.kode_barang', 'cn_transaksi_detail.qty', 'cn_barang.unit')
+                                ->join('tb_barang', 'tb_barang.kode_barang', '=', 'cn_transaksi_detail.kode_barang')
+                                ->select('cn_transaksi_detail.kode_barang', 'cn_transaksi_detail.qty', 'tb_barang.unit')
                                 ->where('transaksi_id', $transactionId)
                                 ->get();
 

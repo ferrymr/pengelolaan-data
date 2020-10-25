@@ -284,10 +284,6 @@ return [
                     'text' => 'Referral',
                     'url' => 'referral'
                 ],
-                [
-                    'text' => 'Gallery',
-                    'url' => 'admin/gallery'
-                ],
             ],
         ],
         [
@@ -655,6 +651,26 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js',
+                ],
+            ],
+        ],
+        'Ckeditor' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.ckeditor.com/4.14.1/standard/ckeditor.js',
+                ],
+            ],
+        ],
+        'BootstrapFilesyle' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js',
                 ],
             ],
         ],
