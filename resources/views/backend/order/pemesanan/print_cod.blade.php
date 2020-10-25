@@ -80,7 +80,6 @@
 </head>
 <body style="padding-left: 10px;">
     <table style="width=80%">
-        
         <thead>
             <tr>
                 <th>
@@ -303,14 +302,11 @@
                             </th>
                         </tr>
                     </table>
-                    <br>
                     <hr>
                     <hr>
                 </th>
-                <hr>
             </tr>
-        </thead>
-        
+        </thead>  
     </table>
 </body>
 </html>

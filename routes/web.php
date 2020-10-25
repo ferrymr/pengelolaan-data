@@ -4,13 +4,6 @@ use App\Models\ViewPemesanan;
 
 Auth::routes();
 
-Route::get('/print_kurir', function () {
-    return view('backend.order.pemesanan.print_kurir');
-});
-
-Route::get('/print_cod', function () {
-    return view('backend.order.pemesanan.print_cod');
-});
 // =============================== FRONTEND ===============================
 
 // Homepage
@@ -192,4 +185,12 @@ Route::group([
 ], function () {
     Route::get('', 'PemesananController@index')->name('index');
     Route::get('datatable', 'PemesananController@datatable')->name('datatable');
+    Route::get('edit', 'PemesananController@edit')->name('edit');
+    Route::get('delete', 'PemesananController@delete')->name('delete');
+    Route::get('print_kurir/{no_do?}', 'PemesananController@printKurir')->name('print_kurir');
+});
+
+
+Route::get('/print_cod', function () {
+    return view('backend.order.pemesanan.print_cod');
 });

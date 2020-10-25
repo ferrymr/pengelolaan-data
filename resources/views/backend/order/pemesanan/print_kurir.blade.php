@@ -134,7 +134,7 @@
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    INV/2020/00001<br>
+                                    {{ $headJual->no_do }}<br>
                                 </span>
                             </th>
                             <th class="text-right">
@@ -216,49 +216,49 @@
                     <br>
                     <hr>
                     <hr>
-                </th>
-                <table width="100%">
-                    <tr>
-                        <th class="text-left">
-                            <span class="times-new-roman s15">
-                                SUB<br>
-                            </span>
-                        </th>
+                    <table width="100%">
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    TOTAL<br>
+                                    SUB<br>
                                 </span>
                             </th>
-                            <th class="padding-right text-left">
+                            <tr>
+                                <th class="text-left">
+                                    <span class="times-new-roman s15">
+                                        TOTAL<br>
+                                    </span>
+                                </th>
+                                <th class="padding-right text-left">
+                                    <span class="times-new-roman s15">
+                                           1.217.000<br>
+                                    </span>
+                                </th>
+                            </tr>
+                        </tr>
+                    </table>
+                    <hr>
+                    <hr>
+                    <table width="100%">
+                        <th>
+                            <th class="text-left">
                                 <span class="times-new-roman s15">
-                                       1.217.000<br>
+                                    JNE UP ETIKA - BEKASI<br>
                                 </span>
+                            </th>
+                        </th>
+                    </table>
+                    <hr>
+                    <hr>
+                    <table width="100%" class="text-center">
+                        <tr>
+                            <th>
+                                <span class="times-new-roman s10">Terima kasih, semoga produk Bellezkin selalu cocok untuk kulit cantik Anda</span>
                             </th>
                         </tr>
-                    </tr>
-                </table>
-                <hr>
-                <hr>
-                <table width="100%">
-                    <th>
-                        <th class="text-left">
-                            <span class="times-new-roman s15">
-                                JNE UP ETIKA - BEKASI<br>
-                            </span>
-                        </th>
-                    </th>
-                </table>
-                <hr>
-                <hr>
-                <table width="100%" class="text-center">
-                    <tr>
-                        <th>
-                            <span class="times-new-roman s10">Terima kasih, semoga produk Bellezkin selalu cocok untuk kulit cantik Anda</span>
-                        </th>
-                    </tr>
-                </table>
-                <hr>
+                    </table>
+                    <hr>
+                </th>
             </tr>
         </thead>
         
