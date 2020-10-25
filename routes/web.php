@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\ViewPemesanan;
-
 Auth::routes();
 
 // =============================== FRONTEND ===============================
@@ -87,31 +85,13 @@ Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function (
     Route::get('add', 'BarangController@create')->name('add');
     Route::post('store', 'BarangController@store')->name('store');
     Route::post('update/{kode_barang}', 'BarangController@update')->name('update');
-<<<<<<< HEAD
-});
-
-// Master Gallery
-Route::group(['prefix' => '/admin/gallery/', 'as' => 'admin.gallery.'], function () {
-    Route::get('', 'GalleryController@index')->name('index');
-    Route::get('datatable', 'GalleryController@datatable')->name('datatable');
-    Route::get('edit/{id}', 'GalleryController@edit')->name('edit');
-    Route::get('view/{id}', 'GalleryController@view')->name('view');
-    Route::get('delete/{id}', 'GalleryController@destroy')->name('delete');
-    Route::get('add', 'GalleryController@create')->name('add');
-    Route::post('store', 'GalleryController@store')->name('store');
-    Route::post('update/{id}', 'GalleryController@update')->name('update');
-    Route::get('/gambar/{id}', 'GalleryController@getGambar')->name('getGambar');
-=======
 
     Route::post('store-image', 'BarangController@storeBarangImage')->name('store-image');
     Route::get('delete-barang-image/{barangId?}/{id?}', 'BarangController@deleteBarangImage')->name('detele-barang-image');
 });
 
-Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
-{
+Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function () {
     Route::get('barang-image/{id?}', 'BarangController@getBarangImage')->name('barang-image');
-
->>>>>>> dev
 });
 
 // Master Supplier
