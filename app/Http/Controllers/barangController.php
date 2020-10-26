@@ -62,12 +62,15 @@ class BarangController extends Controller
             'user' => $user,
             'roles' => $roles,
         ]);
+
     }
 
     public function store(Request $request)
     {
         $barang = new Barang();
-
+        
+        if(!empty($request->input('bpom'))) {$hasil = 1;} else {$hasil = 0;}
+        if(!empty($request->input('stats'))) {$stats = 1;} else {$stats = 0;}
         $barang->kode_barang = $request->input('kode_barang');
         $barang->nama = $request->input('nama');
         $barang->jenis = $request->input('jenis');
@@ -75,11 +78,11 @@ class BarangController extends Controller
         $barang->h_nomem = $request->input('h_nomem');
         $barang->h_member = $request->input('h_member');
         $barang->berat = $request->input('berat');
-        $barang->bpom = $request->input('bpom');
+        $barang->bpom = $hasil;
         $barang->tgl_eks = $request->input('tgl_eks');
-        $barang->stats = $request->input('stats');
+        $barang->stats = $stats;
         $barang->deskripsi = $request->input('deskripsi');
-        $barang->cara_pakai = $request->input('cara_pakai'); 
+        $barang->cara_pakai = $request->input('cara_pakai');
         $jumlah = DB::table('tb_barang')->where('kode_barang', $barang->kode_barang)->count(); 
         if ($jumlah>0){
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Kode barang sudah ada</strong>')->error()->important();

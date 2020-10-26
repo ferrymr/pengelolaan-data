@@ -180,8 +180,28 @@ Route::group([
     Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('update_penjualan');
 });
 
+// view mysql barang
 Route::group(['prefix' => '/admin/viewbarang/', 'as' => 'admin.viewbarang.'], function()
 {
     Route::get('', 'ViewBarangController@index')->name('index');
 
 });
+
+//  Order Movement
+Route::group(['prefix' => '/admin/movement/', 'as' => 'admin.movement.'], function()
+{
+    Route::get('', 'MovementController@index')->name('index');
+    Route::get('datatable', 'MovementController@datatable')->name('datatable');
+    Route::get('add', 'MovementController@create')->name('add');
+    Route::post('add', 'MovementController@create')->name('add');
+    Route::post('store', 'MovementController@store')->name('store');
+    Route::get('edit/{no_sm}', 'MovementController@edit')->name('edit');
+    Route::get('delete/{no_sm}', 'MovementController@destroy')->name('delete');
+    Route::post('create_invoice', 'MovementController@create_invoice')->name('create.invoice');
+    Route::post('create_kode', 'MovementController@create_kode')->name('create.kode');
+    Route::get('', 'MovementController@getNama')->name('get.nama');
+    Route::POST('update_movement', 'MovementController@update_movement')->name('update_movement');
+    
+
+});
+

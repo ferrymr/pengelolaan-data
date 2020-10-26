@@ -305,7 +305,7 @@ return [
                 ],
                 [
                     'text' => 'Movement',
-                    'url' => 'movement'
+                    'url' => 'admin/movement'
                 ],
                 [
                     'text' => 'Pemesanan',

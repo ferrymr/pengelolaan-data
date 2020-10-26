@@ -104,7 +104,7 @@
         <div class="form-group @if($errors->has('tgl_eks')) has-error @endif">
             <label for="tgl_eks" class="col-sm-12 control-label">Tanggal Expired</label>    
             <div class="col-sm-6">
-                <input type="date" name="tgl_eks" class="form-control" id="tgl_eks" placeholder="tgl_exp" required>
+                <input type="date" name="tgl_eks" class="form-control" id="tgl_eks" placeholder="tgl_exp">
                 @if($errors->has('tgl_eks'))
                     <span class="text-danger">{{ $errors->first('tgl_eks') }}</span>
                 @endif
@@ -151,8 +151,11 @@
 
 @stop
 
+
+
 @section('js')
     <script>
+       
         // select2
         $('.select2').select2();
 
