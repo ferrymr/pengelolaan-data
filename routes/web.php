@@ -197,3 +197,15 @@ Route::group([
     Route::post('create_kode', 'PenjualanController@create_kode')->name('create.kode');
     Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('update_penjualan');
 });
+
+// Cashback
+Route::group([
+    // 'middleware' => ['permission:access-user'], 
+    'prefix' => '/admin/cashback/', 
+    'as' => 'admin.cashback.'
+], function(){
+    Route::get('', 'CashbackController@index')->name('index');
+    Route::get('datatable', 'CashbackController@datatable')->name('datatable');
+    Route::get('delete/{bulan}', 'CashbackController@delete')->name('delete');
+    Route::post('hitung', 'CashbackController@hitung')->name('hitung');
+});

@@ -316,31 +316,27 @@ return [
         ],
         [
             'text' => 'Bonus',
-            'url'  => 'admin/master',
+            'url'  => 'admin/bonus',
             'icon' => 'fas fa-fw fa-money-bill',
             'submenu' => [
                 [
-                    'text' => 'Bonus Qualified',
+                    'text' => 'Qualified',
                     'url' => 'qualified'
                 ],
                 [
-                    'text' => 'Cashback Member',
-                    'url' => 'cashback'
+                    'text' => 'Cashback',
+                    'url' => 'admin/cashback'
                 ],
                 [
-                    'text' => 'Bonus Reward',
+                    'text' => 'Reward',
                     'url' => 'reward'
                 ],
                 [
-                    'text' => 'Bonus Rabat',
-                    'url' => 'rabat'
+                    'text' => 'Leadership',
+                    'url' => 'leadership'
                 ],
                 [
-                    'text' => 'Leader Building',
-                    'url' => 'leaderbuilding'
-                ],
-                [
-                    'text' => 'Free Merchandise',
+                    'text' => 'Merchandise',
                     'url' => 'merchandise'
                 ],
 

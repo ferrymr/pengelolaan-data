@@ -177,11 +177,29 @@
                         method:'POST',
                         data:"kode_barang="+kode_barang , 
                         success: function(data){
-                            var json = data,
-                            obj = JSON.parse(json);
-                            console.log(obj.nama);
-                            console.log(json);
-                            self.parents('.detailItem').find('[name="nama[]"]').val(obj.nama);                     
+                            var contents = {},
+                            duplicates = false;
+                
+                            $('[name="kode_barang[]"]').each(function() {
+                                var hasil = this.value;
+
+                                if (contents[hasil]) {
+                                    duplicates = true;
+                                    return false;
+                                }
+                                    
+                                contents[hasil] = true;
+                            }); 
+
+                            if (duplicates) {
+                                alert("There were duplicates.");
+                            } else {
+                                var json = data,
+                                obj = JSON.parse(json);
+                                console.log(obj.nama);
+                                console.log(json);
+                                self.parents('.detailItem').find('[name="nama[]"]').val(obj.nama);
+                            }
                         }
                     });
                 }, 100);
