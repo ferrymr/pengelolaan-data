@@ -121,7 +121,7 @@ class TransactionController extends Controller
                 );
             }
 
-            DB::insert('INSERT INTO cn_order_history (
+            DB::insert('INSERT INTO tb_order_history (
                     transaksi_id,
                     tanggal,
                     keterangan
@@ -190,8 +190,8 @@ class TransactionController extends Controller
             // di inner join barang yang muncul cuman 1
             // mungkin gara-gara ada kode barang yang awalnya 0 jadinya pas di join on nggak exact perbandingannya
             $orderedItems = DB::table('cn_transaksi_detail')
-                                ->join('cn_barang', 'cn_barang.kode_barang', '=', 'cn_transaksi_detail.kode_barang')
-                                ->select('cn_transaksi_detail.kode_barang', 'cn_transaksi_detail.qty', 'cn_barang.unit')
+                                ->join('tb_barang', 'tb_barang.kode_barang', '=', 'cn_transaksi_detail.kode_barang')
+                                ->select('cn_transaksi_detail.kode_barang', 'cn_transaksi_detail.qty', 'tb_barang.unit')
                                 ->where('transaksi_id', $transactionId)
                                 ->get();
 
@@ -248,7 +248,7 @@ class TransactionController extends Controller
 
 
 
-            // DB::table('cn_order_history')->where('transaksi_id', $transactionId)->delete();
+            // DB::table('tb_order_history')->where('transaksi_id', $transactionId)->delete();
 
 
             DB::commit();
@@ -268,7 +268,7 @@ class TransactionController extends Controller
         }
 
         DB::table('cn_transaksi')->where('id', $transactionId)->update(['status_transaksi' => $status]);
-        DB::insert('INSERT INTO cn_order_history (transaksi_id, tanggal, keterangan ) VALUES (?, ?, ?)', [
+        DB::insert('INSERT INTO tb_order_history (transaksi_id, tanggal, keterangan ) VALUES (?, ?, ?)', [
             $transactionId,
             date('Y-m-d H:i:s'),
             $status
@@ -528,8 +528,8 @@ class TransactionController extends Controller
             // di inner join barang yang muncul cuman 1
             // mungkin gara-gara ada kode barang yang awalnya 0 jadinya pas di join on nggak exact perbandingannya
             $orderedItems = DB::table('cn_transaksi_detail')
-                                ->join('cn_barang', 'cn_barang.kode_barang', '=', 'cn_transaksi_detail.kode_barang')
-                                ->select('cn_transaksi_detail.kode_barang', 'cn_transaksi_detail.qty', 'cn_barang.unit')
+                                ->join('tb_barang', 'tb_barang.kode_barang', '=', 'cn_transaksi_detail.kode_barang')
+                                ->select('cn_transaksi_detail.kode_barang', 'cn_transaksi_detail.qty', 'tb_barang.unit')
                                 ->where('transaksi_id', $transactionId)
                                 ->get();
 
@@ -587,7 +587,7 @@ class TransactionController extends Controller
 
 
 
-            DB::table('cn_order_history')->where('transaksi_id', $transactionId)->delete();
+            DB::table('tb_order_history')->where('transaksi_id', $transactionId)->delete();
 
 
             DB::commit();

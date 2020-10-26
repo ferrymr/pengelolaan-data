@@ -30,7 +30,7 @@ class OrderDetail extends Component
                     $history->select('transaksi_id', 'tanggal', 'keterangan');
                 },
                 'shippingAddress' => function($address) {
-                    $address->select('cn_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');
+                    $address->select('tb_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');
                 }
             ]
         )->first();

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderHistory extends Model
 {
-    protected $table = 'cn_order_history';
+    protected $table = 'tb_order_history';
 
     public function transaction()
     {

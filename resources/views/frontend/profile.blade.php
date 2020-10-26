@@ -82,7 +82,7 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="#">
+                                            <a href="{{ route('member.signup') }}">
                                                 <div class="menu-ui-item">
                                                     <div class="menu-ui-left">
                                                         <div class="title-item-menu">Yuk daftar jadi member!</div>
