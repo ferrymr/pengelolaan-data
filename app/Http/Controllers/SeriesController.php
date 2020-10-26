@@ -30,7 +30,7 @@ class SeriesController extends Controller
         $user = Auth::user();
         $series = $this->seriesRepo->getAll();
 
-        return view('backend.store.series.index')->with([
+        return view('backend.master.series.index')->with([
             'user' => $user,
             'series' => $series
         ]);
@@ -59,7 +59,7 @@ class SeriesController extends Controller
         $barang = $this->barangRepo->getAll();
         $roles = $this->roleRepo->getAll();
         
-        return view('backend.store.series.create')->with([
+        return view('backend.master.series.create')->with([
             'user' => $user,
             'barang' => $barang,
             'roles' => $roles,
@@ -89,7 +89,7 @@ class SeriesController extends Controller
                     SeriesDetail::insert($detail);
                 }
 
-                flash('<i class="fa fa-info"></i>&nbsp; <strong>Series berhasil ditambah</strong>')->success();
+                flash('<i class="fa fa-info"></i>&nbsp; <strong>Series berhasil ditambah</strong>')->success()->important();
                 return redirect()->route('admin.series.index');
             } else {
                 flash('<i class="fa fa-info"></i>&nbsp; <strong>Tambah data series gagal</strong>')->error()->important();
@@ -114,7 +114,7 @@ class SeriesController extends Controller
         $barang = $this->barangRepo->getAll();
         $roles = $this->roleRepo->getAll();
 
-        return view('backend.store.series.edit')->with([
+        return view('backend.master.series.edit')->with([
             'user' => $user,
             'series' => $series,
             'detail' => $detail,
@@ -153,7 +153,7 @@ class SeriesController extends Controller
                     SeriesDetail::insert($detail);
                 }
 
-                flash('<i class="fa fa-info"></i>&nbsp; <strong>Series berhasil diupdate</strong>')->success();
+                flash('<i class="fa fa-info"></i>&nbsp; <strong>Series berhasil diupdate</strong>')->success()->important();
                 return redirect()->route('admin.series.index');
             } else {
                 flash('<i class="fa fa-info"></i>&nbsp; <strong>Update data series gagal</strong>')->error()->important();
@@ -173,15 +173,31 @@ class SeriesController extends Controller
             $item = $this->detailRepo->deleteSeries($kode_pack);
 
             if(!empty($item)) {
-                flash('<i class="fa fa-info"></i>&nbsp; <strong>Series berhasil dihapus</strong>')->success();
+                flash('<i class="fa fa-info"></i>&nbsp; <strong>Series berhasil dihapus</strong>')->success()->important();
                 return redirect()->route('admin.series.index');
             } else {
-                flash('<i class="fa fa-info"></i>&nbsp; <strong>Komposisi series tidak ditemukan</strong>')->success();
+                flash('<i class="fa fa-info"></i>&nbsp; <strong>Komposisi series tidak ditemukan</strong>')->success()->important();
                 return redirect()->route('admin.series.index');
             }
         } else {
-            flash('<i class="fa fa-info"></i>&nbsp; <strong>Series tidak ditemukan</strong>')->error()->important();
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Series tidak ditemukan</strong>')->error()->important()->important();
             return redirect()->route('admin.series.index');
+        }
+    }
+
+    public function komposisi(Request $request)
+    {
+        $kode_barang = $request->get('kode_barang');
+
+        if($request->ajax()) {
+            $data = '';
+            $qry = Barang::where('kode_barang', $kode_barang)->get();
+            foreach ($qry as $value) {
+                $data = array(
+                    'nama'  =>  $value->nama,
+                );
+            }
+            echo json_encode($data);
         }
     }
 }
