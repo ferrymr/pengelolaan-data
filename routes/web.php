@@ -151,7 +151,25 @@ Route::group([
     Route::get('delete/{kode_pack}', 'SeriesController@destroy')->name('delete');
     Route::get('add', 'SeriesController@create')->name('add');
     Route::post('store', 'SeriesController@store')->name('store');
+    Route::post('komposisi', 'SeriesController@komposisi')->name('komposisi');
     Route::post('update/{kode_pack}', 'SeriesController@update')->name('update');
+});
+
+// Referral
+Route::group([
+    // 'middleware' => ['permission:access-user'], 
+    'prefix' => '/admin/referral/', 
+    'as' => 'admin.referral.'
+], function(){
+    Route::get('', 'ReferralController@index')->name('index');
+    Route::get('datatable', 'ReferralController@datatable')->name('datatable');
+    Route::get('edit/{kode_pack}', 'ReferralController@edit')->name('edit');
+    Route::get('view/{kode_pack}', 'ReferralController@view')->name('view');
+    Route::get('delete/{kode_pack}', 'ReferralController@destroy')->name('delete');
+    Route::get('add', 'ReferralController@create')->name('add');
+    Route::post('store', 'ReferralController@store')->name('store');
+    Route::post('komposisi', 'ReferralController@komposisi')->name('komposisi');
+    Route::post('update/{kode_pack}', 'ReferralController@update')->name('update');
 });
 
 // ORDER.PENJUALAN
@@ -168,4 +186,15 @@ Route::group([
     Route::post('create_invoice', 'PenjualanController@create_invoice')->name('create.invoice');
     Route::post('create_kode', 'PenjualanController@create_kode')->name('create.kode');
     Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('update_penjualan');
+});
+
+// Cashback
+Route::group([
+    // 'middleware' => ['permission:access-user'], 
+    'prefix' => '/admin/cashback/', 
+    'as' => 'admin.cashback.'
+], function(){
+    Route::get('', 'CashbackController@index')->name('index');
+    Route::get('datatable', 'CashbackController@datatable')->name('datatable');
+    Route::post('hitung', 'CashbackController@hitung')->name('hitung');
 });

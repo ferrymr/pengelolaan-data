@@ -63,9 +63,4 @@ class Series extends Model
             return false;
         }
     }
-
-    // public function detail()
-    // {
-    //     return $this->hasMany(SeriesDetail::class);
-    // }
 }
