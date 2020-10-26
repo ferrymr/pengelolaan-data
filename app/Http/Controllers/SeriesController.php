@@ -89,7 +89,7 @@ class SeriesController extends Controller
                     SeriesDetail::insert($detail);
                 }
 
-                flash('<i class="fa fa-info"></i>&nbsp; <strong>Series berhasil ditambah</strong>')->success();
+                flash('<i class="fa fa-info"></i>&nbsp; <strong>Series berhasil ditambah</strong>')->success()->important();
                 return redirect()->route('admin.series.index');
             } else {
                 flash('<i class="fa fa-info"></i>&nbsp; <strong>Tambah data series gagal</strong>')->error()->important();
@@ -153,7 +153,7 @@ class SeriesController extends Controller
                     SeriesDetail::insert($detail);
                 }
 
-                flash('<i class="fa fa-info"></i>&nbsp; <strong>Series berhasil diupdate</strong>')->success();
+                flash('<i class="fa fa-info"></i>&nbsp; <strong>Series berhasil diupdate</strong>')->success()->important();
                 return redirect()->route('admin.series.index');
             } else {
                 flash('<i class="fa fa-info"></i>&nbsp; <strong>Update data series gagal</strong>')->error()->important();
@@ -173,14 +173,14 @@ class SeriesController extends Controller
             $item = $this->detailRepo->deleteSeries($kode_pack);
 
             if(!empty($item)) {
-                flash('<i class="fa fa-info"></i>&nbsp; <strong>Series berhasil dihapus</strong>')->success();
+                flash('<i class="fa fa-info"></i>&nbsp; <strong>Series berhasil dihapus</strong>')->success()->important();
                 return redirect()->route('admin.series.index');
             } else {
-                flash('<i class="fa fa-info"></i>&nbsp; <strong>Komposisi series tidak ditemukan</strong>')->success();
+                flash('<i class="fa fa-info"></i>&nbsp; <strong>Komposisi series tidak ditemukan</strong>')->success()->important();
                 return redirect()->route('admin.series.index');
             }
         } else {
-            flash('<i class="fa fa-info"></i>&nbsp; <strong>Series tidak ditemukan</strong>')->error()->important();
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Series tidak ditemukan</strong>')->error()->important()->important();
             return redirect()->route('admin.series.index');
         }
     }

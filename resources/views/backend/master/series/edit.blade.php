@@ -17,13 +17,13 @@
     ]) !!}
 
     <div class="row">
-        <div class="card col-4 m-2">
+        <div class="card col-12">
             <div class="card-header">
                 <h3 class="card-title">Ubah Series</h3>
             </div>
             <div class="card-body">
                 <div class="form-group @if($errors->has('kode_pack')) has-error @endif">
-                    <label for="no_member" class="col-sm-12 control-label">Kode *</label>    
+                    <label for="no_member" class="col-sm-12 control-label">Kode Series</label>    
                     <div class="col-sm-6">
                         <input type="text" value="{{ $series->kode_pack }}" name="kode_pack" class="form-control" id="kode_pack" placeholder="Kode Series" required>
                         @if($errors->has('kode_pack'))
@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="form-group @if($errors->has('nama_pack')) has-error @endif">
-                    <label for="nik" class="col-sm-12 control-label">Nama Series *</label>    
+                    <label for="nik" class="col-sm-12 control-label">Nama Series</label>    
                     <div class="col-sm-8">
                         <input type="text" value="{{ $series->nama_pack }}" name="nama_pack" class="form-control" id="nama_pack" placeholder="Nama Series" required>
                         @if($errors->has('nama_pack'))
@@ -40,51 +40,39 @@
                         @endif
                     </div>
                 </div>
-                <div class="form-group @if($errors->has('jenis_pack')) has-error @endif">
-                    <label for="name" class="col-sm-12 control-label">Jenis *</label>    
-                    <div class="col-sm-12">
-                        <input type="text" value="{{ $series->jenis_pack }}" name="jenis_pack" class="form-control" id="jenis_pack" placeholder="Jenis Series" required>
-                        @if($errors->has('jenis_pack'))
-                            <span class="text-danger">{{ $errors->first('jenis_pack') }}</span>
-                        @endif
+                <div class="form-group row col-12">
+                    <div class="form-group @if($errors->has('h_member')) has-error @endif">
+                        <label for="name" class="col-sm-12 control-label">Harga Member</label>    
+                        <div class="col-sm-12">
+                            <input type="number" value="{{ $series->h_member }}" name="h_member" class="form-control" id="h_member" placeholder="Harga Member" required>
+                            @if($errors->has('h_member'))
+                                <span class="text-danger">{{ $errors->first('h_member') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group @if($errors->has('poin')) has-error @endif">
+                        <label for="name" class="col-sm-12 control-label">Poin</label>    
+                        <div class="col-sm-12">
+                            <input type="number" value="{{ $series->poin }}" name="poin" class="form-control" id="poin" placeholder="Poin" required>
+                            @if($errors->has('poin'))
+                                <span class="text-danger">{{ $errors->first('poin') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group @if($errors->has('h_nomem')) has-error @endif">
+                        <label for="name" class="col-sm-12 control-label">Harga User</label>    
+                        <div class="col-sm-12">
+                            <input type="number" value="{{ $series->h_nomem }}" name="h_nomem" class="form-control" id="h_nomem" placeholder="Harga User" required>
+                            @if($errors->has('h_nomem'))
+                                <span class="text-danger">{{ $errors->first('h_nomem') }}</span>
+                            @endif
+                        </div>
                     </div>
                 </div>
-                <div class="form-group @if($errors->has('poin')) has-error @endif">
-                    <label for="name" class="col-sm-12 control-label">Poin *</label>    
-                    <div class="col-sm-12">
-                        <input type="number" value="{{ $series->poin }}" name="poin" class="form-control" id="poin" placeholder="Poin" required>
-                        @if($errors->has('poin'))
-                            <span class="text-danger">{{ $errors->first('poin') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="form-group @if($errors->has('h_member')) has-error @endif">
-                    <label for="name" class="col-sm-12 control-label">Harga Member *</label>    
-                    <div class="col-sm-12">
-                        <input type="number" value="{{ $series->h_member }}" name="h_member" class="form-control" id="h_member" placeholder="Harga Member" required>
-                        @if($errors->has('h_member'))
-                            <span class="text-danger">{{ $errors->first('h_member') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="form-group @if($errors->has('h_nomem')) has-error @endif">
-                    <label for="name" class="col-sm-12 control-label">Harga User *</label>    
-                    <div class="col-sm-12">
-                        <input type="number" value="{{ $series->h_nomem }}" name="h_nomem" class="form-control" id="h_nomem" placeholder="Harga User" required>
-                        @if($errors->has('h_nomem'))
-                            <span class="text-danger">{{ $errors->first('h_nomem') }}</span>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-footer">
-                <button type="submit" class="btn btn-info">Update</button>
-                <a href="{{ route("admin.series.index") }}" class="btn btn-warning float-right" style="color: white;">Kembali</a>
             </div>
         </div>
 
-        <div class="card col-6 m-2">
+        <div class="card col-12">
             <div class="card-header">
                 <h3 class="card-title">Komposisi Series</h3>
             </div>
@@ -119,6 +107,11 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-info">Update</button>
+                <a href="{{ route("admin.series.index") }}" class="btn btn-warning float-right" style="color: white;">Kembali</a>
             </div>
         </div>
     </div>

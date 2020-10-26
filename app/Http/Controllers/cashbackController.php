@@ -30,11 +30,6 @@ class CashbackController extends Controller
             'cashback' => $cashback
         ]);
 
-        // $awal = date('Y-10-01');
-        // $akhir = date('Y-m-t', strtotime($awal));
-
-        // $cashback = $this->bonusRepo->callSponsor($awal, $akhir);
-
         return $cashback;
     }
 
@@ -80,7 +75,7 @@ class CashbackController extends Controller
     {
         $bulan = date('Y') . '-' . $request->bulan . '-' . date('d');
 
-        if(!empty($bulan)) {
+        if (!empty($bulan)) {
             $mark = 0;
             $awal = date('Y-m-01', strtotime($bulan));
             $akhir = date('Y-m-t', strtotime($awal));
@@ -415,8 +410,21 @@ class CashbackController extends Controller
 
                 $update = $this->cashbackRepo->editCashback($subtotal, $member);
             }
+
+            $done = 1;
         } else {
+            $done = 0;
+
             return false;
+        }
+
+        if (isset($done) && $done == 1)
+        {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Hitung bonus berhasil</strong>')->success()->important();
+            return redirect()->route('admin.cashback.index');
+        } else {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Hitung bonus gagal</strong>')->error()->important();
+            return redirect()->route('admin.cashback.index');
         }
     }
 

@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row">
         <div class="col-6">
-            <h1>Series</h1>
+            <h1>Produk Series</h1>
         </div>
         <div class="col-6">
             <div class="float-right">

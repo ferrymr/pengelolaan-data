@@ -196,6 +196,5 @@ Route::group([
 ], function(){
     Route::get('', 'CashbackController@index')->name('index');
     Route::get('datatable', 'CashbackController@datatable')->name('datatable');
-    Route::get('delete/{bulan}', 'CashbackController@delete')->name('delete');
     Route::post('hitung', 'CashbackController@hitung')->name('hitung');
 });
