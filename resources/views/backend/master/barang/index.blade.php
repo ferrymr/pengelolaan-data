@@ -29,6 +29,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Foto</th>
                         <th>Kode Barang</th>
                         <th>Nama Barang</th>
                         <th>Jenis</th>
@@ -107,6 +108,13 @@
                         orderable: false,
                         render: function (data, type, row, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    {
+                        data: 'image', 
+                        name: 'image', 
+                        render: function(data) {
+                            return '<img class="img-fluid thumbnail" style="width:50%" src="' + data + '">';
                         }
                     },
                     { data: 'kode_barang', name: 'kode_barang'},

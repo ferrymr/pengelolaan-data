@@ -7,18 +7,18 @@ use App\Http\Requests\CreateBarangRequest;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use App\Models\Barang;
+use App\Models\BarangImages;
 use App\Models\User;
-use App\Models\Role;
 use App\Models\Gallery;
-use App\Models\ViewBarang;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
+use DB;
+use File;
 
 class BarangController extends Controller
 {
-    public function __construct (User $user, Role $role, Barang $barang) 
+    public function __construct (User $user, Barang $barang) 
     {
         $this->userRepo     = $user;
-        $this->roleRepo     = $role;
         $this->barangRepo   = $barang;
     }
     
@@ -38,10 +38,16 @@ class BarangController extends Controller
         $barang = $this->barangRepo->getAll();
 
         return Datatables::of($barang)
+            ->editColumn('image', function($barang) {
+                if($barang->barangImages()->first()) {
+                    return route('admin.barang.barang-image', $barang->barangImages()->first()->id);
+                } else {
+                    return '../img/no-image-barang.jpg';
+                }
+            })
             ->addColumn('action', function ($barang){
                 return [
-                    'view' => route('admin.barang.view', $barang->kode_barang),
-                    'edit' => route('admin.barang.edit', $barang->kode_barang),
+                    'edit' => route('admin.barang.edit', $barang->id),
                     'hapus' => route('admin.barang.delete', $barang->kode_barang),
                 ];
             })
@@ -49,18 +55,12 @@ class BarangController extends Controller
             ->make(true);
     }
 
-    public function getBarang($roleId) {
-        return $this->barangRepo->getBarang($roleId);
-    }
-
     public function create()
     {
         $user = Auth::user();
-        $roles = $this->userRepo->getAll();
         
         return view('backend.master.barang.create')->with([
             'user' => $user,
-            'roles' => $roles,
         ]);
 
     }
@@ -86,49 +86,30 @@ class BarangController extends Controller
         $jumlah = DB::table('tb_barang')->where('kode_barang', $barang->kode_barang)->count(); 
         if ($jumlah>0){
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Kode barang sudah ada</strong>')->error()->important();
-            return redirect()->route('admin.barang.index');
-            
+            return redirect()->route('admin.barang.add');
         } else{
-            $barang->save();
+            // save template
+            $this->barangRepo->addBarang($input);
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Data barang berhasil ditambah</strong>')->success()->important();
             return redirect()->route('admin.barang.index');
+        }        
+    }    
 
-        }  
-        
-    }
-    
-
-    public function view($kode_barang)
-    {
+    public function edit($id)
+    {        
         $user = Auth::user();
-        $barang = Barang::where('kode_barang', $kode_barang)->first();
-        $viewbarang = ViewBarang::where('kode_barang', $kode_barang)->get();
-        $roles = $this->roleRepo->getAll();
-        return view('backend.master.barang.view')->with([
-            'user' => $user,
-            'roles' => $roles,
-            'barang' =>$barang,
-            'viewbarang' =>$viewbarang
-        ]);
-    }
-
-    public function edit($kode_barang)
-    {
-        
-        $user = Auth::user();
-        $barang = Barang::where('kode_barang', $kode_barang)->first();
-        $roles = $this->roleRepo->getAll();
+        $barang = $this->barangRepo->findId($id);
+        $barangImages = BarangImages::where('tb_barang_id', $id)->get();
 
         return view('backend.master.barang.edit')->with([
             'user' => $user,
-            'roles' => $roles,
-            'barang' =>$barang
+            'barang' => $barang,
+            'barangImages' => $barangImages
         ]);
     }
     
     public function update(CreateBarangRequest $request, $kode_barang)
     {
-
         // password kosong
         $param = array(
             "kode_barang" => $request->input('kode_barang'),
@@ -167,6 +148,74 @@ class BarangController extends Controller
         }
     }
 
-    
+    // ===================== BARANG IMAGE =========================
+
+    public function storeBarangImage(Request $request)
+    {
+        
+        if(!empty($request->file('nama_file'))) {
+            $sort = 1;
+            foreach ($request->file('nama_file') as $file) {
+                $nama_file = 'barang-'.$sort.'-'. $request->input('barang_id') .'-' . date('YmdHis') . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('public/barang', $nama_file);
+
+                $barang = $this->barangRepo->addbarangImage($request->input('barang_id'), $nama_file);
+                $sort++;
+            }
+        }  else {
+            $nama_file = "";
+        }         
+
+        if(!empty($nama_file)) {
+            flash('<strong>Foto Barang Berhasil Ditambah</strong>')->success()->important();
+            return redirect()->route('admin.barang.edit', $request->input('barang_id'));
+        } else {
+            flash('<strong>Foto Barang </strong> ' . $this->barangRepo->error)->error()->important();
+            return redirect()->route('admin.barang.edit', $request->input('barang_id'))->withInput()->withError();
+        }
+    }
+
+    public function getbarangImage($id) {
+        $barangImage = BarangImages::find($id);
+        
+        if(!$barangImage) {
+            abort(404); 
+        }
+
+        // Access local storage
+        $path = storage_path('app/public/barang/' . $barangImage->nama_file);
+
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        // Return file
+        return (new Response(File::get($path), 200))
+              ->header('Content-Type', File::mimeType($path));
+    }
+
+    public function deletebarangImage($barangId, $id) {
+        $data = BarangImages::find($id);
+        if(!empty($data)) {
+            BarangImages::where('id', $id)->delete();
+
+            // unlink image
+            if(file_exists(base_path(). '/storage/app/public/barang/'. $data->nama_file)) {
+                unlink(base_path(). '/storage/app/public/barang/'. $data->nama_file);
+            }
+
+            $result = true;
+        } else {
+            $result = false;
+        }
+
+        if($result) {
+            flash('<strong>Foto Barang Berhasil Dihapus</strong>')->success()->important();
+            return redirect()->route('admin.barang.edit', $barangId);
+        } else {
+            flash('<strong>Foto Barang Gagal Dihapus</strong> ')->error()->important();
+            return redirect()->route('admin.barang.edit', $barangId)->withInput()->withError();
+        }
+    }
     
 }

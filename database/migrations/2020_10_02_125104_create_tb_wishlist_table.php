@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCnWishlistTable extends Migration
+class CreateTbWishlistTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateCnWishlistTable extends Migration
      */
     public function up()
     {
-        Schema::create('cn_wishlist', function (Blueprint $table) {
+        Schema::create('tb_wishlist', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->string('kode_barang');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateCnWishlistTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cn_wishlist');
+        Schema::dropIfExists('tb_wishlist');
     }
 }
