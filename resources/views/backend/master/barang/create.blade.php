@@ -21,13 +21,25 @@
             <h3 class="card-title">Tambah Data Barang</h3>
         </div>
         <div class="card-body">
-            <div class="form-group @if($errors->has('no_member')) has-error @endif">
-                <label for="kode_barang" class="col-sm-12 control-label">Kode barang</label>    
-                <div class="col-sm-4">
-                    <input value="{{ old('kode_barang') }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode barang" required>
-                    @if($errors->has('kode_barang'))
-                        <span class="text-danger">{{ $errors->first('kode_barang') }}</span>
-                    @endif
+            <div class="form-group row col-sm-12">
+                <div class="form-group @if($errors->has('unit')) has-error @endif">
+                    <label for="unit" class="col-sm-12 control-label">Unit</label>    
+                    <div class="col-sm-12">
+                        <select name="unit" class="form-control select2">
+                            <option value="" selected>Pilih unit</option>
+                            <option value="PIECES">PIECES</option>
+                            <option value="SERIES">SERIES</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group @if($errors->has('no_member')) has-error @endif">
+                    <label for="kode_barang" class="col-sm-12 control-label">Kode</label>    
+                    <div class="col-sm-12">
+                        <input value="{{ old('kode_barang') }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode" required>
+                        @if($errors->has('kode_barang'))
+                            <span class="text-danger">{{ $errors->first('kode_barang') }}</span>
+                        @endif
+                    </div>
                 </div>
             </div>
             <div class="form-group @if($errors->has('nama')) has-error @endif">
@@ -85,27 +97,18 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group @if($errors->has('unit')) has-error @endif">
-                    <label for="unit" class="col-sm-12 control-label">Unit</label>    
-                    <div class="col-sm-12">
-                        <select name="unit" class="form-control select2">
-                            <option value="" selected>Pilih unit</option>
-                            <option value="PIECES">PIECES</option>
-                            <option value="SERIES">SERIES</option>
-                        </select>
-                    </div>
-                </div>
+                
             </div>
         </div>
         &nbsp;
         <div class="form-group @if($errors->has('tgl_eks')) has-error @endif">
-            <label for="tgl_eks" class="col-sm-12 control-label">Tanggal Expired</label>    
+            {{-- <label for="tgl_eks" class="col-sm-12 control-label">Tanggal Expired</label>    
             <div class="col-sm-6">
                 <input type="date" name="tgl_eks" class="form-control" id="tgl_eks" placeholder="tgl_exp">
                 @if($errors->has('tgl_eks'))
                     <span class="text-danger">{{ $errors->first('tgl_eks') }}</span>
                 @endif
-            </div>
+            </div> --}}
             
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('h_nomem')) has-error @endif">

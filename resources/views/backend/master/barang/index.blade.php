@@ -132,7 +132,7 @@
                     },
                     { data: 'nama', name: 'nama', visible: false },
                 ],
-                order: [[ 1, 'asc' ]]
+                order: [[ 2, 'asc' ]]
                
             });
         });

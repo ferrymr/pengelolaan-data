@@ -67,23 +67,14 @@ class BarangController extends Controller
 
     public function store(Request $request)
     {
-        $barang = new Barang();
-        
-        if(!empty($request->input('bpom'))) {$hasil = 1;} else {$hasil = 0;}
-        if(!empty($request->input('stats'))) {$stats = 1;} else {$stats = 0;}
-        $barang->kode_barang = $request->input('kode_barang');
-        $barang->nama = $request->input('nama');
-        $barang->jenis = $request->input('jenis');
-        $barang->poin = $request->input('poin');
-        $barang->h_nomem = $request->input('h_nomem');
-        $barang->h_member = $request->input('h_member');
-        $barang->berat = $request->input('berat');
-        $barang->bpom = $hasil;
-        $barang->tgl_eks = $request->input('tgl_eks');
-        $barang->stats = $stats;
-        $barang->deskripsi = $request->input('deskripsi');
-        $barang->cara_pakai = $request->input('cara_pakai');
-        $jumlah = DB::table('tb_barang')->where('kode_barang', $barang->kode_barang)->count(); 
+        $input = $request->except(['_token']);
+        $input['created_at'] = date("Y-m-d H:i:s");
+        $input['update_at'] = date("Y-m-d H:i:s");
+        $input['bpom'] = isset($input['bpom']) ? $input['bpom'] : 0;
+        $input['cat'] = $input['bpom'];
+
+        $jumlah = Barang::where('kode_barang', $input['kode_barang'])->count();
+
         if ($jumlah>0){
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Kode barang sudah ada</strong>')->error()->important();
             return redirect()->route('admin.barang.add');
@@ -93,6 +84,7 @@ class BarangController extends Controller
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Data barang berhasil ditambah</strong>')->success()->important();
             return redirect()->route('admin.barang.index');
         }        
+
     }    
 
     public function edit($id)
