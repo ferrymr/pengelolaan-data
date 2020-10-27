@@ -136,19 +136,25 @@
           </div>
         </div> --}}
       </div>
-      <div class="form-group col-md-4 @if($errors->has('status_transaksi')) has-error @endif">
-        <label for="status_transaksi" class="col-sm-9 control-label">Update Status *</label>    
-        <div class="col-sm-9">
-            <select name="status_transaksi" id="" class="form-control select2 jenis-bayar">
-                <option value="">Pilih Status Pembayaran</option>
-                <option value="">Menunggu Pembayaran</option>
-                <option value="">Sedang Diproses</option>
-                <option value="">Sedang Dikirim</option>
-                <option value="">Selesai</option>
-            </select>
-            @if($errors->has('status_transaksi'))
-                <span class="text-danger">{{ $errors->first('status_transaksi') }}</span>
-            @endif
+      <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{{ route('admin.pemesanan.index') }}" target="" class="btn btn-default float-right"><i></i> Cancel</a>
+            <div class="form-group col-md-4 @if($errors->has('status_transaksi')) has-error @endif">
+                <label for="status_transaksi" class="col-sm-9 control-label">Update Status *</label>    
+                <div class="col-sm-9">
+                    <select name="status_transaksi" id="" class="form-control select2 jenis-bayar">
+                        <option value="">Pilih Status Pembayaran</option>
+                        <option value="">Menunggu Pembayaran</option>
+                        <option value="">Sedang Diproses</option>
+                        <option value="">Sedang Dikirim</option>
+                        <option value="">Selesai</option>
+                    </select>
+                    @if($errors->has('status_transaksi'))
+                        <span class="text-danger">{{ $errors->first('status_transaksi') }}</span>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
 @stop
@@ -160,8 +166,8 @@
 @section('js')
     
     <script type="text/javascript">
-// select2
-$('.select2').select2();
+    // select2
+    $('.select2').select2();
 
     </script>
 @stop
