@@ -80,6 +80,191 @@
 </head>
 <body style="padding-left: 10px;">
     <table style="width=80%">
+        
+        <thead>
+            <tr>
+                <th>
+                    <table width="100%" class="text-center">
+                        <tr>
+                            <th>
+                                <span class="times-new-roman s20">BELLEZKIN</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <span class="times-new-roman s15">
+                                    SALES INVOICE<br>
+                                </span>
+                            </th>
+                        </tr>
+                    </table>
+                    <hr>
+                    <hr>
+                    <table width="100%">
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    SP002<br>
+                                </span>
+                            </th>
+                            <th class="text-right">
+                                <span class="times-new-roman s15">
+                                    CS001<br>
+                                </span>
+                            </th>
+                        </tr>
+                    </table>
+                    <br>
+                    <table widt="100%">
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    DR001002171234567<br>
+                                </span>
+                            </th>
+                            <th class="text-right">
+                                <span class="times-new-roman s15">
+                                    DR001<br>
+                                </span>
+                            </th>
+                        </tr>
+                    </table>
+                    <hr>
+                    <table width="100%">
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    {{ $headJual->no_do }}<br>
+                                </span>
+                            </th>
+                            <th class="text-right">
+                                <span class="times-new-roman s15">
+                                   {{$headJual->tanggal}}<br>
+                                </span>
+                            </th>
+                        </tr>
+                    </table>
+                    <br>
+                    <table width="100%">
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    {{ $headJual->no_member }}<br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                    {{ $headJual->nama }}<br>
+                                </span>
+                            </th>
+                        </tr>
+                    </table>
+                    <br>
+                    <table width="100%">
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    {{ $headJual->bayar }}<br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                    {{ $headJual->cc }}<br>
+                                </span>
+                            </th>
+                        </tr>
+                    </table>
+                    <hr>
+                    <table width="100%">
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    {{ $headJual->detjual->kode_barang }}<br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                         {{ $headJual->detjual->nama }}<br>
+                                </span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    {{ $headJual->detjual->jumlah }}<br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                        {{ $headJual->detjual->harga }}<br>
+                                </span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    <br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                    {{ $headJual->detjual->promo }}<br>
+                                </span>
+                            </th>
+                        </tr>
+                    </table>
+                    <br>
+                    <hr>
+                    <hr>
+                    <table width="100%">
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    SUB<br>
+                                </span>
+                            </th>
+                            <tr>
+                                <th class="text-left">
+                                    <span class="times-new-roman s15">
+                                        TOTAL<br>
+                                    </span>
+                                </th>
+                                <th class="padding-right text-left">
+                                    <span class="times-new-roman s15">
+                                        {{ $headJual->sub_total }}<br>
+                                    </span>
+                                </th>
+                            </tr>
+                        </tr>
+                    </table>
+                    <hr>
+                    <hr>
+                    <table width="100%">
+                        <th>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    JNE UP ETIKA - BEKASI<br>
+                                </span>
+                            </th>
+                        </th>
+                    </table>
+                    <hr>
+                    <hr>
+                    <table width="100%" class="text-center">
+                        <tr>
+                            <th>
+                                <span class="times-new-roman s10">Terima kasih, semoga produk Bellezkin selalu cocok untuk kulit cantik Anda</span>
+                            </th>
+                        </tr>
+                    </table>
+                    <hr>
+                </th>
+            </tr>
+        </thead>
+        
+    </table>
+
+    <table style="width=80%">
         <thead>
             <tr>
                 <th>
@@ -103,7 +288,7 @@
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    INV/2020/12345<br>
+                                    {{ $headJual->no_do}}<br>
                                 </span>
                             </th>
                             <th class="text-right">

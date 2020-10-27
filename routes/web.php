@@ -173,12 +173,8 @@ Route::group([
 ], function () {
     Route::get('', 'PemesananController@index')->name('index');
     Route::get('datatable', 'PemesananController@datatable')->name('datatable');
-    Route::get('edit', 'PemesananController@edit')->name('edit');
+    Route::get('show/{id}', 'PemesananController@show')->name('show');
     Route::get('delete', 'PemesananController@delete')->name('delete');
-    Route::get('print_kurir/{no_do?}', 'PemesananController@printKurir')->name('print_kurir');
-});
-
-
-Route::get('/print_cod', function () {
-    return view('backend.order.pemesanan.print_cod');
+    Route::get('print_trf/{no_do?}', 'PemesananController@printTrf')->name('print_trf');
+    Route::get('print_immadiate/{no_do?}', 'PemesananController@printImmadiate')->name('print_immadiate');
 });

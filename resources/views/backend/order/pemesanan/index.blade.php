@@ -24,15 +24,7 @@
                         <th>No</th>
                         <th>No Invoice</th>
                         <th>Tanggal</th>
-                        <th>No Member</th>
                         <th>Nama Member</th>
-                        {{-- <th>Kode Barang</th>
-                        <th>Nama Barang</th>
-                        {{-- <th>Jenis</th>
-                        <th>Jumlah</th>
-                        <th>Harga</th> --}}
-                        {{-- <th>Total</th>
-                        <th>Sub Total</th> --}}
                         <th>Bank</th>
                         <th>Keterangan</th>
                         <th>Action</th>
@@ -43,8 +35,8 @@
 
             <div id="action-template" style="display:none">
                 <div class="action-content">
-                    <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
-                        <i class="fa fa-edit"></i>
+                    <a href="#" class="btn btn-sm btn-info btn-show" title="Show" style="display: none;">
+                        <i class="fa fa-eye"></i>
                     </a>
                     <a href="#" class="btn btn-sm btn-warning btn-print" title="Print" style="display: none;">
                         <i class="fa fa-print"></i>
@@ -78,8 +70,8 @@
 
                 var wrapper = $('<p></p>').append($('#action-template .action-content').clone());
                             
-                if(data.action.edit) {
-                    wrapper.find('.btn-edit').attr('href', data.action.edit).show();
+                if(data.action.show) {
+                    wrapper.find('.btn-show').attr('href', data.action.show).show();
                 }
 
                 if(data.action.print) {
@@ -114,15 +106,7 @@
                     },
                     { data: 'no_do', name: 'no_do' },
                     { data: 'tanggal', name: 'tanggal' },
-                    { data: 'kode_cust', name: 'kode_cust' },
-                    { data: 'name', name: 'name' },
-                    // { data: 'kode_barang', name: 'kode_barang' },
-                    // { data: 'nama_bar', name: 'nama_bar' },
-                    // { data: 'jenis', name: 'jenis' },
-                    // { data: 'jumlah', name: 'jumlah' },
-                    // { data: 'harga', name: 'harga' },
-                    // { data: 'total', name: 'total' },
-                    // { data: 'sub_total', name: 'sub_total' },
+                    { data: 'nama', name: 'nama' },
                     { data: 'cc', name: 'cc' },
                     { data: 'note', name: 'note' },
                     {
@@ -133,7 +117,7 @@
                         className: 'dt-body-center',
                         render: renderAction
                     },
-                    { data: 'no_do', name: 'no_do', visible: false },
+                    { data: 'id', name: 'id', visible: false },
                 ],
                 order: [[ 5, 'desc' ]]
             });

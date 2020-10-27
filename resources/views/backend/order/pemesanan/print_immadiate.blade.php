@@ -80,7 +80,6 @@
 </head>
 <body style="padding-left: 10px;">
     <table style="width=80%">
-        
         <thead>
             <tr>
                 <th>
@@ -93,7 +92,7 @@
                         <tr>
                             <th>
                                 <span class="times-new-roman s15">
-                                    SALES INVOICE<br>
+                                    SHIPPING LABEL<br>
                                 </span>
                             </th>
                         </tr>
@@ -104,27 +103,24 @@
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    SP002<br>
+                                    {{-- {{ $headJual->id }}<br> --}}
                                 </span>
                             </th>
                             <th class="text-right">
                                 <span class="times-new-roman s15">
-                                    CS001<br>
+                                          JNE REG<br>
                                 </span>
                             </th>
                         </tr>
-                    </table>
-                    <br>
-                    <table widt="100%">
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    DR001002171234567<br>
+                                    KOSMETIK<br>
                                 </span>
                             </th>
                             <th class="text-right">
                                 <span class="times-new-roman s15">
-                                    DR001<br>
+                                        0,98 kg<br>
                                 </span>
                             </th>
                         </tr>
@@ -134,69 +130,12 @@
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    {{ $headJual->no_do }}<br>
-                                </span>
-                            </th>
-                            <th class="text-right">
-                                <span class="times-new-roman s15">
-                                    2020 - 09 - 07<br>
-                                </span>
-                            </th>
-                        </tr>
-                    </table>
-                    <br>
-                    <table width="100%">
-                        <tr>
-                            <th class="text-left">
-                                <span class="times-new-roman s15">
-                                    00217<br>
+                                    FROM<br>
                                 </span>
                             </th>
                             <th class="padding-right text-left">
                                 <span class="times-new-roman s15">
-                                    NUNI NURENDAHSARI<br>
-                                </span>
-                            </th>
-                        </tr>
-                    </table>
-                    <br>
-                    <table width="100%">
-                        <tr>
-                            <th class="text-left">
-                                <span class="times-new-roman s15">
-                                    TRF<br>
-                                </span>
-                            </th>
-                            <th class="padding-right text-left">
-                                <span class="times-new-roman s15">
-                                    MANDIRI<br>
-                                </span>
-                            </th>
-                        </tr>
-                    </table>
-                    <hr>
-                    <table width="100%">
-                        <tr>
-                            <th class="text-left">
-                                <span class="times-new-roman s15">
-                                    88015<br>
-                                </span>
-                            </th>
-                            <th class="padding-right text-left">
-                                <span class="times-new-roman s15">
-                                        WHITENING GLOW SERIES<br>
-                                </span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="text-left">
-                                <span class="times-new-roman s15">
-                                    2X<br>
-                                </span>
-                            </th>
-                            <th class="padding-right text-left">
-                                <span class="times-new-roman s15">
-                                        528.000<br>
+                                        NUNI NURENDAH SARI<br>
                                 </span>
                             </th>
                         </tr>
@@ -208,60 +147,166 @@
                             </th>
                             <th class="padding-right text-left">
                                 <span class="times-new-roman s15">
-                                        DISC 20%<br>
+                                        0821 7862 1234<br>
                                 </span>
                             </th>
                         </tr>
                     </table>
                     <br>
-                    <hr>
+                    <table width="100%">
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    TO<br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                        NUNI NURENDAH SARI<br>
+                                </span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    <br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                        0821 7862 1234<br>
+                                </span>
+                            </th>
+                        </tr>
+                    </table>
+                    <br>
+                    <table width="100%">
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    <br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                        Jalan Babakan Sari Selatan N0. 16<br>
+                                </span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    <br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                        Kel. Babakan Sari<br>
+                                </span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    <br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                       40283<br>
+                                </span>
+                            </th>
+                        </tr>
+                    </table>
+                    <br>
+                    <table width="100%">
+                        <tr>
+                           <th class="text-left">
+                               <span class="times-new-roman s15">
+                                   <br>
+                               </span>
+                           </th>
+                           <th class="padding-right text-left">
+                               <span class="times-new-roman s15">
+                                       KIARA CONDONG<br>
+                               </span>
+                           </th>
+                       </tr>
+                    </table>
+                    <br>
+                    <table width="100%">
+                        <tr>
+                           <th class="text-left">
+                               <span class="times-new-roman s15">
+                                   <br>
+                               </span>
+                           </th>
+                           <th class="padding-right text-left">
+                               <span class="times-new-roman s15">
+                                       BANDUNG<br>
+                               </span>
+                           </th>
+                       </tr>
+                    </table>
+                    <br>
+                    <table width="100%">
+                        <tr>
+                           <th class="text-left">
+                               <span class="times-new-roman s15">
+                                   <br>
+                               </span>
+                           </th>
+                           <th class="padding-right text-left">
+                               <span class="times-new-roman s15">
+                                      JAWA BARAT<br>
+                               </span>
+                           </th>
+                       </tr>
+                   </table>
                     <hr>
                     <table width="100%">
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    SUB<br>
+                                    NOTE<br>
                                 </span>
                             </th>
-                            <tr>
-                                <th class="text-left">
-                                    <span class="times-new-roman s15">
-                                        TOTAL<br>
-                                    </span>
-                                </th>
-                                <th class="padding-right text-left">
-                                    <span class="times-new-roman s15">
-                                           1.217.000<br>
-                                    </span>
-                                </th>
-                            </tr>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                       Rumah Warna Hijau Dekat Masjid<br>
+                                </span>
+                            </th>
                         </tr>
-                    </table>
-                    <hr>
-                    <hr>
-                    <table width="100%">
-                        <th>
+                        <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    JNE UP ETIKA - BEKASI<br>
+                                    <br>
                                 </span>
                             </th>
-                        </th>
-                    </table>
-                    <hr>
-                    <hr>
-                    <table width="100%" class="text-center">
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                        Al-Hidayah - Ada di rumah diatas<br>
+                                </span>
+                            </th>
+                        </tr>
                         <tr>
-                            <th>
-                                <span class="times-new-roman s10">Terima kasih, semoga produk Bellezkin selalu cocok untuk kulit cantik Anda</span>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    <br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                        Jam 17.20<br>
+                                </span>
                             </th>
                         </tr>
                     </table>
+                    <hr>
                     <hr>
                 </th>
             </tr>
-        </thead>
-        
+        </thead>  
     </table>
 </body>
 </html>
