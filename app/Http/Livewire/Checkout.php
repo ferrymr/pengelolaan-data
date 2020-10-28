@@ -471,6 +471,7 @@ class Checkout extends Component
             'selectedSpb' => $this->selectedSpb, //$request->kode_spb,
             'selectedBank' => $this->selectedBank, //$request->bank,
             'totalItems' => $this->totalItems, //$request->bank,
+            'kodeUnik' => $this->kodeUnik, 
         ];
 
         session($summaryTrans);
@@ -570,9 +571,9 @@ class Checkout extends Component
 
             $transactionNumber = "TRX" . date('y') . $alphabet[date('m')-1] . date('d') . rand(1000,9999);
 
-            DB::insert('INSERT INTO cn_transaksi (
-                            tgl_transaksi,
-                            nomor_transaksi,
+            DB::insert('INSERT INTO tb_head_jual (
+                            tanggal,
+                            no_do,
                             no_member,
                             user_id,
                             nama,
@@ -619,7 +620,7 @@ class Checkout extends Component
             }
 
             foreach($cartItems as $item) {
-                DB::insert('INSERT INTO cn_transaksi_detail (
+                DB::insert('INSERT INTO tb_det_jual (
                         transaksi_id,
                         kode_barang,
                         harga,

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    protected $table = 'cn_transaksi';
+    protected $table = 'tb_head_jual';
 
     public function user()
     {
@@ -25,7 +25,7 @@ class Transaction extends Model
 
     public function shippingAddress()
     {
-        return $this->belongsToMany(ShippingAddress::class, 'cn_transaksi', 'id');
+        return $this->belongsToMany(ShippingAddress::class, 'tb_head_jual', 'id');
     }
 
     /* public function parentable()

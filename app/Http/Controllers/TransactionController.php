@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Facades\Cart;
-use App\ShippingAddress;
+use App\Models\ShippingAddress;
+use App\Models\TbHeadJual;
+use App\Models\TbDetJual;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,9 +47,9 @@ class TransactionController extends Controller
 
             $user = auth()->user();
 
-            DB::insert('INSERT INTO cn_transaksi (
-                            tgl_transaksi,
-                            nomor_transaksi,
+            DB::insert('INSERT INTO tb_head_jual (
+                            tanggal,
+                            no_do,
                             member_id,
                             customer_id,
                             nama,
@@ -96,7 +98,7 @@ class TransactionController extends Controller
             }
 
             foreach($cartItems as $item) {
-                DB::insert('INSERT INTO cn_transaksi_detail (
+                DB::insert('INSERT INTO tb_det_jual (
                         transaksi_id,
                         kode_barang,
                         harga,
@@ -184,14 +186,14 @@ class TransactionController extends Controller
 
         try {
 
-            $spbCode = DB::table('cn_transaksi')->select('kode_spb')->where('id', $transactionId)->first()->kode_spb;
+            $spbCode = DB::table('tb_head_jual')->select('kode_spb')->where('id', $transactionId)->first()->kode_spb;
 
             //  1
             // di inner join barang yang muncul cuman 1
             // mungkin gara-gara ada kode barang yang awalnya 0 jadinya pas di join on nggak exact perbandingannya
-            $orderedItems = DB::table('cn_transaksi_detail')
-                                ->join('tb_barang', 'tb_barang.kode_barang', '=', 'cn_transaksi_detail.kode_barang')
-                                ->select('cn_transaksi_detail.kode_barang', 'cn_transaksi_detail.qty', 'tb_barang.unit')
+            $orderedItems = DB::table('tb_det_jual')
+                                ->join('tb_barang', 'tb_barang.kode_barang', '=', 'tb_det_jual.kode_barang')
+                                ->select('tb_det_jual.kode_barang', 'tb_det_jual.qty', 'tb_barang.unit')
                                 ->where('transaksi_id', $transactionId)
                                 ->get();
 
@@ -241,9 +243,9 @@ class TransactionController extends Controller
                 }
             }
 
-            // DB::table('cn_transaksi')->where('id', $transactionId)->delete();
+            // DB::table('tb_head_jual')->where('id', $transactionId)->delete();
             
-            // DB::table('cn_transaksi_detail')->where('transaksi_id', $transactionId)->delete();
+            // DB::table('tb_det_jual')->where('transaksi_id', $transactionId)->delete();
             
 
 
@@ -267,7 +269,7 @@ class TransactionController extends Controller
             $this->cancel($transactionId);
         }
 
-        DB::table('cn_transaksi')->where('id', $transactionId)->update(['status_transaksi' => $status]);
+        DB::table('tb_head_jual')->where('id', $transactionId)->update(['status_transaksi' => $status]);
         DB::insert('INSERT INTO tb_order_history (transaksi_id, tanggal, keterangan ) VALUES (?, ?, ?)', [
             $transactionId,
             date('Y-m-d H:i:s'),
@@ -522,14 +524,14 @@ class TransactionController extends Controller
 
         try {
 
-            $spbCode = DB::table('cn_transaksi')->select('kode_spb')->where('id', $transactionId)->first()->kode_spb;
+            $spbCode = DB::table('tb_head_jual')->select('kode_spb')->where('id', $transactionId)->first()->kode_spb;
 
             //  1
             // di inner join barang yang muncul cuman 1
             // mungkin gara-gara ada kode barang yang awalnya 0 jadinya pas di join on nggak exact perbandingannya
-            $orderedItems = DB::table('cn_transaksi_detail')
-                                ->join('tb_barang', 'tb_barang.kode_barang', '=', 'cn_transaksi_detail.kode_barang')
-                                ->select('cn_transaksi_detail.kode_barang', 'cn_transaksi_detail.qty', 'tb_barang.unit')
+            $orderedItems = DB::table('tb_det_jual')
+                                ->join('tb_barang', 'tb_barang.kode_barang', '=', 'tb_det_jual.kode_barang')
+                                ->select('tb_det_jual.kode_barang', 'tb_det_jual.qty', 'tb_barang.unit')
                                 ->where('transaksi_id', $transactionId)
                                 ->get();
 
@@ -580,9 +582,9 @@ class TransactionController extends Controller
                 }
             }
 
-            DB::table('cn_transaksi')->where('id', $transactionId)->delete();
+            DB::table('tb_head_jual')->where('id', $transactionId)->delete();
             
-            DB::table('cn_transaksi_detail')->where('transaksi_id', $transactionId)->delete();
+            DB::table('tb_det_jual')->where('transaksi_id', $transactionId)->delete();
             
 
 

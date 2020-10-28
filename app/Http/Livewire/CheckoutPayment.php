@@ -49,6 +49,7 @@ class CheckoutPayment extends Component
         $this->totalBayar = session('totalBayar');
         $this->totalBerat = session('totalBerat');
         $this->totalItems = session('totalItems');
+        $this->kodeUnik = session('kodeUnik');
         $this->validateAllInputs();
     }
 
@@ -68,9 +69,9 @@ class CheckoutPayment extends Component
 
         try {
             
-            DB::insert('INSERT INTO cn_transaksi (
-                            tgl_transaksi,
-                            nomor_transaksi,
+            DB::insert('INSERT INTO tb_head_jual (
+                            tanggal,
+                            no_do,
                             no_member,
                             user_id,
                             nama,
@@ -118,7 +119,7 @@ class CheckoutPayment extends Component
 
             // insert into transaction detail
             foreach($cartItems as $item) {
-                DB::insert('INSERT INTO cn_transaksi_detail (
+                DB::insert('INSERT INTO tb_det_jual (
                         transaksi_id,
                         kode_barang,
                         harga,

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionDetail extends Model
 {
-    protected $table = 'cn_transaksi_detail';
+    protected $table = 'tb_det_jual';
     
     public function transaction()
     {

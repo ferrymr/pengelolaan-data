@@ -48,7 +48,7 @@ class HistoryOrderController extends Controller
                             ->whereIn('status_transaksi', ['RECEIVED']);
         }
 
-        $transactions = $transactions->orderBy('tgl_transaksi', 'DESC')->get();
+        $transactions = $transactions->orderBy('tanggal', 'DESC')->get();
         
         // Place order
         $totalPlaceOrder = $user->transactions()

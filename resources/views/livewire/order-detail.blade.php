@@ -23,7 +23,7 @@
                         </li>
                         <li class="trail-item trail-end active">
                             <span>
-                                {{ $transaction->nomor_transaksi }}
+                                {{ $transaction->no_do }}
                             </span>
                         </li>
                     </ul>
