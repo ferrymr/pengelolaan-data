@@ -40,7 +40,7 @@
           <div class="col-sm-4 invoice-col">
             To
             <address>
-              <strong>{{ $->address->nama }}</strong><br>
+              <strong>{{ $data->address->nama }}</strong><br>
               {{ $data->address->alamat }}<br>
               {{ $data->address->kota_nama }}<br>
               {{ $data->address->kecamatan_nama }}<br>
@@ -114,7 +114,7 @@
                 </tr>
                 <tr>
                   <th>Total:</th>
-                  <td>{{ $data->sub_total }}</td>
+                  <td>{{ $data->grand_total }}</td>
                 </tr>
               </table>
             </div>
