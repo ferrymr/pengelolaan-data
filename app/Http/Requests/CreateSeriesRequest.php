@@ -12,7 +12,6 @@ class CreateSeriesRequest extends FormRequest
         $arrays = [
             "kode_pack"     => "required",
             "nama_pack"     => "required",
-            "jenis_pack"    => "required",
             "h_nomem"       => "required",
             "h_member"      => "required",
             "poin"          => "required",
