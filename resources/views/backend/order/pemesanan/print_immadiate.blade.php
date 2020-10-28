@@ -80,6 +80,7 @@
 </head>
 <body style="padding-left: 10px;">
     <table style="width=80%">
+        
         <thead>
             <tr>
                 <th>
@@ -92,7 +93,7 @@
                         <tr>
                             <th>
                                 <span class="times-new-roman s15">
-                                    SHIPPING LABEL<br>
+                                    SALES INVOICE<br>
                                 </span>
                             </th>
                         </tr>
@@ -103,24 +104,27 @@
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    {{-- {{ $headJual->id }}<br> --}}
+                                    SP002<br>
                                 </span>
                             </th>
                             <th class="text-right">
                                 <span class="times-new-roman s15">
-                                          JNE REG<br>
+                                    CS001<br>
                                 </span>
                             </th>
                         </tr>
+                    </table>
+                    <br>
+                    <table widt="100%">
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    KOSMETIK<br>
+                                    DR001002171234567<br>
                                 </span>
                             </th>
                             <th class="text-right">
                                 <span class="times-new-roman s15">
-                                        0,98 kg<br>
+                                    DR001<br>
                                 </span>
                             </th>
                         </tr>
@@ -130,24 +134,12 @@
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    FROM<br>
+                                    {{ $headJual->no_do }}<br>
                                 </span>
                             </th>
-                            <th class="padding-right text-left">
+                            <th class="text-right">
                                 <span class="times-new-roman s15">
-                                        NUNI NURENDAH SARI<br>
-                                </span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="text-left">
-                                <span class="times-new-roman s15">
-                                    <br>
-                                </span>
-                            </th>
-                            <th class="padding-right text-left">
-                                <span class="times-new-roman s15">
-                                        0821 7862 1234<br>
+                                   {{$headJual->tanggal}}<br>
                                 </span>
                             </th>
                         </tr>
@@ -157,24 +149,12 @@
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    TO<br>
+                                    {{ $headJual->no_member }}<br>
                                 </span>
                             </th>
                             <th class="padding-right text-left">
                                 <span class="times-new-roman s15">
-                                        NUNI NURENDAH SARI<br>
-                                </span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="text-left">
-                                <span class="times-new-roman s15">
-                                    <br>
-                                </span>
-                            </th>
-                            <th class="padding-right text-left">
-                                <span class="times-new-roman s15">
-                                        0821 7862 1234<br>
+                                    {{ $headJual->nama }}<br>
                                 </span>
                             </th>
                         </tr>
@@ -184,96 +164,39 @@
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    <br>
+                                    {{ $headJual->bayar }}<br>
                                 </span>
                             </th>
                             <th class="padding-right text-left">
                                 <span class="times-new-roman s15">
-                                        Jalan Babakan Sari Selatan N0. 16<br>
-                                </span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="text-left">
-                                <span class="times-new-roman s15">
-                                    <br>
-                                </span>
-                            </th>
-                            <th class="padding-right text-left">
-                                <span class="times-new-roman s15">
-                                        Kel. Babakan Sari<br>
-                                </span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="text-left">
-                                <span class="times-new-roman s15">
-                                    <br>
-                                </span>
-                            </th>
-                            <th class="padding-right text-left">
-                                <span class="times-new-roman s15">
-                                       40283<br>
+                                    {{ $headJual->cc }}<br>
                                 </span>
                             </th>
                         </tr>
                     </table>
-                    <br>
-                    <table width="100%">
-                        <tr>
-                           <th class="text-left">
-                               <span class="times-new-roman s15">
-                                   <br>
-                               </span>
-                           </th>
-                           <th class="padding-right text-left">
-                               <span class="times-new-roman s15">
-                                       KIARA CONDONG<br>
-                               </span>
-                           </th>
-                       </tr>
-                    </table>
-                    <br>
-                    <table width="100%">
-                        <tr>
-                           <th class="text-left">
-                               <span class="times-new-roman s15">
-                                   <br>
-                               </span>
-                           </th>
-                           <th class="padding-right text-left">
-                               <span class="times-new-roman s15">
-                                       BANDUNG<br>
-                               </span>
-                           </th>
-                       </tr>
-                    </table>
-                    <br>
-                    <table width="100%">
-                        <tr>
-                           <th class="text-left">
-                               <span class="times-new-roman s15">
-                                   <br>
-                               </span>
-                           </th>
-                           <th class="padding-right text-left">
-                               <span class="times-new-roman s15">
-                                      JAWA BARAT<br>
-                               </span>
-                           </th>
-                       </tr>
-                   </table>
                     <hr>
                     <table width="100%">
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    NOTE<br>
+                                    {{ $headJual->detjual->kode_barang }}<br>
                                 </span>
                             </th>
                             <th class="padding-right text-left">
                                 <span class="times-new-roman s15">
-                                       Rumah Warna Hijau Dekat Masjid<br>
+                                         {{ $headJual->detjual->nama }}<br>
+                                </span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    {{ $headJual->detjual->jumlah }}<br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                        {{ $headJual->detjual->harga }}<br>
                                 </span>
                             </th>
                         </tr>
@@ -285,28 +208,60 @@
                             </th>
                             <th class="padding-right text-left">
                                 <span class="times-new-roman s15">
-                                        Al-Hidayah - Ada di rumah diatas<br>
-                                </span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="text-left">
-                                <span class="times-new-roman s15">
-                                    <br>
-                                </span>
-                            </th>
-                            <th class="padding-right text-left">
-                                <span class="times-new-roman s15">
-                                        Jam 17.20<br>
+                                    {{ $headJual->detjual->promo }}<br>
                                 </span>
                             </th>
                         </tr>
                     </table>
+                    <br>
                     <hr>
+                    <hr>
+                    <table width="100%">
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    SUB<br>
+                                </span>
+                            </th>
+                            <tr>
+                                <th class="text-left">
+                                    <span class="times-new-roman s15">
+                                        TOTAL<br>
+                                    </span>
+                                </th>
+                                <th class="padding-right text-left">
+                                    <span class="times-new-roman s15">
+                                        {{ $headJual->sub_total }}<br>
+                                    </span>
+                                </th>
+                            </tr>
+                        </tr>
+                    </table>
+                    <hr>
+                    <hr>
+                    <table width="100%">
+                        <th>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    JNE UP ETIKA - BEKASI<br>
+                                </span>
+                            </th>
+                        </th>
+                    </table>
+                    <hr>
+                    <hr>
+                    <table width="100%" class="text-center">
+                        <tr>
+                            <th>
+                                <span class="times-new-roman s10">Terima kasih, semoga produk Bellezkin selalu cocok untuk kulit cantik Anda</span>
+                            </th>
+                        </tr>
+                    </table>
                     <hr>
                 </th>
             </tr>
-        </thead>  
+        </thead>
+        
     </table>
 </body>
 </html>

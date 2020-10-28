@@ -40,7 +40,7 @@
           <div class="col-sm-4 invoice-col">
             To
             <address>
-              <strong>{{ $data->nama }}</strong><br>
+              <strong>{{ $->address->nama }}</strong><br>
               {{ $data->address->alamat }}<br>
               {{ $data->address->kota_nama }}<br>
               {{ $data->address->kecamatan_nama }}<br>

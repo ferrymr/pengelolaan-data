@@ -66,7 +66,7 @@ class PemesananController extends Controller
 
     public function printTrf($id)
     {
-        $headJual = TbHeadJual::with('detjual', 'address')->find($id)->first();
+        $headJual = TbHeadJual::with('detjual', 'address', 'user')->find($id)->first();
 
         $pdf = PDF::loadView('backend.order.pemesanan.print_trf', compact('headJual'))->setPaper('a4', 'landscape');
         return $pdf->stream();
@@ -74,9 +74,13 @@ class PemesananController extends Controller
 
     public function printImmadiate($id)
     {
-        $headJual = TbHeadJual::with('detjual', 'address')->find($id)->first();
+        $headJual = TbHeadJual::with('detjual', 'address', 'user')->find($id)->first();
 
         $pdf = PDF::loadView('backend.order.pemesanan.print_immadiate', compact('headJual'))->setPaper('a4', 'landscape');
         return $pdf->stream();
+    }
+
+    public function setStatus()
+    {
     }
 }

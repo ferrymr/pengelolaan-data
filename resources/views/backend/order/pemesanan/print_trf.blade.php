@@ -293,7 +293,7 @@
                             </th>
                             <th class="text-right">
                                 <span class="times-new-roman s15">
-                                          JNE REG<br>
+                                          {{ $headJual->kurir }}<br>
                                 </span>
                             </th>
                         </tr>
@@ -305,7 +305,7 @@
                             </th>
                             <th class="text-right">
                                 <span class="times-new-roman s15">
-                                        0,98 kg<br>
+                                        {{ $headJual->total_berat }} kg<br>
                                 </span>
                             </th>
                         </tr>
@@ -347,7 +347,7 @@
                             </th>
                             <th class="padding-right text-left">
                                 <span class="times-new-roman s15">
-                                        NUNI NURENDAH SARI<br>
+                                        {{ $headJual->address->nama }}<br>
                                 </span>
                             </th>
                         </tr>
@@ -359,7 +359,7 @@
                             </th>
                             <th class="padding-right text-left">
                                 <span class="times-new-roman s15">
-                                        0821 7862 1234<br>
+                                    {{ $headJual->address->telepon}}<br>
                                 </span>
                             </th>
                         </tr>
@@ -374,7 +374,7 @@
                             </th>
                             <th class="padding-right text-left">
                                 <span class="times-new-roman s15">
-                                        Jalan Babakan Sari Selatan N0. 16<br>
+                                    {{ $headJual->address->alamat}}<br>
                                 </span>
                             </th>
                         </tr>
@@ -386,7 +386,7 @@
                             </th>
                             <th class="padding-right text-left">
                                 <span class="times-new-roman s15">
-                                        Kel. Babakan Sari<br>
+                                   {{ $headJual->address->kecamatan_nama }}<br>
                                 </span>
                             </th>
                         </tr>
@@ -398,7 +398,7 @@
                             </th>
                             <th class="padding-right text-left">
                                 <span class="times-new-roman s15">
-                                       40283<br>
+                                    {{ $headJual->address->kode_pos }}<br>
                                 </span>
                             </th>
                         </tr>
@@ -413,7 +413,7 @@
                            </th>
                            <th class="padding-right text-left">
                                <span class="times-new-roman s15">
-                                       KIARA CONDONG<br>
+                                {{ $headJual->address->kota_nama }}<br>
                                </span>
                            </th>
                        </tr>
@@ -428,22 +428,7 @@
                            </th>
                            <th class="padding-right text-left">
                                <span class="times-new-roman s15">
-                                       BANDUNG<br>
-                               </span>
-                           </th>
-                       </tr>
-                    </table>
-                    <br>
-                    <table width="100%">
-                        <tr>
-                           <th class="text-left">
-                               <span class="times-new-roman s15">
-                                   <br>
-                               </span>
-                           </th>
-                           <th class="padding-right text-left">
-                               <span class="times-new-roman s15">
-                                      JAWA BARAT<br>
+                                {{ $headJual->address->provinsi_nama }}<br>
                                </span>
                            </th>
                        </tr>
@@ -458,11 +443,11 @@
                             </th>
                             <th class="padding-right text-left">
                                 <span class="times-new-roman s15">
-                                       Rumah Warna Hijau Dekat Masjid<br>
+                                       {{ $headJual->note }}<br>
                                 </span>
                             </th>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
                                     <br>
@@ -485,7 +470,7 @@
                                         Jam 17.20<br>
                                 </span>
                             </th>
-                        </tr>
+                        </tr> --}}
                     </table>
                     <hr>
                     <hr>
