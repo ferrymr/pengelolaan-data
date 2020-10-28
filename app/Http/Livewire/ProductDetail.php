@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Facades\Cart;
-use App\Models\Product;
+use App\Models\Barang;
 use Livewire\Component;
 
 class ProductDetail extends Component
@@ -13,7 +13,9 @@ class ProductDetail extends Component
 
     public function mount($productCode)
     {
-        $this->product = Product::find($productCode);
+        $this->product = Barang::with('barangImages')->where('kode_barang', $productCode)->first();
+        // dd($this->product);
+        // dd(Cart::get());
     }
 
     public function render()

@@ -1,8 +1,8 @@
 <?php
 
-use App\City;
-use App\Province;
-use App\Subdistrict;
+use App\Models\City;
+use App\Models\Province;
+use App\Models\Subdistrict;
 use Illuminate\Database\Seeder;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
 

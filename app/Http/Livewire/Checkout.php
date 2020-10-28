@@ -101,6 +101,8 @@ class Checkout extends Component
 
     public function hydrate()
     {
+        
+
         if ($this->shippingMethod == "IMMEDIATE") {
             $this->ongkosKirim = 0;
             $this->courier = "";

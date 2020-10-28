@@ -154,7 +154,7 @@ Route::group([
     Route::post('update/{kode_pack}', 'SeriesController@update')->name('update');
 });
 
-// ORDER.PENJUALAN
+// Penjualan
 Route::group([
     'prefix' => '/admin/penjualan/',
     'as'     => 'admin.penjualan.'
@@ -168,4 +168,19 @@ Route::group([
     Route::post('create_invoice', 'PenjualanController@create_invoice')->name('create.invoice');
     Route::post('create_kode', 'PenjualanController@create_kode')->name('create.kode');
     Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('update_penjualan');
+});
+
+// Konfirmasi penjualan
+Route::group([
+    'prefix' => '/admin/konfirmasi-penjualan/',
+    'as'     => 'admin.konfirmasi-penjualan.'
+], function () {
+    Route::get('/', 'KonfirmasiPenjualanController@index')->name('index');
+    Route::get('/datatable', 'KonfirmasiPenjualanController@datatable')->name('datatable');
+    // Route::get('/edit/{id}', 'KonfirmasiPenjualanController@edit')->name('edit');
+    // Route::post('/update/{id}', 'KonfirmasiPenjualanController@update')->name('update');
+    // Route::get('/view/{id}', 'KonfirmasiPenjualanController@view')->name('view');
+    // Route::get('/delete/{id}', 'KonfirmasiPenjualanController@destroy')->name('delete');
+    // Route::get('/add', 'KonfirmasiPenjualanController@create')->name('add');
+    // Route::post('/store', 'KonfirmasiPenjualanController@store')->name('store');
 });

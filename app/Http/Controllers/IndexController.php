@@ -27,8 +27,9 @@ class IndexController extends Controller
                         ->limit(5)
                         ->get();
 
-        $bestSellingProducts = Barang::select('kode_barang', 'nama', 'h_nomem')
-                                ->where('unit', 'SERIES')
+        $bestSellingProducts = Barang::with('barangImages')
+                                // ->select('kode_barang', 'nama', 'h_nomem')
+                                // ->where('unit', 'SERIES')
                                 ->limit(8)
                                 ->get();
 

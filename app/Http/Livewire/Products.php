@@ -20,6 +20,7 @@ class Products extends Component
 
     public function render()
     {
+        // dd($this->products);
         return view('livewire.products');
     }
 }

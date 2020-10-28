@@ -293,7 +293,11 @@ return [
             'submenu' => [
                 [
                     'text' => 'Penjualan',
-                    'url' => 'admin/penjualan/index'
+                    'url' => 'admin/penjualan'
+                ],
+                [
+                    'text' => 'Konfimasi penjualan',
+                    'url' => 'admin/konfirmasi-penjualan'
                 ],
                 [
                     'text' => 'Pembelian',

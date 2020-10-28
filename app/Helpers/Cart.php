@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Helpers;
-use App\Models\Product;
+use App\Models\Barang;
 
 class Cart
 {
@@ -27,7 +27,7 @@ class Cart
         session()->put('cart', $cart);
     }
 
-    public function add(Product $product)
+    public function add(Barang $product)
     {
         $cart = $this->get();
 
@@ -47,6 +47,8 @@ class Cart
 
             // $productCode = $product->kode_barang;
 
+            // dd($product);
+
             $cart[$cartIndex] = array(
                     'kode_barang' => $productCode,
                     'nama' => $product->nama,
@@ -57,7 +59,8 @@ class Cart
                     'total_berat' => $product->qty * $product->berat,
                     'subtotal' => $product->qty * $product->h_nomem,
                     'qty' => $product->qty,
-                    'note' => ''
+                    'note' => '',
+                    'barang_image_id' => $product->barangImages->first()->id
                 );
 
         } else {

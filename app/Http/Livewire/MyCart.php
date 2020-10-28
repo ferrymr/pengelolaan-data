@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Facades\Cart;
 use Livewire\Component;
-use App\Models\Product;
+use App\Models\Barang;
 use App\Models\ShippingAddress;
 
 class MyCart extends Component
@@ -39,7 +39,7 @@ class MyCart extends Component
 
     public function updateQty($productCode, $type)
     {
-        $product = Product::find($productCode);
+        $product = Barang::with('barangImages')->where('kode_barang', $productCode)->first();
 
         if ($type == 'increment') {
             $product->qty = 1;

@@ -15,6 +15,7 @@ class TransactionDetail extends Model
 
     public function itemDetail()
     {
+        // to do refactoring
         return $this->belongsTo(Product::class, 'kode_barang');
     }
 }

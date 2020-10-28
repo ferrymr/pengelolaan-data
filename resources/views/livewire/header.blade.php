@@ -38,7 +38,7 @@
                                         @foreach ($cartItems as $cartItem)
                                             <li class="product-cart mini_cart_item">
                                                 <a href="#" class="product-media">
-                                                    <img src="{{ asset('assets/images/thumbnails/' . $cartItem['kode_barang'] . '.jpg') }}" alt="">
+                                                    <img src="{{ route('admin.barang.barang-image', $cartItem['barang_image_id']) }}" alt="{{ $cartItem['nama'] }}">
                                                 </a>
                                                 <div class="product-details">
                                                     <h5 class="product-name"><a href="{{ route('products.show', $cartItem['kode_barang']) }}">{{ $cartItem['nama'] }}</a></h5>
@@ -66,7 +66,7 @@
                                             <a href="{{ route('mycart') }}" class="button button-viewcart">
                                                 <span>View Cart</span>
                                             </a>
-                                            <a href="{{ route('checkout') }}" class="button button-checkout">
+                                            <a href="{{ $nextPageLink }}" class="button button-checkout">
                                                 <span>Checkout</span>
                                             </a>
                                         </div>

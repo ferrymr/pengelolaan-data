@@ -55,7 +55,9 @@
                             <div class="product-thumb">
                                 <div class="thumb-inner">
                                     <a href="{{ route('products.show', $product->kode_barang) }}">
-                                        <img src="{{ asset('assets/images/thumbnails/' . $product->kode_barang . '.jpg') }}" alt="{{ $product->nama }}">
+                                        {{-- {{ dd($product->barangImages()->first()) }} --}}
+                                        {{-- <img src="{{ asset('assets/images/thumbnails/' . $product->kode_barang . '.jpg') }}" alt="{{ $product->nama }}"> --}}
+                                        <img src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" alt="{{ $product->nama }}">
                                     </a>
                                 </div>
                                 {{-- <a href="#" class="button quick-wiew-button">Quick View</a> --}}

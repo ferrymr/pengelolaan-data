@@ -49,7 +49,7 @@
                                                     </td>
                                                     <td class="product-thumbnail">
                                                         <a href="#">
-                                                            <img src="{{ asset('assets/images/thumbnails/' . $item['kode_barang'] . '.jpg') }}" 
+                                                            <img src="{{ route('admin.barang.barang-image', $item['barang_image_id']) }}" 
                                                                 alt="{{ $item['nama'] }}"
                                                                 class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image">
                                                         </a>
