@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Shop</title>
+    <title>Bellezkin Shop</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,9 @@
     @yield('styles')
 </head>
 <body class="productsgrid-page">
+    <div id="loading" style="display: none;">
+        <img id="loading-image" src="{{ asset('assets/images/loader.gif') }}" alt="Loading..." />
+    </div>
     
     {{-- <x-topbar>
         <a href="#">Menjadi Reseller</a> &nbsp;&nbsp; <a href="#">Konsultasi Kecantikan</a>
@@ -39,8 +42,8 @@
     {{-- <x-header-mobile /> --}}
     @include('partials.header-mobile')
 
-     <!-- banner newsletter -->
-    <x-newsletter />
+    <!-- banner newsletter -->
+    {{-- <x-newsletter /> --}}
 
     <!-- text block -->
     <x-promo-text-bar>

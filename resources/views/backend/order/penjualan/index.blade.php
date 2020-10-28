@@ -9,7 +9,7 @@
         </div>
         <div class="col-6">
             <div class="float-right">
-                <a href="" class="btn btn-block btn-info">
+                <a href="{{ route('admin.penjualan.add') }}" class="btn btn-block btn-info">
                     <i class="fa fa-plus-square"></i>&nbsp;Tambah
                 </a>
             </div>
@@ -28,6 +28,7 @@
             <table class="table table-bordered table-hover" id='penjualan-table'>
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>No Invoice</th>
                         <th>Tanggal</th>
                         <th>No Member</th>
@@ -37,7 +38,6 @@
                         <th>Type Pembayaran</th>
                         <th>Bank</th>
                         <th>Sub Total</th>
-                        <th>Action</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -77,16 +77,16 @@
 
                 var wrapper = $('<p></p>').append($('#action-template .action-content').clone());
                             
-                if(data.action.edit) {
-                    wrapper.find('.btn-edit').attr('href', data.action.edit).show();
-                }
+                // if(data.action.edit) {
+                //     wrapper.find('.btn-edit').attr('href', data.action.edit).show();
+                // }
 
-                if(data.action.hapus) {
-                    wrapper.find('.btn-hapus')
-                        .attr('href', data.action.hapus)
-                        .attr('data-id', data.no_do)
-                        .attr('data-title', 'Delete ' + data.no_do + '?').show();
-                }
+                // if(data.action.hapus) {
+                //     wrapper.find('.btn-hapus')
+                //         .attr('href', data.action.hapus)
+                //         .attr('data-id', data.no_do)
+                //         .attr('data-title', 'Delete ' + data.no_do + '?').show();
+                // }
 
                 //return the buttons
                 return wrapper.html();
@@ -107,6 +107,7 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
+                    { data: 'no_do', name: 'no_do' },
                     { data: 'tanggal', name: 'tanggal' },
                     { data: 'kode_cust', name: 'kode_cust' },
                     { data: 'nama', name: 'nama' },
@@ -114,8 +115,7 @@
                     { data: 'trans', name: 'trans' },
                     { data: 'bayar', name: 'bayar' },
                     { data: 'cc', name: 'cc' },
-                    { data: 'cc', name: 'cc' },
-                    { data: 'created_at', name: 'created_at' },
+                    { data: 'sub_total', name: 'sub_total' },
                     {
                         // Define the action column
                         data: null,

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Product;
-use App\ShoppingCart;
+use App\Models\Product;
+use App\Models\ShoppingCart;
 use DB;
 
 class ShoppingCartController extends Controller
@@ -17,20 +17,6 @@ class ShoppingCartController extends Controller
      */
     public function index()
     {
-       /*  $items = DB::table('cn_shoppingcart')
-            ->join('cn_barang', 'cn_barang.kode_barang', '=', 'cn_shoppingcart.kode_barang')
-            ->select('cn_shoppingcart.id','cn_shoppingcart.kode_barang', 'cn_shoppingcart.quantity', 'cn_shoppingcart.note', 'cn_barang.nama', 'cn_barang.jenis', 'cn_barang.h_nomem')
-            ->limit(10)
-            ->get();
-        $totals = 0 ;
-        foreach ($items as $item) {
-            $totals += $item->h_nomem * $item->quantity;
-        } */
-
-        // dd($totals);
-
-        
-        // return view('shoppingcart', compact('items','totals'));
         return view('shoppingcart');
     }
 

@@ -7,16 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class TbDetJual extends Model
 {
     protected $table = 'tb_det_jual';
-
-    protected $fillable = [
-        'kode_barang',
-        'jumlah',
-        'harga',
-        'nama'
-    ];
+    protected $primaryKey = 'id';
 
     public function headjual()
     {
-       return $this->belongsTo(TbHeadJual::class, 'no_do'); 
+        return $this->belongsTo(TbHeadJual::class, 'tb_head_jual_id', 'id');
     }
 }

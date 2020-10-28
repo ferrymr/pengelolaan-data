@@ -3,9 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Facades\Cart;
-use App\Product;
-use App\ShippingAddress;
 use Livewire\Component;
+use App\Models\Product;
+use App\Models\ShippingAddress;
 
 class MyCart extends Component
 {
@@ -80,9 +80,6 @@ class MyCart extends Component
 
     public function removeFromCart($productCode)
     {
-        // $user_id = 1; // ambil dari session nanti mah
-        // ShoppingCart::where('users_id', '=', $user_id)->where('kode_barang', '=', $product->kode_barang)->delete();
-
         Cart::remove($productCode);
         $this->refreshData();
         $this->emit('refreshCartItems');

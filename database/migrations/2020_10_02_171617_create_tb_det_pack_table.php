@@ -14,13 +14,10 @@ class CreateTbDetPackTable extends Migration
     public function up()
     {
         Schema::create('tb_det_pack', function (Blueprint $table) {
-            $table->string('kode_pack', 6);
-            $table->string('kode_barang', 6);
-            $table->string('nama', 35)->nullable();
-            $table->string('jenis', 25)->nullable();
-            $table->double('jumlah')->nullable();
-            $table->double('vol');
-            $table->timestamps();
+            $table->string('kode_pack', 5);
+            $table->string('kode_barang', 5);
+            $table->string('nama', 35);
+            $table->integer('jumlah');
             $table->primary(['kode_pack','kode_barang']);
         });
     }

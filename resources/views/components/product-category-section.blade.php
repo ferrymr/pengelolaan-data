@@ -6,8 +6,12 @@
         <div class="turan-tabs  style2 avoid-underline">
             <div class="tab-head">
                 <ul class="tab-link">
-                    <li class="active"><a data-toggle="tab" aria-expanded="true" data-animate="fadeInUp" href="#disc">Satuan</a></li>
-                    <li class=""><a data-toggle="tab" aria-expanded="true" data-animate="fadeInUp" href="#cheap">Series</a></li>
+                    <li class="active">
+                        <a data-toggle="tab" aria-expanded="true" data-animate="fadeInUp" href="#disc">Satuan</a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" aria-expanded="true" data-animate="fadeInUp" href="#cheap">Series</a>
+                    </li>
                 </ul>
             </div>
             <div class="tab-container">
@@ -19,30 +23,33 @@
                                     <div class="product-inner equal-element">
                                         <div class="product-top">
                                             <div class="flash">
-                                                <span class="onnew"><span class="text">new</span></span>
+                                                <span class="onnew"><span class="text">NEW PRODUCT</span></span>
                                             </div>
-                                            <div class="yith-wcwl-add-to-wishlist">
+                                            {{-- <div class="yith-wcwl-add-to-wishlist">
                                                 <div class="yith-wcwl-add-button">
                                                     <a href="#">Add to Wishlist</a>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <div class="product-thumb">
                                             <div class="thumb-inner">
-                                                <a href="#">
+                                                <a href="{{ route('products.show', $item->kode_barang) }}">
                                                     <img src="{{ asset('assets/images/thumbnails/' . $item->kode_barang . '.jpg') }}" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="product-info">
                                             <h5 class="product-name product_title">
-                                            <a href="#">{{ $item->nama }} </a>
+                                                <a href="{{ route('products.show', $item->kode_barang) }}">
+                                                    {{ $item->nama }} 
+                                                </a>
                                             </h5>
                                             <div class="group-info">
                                                 <div class="price"><ins>@currency($item->harga)</ins></div>
                                             </div>
                                         </div>
-                                        <div class="loop-form-add-to-cart">
+                                        {{-- button add to cart directly --}}
+                                        {{-- <div class="loop-form-add-to-cart">
                                             <form class="cart">
                                                 <input type="hidden" name="attribute_pa_size"  value="M">
                                                 <input type="hidden" name="attribute_pa_color" value="hunter_green">
@@ -58,7 +65,7 @@
                                                     <button class="single_add_to_cart_button button">Add to cart</button>
                                                 </div>
                                             </form>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             @empty

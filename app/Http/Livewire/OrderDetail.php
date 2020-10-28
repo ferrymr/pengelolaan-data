@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Transaction;
+use App\Models\Transaction;
 use Livewire\Component;
 
 class OrderDetail extends Component
@@ -30,17 +30,21 @@ class OrderDetail extends Component
                     $history->select('transaksi_id', 'tanggal', 'keterangan');
                 },
                 'shippingAddress' => function($address) {
-                    $address->select('cn_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');
+                    $address->select('tb_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');
                 }
             ]
         )->first();
 
-        $this->transaction = $transaction;
-        $this->items = $detail->items;
-        $this->history = $detail->history;
-        $this->shippingAddress = $detail->shippingAddress;
+        $transactionNew = Transaction::where('id', $transactionId)->with('items.itemDetail', 'shippingAddress')->first();
 
-        return view('detail-history-transaction');
+        // dd($transactionNew->shippingAddress);
+
+        $this->transaction = $transaction;
+        $this->items = $transactionNew->items;
+        $this->history = $detail->history;
+        $this->shippingAddress = $transactionNew->shippingAddress;
+
+        return view('frontend.detail-history-transaction');
     }
 
     public function render()

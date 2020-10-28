@@ -3,10 +3,15 @@
 namespace App\Http\Livewire;
 
 use App\Facades\Cart;
-use App\ShippingAddress;
+use App\Models\ShippingAddress;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
 use Livewire\Component;
 use DB;
+use App\Models\Provinsi;
+use App\Models\Kota;
+use App\Models\Kecamatan;
+use App\Http\Resources\CityResource;
+use App\Http\Resources\SubdistrictResource;
 
 class Checkout extends Component
 {
@@ -27,6 +32,23 @@ class Checkout extends Component
     public $note;
     public $user;
     public $inputsValid;
+    public $daftarProvinsi;
+    public $daftaralamatTujuan;
+    public $alamatTujuan;
+
+    // for address part
+    public $nama;
+    public $telepon;
+    public $provinsi;
+    public $kota;
+    public $kecamatan;
+    public $alamat;
+    public $kode_pos;
+
+    public $address;
+
+    public $listKota;
+    public $listKecamatan;
 
     public function mount()
     {
@@ -36,16 +58,45 @@ class Checkout extends Component
         $this->hitungSubtotal();
         $this->generateKodeUnik();
         $this->hitungTotalBayar();
+        // $this->saveNewAddress();
         $this->user = auth()->user();
         $this->bankList = array('BCA', 'BNI', 'BRI', 'MANDIRI');
         $this->spbList = $this->getSpbList();
-        $this->defaultShippingAddress = ShippingAddress::where('user_id', $this->user->id)->where('is_default', 1)->first();
+        $this->defaultShippingAddress = ShippingAddress::where('user_id', $this->user->id)
+                                            ->where('is_default', 1)
+                                            ->first();
         $this->selectedSpb = "";
         $this->ongkosKirim = 0;
         $this->courier = "";
         $this->selectedBank = "";
         $this->note = "";
         $this->validateAllInputs();
+        $this->daftarProvinsi = Provinsi::all();
+        $this->daftaralamatTujuan = ShippingAddress::where('user_id', $this->user->id)->get();
+        $this->alamatTujuan;
+
+        // for address part
+        $this->nama;
+        $this->telepon;
+        $this->provinsi;
+        $this->kota;
+        $this->kecamatan;
+        $this->alamat;
+        $this->kode_pos;
+
+        $this->listKota;
+        $this->listKecamatan;
+
+    }
+
+    public function resetAddressInputFields() {
+        $this->nama = '';
+        $this->telepon = '';
+        $this->provinsi = '';
+        $this->kota = '';
+        $this->kecamatan = '';
+        $this->alamat = '';
+        $this->kode_pos = '';
     }
 
     public function hydrate()
@@ -56,7 +107,21 @@ class Checkout extends Component
         } else {
             $this->note = "";
         }
+
+        $this->checkRajaOngkir();
         
+        $this->hitungTotalBayar();
+
+        $this->validateAllInputs();
+
+        // get kota
+        $this->getCitiesCheckout();
+
+        // get kecamatan
+        $this->getSubdistrictsCheckout();
+    }
+
+    public function checkRajaOngkir() {
         if ($this->courier && $this->defaultShippingAddress && $this->selectedSpb) {
 
             $spbIndex = 'SPB' . $this->selectedSpb;
@@ -76,10 +141,18 @@ class Checkout extends Component
                 $this->ongkosKirim = $rajaOngkir['costs'][0]['cost'][0]['value'];
             }
         }
-        
-        $this->hitungTotalBayar();
+    }
 
-        $this->validateAllInputs();
+    public function getCitiesCheckout() {
+        if($this->provinsi != null) {
+            $this->listKota = Kota::where('province_id', $this->provinsi)->get();
+        }
+    }
+
+    public function getSubdistrictsCheckout() {
+        if ($this->kota != null) {
+            $this->listKecamatan = Kecamatan::where('city_id', $this->kota)->get();
+        }
     }
 
     public function render()
@@ -376,6 +449,115 @@ class Checkout extends Component
         $this->totalBayar = substr($totalBayar, 0, -3) . $this->kodeUnik;
     }
 
+    public function gotoCheckoutPayment()  {
+
+        // generate trasaction number
+        $alphabet = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+        $transactionNumber = "TRX" . date('y') . $alphabet[date('m')-1] . date('d') . rand(1000,9999);
+
+        // set sesion for transaction
+        $summaryTrans = [
+            'transactionNumber' => $transactionNumber,
+            'shippingMethod' => $this->shippingMethod, //$request->shipping_method,
+            'courier' => $this->courier, //$request->courier,
+            'shippingAddressId' => $this->shippingMethod == 'EXPEDITION' ? $this->defaultShippingAddress->id : null, //$request->shipping_address_id,
+            'subtotal' => $this->subtotal, //$request->subtotal,
+            'ongkosKirim' => $this->ongkosKirim, //$request->request->shipping_fee,
+            'totalBayar' => $this->totalBayar, //$request->grand_total,
+            'totalBerat' => $this->totalBerat, //$request->total_berat,
+            'note' => $this->note, //$request->note,
+            'selectedSpb' => $this->selectedSpb, //$request->kode_spb,
+            'selectedBank' => $this->selectedBank, //$request->bank,
+            'totalItems' => $this->totalItems, //$request->bank,
+        ];
+
+        session($summaryTrans);
+
+        return redirect()->route('checkout-payment');
+    }
+
+    // change the adefault  adress
+    public function saveSelectAddress() {
+        if($this->alamatTujuan != '') {
+
+            // update the other shipping address
+            ShippingAddress::where('user_id', $this->user->id)->update([
+                'is_default' => 0
+            ]);
+
+            // set the selected address to be default
+            ShippingAddress::where('id', $this->alamatTujuan)->update([
+                'is_default' => 1
+            ]);
+
+            // set default shiping address
+            $this->defaultShippingAddress = ShippingAddress::where('user_id', $this->user->id)
+                                                            ->where('is_default', 1)
+                                                            ->first();
+
+            // check raja ongkir
+            $this->checkRajaOngkir();
+
+            // flash
+            flash('Alamat berhasil dijadikan sebagai default')->success();
+        }        
+    }
+
+    // untuk menyimpan alamat baru
+    public function saveNewAddress() {
+        
+        $this->validate([
+            'nama' => 'required',
+            'telepon' => 'required',
+            'provinsi' => 'required',
+            'kota' => 'required',
+            'kecamatan' => 'required',
+            'alamat' => 'required'
+        ]);
+
+        $provinsi   = Provinsi::select('province_id','name')->where('province_id',$this->provinsi)->first();
+        $kota       = Kota::select('city_id','name')->where('city_id',$this->kota)->first();
+        $kecamatan  = Kecamatan::select('subdistrict_id','name')->where('subdistrict_id',$this->kecamatan)->first();
+
+        // $isAvailable = ShippingAddress::where('user_id', $this->user->id)->count();
+
+        $input = [
+            'user_id' => $this->user->id,
+            'nama' => $this->nama,
+            'telepon' => $this->telepon,
+            'provinsi_id' => $this->provinsi,
+            'provinsi_nama' => $provinsi->name,
+            'kota_id' => $this->kota,
+            'kota_nama' => $kota->name,
+            'kecamatan_id' => $this->kecamatan,
+            'kecamatan_nama' => $kecamatan->name,
+            'alamat' => $this->alamat,
+            'kode_pos' => $this->kode_pos,
+            'is_default' => 1
+        ];
+
+        // update the other shipping address
+        ShippingAddress::where('user_id', $this->user->id)->update([
+            'is_default' => 0
+        ]);
+
+        ShippingAddress::create($input);
+
+        // set default shiping address
+        $this->defaultShippingAddress = ShippingAddress::where('user_id', $this->user->id)
+                                            ->where('is_default', 1)
+                                            ->first();
+        
+        // check raja ongkir
+        $this->checkRajaOngkir();
+
+        // flash
+        flash('Alamat baru berhasil ditambahkan dan dijadikan sebagai default')->success();
+
+        $this->resetAddressInputFields();
+    }
+
+    // will be change to next checkout payment
     public function saveTransaction()
     {
         DB::beginTransaction();
@@ -385,7 +567,6 @@ class Checkout extends Component
             $alphabet = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
 
             $transactionNumber = "TRX" . date('y') . $alphabet[date('m')-1] . date('d') . rand(1000,9999);
-
 
             DB::insert('INSERT INTO cn_transaksi (
                             tgl_transaksi,
@@ -431,8 +612,6 @@ class Checkout extends Component
             
             $cartItems = Cart::get();
 
-            // dd($cartItems);
-
             if (count($cartItems) < 1) {
                 throw new \Exception("No items in the cart!");
             }
@@ -463,7 +642,7 @@ class Checkout extends Component
                 );
             }
 
-            DB::insert('INSERT INTO cn_order_history (
+            DB::insert('INSERT INTO tb_order_history (
                     transaksi_id,
                     tanggal,
                     keterangan
@@ -515,7 +694,7 @@ class Checkout extends Component
             }
     
             session()->flash('success', 'Transaksi berhasil!');
-            return redirect()->route('order-history.index');
+            return redirect()->route('order-history-status');
         } catch (\Exception $e) {
             DB::rollback();
             dd($e->getMessage());
@@ -525,11 +704,6 @@ class Checkout extends Component
 
     public function validateAllInputs()
     {
-        if (!$this->selectedBank) {
-            $this->inputsValid = false;
-            return;
-        }
-
         if (!$this->selectedSpb) {
             $this->inputsValid = false;
             return;

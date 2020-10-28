@@ -2,83 +2,123 @@
 
 @section('content')
 
-<!-- wrap main content -->
-<div class="site-content">
-    <main class="site-main  main-container no-sidebar">
-        <div class="container">
+{{-- wrap main content --}}
+<div class="main-content main-content-login" style="margin-bottom:50px;">
+    <div class="container">
 
-            <!-- main content -->
-            <div class="row">
-                <div class="main-content-cart main-content col-sm-12">
-                    <div class="row">
-                        <div class="col-md-6 col-md-offset-3 col-sm-12">
-                            {{-- IF SOMETHING WRONG HAPPENED --}}
-                            @if ($errors->any())
-                            <x-alert type="danger" :message="$errors"/>
-                            @endif
-                        </div>
-                        
-                    <div class="col-md-6 col-md-offset-3 col-sm-12">
-                        <x-alert type="warning" message="Silahkan buat alamat pengiriman baru"/>
-                    </div>
-                        
-                        <form action="{{ route('address.save-address-post-cart')}}" method="post">
-                            @csrf
-                            <div class="col-md-6 col-md-offset-3 col-sm-12">
-                                <div class="form-address" style="margin-bottom: 32px">
-                                    <div class="col-12">
-                                        <label class="text">Name</label> 
-                                        <input type="text" id="nama" name="nama" class="input-text {{ $errors->has('nama') ? 'is-invalid':'' }}" value="{{ old('nama') }}" style="width: 100%;">
-                                    </div>
-                                    <div class="col-12" style="margin-top:16px">
-                                        <label class="text">Phone</label> 
-                                        <input type="text" id="telepon" name="telepon" class="input-text {{ $errors->has('telepon') ? 'is-invalid':'' }}" value="{{ old('telepon') }}" style="width: 100%;">
-                                    </div>
-                                    <div class="col-12" style="margin-top:16px">
-                                        <label for="provinsi">Pilih Provinsi</label>
-                                        <select class="form-control" id="provinsi" name="provinsi">
-                                            <option value="" selected disabled>-- Pilih Provinsi --</option>
-                                            @foreach($daftarProvinsi as $provinsi)
-                                                <option value="{{ $provinsi['province_id'] }}">{{ $provinsi['name'] }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-12" style="margin-top:16px">
-                                        <label for="kota">Pilih Kota</label>
-                                        <select class="form-control" id="kota" name="kota">
-                                            <option value="" selected disabled> -- Pilih Kota -- </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12" style="margin-top:16px">
-                                        <label for="kecamatan">Pilih Kecamatan</label>
-                                        <select class="form-control" id="kecamatan" name="kecamatan">
-                                            <option value="" selected disabled> -- Pilih Kecamatan -- </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12" style="margin-top:16px">
-                                        <label class="text">Address</label> 
-                                        <textarea id="exampleFormControlTextarea1" name="alamat" rows="3" class="input-text {{ $errors->has('alamat') ? 'is-invalid':'' }}" value="{{ old('alamat') }}" ></textarea>
-                                    </div>
-                                    <div class="col-12" style="margin-top:16px">
-                                        <label class="text">Post Code</label> 
-                                        <input type="text" name="kode_pos" class="input-text {{ $errors->has('kode_pos') ? 'is-invalid':'' }}" value="{{ old('kode_pos') }}" style="width: 100%;">
-                                    </div>
-                                    <button type="submit" class="button" style="margin-top: 2rem">Tambah Alamat</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+        {{-- breadsrumb --}}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-trail breadcrumbs">
+                    <ul class="trail-items breadcrumb">
+                        <li class="trail-item trail-begin"><a href="index.html">Home</a></li>
+                        <li class="trail-item trail-end active">Tambah alamat pengiriman</li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </main>
+
+        {{-- main content --}}
+        <div class="row">
+
+            {{-- side main --}}
+            <div class="content-area col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="site-main">
+
+                    <h3 class="custom_blog_title" style="margin-bottom:0px">#Address</h3>
+                    <br>
+
+                    <div class="customer_login">
+                        <div class="row">
+
+                            <div class="col-md-offset-2 col-lg-8 col-md-8 col-sm-12">
+                                <div class="login-item">
+                                    <h5 class="title-login">Tambahkan alamat</h5>
+                                    <form action="{{ route('address.save-address-post-cart')}}" method="post" class="register">
+                                        @csrf
+                                        <div class="alert alert-warning" role="alert">
+                                            Silahkan tambahkan alamat pengiriman baru
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        {{-- print error --}}
+                                        @if ($errors->any())
+                                            <x-alert type="danger" :message="$errors"/>
+                                        @endif
+
+                                        <p class="form-row form-row-wide">
+                                            <label class="text">Nama Lengkap <span style="color:red">*</span></label> 
+                                            <input type="text" id="nama" name="nama" class="input-text {{ $errors->has('nama') ? 'is-invalid':'' }}" value="{{ old('nama') }}" required>
+                                        </p>
+                                        <p class="form-row form-row-wide">
+                                            <label class="text">Telepon <span style="color:red">*</span></label> 
+                                            <input type="tel" placeholder="Contoh: 085642274427" id="telepon" name="telepon" class="input-text {{ $errors->has('telepon') ? 'is-invalid':'' }}" value="{{ old('telepon') }}" required>
+                                        </p>
+                                        <p class="form-row form-row-wide">
+                                            <label for="provinsi">Provinsi <span style="color:red">*</span></label>
+                                            <select class="form-control select2" id="provinsi" name="provinsi" {{ $errors->has('provinsi') ? 'is-invalid':'' }}" required>
+                                                <option value="" selected disabled>Pilih Provinsi</option>
+                                                @foreach($daftarProvinsi as $provinsi)
+                                                    <option value="{{ $provinsi['province_id'] }}">{{ $provinsi['name'] }}</option>
+                                                @endforeach
+                                            </select>
+                                        </p>
+                                        <p class="form-row form-row-wide" id="block-kota" style="display: none;">
+                                            <label for="kota">Kota <span style="color:red">*</span></label>
+                                            <select class="form-control select2" id="kota" name="kota" {{ $errors->has('kota') ? 'is-invalid':'' }}" required>
+                                                <option value="" selected disabled>Pilih Kota</option>
+                                            </select>
+                                        </p>
+                                        <p class="form-row form-row-wide" id="block-kecamatan" style="display: none;">
+                                            <label for="kecamatan">Kecamatan <span style="color:red">*</span></label>
+                                            <select class="form-control select2" id="kecamatan" name="kecamatan" {{ $errors->has('kecamatan') ? 'is-invalid':'' }}" required>
+                                                <option value="" selected disabled>Pilih Kecamatan</option>
+                                            </select>
+                                        </p>
+                                        <p class="form-row form-row-wide">
+                                            <label class="text">Alamat Lengkap <span style="color:red">*</span></label> 
+                                            <textarea  name="alamat" 
+                                                        rows="3" 
+                                                        class="input-text {{ $errors->has('alamat') ? 'is-invalid':'' }}" 
+                                                        value="{{ old('alamat') }}" required></textarea>
+                                        </p>
+                                        <p class="form-row form-row-wide">
+                                            <label class="text">Kodepos</label> 
+                                            <input type="text" 
+                                                name="kode_pos" 
+                                                class="input-text {{ $errors->has('kode_pos') ? 'is-invalid':'' }}" 
+                                                value="{{ old('kode_pos') }}">
+                                        </p>
+                                        <p class="">
+                                            <input type="submit" class="button-submit" value="Tambah Alamat">
+                                        </p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
+
 @endsection
 
 @section('scripts')
     <script>
         $(function() {
+
+            // activate select2
+            $(".select2").select2({ width: 'resolve' });
+
             $('select[name=provinsi]').change(function() {
+
+                $("#loading").show();
 
                 $.ajax({
                     url: '{{ env('APP_API_URL') }}cities/' + $(this).val(),
@@ -90,19 +130,25 @@
                     dataType: 'json',
                     success: function(result) {
                         var select = $('select[name=kota]');
-
                         select.empty();
 
-                        select.append('<option selected disabled>-- Pilih Kota --</option>');
+                        // show kota
+                        $("#block-kota").show();
+                        $(".select2").select2({ width: 'resolve' });
+                        select.append('<option selected disabled>Pilih Kota</option>');
 
                         $.each(result.data,function(key, value) {
                             select.append('<option value=' + value.city_id + '>' + value.city_name + '</option>');
                         });
+                        
+                        $("#loading").hide();
                     }
                 });
             });
 
             $('select[name=kota]').change(function() {
+
+                $("#loading").show();
 
                 $.ajax({
                     url: '{{ env('APP_API_URL') }}subdistricts/' + $(this).val(),
@@ -113,18 +159,21 @@
                     crossDomain: true,
                     dataType: 'json',
                     success: function(result) {
-
-                        console.log(result);
                         
                         var select = $('select[name=kecamatan]');
-
                         select.empty();
 
-                        select.append('<option selected disabled>-- Pilih Kecamatan --</option>');
+                        // show kecamatan
+                        $("#block-kecamatan").show();
+                        $(".select2").select2({ width: 'resolve' });
+
+                        select.append('<option selected disabled>Pilih Kecamatan</option>');
 
                         $.each(result.data,function(key, value) {
                             select.append('<option value=' + value.subdistrict_id + '>' + value.subdistrict_name + '</option>');
                         });
+
+                        $("#loading").hide();
                     }
                 });
             });

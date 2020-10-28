@@ -60,13 +60,18 @@
                                 {{-- <a href="#" class="button quick-wiew-button">Quick View</a> --}}
                             </div>
                             <div class="product-info">
-                                <h5 class="product-name product_title"><a href="#">{{ $product->nama }}</a></h5>
+                                <h5 class="product-name product_title">
+                                    <a href="{{ route('products.show', $product->kode_barang) }}">
+                                        {{ $product->nama }}
+                                    </a>
+                                </h5>
                                 <div class="group-info">
                                     {{-- <div class="stars-rating"><div class="star-rating"><span class="star-4"></span></div><div class="count-star">(14)</div></div> --}}
                                     <div class="price"><span>@currency($product->harga)</span></div>
                                 </div>
                             </div>
-                            <div class="loop-form-add-to-cart">
+                            {{-- button add to cart directly --}}
+                            {{-- <div class="loop-form-add-to-cart">
                                 <form class="cart">
                                     <div class="single_variation_wrap">
                                         <div class="quantity">
@@ -79,7 +84,7 @@
                                         <button class="single_add_to_cart_button button">Add to cart</button>
                                     </div>
                                 </form>
-                            </div>
+                            </div> --}}
                         </div>
                     </li>
                 @empty
