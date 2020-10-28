@@ -77,8 +77,7 @@ Route::group(['prefix' => '/admin/dashboard/', 'as' => 'admin.dashboard.'], func
 });
 
 // Master Barang
-Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
-{
+Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function () {
     Route::get('', 'BarangController@index')->name('index');
     Route::get('datatable', 'BarangController@datatable')->name('datatable');
     Route::get('edit/{kode_barang}', 'BarangController@edit')->name('edit');
@@ -91,15 +90,12 @@ Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
     Route::get('delete-barang-image/{barangId?}/{id?}', 'BarangController@deleteBarangImage')->name('detele-barang-image');
 });
 
-Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
-{
+Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function () {
     Route::get('barang-image/{id?}', 'BarangController@getBarangImage')->name('barang-image');
-
 });
 
 // Master Supplier
-Route::group(['prefix' => '/admin/supplier/', 'as' => 'admin.supplier.'], function()
-{
+Route::group(['prefix' => '/admin/supplier/', 'as' => 'admin.supplier.'], function () {
     Route::get('', 'SupplierController@index')->name('index');
     Route::get('add', 'SupplierController@create')->name('add');
     Route::post('store', 'SupplierController@store')->name('store');
@@ -141,9 +137,9 @@ Route::group([
 // Series
 Route::group([
     // 'middleware' => ['permission:access-user'], 
-    'prefix' => '/admin/series/', 
+    'prefix' => '/admin/series/',
     'as' => 'admin.series.'
-], function(){
+], function () {
     Route::get('', 'SeriesController@index')->name('index');
     Route::get('datatable', 'SeriesController@datatable')->name('datatable');
     Route::get('edit/{kode_pack}', 'SeriesController@edit')->name('edit');
@@ -186,6 +182,19 @@ Route::group([
     Route::post('create_invoice', 'PenjualanController@create_invoice')->name('create.invoice');
     Route::post('create_kode', 'PenjualanController@create_kode')->name('create.kode');
     Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('update_penjualan');
+});
+
+// ORDER.PEMESANAN
+Route::group([
+    'prefix' => '/admin/pemesanan/',
+    'as'     => 'admin.pemesanan.'
+], function () {
+    Route::get('', 'PemesananController@index')->name('index');
+    Route::get('datatable', 'PemesananController@datatable')->name('datatable');
+    Route::get('show/{id}', 'PemesananController@show')->name('show');
+    Route::get('delete', 'PemesananController@delete')->name('delete');
+    Route::get('print_trf/{no_do?}', 'PemesananController@printTrf')->name('print_trf');
+    Route::get('print_immadiate/{no_do?}', 'PemesananController@printImmadiate')->name('print_immadiate');
 });
 
 // Cashback

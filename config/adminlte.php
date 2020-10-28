@@ -305,7 +305,7 @@ return [
                 ],
                 [
                     'text' => 'Pemesanan',
-                    'url' => 'pemesanan'
+                    'url' => 'admin/pemesanan'
                 ],
 
             ],
