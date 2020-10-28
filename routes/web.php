@@ -147,7 +147,25 @@ Route::group([
     Route::get('delete/{kode_pack}', 'SeriesController@destroy')->name('delete');
     Route::get('add', 'SeriesController@create')->name('add');
     Route::post('store', 'SeriesController@store')->name('store');
+    Route::post('komposisi', 'SeriesController@komposisi')->name('komposisi');
     Route::post('update/{kode_pack}', 'SeriesController@update')->name('update');
+});
+
+// Referral
+Route::group([
+    // 'middleware' => ['permission:access-user'], 
+    'prefix' => '/admin/referral/', 
+    'as' => 'admin.referral.'
+], function(){
+    Route::get('', 'ReferralController@index')->name('index');
+    Route::get('datatable', 'ReferralController@datatable')->name('datatable');
+    Route::get('edit/{kode_pack}', 'ReferralController@edit')->name('edit');
+    Route::get('view/{kode_pack}', 'ReferralController@view')->name('view');
+    Route::get('delete/{kode_pack}', 'ReferralController@destroy')->name('delete');
+    Route::get('add', 'ReferralController@create')->name('add');
+    Route::post('store', 'ReferralController@store')->name('store');
+    Route::post('komposisi', 'ReferralController@komposisi')->name('komposisi');
+    Route::post('update/{kode_pack}', 'ReferralController@update')->name('update');
 });
 
 // ORDER.PENJUALAN
@@ -177,4 +195,15 @@ Route::group([
     Route::get('delete', 'PemesananController@delete')->name('delete');
     Route::get('print_trf/{no_do?}', 'PemesananController@printTrf')->name('print_trf');
     Route::get('print_immadiate/{no_do?}', 'PemesananController@printImmadiate')->name('print_immadiate');
+});
+
+// Cashback
+Route::group([
+    // 'middleware' => ['permission:access-user'], 
+    'prefix' => '/admin/cashback/', 
+    'as' => 'admin.cashback.'
+], function(){
+    Route::get('', 'CashbackController@index')->name('index');
+    Route::get('datatable', 'CashbackController@datatable')->name('datatable');
+    Route::post('hitung', 'CashbackController@hitung')->name('hitung');
 });

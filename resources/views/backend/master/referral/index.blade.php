@@ -1,15 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Series')
+@section('title', 'Referral')
 
 @section('content_header')
     <div class="row">
         <div class="col-6">
-            <h1>Series</h1>
+            <h1>Referral</h1>
         </div>
         <div class="col-6">
             <div class="float-right">
-                <a href="{{ route('admin.series.add') }}" class="btn btn-block btn-info">
+                <a href="{{ route('admin.referral.add') }}" class="btn btn-block btn-info">
                     <i class="fa fa-plus-square"></i>&nbsp;Tambah
                 </a>
             </div>
@@ -22,18 +22,18 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Data Series</h3>
+            <h3 class="card-title">Data Referral</h3>
         </div>
         <div class="card-body">
-            <table class="table table-bordered table-hover" id='series-table'>
+            <table class="table table-bordered table-hover" id='referral-table'>
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Kode</th>
-                        <th>Nama Series</th>
                         <th>Member</th>
-                        <th>Poin</th>
-                        <th>Katalog</th>
+                        <th>Nama</th>
+                        <th>Register</th>
+                        <th>Upline</th>
+                        <th>Direktur</th>
                         <th>Action</th>
                         <th>&nbsp;</th>
                     </tr>
@@ -42,12 +42,6 @@
 
             <div id="action-template" style="display:none">
                 <div class="action-content">
-                    <a class="btn btn-sm btn-warning btn-tampil" title="View" 
-                        data-toggle="modal" 
-                        data-target="#myModal" 
-                        style="color: white; display: none;">
-                        <i class="fa fa-eye"></i>
-                    </a>
                     <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
                         <i class="fa fa-edit"></i>
                     </a>
@@ -68,7 +62,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Komposisi Data Series</h5>
+                    <h5 class="modal-title">Daftar Downline</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -103,26 +97,19 @@
                 if(data.action.hapus) {
                     wrapper.find('.btn-hapus')
                         .attr('href', data.action.hapus)
-                        .attr('data-id', data.kode_pack)
-                        .attr('data-title', 'Delete ' + data.kode_pack + '?').show();
-                }
-
-                if(data.action.tampil) {
-                    wrapper.find('.btn-tampil')
-                        .attr('href', data.action.tampil)
-                        .attr('data-id', data.kode_pack)
-                        .attr('data-title', 'View ' + data.kode_pack + '?').show();
+                        .attr('data-id', data.no_member)
+                        .attr('data-title', 'Delete ' + data.no_member + '?').show();
                 }
                 
                 return wrapper.html();
             }
 
-            dataTable = $('#series-table').DataTable({
+            dataTable = $('#referral-table').DataTable({
                 processing: true,
                 serverSide: true,
                 stateSave: false,
                 // dom: '<"top">rt<"bottom"ilp><"clear">',
-                ajax: '{!! route('admin.series.datatable') !!}',
+                ajax: '{!! route('admin.referral.datatable') !!}',
                 orderCellsTop: true,
                 "pageLength": 25,
                 columns: [
@@ -133,11 +120,11 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    { data: 'kode_pack', name: 'kode_pack' },
-                    { data: 'nama_pack', name: 'nama_pack' },
-                    { data: 'h_member', name: 'h_member' },
-                    { data: 'poin', name: 'poin' },
-                    { data: 'h_nomem', name: 'h_nomem' },
+                    { data: 'no_member', name: 'no_member' },
+                    { data: 'name', name: 'name' },
+                    { data: 'daftar', name: 'daftar' },
+                    { data: 'kode_up', name: 'kode_up' },
+                    { data: 'kode_dr', name: 'kode_dr' },
                     {
                         // Define the action column
                         data: null,
@@ -146,7 +133,7 @@
                         className: 'dt-body-center',
                         render: renderAction
                     },
-                    { data: 'nama_pack', name: 'nama_pack', visible: false },
+                    { data: 'name', name: 'name', visible: false },
                 ],
                 order: [[ 1, 'asc' ]]
             });
