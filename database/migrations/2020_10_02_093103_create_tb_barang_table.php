@@ -41,6 +41,8 @@ class CreateTbBarangTable extends Migration
             $table->string('unit')->default('PIECES'); // shop
             $table->text('deskripsi')->nullable();
             $table->text('cara_pakai')->nullable();
+            $table->boolean('flag_promo')->default(0);
+            $table->boolean('flag_bestseller')->default(0);
             $table->timestamps();
         });
     }

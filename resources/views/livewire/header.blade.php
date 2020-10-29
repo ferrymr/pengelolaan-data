@@ -211,23 +211,20 @@
                         <a href="{{ route('home') }}" class="kt-item-title" title="Shop">Home</a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('products.category', 'brightening') }}" class="kt-item-title" title="Brightening">Brightening</a>
+                        <a href="{{ route('products.category', 'ALL') }}" class="kt-item-title" title="All Products">All Products</a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('products.category', 'purify') }}" class="kt-item-title" title="Purify">Purify</a>
+                        <a href="{{ route('products.category', 'WHITENING') }}" class="kt-item-title" title="Whitening">Whitening</a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('products.category', 'decorative') }}" class="kt-item-title" title="Decorative">Decorative</a>
+                        <a href="{{ route('products.category', 'PURIFYING') }}" class="kt-item-title" title="Purifying">Purifying</a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('products.category', 'extra care') }}" class="kt-item-title" title="Extra Care">Extra Care</a>
+                        <a href="{{ route('products.category', 'ACCESORIES') }}" class="kt-item-title" title="Accesories">Accesories</a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('products.category', 'series') }}" class="kt-item-title" title="About">Series</a>
+                        <a href="{{ route('products.category', 'SERIES') }}" class="kt-item-title" title="Series">Series</a>
                     </li>
-                    {{-- <li class="menu-item">
-                        <a href="{{ route('products.category', 'series') }}" class="kt-item-title" title="About">Series</a>
-                    </li> --}}
                     <li class="menu-item mobile-only" style="margin-top: 16px">
                         <a href="{{ route('login') }}" class="kt-item-title" title="Login">Login Register</a>
                     </li>

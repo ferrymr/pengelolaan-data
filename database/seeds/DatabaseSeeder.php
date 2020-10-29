@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(OkProvincesTableSeeder::class);
         $this->call(OkCitiesTableSeeder::class);
         $this->call(OkSubdistrictsTableSeeder::class);
+        $this->call(SpbTableSeeder::class);
     }
 }

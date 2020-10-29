@@ -50,10 +50,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/order-history/{status?}', 'HistoryOrderController@index')->name('order-history-status');
     Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');
-
-    Route::get('/transaction', 'TransactionController@store');
-    Route::get('/transaction/delete', 'TransactionController@destroy');
-    Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus')->name('transaction.change-status');
 });
 
 Route::get('/spb/check', 'SpbController@check');

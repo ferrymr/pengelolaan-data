@@ -112,7 +112,9 @@ class BarangController extends Controller
             "h_nomem" => $request->input('h_nomem'),
             "h_member" => $request->input('h_member'),
             "deskripsi" => $request->input('deskripsi'),
-            "cara_pakai" => $request->input('cara_pakai')
+            "cara_pakai" => $request->input('cara_pakai'),
+            "flag_bestseller" => $request->input('flag_bestseller'),
+            "flag_promo" => $request->input('flag_promo')
         );
     
         $barang = $this->barangRepo->editBarang($param, $kode_barang, $request->input('role_id'));

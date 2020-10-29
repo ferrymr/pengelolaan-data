@@ -37,7 +37,30 @@ class Barang extends Model
         'cara_pakai',
         // 'stok_his',
         // 'log_his',
+        'flag_bestseller',
+        'flag_promo',
     ];
+
+    // ======================== frontend ========================
+
+    public function getBarangByCategory($category_name) {
+        return Barang::where('jenis', $category_name)
+                        ->where('h_nomem', '!=', 0)
+                        ->paginate(20);
+    }
+
+    public function getBarangSeries() {
+        return Barang::where('unit', "SERIES")
+                        ->where('h_nomem', '!=', 0)
+                        ->paginate(20);
+    }
+
+    public function getBarangAll() {
+        return Barang::where('h_nomem', '!=', 0)
+                        ->paginate(20);
+    }
+
+    // ======================== backend ========================
 
     public function getAll() {
         return Barang::all();

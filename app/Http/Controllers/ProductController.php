@@ -7,6 +7,31 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct(Barang $barang) {
+        $this->barangRepo = $barang;
+    }
+
+    // sorted by category
+    public function category($category_name)
+    {
+        if($category_name == "SERIES") {
+            $products = $this->barangRepo->getBarangSeries();
+        } else if($category_name == "ALL") {
+            $products = $this->barangRepo->getBarangAll();
+        } else {
+            $products = $this->barangRepo->getBarangByCategory($category_name);
+        }
+        
+        $category_name = ucfirst($category_name);
+
+        return view('frontend.products', 
+            compact(
+                'products', 
+                'category_name'
+            )
+        );
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -83,21 +108,4 @@ class ProductController extends Controller
         //
     }
 
-    public function category($category_name)
-    {
-        // todo refactoring
-        $products = Product::select('kode_barang', 'nama', 'h_nomem as harga')
-                        ->where('jenis', $category_name)
-                        ->where('h_nomem', '!=', 0)
-                        ->paginate(20);
-
-        $category_name = ucfirst($category_name);
-
-        return view('frontend.products', 
-            compact(
-                'products', 
-                'category_name'
-            )
-        );
-    }
 }

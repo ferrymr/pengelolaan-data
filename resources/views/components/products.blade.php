@@ -6,7 +6,7 @@
         <div class="site-main">
 
             <!--top control-->
-            <div class="shop-top-control">
+            {{-- <div class="shop-top-control">
 
                 <div class="select-item select-form">
                     <span class="title">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div> --}}
 
             <!--page title-->
             {{-- <h4>Menampilkan semua produk <b>{{ $category_name }}</b></h4><br/> --}}
@@ -54,7 +54,8 @@
                             <div class="product-thumb">
                                 <div class="thumb-inner">
                                     <a href="{{ route('products.show', $product->kode_barang) }}">
-                                        <img src="{{ asset('assets/images/thumbnails/' . $product->kode_barang . '.jpg') }}" alt="{{ $product->nama }}">
+                                        <img src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" 
+                                                alt="{{ $product->nama }}">
                                     </a>
                                 </div>
                                 {{-- <a href="#" class="button quick-wiew-button">Quick View</a> --}}
@@ -67,7 +68,7 @@
                                 </h5>
                                 <div class="group-info">
                                     {{-- <div class="stars-rating"><div class="star-rating"><span class="star-4"></span></div><div class="count-star">(14)</div></div> --}}
-                                    <div class="price"><span>@currency($product->harga)</span></div>
+                                    <div class="price"><span>@currency($product->h_nomem)</span></div>
                                 </div>
                             </div>
                             {{-- button add to cart directly --}}
@@ -88,7 +89,7 @@
                         </div>
                     </li>
                 @empty
-
+                    <h5 class="text-center">Produk belum tersedia</h5>
                 @endforelse
 
             </ul>

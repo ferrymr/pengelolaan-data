@@ -46,20 +46,24 @@
         :best-of-pieces="$bestOfPieces" 
         :best-of-series="$bestOfSeries" /> --}}    
 
-    {{-- main content --}}
+    {{-- product list --}}
     <div class="main-content main-content-product no-sidebar">
         <div class="container">
-            {{-- products tabs --}}
-            {{-- <x-products :products="$bestSellingProducts" category-name="Terlaris"/> --}}
             <livewire:products 
                 :products="$bestSellingProducts" 
-                category="Terlaris" />
-
-            {{-- <div class="loadmore-wapper">
-                <a href="#">LIHAT SEMUA BARANG</a>
-            </div> --}}
+                category="Best Seller Product"
+                tags="Best Seller" />
         </div>
     </div>
+
+    <div class="main-content main-content-product no-sidebar">
+        <div class="container">
+            <livewire:products 
+                :products="$promoProducts" 
+                category="Promo Product" 
+                tags="Promo" />
+        </div>
+    </div>   
 
     <x-banner-product/>
 

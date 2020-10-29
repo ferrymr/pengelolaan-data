@@ -191,6 +191,22 @@
                     </div>
                 </div>
             </div>
+            <div class="form-grup @if($errors->has('flag_bestseller')) has-error @endif">
+                <div class="col-sm-6">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="flag_bestseller" value="1" id="flag_bestseller">
+                        <label class="custom-control-label" for="flag_bestseller">Termasuk best seller produk ?</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-grup @if($errors->has('flag_promo')) has-error @endif">
+                <div class="col-sm-6">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="flag_promo" value="1" id="flag_promo">
+                        <label class="custom-control-label" for="flag_promo">Termasuk promo produk ?</label>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-info">Simpan</button>

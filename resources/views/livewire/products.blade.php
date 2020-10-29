@@ -5,37 +5,10 @@
     <div class="content-area shop-grid-content full-width col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="site-main">
 
-            {{-- top control --}}
-            <div class="shop-top-control">
-
-                <div class="select-item select-form">
-                    <span class="title">
-                        @if($category)
-                            Semua produk di kategori <b>"{{ $category }}"</b>
-                        @else
-                            Semua kategori
-                        @endif
-                    </span>
-                </div>
-
-                {{-- order sort --}}
-                <div class="grid-view-mode">
-                    <div class="inner">
-                    <span class="title">Urut berdasarkan</span>&nbsp;
-                    <select data-placeholder="Harga Tertinggi" class="chosen-select">
-                        <option value="best_selling">Terlaris</option>
-                        <option value="highest_price" selected>Harga Tertinggi</option>
-                        <option value="lowest_price">Harga Terendah</option>
-                    </select>
-                    </div>
-                </div>
-
-            </div>
-
             {{-- page title --}}
-            {{-- <h4>Menampilkan semua produk <b>{{ $category_name }}</b></h4><br/> --}}
+            <h3 class="custommenu-title-blog">#{{ $category }}</h3>
 
-             {{-- wrap products --}}
+            {{-- wrap products --}}
             <ul class="row list-products auto-clear equal-container product-grid">
 
                 @forelse ($products as $product)
@@ -44,7 +17,7 @@
                         <div class="product-inner equal-element">
                             <div class="product-top">
                                 <div class="flash">
-                                    {{-- <span class="onnew"><span class="text">new</span></span> --}}
+                                    <span class="onnew"><span class="text">{{ $tags }}</span></span>
                                 </div>
                                 <div class="yith-wcwl-add-to-wishlist">
                                     <div class="yith-wcwl-add-button">
@@ -92,7 +65,7 @@
                     </a>
 
                 @empty
-
+                    <h4 class="text-center">Produk belum tersedia saat ini</h4>
                 @endforelse
 
             </ul>

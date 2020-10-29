@@ -286,7 +286,7 @@ class User extends Authenticatable
 
     public function transactions()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(TbHeadJual::class);
     }
 
     public function shippingAddress()
