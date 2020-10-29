@@ -316,7 +316,7 @@
                                         </span> --}}
                                     </div>
                                 </div> 
-                                <div title="" class="order-track-step
+                                {{-- <div title="" class="order-track-step
                                     @if($transaction->status_transaksi == "RECEIVED"
                                         ) enabled @endif">
                                     <div class="order-track-status">
@@ -326,7 +326,7 @@
                                     <div class="order-track-text">
                                         <span class="order-track-text-stat">Received</span>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

@@ -25,6 +25,14 @@ class KonfirmasiPenjualan extends Model
     ];
 
     public function getAll() {
-        return KonfirmasiPenjualan::get();
+        return KonfirmasiPenjualan::with('transaction.user')
+                                ->get();
+    }
+
+    // ================================== relations ==================================
+
+    public function transaction()
+    {
+        return $this->belongsTo(TbHeadJual::class, 'tb_head_jual_id');
     }
 }

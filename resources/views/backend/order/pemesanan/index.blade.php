@@ -24,9 +24,9 @@
                         <th>No</th>
                         <th>No Invoice</th>
                         <th>Tanggal</th>
-                        <th>Nama Member</th>
-                        <th>Bank</th>
-                        <th>Keterangan</th>
+                        <th>Nama Pembeli</th>
+                        <th>Metode Pengiriman</th>
+                        <th>Status</th>
                         <th>Action</th>
                         <th>&nbsp;</th>
                     </tr>
@@ -107,8 +107,16 @@
                     { data: 'no_do', name: 'no_do' },
                     { data: 'tanggal', name: 'tanggal' },
                     { data: 'nama', name: 'nama' },
-                    { data: 'cc', name: 'cc' },
-                    { data: 'note', name: 'note' },
+                    { data: 'metode_pengiriman', name: 'metode_pengiriman' },
+                    { 
+                        data: 'status', 
+                        name: 'status', 
+                        render: function(data) {
+                            return `
+                                ${data}
+                            `;
+                        } 
+                    },
                     {
                         // Define the action column
                         data: null,

@@ -37,4 +37,10 @@ class TbDetJual extends Model
         // to do refactoring
         return $this->belongsTo(Product::class, 'kode_barang');
     }
+
+    public function itemDetailHas()
+    {
+        // to do refactoring
+        return $this->hasOne(Barang::class, 'kode_barang', 'kode_barang');
+    }
 }

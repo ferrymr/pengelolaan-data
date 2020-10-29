@@ -43,19 +43,21 @@
 
             <div id="action-template" style="display:none">
                 <div class="action-content">
-                    <a href="#" class="btn btn-warning btn-sm btn-info btn-detail" title="View" style="display: none; color: white">
-                    <i class="fa fa-eye"></i>
-                    </a>
-                    <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a class="btn btn-danger btn-sm btn-hapus actDelete" 
-                        data-placement="left" 
-                        data-toggle="confirmation" 
-                        data-title="Hapus data ?" 
-                        style="display:none;">
-                        <i class="fa fa-trash fa-fw"></i>
-                    </a>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-warning btn-sm btn-info btn-detail" title="View" style="display: none; color: white">
+                        <i class="fa fa-eye"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm btn-hapus actDelete" 
+                            data-placement="left" 
+                            data-toggle="confirmation" 
+                            data-title="Hapus data ?" 
+                            style="display:none;">
+                            <i class="fa fa-trash fa-fw"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,7 +73,12 @@
     <script type="text/javascript">
         var dataTable;
 
-        $(function() {
+        $(document).ready(function() {
+            
+            $('.image-link').magnificPopup({
+                type: 'image'
+            });
+
             function renderAction(data) {
                 var wrapper = $('<p></p>').append($('#action-template .action-content').clone());
 
@@ -114,7 +121,11 @@
                         data: 'image', 
                         name: 'image', 
                         render: function(data) {
-                            return '<img class="img-fluid thumbnail" style="width:50%" src="' + data + '">';
+                            return `
+                                <a class="image-link" href="${data}" target="_blank">
+                                    <img class="img-fluid thumbnail image-link" style="width:70%" src="${data}">
+                                </a>
+                            `;
                         }
                     },
                     { data: 'kode_barang', name: 'kode_barang'},

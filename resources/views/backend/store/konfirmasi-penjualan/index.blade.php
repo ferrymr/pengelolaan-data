@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title', 'Konfirmasi Penjualan')
+@section('title', 'Konfirmasi Pemesanan')
 
 @section('content_header')
     <div class="row">
         <div class="col-6">
-            <h1>Konfirmasi Penjualan</h1>
+            <h1>Konfirmasi Pemesanan</h1>
         </div>
         <div class="col-6">
             {{-- <div class="float-right">
@@ -28,15 +28,21 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Data Konfirmasi Penjualan</h3>
+            <h3 class="card-title">Data Konfirmasi Pemesanan</h3>
         </div>
         <div class="card-body">
-            <table class="table table-bordered table-hover" id='slider-table'>
+            <table class="table table-bordered table-hover" id='konfirmasi-table'>
                 <thead>
                     <tr>
-                        <th class="col-md-1">Order</th>
-                        <th>Foto Slider</th>
-                        <th>Nama File</th>
+                        <th>No</th>
+                        <th>Bukti Transfer</th>
+                        <th>Kode pemesanan</th>
+                        <th>Nama pemesan</th>
+                        <th>Transfer ke bank</th>
+                        <th>Nama rekening</th>
+                        <th>No rekening</th>
+                        <th>Grand Total</th>
+                        <th>Status</th>                        
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -44,9 +50,14 @@
 
             <div id="action-template" style="display:none">
                 <div class="action-content">
-                    <a class="btn btn-danger btn-xs btn-delete actDelete" data-placement="left" data-toggle="confirmation" data-title="Hapus data ?" style="display:none;">
-                        <i class="fa fa-trash fa-fw"></i>
-                    </a>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-sm btn-success btn-edit" title="Confirm" style="display: none;">
+                            <i class="fa fa-check"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm btn-danger btn-cancel" title="Cancel" style="display: none;">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,36 +84,76 @@
 
                 var wrapper = $('<p></p>').append($('#action-template .action-content').clone());
 
-                if(data.action.delete) {
-                    wrapper.find('.btn-delete')
-                        .attr('href', data.action.delete)
-                        .attr('data-id', data.id)
-                        .attr('data-title', 'Hapus ' + data.name + '?').show();
+                if(data.action.edit) {
+                    wrapper.find('.btn-edit').attr('href', data.action.edit).show();
+                }
+
+                if(data.action.cancel) {
+                    wrapper.find('.btn-cancel').attr('href', data.action.cancel).show();
                 }
 
                 //return the buttons
                 return wrapper.html();
             }
 
-            dataTable = $('#slider-table').DataTable({
+            dataTable = $('#konfirmasi-table').DataTable({
                 rowReorder: true,
                 processing: true,
                 serverSide: true,
                 stateSave: false,
-                ajax: '{!! route('admin.slider.datatable') !!}',
+                ajax: '{!! route('admin.konfirmasi-penjualan.datatable') !!}',
                 orderCellsTop: true,
                 columns: [
-                    { data: 'order', name: 'order' },
+                    {
+                        data: null,
+                        orderable: false,
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
                     { 
-                        data: 'id', 
-                        name: 'id', 
+                        data: 'filename', 
+                        name: 'filename', 
                         render: function(data) {
-                            return '<img class="img-fluid thumbnail" style="width: 75%" src="./slider/slider-image/'+data+'">';
+                            return `
+                                <a class="image-link" href="${data}" target="_blank">
+                                    <img class="img-fluid thumbnail image-link" style="width:70%" src="${data}">
+                                </a>
+                            `;
                         } 
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'transaction.no_do',
+                        name: 'transaction.no_do'
+                    },
+                    {
+                        data: 'transaction.user.name',
+                        name: 'transaction.user.name'
+                    },
+                    {
+                        data: 'bank',
+                        name: 'bank'
+                    },
+                    {
+                        data: 'rekening_name',
+                        name: 'rekening_name'
+                    },
+                    {
+                        data: 'rekening_number',
+                        name: 'rekening_number'
+                    },
+                    {
+                        data: 'transaction.grand_total',
+                        name: 'transaction.grand_total'
+                    },
+                    { 
+                        data: 'status', 
+                        name: 'status', 
+                        render: function(data) {
+                            return `
+                                ${data}
+                            `;
+                        } 
                     },
                     {
                         // Define the action column

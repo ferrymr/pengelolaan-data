@@ -292,13 +292,17 @@ return [
             'icon' => 'fas fa-fw fa-shopping-bag',
             'submenu' => [
                 [
-                    'text' => 'Penjualan',
-                    'url' => 'admin/penjualan'
+                    'text' => 'Pemesanan',
+                    'url' => 'admin/pemesanan'
                 ],
                 [
-                    'text' => 'Konfimasi penjualan',
+                    'text' => 'Konfirmasi pemesanan',
                     'url' => 'admin/konfirmasi-penjualan'
                 ],
+                [
+                    'text' => 'Penjualan',
+                    'url' => 'admin/penjualan'
+                ],                
                 [
                     'text' => 'Pembelian',
                     'url' => 'pembelian'
@@ -307,10 +311,7 @@ return [
                     'text' => 'Movement',
                     'url' => 'movement'
                 ],
-                [
-                    'text' => 'Pemesanan',
-                    'url' => 'admin/pemesanan'
-                ],
+                
 
             ],
         ],
@@ -671,6 +672,21 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js',
+                ],
+            ],
+        ],
+        'Popup' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js',
                 ],
             ],
         ],

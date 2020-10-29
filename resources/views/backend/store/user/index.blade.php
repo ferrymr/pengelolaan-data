@@ -42,16 +42,18 @@
 
             <div id="action-template" style="display:none">
                 <div class="action-content">
-                    <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a class="btn btn-danger btn-sm btn-hapus actDelete" 
-                        data-placement="left" 
-                        data-toggle="confirmation" 
-                        data-title="Hapus data ?" 
-                        style="display:none;">
-                        <i class="fa fa-trash fa-fw"></i>
-                    </a>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm btn-hapus actDelete" 
+                            data-placement="left" 
+                            data-toggle="confirmation" 
+                            data-title="Hapus data ?" 
+                            style="display:none;">
+                            <i class="fa fa-trash fa-fw"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

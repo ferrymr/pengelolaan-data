@@ -14,11 +14,13 @@ use PDF;
 
 class PemesananController extends Controller
 {
+    public function __contruct(TbHeadJual $TbHeadJual) {
+        $this->TbHeadJualRepo = $TbHeadJual;
+    }
+
     public function index()
     {
         $data = TbHeadJual::with('detjual')->get();
-
-
         return view('backend.order.pemesanan.index')->with([
             'data' => $data
         ]);
@@ -34,6 +36,9 @@ class PemesananController extends Controller
             })
             ->addColumn('jumlah', function ($data) {
                 return $data->detjual->jumlah;
+            })
+            ->addColumn('status', function($data) {
+                return '<span class="badge bg-success">'.$data->status_transaksi.'</span>';
             })
             // nah nanti pengecekannya di sini om 
             ->addColumn('action', function ($data) {
@@ -56,12 +61,10 @@ class PemesananController extends Controller
 
     public function show($id)
     {
-
-        $data = TbHeadJual::with('detjual', 'address', 'user')->findOrFail($id);
-
-
-
-        return view('backend.order.pemesanan.show', compact('data'));
+        $data = TbHeadJual::with('items.itemDetailHas','address','user','spb')
+                    ->findOrFail($id);
+        return view('backend.order.pemesanan.show', 
+                compact('data'));
     }
 
     public function printTrf($id)
@@ -80,7 +83,22 @@ class PemesananController extends Controller
         return $pdf->stream();
     }
 
-    public function setStatus()
+
+    public function setStatus(Request $request, $id)
     {
+        // password kosong
+        $param = array(
+            "status_transaksi" => $request->input('status_transaksi')
+        );
+
+        $trans = TbHeadJual::where('id', $id)->update($param);
+        
+        if(!$trans) {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Status pemesanan berhasil diupdate</strong>')->success()->important();
+            return redirect()->route('admin.pemesanan.index');
+        } else {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Status pemesanan gagal diupdate </strong>'  )->error()->important();
+            return redirect()->route('admin.pemesanan.index')->withInput()->withError();
+        }
     }
 }

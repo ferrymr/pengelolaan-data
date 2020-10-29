@@ -189,6 +189,7 @@ Route::group([
     Route::get('datatable', 'PemesananController@datatable')->name('datatable');
     Route::get('show/{id}', 'PemesananController@show')->name('show');
     Route::get('delete', 'PemesananController@delete')->name('delete');
+    Route::post('update-status/{id?}', 'PemesananController@setStatus')->name('update-status');
     Route::get('print_trf/{no_do?}', 'PemesananController@printTrf')->name('print_trf');
     Route::get('print_immadiate/{no_do?}', 'PemesananController@printImmadiate')->name('print_immadiate');
 });
@@ -211,10 +212,18 @@ Route::group([
 ], function () {
     Route::get('/', 'KonfirmasiPenjualanController@index')->name('index');
     Route::get('/datatable', 'KonfirmasiPenjualanController@datatable')->name('datatable');
-    // Route::get('/edit/{id}', 'KonfirmasiPenjualanController@edit')->name('edit');
+    Route::get('/edit/{id}', 'KonfirmasiPenjualanController@edit')->name('edit');
+    Route::get('/cancel/{id}', 'KonfirmasiPenjualanController@cancel')->name('cancel');
     // Route::post('/update/{id}', 'KonfirmasiPenjualanController@update')->name('update');
     // Route::get('/view/{id}', 'KonfirmasiPenjualanController@view')->name('view');
     // Route::get('/delete/{id}', 'KonfirmasiPenjualanController@destroy')->name('delete');
     // Route::get('/add', 'KonfirmasiPenjualanController@create')->name('add');
     // Route::post('/store', 'KonfirmasiPenjualanController@store')->name('store');
+});
+
+Route::group([
+    'prefix' => '/admin/konfirmasi-penjualan/',
+    'as'     => 'admin.konfirmasi-penjualan.'
+], function () {
+    Route::get('konfirmasi-image/{id?}', 'KonfirmasiPenjualanController@getKonfirmasiImage')->name('konfirmasi-image');
 });
