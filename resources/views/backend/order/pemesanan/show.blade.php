@@ -122,19 +122,6 @@
           <!-- /.col -->
         </div>
         <!-- /.row -->
-
-        <!-- this row will not appear when printing -->
-        {{-- <div class="row no-print">
-          <div class="col-12">
-            <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-            <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-              Payment
-            </button>
-            <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-              <i class="fas fa-download"></i> Generate PDF
-            </button>
-          </div>
-        </div> --}}
       </div>
       <hr>
     <div class="row">
@@ -144,11 +131,11 @@
                 <label for="status_transaksi" class="col-sm-9 control-label">Update Status *</label>    
                 <div class="col-sm-9">
                     <select name="status_transaksi" id="" class="form-control select2 jenis-bayar">
-                        <option value="">Pilih Status Pembayaran</option>
-                        <option value="">Menunggu Pembayaran</option>
-                        <option value="">Sedang Diproses</option>
-                        <option value="">Sedang Dikirim</option>
-                        <option value="">Selesai</option>
+                        <option value="TRANSFERRED">TRANSFERRED</option>
+                        <option value="PAYMENT CONFIRMED">PAYMENT CONFIRMED</option>
+                        <option value="PACKED">PACKED</option>
+                        <option value="SHIPPED">SHIPPED</option>
+                        <option value="RECEIVED">RECEIVED</option>
                     </select>
                     @if($errors->has('status_transaksi'))
                         <span class="text-danger">{{ $errors->first('status_transaksi') }}</span>
