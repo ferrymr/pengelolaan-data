@@ -29,7 +29,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $users = $this->userRepo->getAll();
-        
+        // dd($user);
         return view('backend.store.user.index')->with([
             'user' => $user,
             'users' => $users,
@@ -41,9 +41,9 @@ class UserController extends Controller
         $users = $this->userRepo->getAll();
 
         return Datatables::of($users)
-            // ->editColumn('role', function($user) {
-            //     return $user->roles[0]->display_name;
-            // })
+            ->editColumn('role', function($user) {
+                return $user->roles[0]->display_name;
+            })
             ->editColumn('created_at', function($user) {
                 return date('d F Y', strtotime($user->created_at));
             })
@@ -146,12 +146,12 @@ class UserController extends Controller
         // password kosong
         $param = array(
             "name" => $request->input('name'),
-            "distributor_id" => $request->input('distributor_id') ? $request->input('distributor_id') : null,
+            // "distributor_id" => $request->input('distributor_id') ? $request->input('distributor_id') : null,
             "phone" => $request->input('phone'),
             "email" => $request->input('email'),
-            "discount" => $request->input('discount'),
-            "address" => $request->input('address'),
-            "description" => $request->input('description'),
+            // "discount" => $request->input('discount'),
+            // "address" => $request->input('address'),
+            // "description" => $request->input('description'),
         );
     
         $User = $this->userRepo->editUser($param, $id, $request->input('role_id'));

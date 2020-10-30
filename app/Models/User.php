@@ -52,9 +52,28 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // ========================== relations ==========================
+
+    public function transactions()
+    {
+        return $this->hasMany(TbHeadJual::class);
+    }
+
+    public function shippingAddress()
+    {
+        return $this->hasMany(ShippingAddress::class);
+    }
+
+    public function headjual()
+    {
+        return $this->hasMany(TbHeadjual::class, 'user_id');
+    }
+
+    // ========================== backend ==========================
+
     public function getAll()
     {
-        return User::all();
+        return User::orderBy('id', 'DESC')->get();
     }
 
     public function getDistributor()
@@ -148,8 +167,10 @@ class User extends Authenticatable
 
         $role = DB::table('role_user')->where('user_id', $id)->first();
 
-        // delete the existing one
-        DB::table('role_user')->where('role_id', $role->role_id)->where('user_id', $id)->delete();
+        if(isset($role->role_id)) {
+            // delete the existing one
+            DB::table('role_user')->where('role_id', $role->role_id)->where('user_id', $id)->delete();
+        }
 
         if (!empty($data)) {
             $data->delete();
@@ -207,7 +228,7 @@ class User extends Authenticatable
         $role_user = array(
             'role_id' => $role_id,
             'user_id' => $id,
-            'user_type' => 'App\User'
+            'user_type' => 'App\Models\User'
         );
         return DB::table('role_user')->insert($role_user);
 
@@ -282,20 +303,5 @@ class User extends Authenticatable
         } else {
             return false;
         }
-    }
-
-    public function transactions()
-    {
-        return $this->hasMany(TbHeadJual::class);
-    }
-
-    public function shippingAddress()
-    {
-        return $this->hasMany(ShippingAddress::class);
-    }
-
-    public function headjual()
-    {
-        return $this->hasMany(TbHeadjual::class, 'user_id');
     }
 }

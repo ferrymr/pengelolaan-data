@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 use DB;
 
@@ -22,10 +23,13 @@ class IndexController extends Controller
                                 ->limit(8)
                                 ->get();
 
+        $sliders = Slider::get();
+
         return view('frontend.index', 
                 compact(
                     'bestSellingProducts', 
-                    'promoProducts'
+                    'promoProducts',
+                    'sliders'
                 )
             );
     }

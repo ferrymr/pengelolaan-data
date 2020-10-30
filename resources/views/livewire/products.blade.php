@@ -43,7 +43,16 @@
                                 </h5>
                                 <div class="group-info">
                                     {{-- <div class="stars-rating"><div class="star-rating"><span class="star-4"></span></div><div class="count-star">(14)</div></div> --}}
-                                    <div class="price"><span>@currency($product->h_nomem)</span></div>
+                                    @if($user->hasRole('user'))
+                                        <div class="price">
+                                            <span>@currency($product->h_nomem)</span>
+                                        </div>
+                                    @else
+                                        <div class="price">
+                                            <span>@currency($product->h_member)</span>
+                                        </div>
+                                    @endif   
+                                    
                                 </div>
                             </div>
                             {{-- <div class="loop-form-add-to-cart">

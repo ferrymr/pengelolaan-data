@@ -69,7 +69,11 @@
                             </div>
                             <div class="availability">availability:<a href="#">instock</a></div> --}}
                             <div class="price">
-                                <span>@currency($product->h_nomem)</span>
+                                @if($user->hasRole('user'))
+                                    <span>@currency($product->h_nomem)</span>
+                                @else
+                                    <span>@currency($product->h_member)</span>
+                                @endif                            
                             </div>
                             <div class="product-details-description">
                                 <p class="desc">{{ $product->deskripsi_lengkap }}</p>

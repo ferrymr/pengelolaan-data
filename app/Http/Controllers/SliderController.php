@@ -35,10 +35,17 @@ class SliderController extends Controller
 
         $slider = $this->sliderRepo->getAll();
         return Datatables::of($slider)
-            ->addColumn('action', function ($carousel){
+            ->editColumn('image', function($slider) {
+                if(!empty($slider->name)) {
+                    return route('admin.slider.slider-image', $slider->id);
+                } else {
+                    return '../../img/no-image-product.jpg';
+                }
+            })
+            ->addColumn('action', function ($slider){
                 return [
-                    // 'edit' => route('admin.carousel.edit', $carousel->id),
-                    'delete' => route('admin.carousel.delete', $carousel->id),
+                    // 'edit' => route('admin.slider.edit', $slider->id),
+                    'delete' => route('admin.slider.delete', $slider->id),
                 ];
             })
             ->make(true);
@@ -57,10 +64,10 @@ class SliderController extends Controller
         if(!empty($request->file('filename'))) {
             $sort = 1;
             foreach ($request->file('filename') as $file) {
-                $filename = 'carousel-' . $sort . '-' . date('YmdHis') . '.' . $file->getClientOriginalExtension();
-                $path = $file->storeAs('public/carousel', $filename);
+                $filename = 'slider-' . $sort . '-' . date('YmdHis') . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('public/slider', $filename);
 
-                $carousel = $this->sliderRepo->addSliderImage('home', $filename, $sort);
+                $slider = $this->sliderRepo->addSliderImage('home', $filename, $sort);
                 $sort++;
             }
         }  else {
@@ -69,10 +76,10 @@ class SliderController extends Controller
 
         if(!empty($filename)) {
             flash('<strong>Foto Slider Berhasil Ditambah</strong>')->success()->important();
-            return redirect()->route('admin.carousel.index');
+            return redirect()->route('admin.slider.index');
         } else {
             flash('<strong>Foto Slider Gagal Ditambah</strong>')->error()->important();
-            return redirect()->route('admin.carousel.index');
+            return redirect()->route('admin.slider.index');
         }
     }
 
@@ -87,22 +94,22 @@ class SliderController extends Controller
         $data = $this->sliderRepo->deleteSlider($id);
         if(!empty($data)) {
             flash()->success('Slider Terhapus');
-            return redirect()->route('admin.carousel.index');
+            return redirect()->route('admin.slider.index');
         } else {
             flash()->success('Slider Tidak Ditemukan');
-            return redirect()->route('admin.carousel.index');
+            return redirect()->route('admin.slider.index');
         }
     }
 
     public function getSliderImage($id) {
-        $carouselImage = $this->sliderRepo->find($id);
+        $sliderImage = $this->sliderRepo->find($id);
         
-        if(!$carouselImage) {
+        if(!$sliderImage) {
             abort(404); 
         }
 
         // Access local storage
-        $path = storage_path('app/public/carousel/' . $carouselImage->name);
+        $path = storage_path('app/public/slider/' . $sliderImage->name);
 
         if (!File::exists($path)) {
             abort(404);
@@ -117,9 +124,9 @@ class SliderController extends Controller
     {
         $slider = Slider::all();
         
-        foreach ($slider as $carousel) {
-            // $carousel->timestamps = false; // To disable update_at field updation
-            $id = $carousel->id;
+        foreach ($slider as $slider) {
+            // $slider->timestamps = false; // To disable update_at field updation
+            $id = $slider->id;
             // dd($id);
             foreach ($request->input('order') as $order) {
                 if ($order['id'] == $id) {

@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 use App\Models\Barang;
+use Illuminate\Support\Facades\Auth;
 
 class Cart
 {
@@ -30,6 +31,7 @@ class Cart
     public function add(Barang $product)
     {
         $cart = $this->get();
+        $user = Auth::user();
 
         $productCode = (strlen($product->kode_barang) < 5 ? sprintf('%05d', $product->kode_barang) : (string) $product->kode_barang);
 
@@ -39,42 +41,44 @@ class Cart
         // SUPAYA TIDAK DI KONVERSI MENJADI INTEGER
         $cartIndex = 'x' . $productCode;
 
+        // define user price
+        if($user->hasRole('user')) {
+            $harga = $product->h_nomem;
+        } else {
+            $harga = $product->h_member;
+        }
+
         if(!isset($cart[$cartIndex])) {
 
             // KODE BARANG YANG DIAWALI ANGKA 0, BIASANYA HILANG ANGKA 0 AWALNYA
             // JIKA ANGKA 0 DI AWAL PADA KODE BARANG HILANG MAKA TAMBAHKAN ANGKA 0 NYA 
             // $productCode = (strlen($product->kode_barang) < 5 ? sprintf('%05d', $product->kode_barang) : (string) $product->kode_barang); // sprintf('%05d', $product->kode_barang);
 
-            // $productCode = $product->kode_barang;
-
-            // dd($product);
+            // $productCode = $product->kode_barang;           
 
             $cart[$cartIndex] = array(
                     'kode_barang' => $productCode,
                     'nama' => $product->nama,
                     'jenis' => $product->jenis,
                     'unit' => $product->unit,
-                    'h_nomem' => $product->h_nomem,
+                    'h_nomem' => $harga,
                     'berat' => $product->berat,
                     'total_berat' => $product->qty * $product->berat,
-                    'subtotal' => $product->qty * $product->h_nomem,
+                    'subtotal' => $product->qty * $harga,
                     'qty' => $product->qty,
                     'note' => '',
                     'barang_image_id' => $product->barangImages->first()->id
                 );
 
         } else {
-            /* $cart[$cartIndex]['qty'] += $product->qty;
-            $cart[$cartIndex]['total_berat'] += $product->qty * $product->berat;
-            $cart[$cartIndex]['subtotal'] += $product->qty  * $product->h_nomem; */
 
             $currentCartQty = $cart[$cartIndex]['qty'];
             $currentTotalBerat = $currentCartQty * $product->berat;
-            $currentSubtotal = $currentCartQty * $product->h_nomem;
+            $currentSubtotal = $currentCartQty * $harga;
 
             $newCartQty = $currentCartQty + $product->qty;
             $newTotalBerat = $newCartQty * $product->berat;
-            $newSubtotal = $newCartQty * $product->h_nomem;
+            $newSubtotal = $newCartQty * $harga;
 
             $cart[$cartIndex]['qty'] = $newCartQty;
             $cart[$cartIndex]['total_berat'] = $newTotalBerat;

@@ -443,15 +443,30 @@ return [
             'url'  => 'admin/slider',
             'icon' => 'fas fa-fw fa-image',
         ],
+        // [
+        //     'text' => 'Banner',
+        //     'url'  => 'admin/banner',
+        //     'icon' => 'fas fa-fw fa-tag',
+        // ],        
         [
-            'text' => 'Banner',
-            'url'  => 'admin/banner',
+            'text' => 'Coupon',
+            'url'  => 'admin/coupon',
             'icon' => 'fas fa-fw fa-tag',
         ],
         [
             'text' => 'Users',
             'url'  => 'admin/user',
             'icon' => 'fas fa-fw fa-users',
+        ],
+        // [
+        //     'text' => 'Pendaftaran Member',
+        //     'url'  => 'admin/daftar-member',
+        //     'icon' => 'fas fa-fw fa-list',
+        // ],
+        [
+            'text' => 'Konfirmasi Pendaftaran',
+            'url'  => 'admin/konfirmasi-daftar',
+            'icon' => 'fas fa-fw fa-book',
         ],
 
         ['header' => 'PROFILE'],
