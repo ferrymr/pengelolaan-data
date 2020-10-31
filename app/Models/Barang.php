@@ -113,13 +113,15 @@ class Barang extends Model
 
         $barang = Barang::create($request);
 
-        foreach($product as $key => $row) {
-            TbDetSeries::insert([
-                'tb_barang_id' => $row,
-                'tb_series_id' => $barang->id,
-                'qty' => $qty_product[$key]
-            ]);
-        }
+        if($request['jenis'] == 'SERIES') {
+            foreach($product as $key => $row) {
+                TbDetSeries::insert([
+                    'tb_barang_id' => $row,
+                    'tb_series_id' => $barang->id,
+                    'qty' => $qty_product[$key]
+                ]);
+            }
+        }        
 
         return $barang;
     }
