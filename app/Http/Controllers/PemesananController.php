@@ -11,6 +11,10 @@ use App\Models\User;
 use App\Models\TbHeadJual;
 use App\Models\TbDetJual;
 use PDF;
+use App\Mail\OrderConfirmed;
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
+use App\Helpers\Whatsapp;
 
 class PemesananController extends Controller
 {
@@ -91,14 +95,48 @@ class PemesananController extends Controller
             "status_transaksi" => $request->input('status_transaksi')
         );
 
-        $trans = TbHeadJual::where('id', $id)->update($param);
+        // get transaction
+        $getTrans = TbHeadJual::with('items', 'address', 'user')->where('id', $id);
+
+        $data = $getTrans->first();
+
+        if($data) {
+            if(isset($data->user->email)) {
+                if($request->input('status_transaksi') == 'PAYMENT CONFIRMED') {
+                    
+                    // notif email
+                    Mail::to($data->user->email)->send(new OrderConfirmed($data));
+
+                    // notify to whatsapp
+                    $to = $data->user->email;
+                    $message = "Terimakasih telah melakukan pembayaran di Toko Kami, pembayaran kakak telah terkonfirmasi. 
+                    Kami akan segera memproses pesanannya, ditunggu ya kak.";
+
+                    Whatsapp::sendMSG($to, $message);
+
+                } else if($request->input('status_transaksi') == 'SHIPPED') {
+                    // notif email
+                    Mail::to($data->user->email)->send(new OrderShipped($data));
+
+                    // notify to whatsapp
+                    $to = $data->user->email;
+                    $message = "Pesanan kakak telah kami pack dan sedang dalam proses pengiriman, ditunggu ya kakak :). 
+                    Terimakasih";
+
+                    Whatsapp::sendMSG($to, $message);
+
+                }
+            } 
+        }
+
+        $trans = $getTrans->update($param);
         
-        if(!$trans) {
+        if($trans) {
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Status pemesanan berhasil diupdate</strong>')->success()->important();
-            return redirect()->route('admin.pemesanan.index');
-        } else {
+            return redirect()->route('admin.pemesanan.index');            
+        } else {            
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Status pemesanan gagal diupdate </strong>'  )->error()->important();
-            return redirect()->route('admin.pemesanan.index')->withInput()->withError();
+            return redirect()->route('admin.pemesanan.index')->withError();
         }
     }
 }

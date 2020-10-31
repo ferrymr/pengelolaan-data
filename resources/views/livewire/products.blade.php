@@ -43,15 +43,33 @@
                                 </h5>
                                 <div class="group-info">
                                     {{-- <div class="stars-rating"><div class="star-rating"><span class="star-4"></span></div><div class="count-star">(14)</div></div> --}}
-                                    @if($user->hasRole('user'))
-                                        <div class="price">
+                                    @if(!isset($user) || $user->hasRole('user'))
+
+                                        @if($product->diskon > 0)
+                                            @php
+                                                $harga = $product->h_nomem;
+                                                $harga = $harga - ($harga * ($product->diskon/100));
+                                            @endphp
+                                            <span style="text-decoration:  line-through;">@currency($product->h_nomem)</span> 
+                                            <span>@currency($harga)</span>
+                                        @else
                                             <span>@currency($product->h_nomem)</span>
-                                        </div>
+                                        @endif
+
                                     @else
-                                        <div class="price">
+
+                                        @if($product->diskon > 0)
+                                            @php
+                                                $harga = $product->h_member;
+                                                $harga = $harga - ($harga * ($product->diskon/100));
+                                            @endphp
+                                            <span style="text-decoration:  line-through;">@currency($product->h_member)</span> 
+                                            <span>@currency($harga)</span>
+                                        @else
                                             <span>@currency($product->h_member)</span>
-                                        </div>
-                                    @endif   
+                                        @endif
+                                        
+                                    @endif
                                     
                                 </div>
                             </div>

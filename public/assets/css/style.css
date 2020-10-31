@@ -13625,7 +13625,7 @@ iframe {
     .slider-item.style2 .slider-inner::before,
     .slider-item.style3 .slider-inner::before {
         content: "";
-        background: rgba(0, 0, 0, 0.6);
+        /* background: rgba(0, 0, 0, 0.6); */
         position: absolute;
         top: 0;
         left: 0;

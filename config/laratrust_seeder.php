@@ -20,6 +20,14 @@ return [
             'users' => 'c,r,u,d',
             'profile' => 'r,u'
         ],
+        'stockist' => [
+            'dashboard' => 'r',
+            'profile' => 'r,u',
+        ],
+        'store' => [
+            'dashboard' => 'r',
+            'profile' => 'r,u',
+        ],
         'reseller' => [
             'dashboard' => 'r',
             'profile' => 'r,u',

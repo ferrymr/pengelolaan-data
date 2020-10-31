@@ -39,6 +39,7 @@
                                 <div class="col-md-offset-2 col-md-3 col-12">
                                     <div class="row">
                                         <div class="col-md-12"> 
+                                            {{-- {{ dd($user->hasRole('member')) }} --}}
                                             @if($user->hasRole('member'))                                               
                                                 <button class="btn btn-success">User <b>Member</b></button>
                                             @elseif($user->hasRole('reseller'))

@@ -33,7 +33,8 @@ class Cart
         $cart = $this->get();
         $user = Auth::user();
 
-        $productCode = (strlen($product->kode_barang) < 5 ? sprintf('%05d', $product->kode_barang) : (string) $product->kode_barang);
+        // $productCode = (strlen($product->kode_barang) < 5 ? sprintf('%05d', $product->kode_barang) : (string) $product->kode_barang);
+        $productCode = $product->kode_barang;
 
         // KODE BARANG YANG DIAWALI ANGKA 0, BIASANYA HILANG ANGKA 0 AWALNYA
         // TERUTAMA KETIKA DI RE-RENDER OLEH LIVEWIRE, KARENA OTOMATIS DI KONVERSI MENJADI INTEGER
@@ -42,10 +43,17 @@ class Cart
         $cartIndex = 'x' . $productCode;
 
         // define user price
-        if($user->hasRole('user')) {
+        if(!isset($user) || $user->hasRole('user')) {
             $harga = $product->h_nomem;
+            $poin = 0;
         } else {
             $harga = $product->h_member;
+            $poin = $product->poin;
+        }
+
+        // get diskon
+        if($product->diskon > 0) {
+            $harga = $harga - ($harga * ($product->diskon/100));
         }
 
         if(!isset($cart[$cartIndex])) {
@@ -54,15 +62,17 @@ class Cart
             // JIKA ANGKA 0 DI AWAL PADA KODE BARANG HILANG MAKA TAMBAHKAN ANGKA 0 NYA 
             // $productCode = (strlen($product->kode_barang) < 5 ? sprintf('%05d', $product->kode_barang) : (string) $product->kode_barang); // sprintf('%05d', $product->kode_barang);
 
-            // $productCode = $product->kode_barang;           
+            // $productCode = $product->kode_barang;
 
             $cart[$cartIndex] = array(
+                    'barang_id' => $product->id,
                     'kode_barang' => $productCode,
                     'nama' => $product->nama,
                     'jenis' => $product->jenis,
                     'unit' => $product->unit,
                     'h_nomem' => $harga,
                     'berat' => $product->berat,
+                    'poin' => $poin,
                     'total_berat' => $product->qty * $product->berat,
                     'subtotal' => $product->qty * $harga,
                     'qty' => $product->qty,
@@ -101,12 +111,6 @@ class Cart
         unset($cart[$productCode]);
         
         $this->set($cart);
-
-        /* if (count($cart) < 1) {
-            $this->set($this->empty());
-        } else {
-            $this->set($cart);
-        } */
 
     }
 }

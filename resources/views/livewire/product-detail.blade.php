@@ -69,10 +69,32 @@
                             </div>
                             <div class="availability">availability:<a href="#">instock</a></div> --}}
                             <div class="price">
-                                @if($user->hasRole('user'))
-                                    <span>@currency($product->h_nomem)</span>
+                                @if(!isset($user) || $user->hasRole('user'))
+
+                                    @if($product->diskon > 0)
+                                        @php
+                                            $harga = $product->h_nomem;
+                                            $harga = $harga - ($harga * ($product->diskon/100));
+                                        @endphp
+                                        <span style="text-decoration:  line-through;">@currency($product->h_nomem)</span> 
+                                        <span>@currency($harga)</span>
+                                    @else
+                                        <span>@currency($product->h_nomem)</span>
+                                    @endif
+
                                 @else
-                                    <span>@currency($product->h_member)</span>
+
+                                    @if($product->diskon > 0)
+                                        @php
+                                            $harga = $product->h_member;
+                                            $harga = $harga - ($harga * ($product->diskon/100));
+                                        @endphp
+                                        <span style="text-decoration:  line-through;">@currency($product->h_member)</span> 
+                                        <span>@currency($harga)</span>
+                                    @else
+                                        <span>@currency($product->h_member)</span>
+                                    @endif
+                                    
                                 @endif                            
                             </div>
                             <div class="product-details-description">

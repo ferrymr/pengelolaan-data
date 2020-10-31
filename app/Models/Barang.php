@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\BarangImages;
+use App\Models\TbDetSeries;
 use Carbon\Carbon;
 
 class Barang extends Model
@@ -43,21 +44,55 @@ class Barang extends Model
 
     // ======================== frontend ========================
 
-    public function getBarangByCategory($category_name) {
-        return Barang::where('jenis', $category_name)
-                        ->where('h_nomem', '!=', 0)
-                        ->paginate(20);
+    public function getBarangByCategory($category_name, $user) {
+        if(!isset($user) || $user->hasRole('user')) {
+            return Barang::where('jenis', $category_name)
+                    ->where('bpom', 1)
+                    ->where('stok','>',0)
+                    ->where('stats',1)
+                    ->where('h_nomem', '!=', 0)
+                    ->paginate(20);
+        } else {
+            return Barang::where('jenis', $category_name)
+                    ->where('h_nomem', '!=', 0)
+                    ->where('stok','>',0)
+                    ->where('stats',1)
+                    ->paginate(20);
+        }
+        
     }
 
-    public function getBarangSeries() {
-        return Barang::where('unit', "SERIES")
-                        ->where('h_nomem', '!=', 0)
+    public function getBarangSeries($user) {
+        if (!isset($user) || $user->hasRole('user')) {
+            return Barang::where('unit', "SERIES")
+                        ->where('bpom', 1)
+                        ->where('stok','>',0)
+                        ->where('stats',1)
+                            ->where('h_nomem', '!=', 0)
                         ->paginate(20);
+        } else {
+            return Barang::where('unit', "SERIES")
+                        ->where('h_nomem', '!=', 0)
+                        ->where('stok','>',0)
+                        ->where('stats',1)
+                            ->paginate(20);
+        }
+        
     }
 
-    public function getBarangAll() {
-        return Barang::where('h_nomem', '!=', 0)
-                        ->paginate(20);
+    public function getBarangAll($user) {
+        if (!isset($user) || $user->hasRole('user')) {
+            return Barang::where('h_nomem', '!=', 0)
+                        ->where('bpom', 1)
+                        ->where('stok','>',0)
+                        ->where('stats',1)
+                            ->paginate(20);
+        } else {
+            return Barang::where('h_nomem', '!=', 0)
+                        ->where('stok','>',0)
+                        ->where('stats',1)
+                            ->paginate(20);
+        }       
     }
 
     // ======================== backend ========================
@@ -68,7 +103,24 @@ class Barang extends Model
 
     public function addBarang($request) 
     {
+        $product = $request['produk'];
+        $qty_product = $request['qty_product'];
+
+        unset($request['produk']);
+        unset($request['qty_product']);
+
+        // dd($request);
+
         $barang = Barang::create($request);
+
+        foreach($product as $key => $row) {
+            TbDetSeries::insert([
+                'tb_barang_id' => $row,
+                'tb_series_id' => $barang->id,
+                'qty' => $qty_product[$key]
+            ]);
+        }
+
         return $barang;
     }
 
@@ -84,7 +136,7 @@ class Barang extends Model
     }
 
     public function findId($id) {
-        $data = Barang::with('barangImages')->find($id);
+        $data = Barang::with('barangImages', 'series.barang')->find($id);
         if(!empty($data)) {
             return $data;
         } else {
@@ -118,4 +170,8 @@ class Barang extends Model
         return $this->hasMany('App\Models\BarangImages', 'tb_barang_id');
     }
     
+    public function series() {
+        return $this->hasMany('App\Models\TbDetSeries', 'tb_series_id');
+    }
+
 }

@@ -268,10 +268,10 @@ return [
                     'text' => 'Barang',
                     'url' => 'admin/barang'
                 ],
-                [
-                    'text' => 'Member',
-                    'url' => 'member'
-                ],
+                // [
+                //     'text' => 'Member',
+                //     'url' => 'member'
+                // ],
                 [
                     'text' => 'Supplier',
                     'url' => 'admin/supplier'
@@ -299,10 +299,10 @@ return [
                     'text' => 'Konfirmasi pemesanan',
                     'url' => 'admin/konfirmasi-penjualan'
                 ],
-                [
-                    'text' => 'Penjualan',
-                    'url' => 'admin/penjualan'
-                ],                
+                // [
+                //     'text' => 'Penjualan',
+                //     'url' => 'admin/penjualan'
+                // ],                
                 [
                     'text' => 'Pembelian',
                     'url' => 'pembelian'
