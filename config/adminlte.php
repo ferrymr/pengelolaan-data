@@ -472,7 +472,7 @@ return [
         ['header' => 'PROFILE'],
         [
             'text' => 'Logout',
-            'url'  => 'admin/settings',
+            'url'  => '/logout',
             'icon' => 'fas fa-fw fa-power-off',
         ],
         [

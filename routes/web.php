@@ -5,6 +5,8 @@ Auth::routes();
 
 // =============================== FRONTEND ===============================
 
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 // Homepage
 Route::get('/', 'IndexController@index')->name('home');
 

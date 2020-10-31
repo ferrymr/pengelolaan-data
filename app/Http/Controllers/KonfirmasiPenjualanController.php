@@ -68,6 +68,23 @@ class KonfirmasiPenjualanController extends Controller
 
     public function edit($id) {
         $konfirm = TbHeadJual::where('id', $id)->update(['status_transaksi' => "PAYMENT CONFIRMED"]);
+
+        $getTrans = TbHeadJual::with('items', 'address', 'user')->where('id', $id);
+        $data = $getTrans->first();
+
+        if($data) {
+            if(isset($data->user->email)) {
+                Mail::to($data->user->email)->send(new OrderConfirmed($data));
+
+                // notify to whatsapp
+                $to = $data->user->email;
+                $message = "Terimakasih telah melakukan pembayaran di Toko Kami, pembayaran kakak telah terkonfirmasi. 
+                Kami akan segera memproses pesanannya, ditunggu ya kak.";
+
+                Whatsapp::sendMSG($to, $message);                
+            } 
+        }
+
         flash('<i class="fa fa-info"></i>&nbsp; <strong>Transaksi berhasil di confirm</strong>')->success()->important();
         return redirect()->route('admin.konfirmasi-penjualan.index');
     }

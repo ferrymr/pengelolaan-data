@@ -152,8 +152,11 @@
                                                 {{ Auth::user()->name }}
                                             </div>
                                             <div class="menu-user">
+                                                @if(Auth::user()->hasRole('administrator'))
+                                                    <a class="dropdown-item" href="{{ route('admin.dashboard.index') }}">Admin Panel</a>
+                                                @endif
                                                 <a class="dropdown-item" href="{{ route('order-history-status') }}">History Transaksi</a>
-                                                <a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a>
+                                                <a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a>                                                
                                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                     {{ __('Logout') }}
                                                 </a>

@@ -36,11 +36,18 @@
                     <div class="details-product single-product-galery">
                         <div class="details-thumd" style="padding-top: 0px">
                             <div class="image-preview-container image-thick-box image_preview_container">
-                                <img id="img_zoom" 
-                                    data-zoom-image="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" 
-                                    src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" 
-                                    alt="">
-                                {{-- <a href="#" class="btn-zoom open_qv"><i class="fa fa-search" aria-hidden="true"></i></a> --}}
+                                @if(!empty($product->barangImages()->first()))
+                                    <img id="img_zoom" 
+                                        data-zoom-image="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" 
+                                        src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" 
+                                        alt="">
+                                    {{-- <a href="#" class="btn-zoom open_qv"><i class="fa fa-search" aria-hidden="true"></i></a> --}}
+                                @else
+                                    <img id="img_zoom" 
+                                            data-zoom-image="{{ asset('assets/images/product-1.jpg') }}" 
+                                            src="{{ asset('assets/images/product-1.jpg') }}" 
+                                            alt="">
+                                @endif
                             </div>
                             <div class="product_preview image-small">
                                 <div id="thumbnails" class="thumbnails_carousel owl-carousel" data-nav="true" data-autoplay="false" data-dots="false" data-loop="false" data-margin="25" data-responsive='{"0":{"items":3},"480":{"items":3},"600":{"items":3},"1000":{"items":3}}' >
