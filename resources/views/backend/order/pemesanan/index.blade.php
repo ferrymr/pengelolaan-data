@@ -41,13 +41,16 @@
                     <a href="#" class="btn btn-sm btn-warning btn-print" title="Print" style="display: none;">
                         <i class="fa fa-print"></i>
                     </a>
-                    <a class="btn btn-danger btn-sm btn-hapus actDelete" 
+                    <a href="#" target="" class="btn btn-default btn-cancel">
+                        Cancel
+                    </a>
+                    {{-- <a class="btn btn-danger btn-sm btn-hapus actDelete" 
                         data-placement="left" 
                         data-toggle="confirmation" 
                         data-title="Hapus data ?" 
                         style="display:none;">
                         <i class="fa fa-trash fa-fw"></i>
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>
@@ -78,12 +81,16 @@
                     wrapper.find('.btn-print').attr('href', data.action.print).show();
                 }
 
-                if(data.action.hapus) {
-                    wrapper.find('.btn-hapus')
-                        .attr('href', data.action.hapus)
-                        .attr('data-id', data.id)
-                        .attr('data-title', 'Delete ' + data.id + '?').show();
+                if(data.action.print) {
+                    wrapper.find('.btn-cancel').attr('href', data.action.cancel).show();
                 }
+
+                // if(data.action.hapus) {
+                //     wrapper.find('.btn-hapus')
+                //         .attr('href', data.action.hapus)
+                //         .attr('data-id', data.id)
+                //         .attr('data-title', 'Delete ' + data.id + '?').show();
+                // }
 
                 //return the buttons
                 return wrapper.html();

@@ -150,9 +150,9 @@ Route::group([
 // Referral
 Route::group([
     // 'middleware' => ['permission:access-user'], 
-    'prefix' => '/admin/referral/', 
+    'prefix' => '/admin/referral/',
     'as' => 'admin.referral.'
-], function(){
+], function () {
     Route::get('', 'ReferralController@index')->name('index');
     Route::get('datatable', 'ReferralController@datatable')->name('datatable');
     Route::get('edit/{kode_pack}', 'ReferralController@edit')->name('edit');
@@ -188,7 +188,7 @@ Route::group([
     Route::get('', 'PemesananController@index')->name('index');
     Route::get('datatable', 'PemesananController@datatable')->name('datatable');
     Route::get('show/{id}', 'PemesananController@show')->name('show');
-    Route::get('delete', 'PemesananController@delete')->name('delete');
+    Route::get('cronCancelProduct/{id}', 'PemesananController@cronCancelProduct')->name('cronCancelProduct');
     Route::post('update-status/{id?}', 'PemesananController@setStatus')->name('update-status');
     Route::get('print_trf/{no_do?}', 'PemesananController@printTrf')->name('print_trf');
     Route::get('print_immadiate/{no_do?}', 'PemesananController@printImmadiate')->name('print_immadiate');
@@ -197,9 +197,9 @@ Route::group([
 // Cashback
 Route::group([
     // 'middleware' => ['permission:access-user'], 
-    'prefix' => '/admin/cashback/', 
+    'prefix' => '/admin/cashback/',
     'as' => 'admin.cashback.'
-], function(){
+], function () {
     Route::get('', 'CashbackController@index')->name('index');
     Route::get('datatable', 'CashbackController@datatable')->name('datatable');
     Route::post('hitung', 'CashbackController@hitung')->name('hitung');

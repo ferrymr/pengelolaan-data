@@ -14,7 +14,8 @@ use PDF;
 
 class PemesananController extends Controller
 {
-    public function __contruct(TbHeadJual $TbHeadJual) {
+    public function __contruct(TbHeadJual $TbHeadJual)
+    {
         $this->TbHeadJualRepo = $TbHeadJual;
     }
 
@@ -37,8 +38,8 @@ class PemesananController extends Controller
             ->addColumn('jumlah', function ($data) {
                 return $data->detjual->jumlah;
             })
-            ->addColumn('status', function($data) {
-                return '<span class="badge bg-success">'.$data->status_transaksi.'</span>';
+            ->addColumn('status', function ($data) {
+                return '<span class="badge bg-success">' . $data->status_transaksi . '</span>';
             })
             // nah nanti pengecekannya di sini om 
             ->addColumn('action', function ($data) {
@@ -49,9 +50,16 @@ class PemesananController extends Controller
                     $printRouting = route('admin.pemesanan.print_immadiate', $data->id);
                 }
 
+                // pengecekan delete
+                // if ($data->status_transaksi == "PAYMENT CONFIRMED") {
+                //     $hapusRouting = route('admin.pemesanan.delete', $data->id);
+                // } else {
+                //     $hapusRouting = route('admin.pemesanan.delete', $data->id);
+                // }
+
                 return [
                     'show' => route('admin.pemesanan.show', $data->id),
-                    'hapus' => route('admin.pemesanan.delete', $data->id),
+                    'cancel' => route('admin.pemesanan.cronCancelProduct', $data->id),
                     'print' => $printRouting,
                 ];
             })
@@ -61,15 +69,17 @@ class PemesananController extends Controller
 
     public function show($id)
     {
-        $data = TbHeadJual::with('items.itemDetailHas','address','user','spb')
-                    ->findOrFail($id);
-        return view('backend.order.pemesanan.show', 
-                compact('data'));
+        $data = TbHeadJual::with('items.itemDetailHas', 'address', 'user', 'spb')
+            ->findOrFail($id);
+        return view(
+            'backend.order.pemesanan.show',
+            compact('data')
+        );
     }
 
     public function printTrf($id)
     {
-        $headJual = TbHeadJual::with('detjual', 'address', 'user')->find($id)->first();
+        $headJual = TbHeadJual::with('items', 'address', 'user')->find($id)->first();
 
         $pdf = PDF::loadView('backend.order.pemesanan.print_trf', compact('headJual'))->setPaper('a4', 'landscape');
         return $pdf->stream();
@@ -77,7 +87,7 @@ class PemesananController extends Controller
 
     public function printImmadiate($id)
     {
-        $headJual = TbHeadJual::with('detjual', 'address', 'user')->find($id)->first();
+        $headJual = TbHeadJual::with('items', 'address', 'user')->find($id)->first();
 
         $pdf = PDF::loadView('backend.order.pemesanan.print_immadiate', compact('headJual'))->setPaper('a4', 'landscape');
         return $pdf->stream();
@@ -92,13 +102,39 @@ class PemesananController extends Controller
         );
 
         $trans = TbHeadJual::where('id', $id)->update($param);
-        
-        if(!$trans) {
+
+        if (!$trans) {
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Status pemesanan berhasil diupdate</strong>')->success()->important();
             return redirect()->route('admin.pemesanan.index');
         } else {
-            flash('<i class="fa fa-info"></i>&nbsp; <strong>Status pemesanan gagal diupdate </strong>'  )->error()->important();
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Status pemesanan gagal diupdate </strong>')->error()->important();
             return redirect()->route('admin.pemesanan.index')->withInput()->withError();
         }
+    }
+
+    public function cronCancelProduct()
+    {
+        $transactions = TbHeadJual::with('items')
+            ->where('status_transaksi', "PLACE ORDER")
+            ->where('tanggal', '<=', date("Y-m-d"))
+            ->get();
+
+        foreach ($transactions as $transaction) {
+            // update status transaksi
+            $update = TbHeadJual::find($transaction->id)
+                // ->first();
+                ->update(['status_transaksi' => 'CANCEL']);
+
+            foreach ($transaction->items as $row) {
+                // get last stock
+                $barang = Barang::where('kode_barang', $row->kode_barang)
+                    ->first();
+
+                Barang::where('kode_barang', $row->kode_barang)
+                    ->update(['stok' => ($barang->stok + $row->jumlah)]);
+            }
+        }
+
+        return "<h1>Sukses gan!</h1>";
     }
 }

@@ -213,6 +213,32 @@
                             </th>
                         </tr>
                     </table>
+                    <table width="100%">
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    <br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                         {{ $headJual->kurir }}<br>
+                                </span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    <br>
+                                </span>
+                            </th>
+                            <th class="padding-right text-left">
+                                <span class="times-new-roman s15">
+                                        {{ $headJual->shipping_fee }}<br>
+                                </span>
+                            </th>
+                        </tr>
+                    </table>
                     <br>
                     <hr>
                     <hr>
@@ -231,7 +257,7 @@
                                 </th>
                                 <th class="padding-right text-left">
                                     <span class="times-new-roman s15">
-                                        {{ $headJual->sub_total }}<br>
+                                        {{ $headJual->grand_total }}<br>
                                     </span>
                                 </th>
                             </tr>
@@ -243,7 +269,7 @@
                         <th>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    JNE UP ETIKA - BEKASI<br>
+                                    {{ $headJual->note }}<br>
                                 </span>
                             </th>
                         </th>
