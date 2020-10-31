@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
+use App\Models\Barang;
 use App\Models\TbHeadJual;
 use App\Models\TbDetJual;
 use PDF;
