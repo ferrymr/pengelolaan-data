@@ -31,11 +31,11 @@
                         <th>No</th>
                         <th>Nama Pengguna</th>
                         <th>Email</th>
-                        {{-- <th>Role</th> --}}
-                        <th>Phone</th>
+                        <th>Role</th>
+                        {{-- <th>Phone</th> --}}
                         <th>Tanggal Pembuatan</th>
                         <th>Action</th>
-                        <th>&nbsp;</th>
+                        <th class="text-center">&nbsp;</th>
                     </tr>
                 </thead>
             </table>
@@ -46,13 +46,13 @@
                         <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <a class="btn btn-danger btn-sm btn-hapus actDelete" 
+                        {{-- <a class="btn btn-danger btn-sm btn-hapus actDelete" 
                             data-placement="left" 
                             data-toggle="confirmation" 
                             data-title="Hapus data ?" 
                             style="display:none;">
                             <i class="fa fa-trash fa-fw"></i>
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
             </div>
@@ -108,8 +108,8 @@
                     },
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
-                    // { data: 'role', name: 'role' },
-                    { data: 'phone', name: 'phone' },
+                    { data: 'role', name: 'role' },
+                    // { data: 'phone', name: 'phone' },
                     { data: 'created_at', name: 'created_at' },
                     {
                         // Define the action column

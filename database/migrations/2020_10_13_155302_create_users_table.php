@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
 
             // TAMBAHAN
+            $table->double('poin')->nullable();
             $table->timestamp('daftar')->nullable();
             $table->string('nik',16)->nullable();
             $table->string('alamat')->nullable();

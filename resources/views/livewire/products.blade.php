@@ -27,11 +27,17 @@
                             </div>
                             <div class="product-thumb">
                                 <div class="thumb-inner">
-                                    <a href="{{ route('products.show', $product->kode_barang) }}">
-                                        {{-- {{ dd($product->barangImages()->first()) }} --}}
-                                        {{-- <img src="{{ asset('assets/images/thumbnails/' . $product->kode_barang . '.jpg') }}" alt="{{ $product->nama }}"> --}}
-                                        <img src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" alt="{{ $product->nama }}">
-                                    </a>
+                                    @if(!empty($product->barangImages()->first()))
+                                        <a href="{{ route('products.show', $product->kode_barang) }}">                                        
+                                            <img src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" alt="{{ $product->nama }}">
+                                        </a>
+                                    @else
+                                        <img id="img_zoom" 
+                                                data-zoom-image="{{ asset('assets/images/product-1.jpg') }}" 
+                                                src="{{ asset('assets/images/product-1.jpg') }}" 
+                                                alt="">
+                                    @endif
+
                                 </div>
                                 {{-- <a href="#" class="button quick-wiew-button">Quick View</a> --}}
                             </div>
@@ -43,7 +49,34 @@
                                 </h5>
                                 <div class="group-info">
                                     {{-- <div class="stars-rating"><div class="star-rating"><span class="star-4"></span></div><div class="count-star">(14)</div></div> --}}
-                                    <div class="price"><span>@currency($product->h_nomem)</span></div>
+                                    @if(!isset($user) || $user->hasRole('user'))
+
+                                        @if($product->diskon > 0)
+                                            @php
+                                                $harga = $product->h_nomem;
+                                                $harga = $harga - ($harga * ($product->diskon/100));
+                                            @endphp
+                                            <span style="text-decoration:  line-through;">@currency($product->h_nomem)</span> 
+                                            <span>@currency($harga)</span>
+                                        @else
+                                            <span>@currency($product->h_nomem)</span>
+                                        @endif
+
+                                    @else
+
+                                        @if($product->diskon > 0)
+                                            @php
+                                                $harga = $product->h_member;
+                                                $harga = $harga - ($harga * ($product->diskon/100));
+                                            @endphp
+                                            <span style="text-decoration:  line-through;">@currency($product->h_member)</span> 
+                                            <span>@currency($harga)</span>
+                                        @else
+                                            <span>@currency($product->h_member)</span>
+                                        @endif
+                                        
+                                    @endif
+                                    
                                 </div>
                             </div>
                             {{-- <div class="loop-form-add-to-cart">

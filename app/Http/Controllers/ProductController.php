@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -14,12 +15,13 @@ class ProductController extends Controller
     // sorted by category
     public function category($category_name)
     {
+        $user = Auth::user();
         if($category_name == "SERIES") {
-            $products = $this->barangRepo->getBarangSeries();
+            $products = $this->barangRepo->getBarangSeries($user);
         } else if($category_name == "ALL") {
-            $products = $this->barangRepo->getBarangAll();
+            $products = $this->barangRepo->getBarangAll($user);
         } else {
-            $products = $this->barangRepo->getBarangByCategory($category_name);
+            $products = $this->barangRepo->getBarangByCategory($category_name, $user);
         }
         
         $category_name = ucfirst($category_name);

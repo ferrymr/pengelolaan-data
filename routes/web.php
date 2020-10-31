@@ -1,11 +1,18 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+
 Auth::routes();
 
 // =============================== FRONTEND ===============================
 
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 // Homepage
 Route::get('/', 'IndexController@index')->name('home');
+
+// Cron job
+Route::get('/cronjob-update-product', 'IndexController@cronCancelProduct')->name('cronjob-update-product');
 
 // Faqs
 Route::get('/faqs', function () {
@@ -41,13 +48,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('checkout/save-address-post-cart', 'AddressController@storePostCart')->name('address.save-address-post-cart');
     Route::get('checkout/set-default-post-cart/{addressId}', 'AddressController@setDefaultPostCart')->name('address.set-default-post-cart');
 
+    // Profile detail
     Route::resource('profile', 'ProfileController');
     Route::get('address/set-default/{addressId}', 'AddressController@setDefault')->name('address.setdefault');
     Route::resource('address', 'AddressController');
 
     // Daftar jadi member
     Route::get('member/signup', 'MemberController@signup')->name('member.signup');
+    Route::post('member/store', 'MemberController@store')->name('member.store');
+    Route::post('member/konfirmasi', 'MemberController@konfirmasi')->name('member.konfirmasi');
 
+    // History transaksi di profile
     Route::get('/order-history/{status?}', 'HistoryOrderController@index')->name('order-history-status');
     Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');
 });
@@ -67,13 +78,35 @@ Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
 
 // =============================== BACKEND ===============================
 
+// Login administrator
+Route::get('/login-administrator', function () {
+    $user = Auth::user();
+    if (!isset($user)) {
+        return view('auth.login-admin');
+    } else {
+        if ($user->hasRole('administrator')) {
+            return redirect()->route('admin.dashboard.index');
+        } else {
+            return redirect()->route('home');
+        }
+    }
+});
+
 // Dashboard
-Route::group(['prefix' => '/admin/dashboard/', 'as' => 'admin.dashboard.'], function () {
+Route::group([
+    'middleware' => ['role:administrator|reseller|member|user'],
+    'prefix' => '/admin/dashboard/',
+    'as' => 'admin.dashboard.'
+], function () {
     Route::get('', 'DashboardController@index')->name('index');
 });
 
 // Master Barang
-Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function () {
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/barang/',
+    'as' => 'admin.barang.'
+], function () {
     Route::get('', 'BarangController@index')->name('index');
     Route::get('datatable', 'BarangController@datatable')->name('datatable');
     Route::get('edit/{kode_barang}', 'BarangController@edit')->name('edit');
@@ -86,12 +119,20 @@ Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function (
     Route::get('delete-barang-image/{barangId?}/{id?}', 'BarangController@deleteBarangImage')->name('detele-barang-image');
 });
 
-Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function () {
+// Master Barang Image
+Route::group([
+    'prefix' => '/admin/barang/',
+    'as' => 'admin.barang.'
+], function () {
     Route::get('barang-image/{id?}', 'BarangController@getBarangImage')->name('barang-image');
 });
 
 // Master Supplier
-Route::group(['prefix' => '/admin/supplier/', 'as' => 'admin.supplier.'], function () {
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/supplier/',
+    'as' => 'admin.supplier.'
+], function () {
     Route::get('', 'SupplierController@index')->name('index');
     Route::get('add', 'SupplierController@create')->name('add');
     Route::post('store', 'SupplierController@store')->name('store');
@@ -103,7 +144,7 @@ Route::group(['prefix' => '/admin/supplier/', 'as' => 'admin.supplier.'], functi
 
 // Slider
 Route::group([
-    // 'middleware' => ['permission:access-slider'], 
+    'middleware' => ['role:administrator'],
     'prefix' => '/admin/slider/',
     'as' => 'admin.slider.'
 ], function () {
@@ -114,9 +155,17 @@ Route::group([
     Route::get('shortable', 'SliderController@updateOrder')->name('shortable');
 });
 
+// Slider Image
+Route::group([
+    'prefix' => '/admin/slider/',
+    'as' => 'admin.slider.'
+], function () {
+    Route::get('slider-image/{id?}', 'SliderController@getSliderImage')->name('slider-image');
+});
+
 // User
 Route::group([
-    // 'middleware' => ['permission:access-user'], 
+    'middleware' => ['role:administrator'],
     'prefix' => '/admin/user/',
     'as' => 'admin.user.'
 ], function () {
@@ -132,7 +181,7 @@ Route::group([
 
 // Series
 Route::group([
-    // 'middleware' => ['permission:access-user'], 
+    'middleware' => ['role:administrator'],
     'prefix' => '/admin/series/',
     'as' => 'admin.series.'
 ], function () {
@@ -149,7 +198,7 @@ Route::group([
 
 // Referral
 Route::group([
-    // 'middleware' => ['permission:access-user'], 
+    'middleware' => ['role:administrator'],
     'prefix' => '/admin/referral/',
     'as' => 'admin.referral.'
 ], function () {
@@ -166,6 +215,7 @@ Route::group([
 
 // Penjualan
 Route::group([
+    'middleware' => ['role:administrator'],
     'prefix' => '/admin/penjualan/',
     'as'     => 'admin.penjualan.'
 ], function () {
@@ -180,8 +230,9 @@ Route::group([
     Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('update_penjualan');
 });
 
-// ORDER.PEMESANAN
+// Pemesanan
 Route::group([
+    'middleware' => ['role:administrator'],
     'prefix' => '/admin/pemesanan/',
     'as'     => 'admin.pemesanan.'
 ], function () {
@@ -196,7 +247,7 @@ Route::group([
 
 // Cashback
 Route::group([
-    // 'middleware' => ['permission:access-user'], 
+    'middleware' => ['role:administrator'],
     'prefix' => '/admin/cashback/',
     'as' => 'admin.cashback.'
 ], function () {
@@ -207,6 +258,7 @@ Route::group([
 
 // Konfirmasi penjualan
 Route::group([
+    'middleware' => ['role:administrator'],
     'prefix' => '/admin/konfirmasi-penjualan/',
     'as'     => 'admin.konfirmasi-penjualan.'
 ], function () {
@@ -214,16 +266,32 @@ Route::group([
     Route::get('/datatable', 'KonfirmasiPenjualanController@datatable')->name('datatable');
     Route::get('/edit/{id}', 'KonfirmasiPenjualanController@edit')->name('edit');
     Route::get('/cancel/{id}', 'KonfirmasiPenjualanController@cancel')->name('cancel');
-    // Route::post('/update/{id}', 'KonfirmasiPenjualanController@update')->name('update');
-    // Route::get('/view/{id}', 'KonfirmasiPenjualanController@view')->name('view');
-    // Route::get('/delete/{id}', 'KonfirmasiPenjualanController@destroy')->name('delete');
-    // Route::get('/add', 'KonfirmasiPenjualanController@create')->name('add');
-    // Route::post('/store', 'KonfirmasiPenjualanController@store')->name('store');
 });
 
+// Konfirmasi penjualan image
 Route::group([
     'prefix' => '/admin/konfirmasi-penjualan/',
     'as'     => 'admin.konfirmasi-penjualan.'
 ], function () {
     Route::get('konfirmasi-image/{id?}', 'KonfirmasiPenjualanController@getKonfirmasiImage')->name('konfirmasi-image');
+});
+
+// Konfirmasi daftar
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/konfirmasi-daftar/',
+    'as'     => 'admin.konfirmasi-daftar.'
+], function () {
+    Route::get('/', 'KonfirmasiDaftarController@index')->name('index');
+    Route::get('/datatable', 'KonfirmasiDaftarController@datatable')->name('datatable');
+    Route::get('/edit/{id}/{jenis?}', 'KonfirmasiDaftarController@edit')->name('edit');
+    Route::get('/cancel/{id}', 'KonfirmasiDaftarController@cancel')->name('cancel');
+});
+
+// Konfirmasi daftar image
+Route::group([
+    'prefix' => '/admin/konfirmasi-daftar/',
+    'as'     => 'admin.konfirmasi-daftar.'
+], function () {
+    Route::get('konfirmasi-daftar-image/{id?}', 'KonfirmasiDaftarController@getKonfirmasiDaftarImage')->name('konfirmasi-daftar-image');
 });

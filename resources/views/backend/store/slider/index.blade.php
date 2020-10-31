@@ -82,10 +82,6 @@
             });
             
             $('#filecount').change(function() {
-                HoldOn.open({
-                    theme:"sk-rect"
-                });
-
                 $('#form-slider-store').submit();
             })
 
@@ -118,10 +114,10 @@
                 columns: [
                     { data: 'order', name: 'order' },
                     { 
-                        data: 'id', 
-                        name: 'id', 
+                        data: 'image', 
+                        name: 'image', 
                         render: function(data) {
-                            return '<img class="img-fluid thumbnail" style="width: 75%" src="./slider/slider-image/'+data+'">';
+                            return '<img class="img-fluid thumbnail" style="width: 75%" src="'+data+'">';
                         } 
                     },
                     {

@@ -25,7 +25,9 @@
                         </li>
                     </ul>
                 </div>
-            </div>            
+            </div>
+
+            @include('flash::message')
 
             <!-- main content -->
             <div class="main-content-cart main-content">                    
@@ -36,8 +38,15 @@
                             <div class="row">
                                 <div class="col-md-offset-2 col-md-3 col-12">
                                     <div class="row">
-                                        <div class="col-md-12">                                                
-                                            <button>User Standar</button>
+                                        <div class="col-md-12"> 
+                                            {{-- {{ dd($user->hasRole('member')) }} --}}
+                                            @if($user->hasRole('member'))                                               
+                                                <button class="btn btn-success">User <b>Member</b></button>
+                                            @elseif($user->hasRole('reseller'))
+                                                <button class="btn btn-info">User <b>Reseller</b></button>
+                                            @else 
+                                                <button class="btn btn-default">User <b>Standar</b></button>
+                                            @endif
                                         </div>
                                     </div>
                                     <br><br> 
@@ -85,8 +94,8 @@
                                             <a href="{{ route('member.signup') }}">
                                                 <div class="menu-ui-item">
                                                     <div class="menu-ui-left">
-                                                        <div class="title-item-menu">Yuk daftar jadi member!</div>
-                                                        <div class="desc-item-menu">Lihat syarat-syarat dan daftar sebagai member</div>
+                                                        <div class="title-item-menu">Yuk daftar jadi member / reseller!</div>
+                                                        <div class="desc-item-menu">Lihat syarat-syarat dan daftar sebagai member / reseller</div>
                                                     </div>
                                                     <div class="menu-ui-icon">
                                                         <i class="fa fa-chevron-right"></i>

@@ -36,6 +36,7 @@ class Checkout extends Component
     public $daftarProvinsi;
     public $daftaralamatTujuan;
     public $alamatTujuan;
+    public $total_poin;
 
     // for address part
     public $nama;
@@ -57,6 +58,7 @@ class Checkout extends Component
         $this->hitungTotalItems();
         $this->hitungTotalBerat();
         $this->hitungSubtotal();
+        $this->hitungTotalPoin();
         $this->generateKodeUnik();
         $this->hitungTotalBayar();
         // $this->saveNewAddress();
@@ -201,6 +203,8 @@ class Checkout extends Component
             }
         }
 
+        // dd($cartItems);
+
         // CHECK KETERSEDIAAN STOK DI MASING-MASING SPB
         // JIKA STOK TIDAK TERSEDIA DI SALAH SATU SPB, MAKA DISABLE SPB TERSEBUT
         foreach($spbList as $spb) {
@@ -299,6 +303,17 @@ class Checkout extends Component
 
         $this->subtotal = $subtotal;
     }
+
+    public function hitungTotalPoin()
+    {
+        $totalPoin = 0;
+
+        foreach($this->cartItems as $cartItem) {
+            $totalPoin += $cartItem['poin'];
+        }
+
+        $this->total_poin = $totalPoin;
+    }
     
     public function hitungTotalBayar()
     {
@@ -330,6 +345,7 @@ class Checkout extends Component
             'selectedBank' => $this->selectedBank, //$request->bank,
             'totalItems' => $this->totalItems, //$request->bank,
             'kodeUnik' => $this->kodeUnik, 
+            'totalPoin' => $this->total_poin, 
         ];
 
         session($summaryTrans);

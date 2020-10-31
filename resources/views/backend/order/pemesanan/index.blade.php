@@ -26,6 +26,7 @@
                         <th>Tanggal</th>
                         <th>Nama Pembeli</th>
                         <th>Metode Pengiriman</th>
+                        <th>Grand Total</th>
                         <th>Status</th>
                         <th>Action</th>
                         <th>&nbsp;</th>
@@ -115,6 +116,7 @@
                     { data: 'tanggal', name: 'tanggal' },
                     { data: 'nama', name: 'nama' },
                     { data: 'metode_pengiriman', name: 'metode_pengiriman' },
+                    { data: 'grand_total', name: 'grand_total' },
                     { 
                         data: 'status', 
                         name: 'status', 

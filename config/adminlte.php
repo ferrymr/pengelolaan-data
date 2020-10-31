@@ -268,10 +268,10 @@ return [
                     'text' => 'Barang',
                     'url' => 'admin/barang'
                 ],
-                [
-                    'text' => 'Member',
-                    'url' => 'member'
-                ],
+                // [
+                //     'text' => 'Member',
+                //     'url' => 'member'
+                // ],
                 [
                     'text' => 'Supplier',
                     'url' => 'admin/supplier'
@@ -299,10 +299,10 @@ return [
                     'text' => 'Konfirmasi pemesanan',
                     'url' => 'admin/konfirmasi-penjualan'
                 ],
-                [
-                    'text' => 'Penjualan',
-                    'url' => 'admin/penjualan'
-                ],                
+                // [
+                //     'text' => 'Penjualan',
+                //     'url' => 'admin/penjualan'
+                // ],                
                 [
                     'text' => 'Pembelian',
                     'url' => 'pembelian'
@@ -443,9 +443,14 @@ return [
             'url'  => 'admin/slider',
             'icon' => 'fas fa-fw fa-image',
         ],
+        // [
+        //     'text' => 'Banner',
+        //     'url'  => 'admin/banner',
+        //     'icon' => 'fas fa-fw fa-tag',
+        // ],        
         [
-            'text' => 'Banner',
-            'url'  => 'admin/banner',
+            'text' => 'Coupon',
+            'url'  => 'admin/coupon',
             'icon' => 'fas fa-fw fa-tag',
         ],
         [
@@ -453,11 +458,21 @@ return [
             'url'  => 'admin/user',
             'icon' => 'fas fa-fw fa-users',
         ],
+        // [
+        //     'text' => 'Pendaftaran Member',
+        //     'url'  => 'admin/daftar-member',
+        //     'icon' => 'fas fa-fw fa-list',
+        // ],
+        [
+            'text' => 'Konfirmasi Pendaftaran',
+            'url'  => 'admin/konfirmasi-daftar',
+            'icon' => 'fas fa-fw fa-book',
+        ],
 
         ['header' => 'PROFILE'],
         [
             'text' => 'Logout',
-            'url'  => 'admin/settings',
+            'url'  => '/logout',
             'icon' => 'fas fa-fw fa-power-off',
         ],
         [

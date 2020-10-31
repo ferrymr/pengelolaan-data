@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 use App\Models\Barang;
+use Illuminate\Support\Facades\Auth;
 
 class Cart
 {
@@ -30,14 +31,30 @@ class Cart
     public function add(Barang $product)
     {
         $cart = $this->get();
+        $user = Auth::user();
 
-        $productCode = (strlen($product->kode_barang) < 5 ? sprintf('%05d', $product->kode_barang) : (string) $product->kode_barang);
+        // $productCode = (strlen($product->kode_barang) < 5 ? sprintf('%05d', $product->kode_barang) : (string) $product->kode_barang);
+        $productCode = $product->kode_barang;
 
         // KODE BARANG YANG DIAWALI ANGKA 0, BIASANYA HILANG ANGKA 0 AWALNYA
         // TERUTAMA KETIKA DI RE-RENDER OLEH LIVEWIRE, KARENA OTOMATIS DI KONVERSI MENJADI INTEGER
         // JIKA ANGKA 0 DI AWAL PADA KODE BARANG HILANG MAKA TAMBAHKAN KARAKTER DI AWALNYA
         // SUPAYA TIDAK DI KONVERSI MENJADI INTEGER
         $cartIndex = 'x' . $productCode;
+
+        // define user price
+        if(!isset($user) || $user->hasRole('user')) {
+            $harga = $product->h_nomem;
+            $poin = 0;
+        } else {
+            $harga = $product->h_member;
+            $poin = $product->poin;
+        }
+
+        // get diskon
+        if($product->diskon > 0) {
+            $harga = $harga - ($harga * ($product->diskon/100));
+        }
 
         if(!isset($cart[$cartIndex])) {
 
@@ -47,34 +64,31 @@ class Cart
 
             // $productCode = $product->kode_barang;
 
-            // dd($product);
-
             $cart[$cartIndex] = array(
+                    'barang_id' => $product->id,
                     'kode_barang' => $productCode,
                     'nama' => $product->nama,
                     'jenis' => $product->jenis,
                     'unit' => $product->unit,
-                    'h_nomem' => $product->h_nomem,
+                    'h_nomem' => $harga,
                     'berat' => $product->berat,
+                    'poin' => $poin,
                     'total_berat' => $product->qty * $product->berat,
-                    'subtotal' => $product->qty * $product->h_nomem,
+                    'subtotal' => $product->qty * $harga,
                     'qty' => $product->qty,
                     'note' => '',
                     'barang_image_id' => $product->barangImages->first()->id
                 );
 
         } else {
-            /* $cart[$cartIndex]['qty'] += $product->qty;
-            $cart[$cartIndex]['total_berat'] += $product->qty * $product->berat;
-            $cart[$cartIndex]['subtotal'] += $product->qty  * $product->h_nomem; */
 
             $currentCartQty = $cart[$cartIndex]['qty'];
             $currentTotalBerat = $currentCartQty * $product->berat;
-            $currentSubtotal = $currentCartQty * $product->h_nomem;
+            $currentSubtotal = $currentCartQty * $harga;
 
             $newCartQty = $currentCartQty + $product->qty;
             $newTotalBerat = $newCartQty * $product->berat;
-            $newSubtotal = $newCartQty * $product->h_nomem;
+            $newSubtotal = $newCartQty * $harga;
 
             $cart[$cartIndex]['qty'] = $newCartQty;
             $cart[$cartIndex]['total_berat'] = $newTotalBerat;
@@ -97,12 +111,6 @@ class Cart
         unset($cart[$productCode]);
         
         $this->set($cart);
-
-        /* if (count($cart) < 1) {
-            $this->set($this->empty());
-        } else {
-            $this->set($cart);
-        } */
 
     }
 }

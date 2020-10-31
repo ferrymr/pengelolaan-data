@@ -21,8 +21,8 @@
                 </div>
                 <div class="col-lg-4 col-sm-6 col-md-6 col-xs-5 col-ts-12">
                     <div class="logo">
-                        <a href="index.html">
-                            <img src="{{ asset('assets/images/logo.png') }}" alt="">
+                        <a href="/">
+                            <img src="{{ asset('assets/images/logo_footer.png') }}" alt="">
                         </a>
                     </div>
                 </div>
@@ -152,8 +152,11 @@
                                                 {{ Auth::user()->name }}
                                             </div>
                                             <div class="menu-user">
+                                                @if(Auth::user()->hasRole('administrator'))
+                                                    <a class="dropdown-item" href="{{ route('admin.dashboard.index') }}">Admin Panel</a>
+                                                @endif
                                                 <a class="dropdown-item" href="{{ route('order-history-status') }}">History Transaksi</a>
-                                                <a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a>
+                                                <a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a>                                                
                                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                     {{ __('Logout') }}
                                                 </a>
@@ -221,6 +224,9 @@
                     </li>
                     <li class="menu-item">
                         <a href="{{ route('products.category', 'ACCESORIES') }}" class="kt-item-title" title="Accesories">Accesories</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('products.category', 'OTHER') }}" class="kt-item-title" title="Other">Other</a>
                     </li>
                     <li class="menu-item">
                         <a href="{{ route('products.category', 'SERIES') }}" class="kt-item-title" title="Series">Series</a>

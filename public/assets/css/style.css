@@ -3388,6 +3388,10 @@ blockquote .author .desc {
     width: 100%;
     padding: 0 15px;
 }
+.header-device-mobile .item.mobile-logo {
+    padding: 18px
+}
+
 .header-device-mobile .item {
     display: table-cell;
     vertical-align: middle;
@@ -13625,7 +13629,7 @@ iframe {
     .slider-item.style2 .slider-inner::before,
     .slider-item.style3 .slider-inner::before {
         content: "";
-        background: rgba(0, 0, 0, 0.6);
+        /* background: rgba(0, 0, 0, 0.6); */
         position: absolute;
         top: 0;
         left: 0;

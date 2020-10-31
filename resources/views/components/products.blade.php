@@ -53,10 +53,17 @@
                             </div>
                             <div class="product-thumb">
                                 <div class="thumb-inner">
-                                    <a href="{{ route('products.show', $product->kode_barang) }}">
-                                        <img src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" 
-                                                alt="{{ $product->nama }}">
-                                    </a>
+                                    @if(!empty($product->barangImages()->first()))
+                                        <a href="{{ route('products.show', $product->kode_barang) }}">
+                                            <img src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" 
+                                                    alt="{{ $product->nama }}">
+                                        </a>
+                                    @else
+                                        <img id="img_zoom" 
+                                                data-zoom-image="{{ asset('assets/images/product-1.jpg') }}" 
+                                                src="{{ asset('assets/images/product-1.jpg') }}" 
+                                                alt="">
+                                    @endif
                                 </div>
                                 {{-- <a href="#" class="button quick-wiew-button">Quick View</a> --}}
                             </div>

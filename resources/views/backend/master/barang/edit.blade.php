@@ -98,6 +98,33 @@
                 </div>
             </div>
 
+            @if($barang->unit == 'SERIES')
+                <div id="series" class="form-group row col-sm-12">
+                    <div class="col-md-12 mb-3">                    
+                        <h5><b>Tambahkan produk ke dalam series</b></h5>
+                    </div>
+                    @foreach($barang->series as $series)
+                        <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                            <div class="input-group">
+                                <select name="produk[]" class="custom-select select2">
+                                    <option value="">Pilih produk</option>
+                                    @foreach($barangs as $barang)
+                                        <option value="{{ $barang->id }}" @if($series->tb_barang_id == $barang->id) selected @endif>
+                                            {{ $barang->nama }}
+                                        </option>
+                                    @endforeach
+                                </select> 
+                                <input type="number" name="qty_product[]" class="form-control" placeholder="Qty" value="{{ $series->qty }}">
+                                <button type="button" class="btn btn-success ml-3" id="add-product">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    @endforeach
+                    <table id="append-product" class="col-md-8"></table>
+                </div>
+            @endif
+
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('poin')) has-error @endif">
                     <label for="poin" class="col-sm-12 control-label">Poin</label>    
@@ -293,6 +320,51 @@
 
 @section('js')
     <script>
+        $(document).ready(function () {
+            $('#add-product').click(function() {
+                $('.select2').select2();
+                $('#append-product').append(`
+                    <tr>
+                        <td>
+                            <div class="input-group col-md-12 mb-2">
+                                <select name="produk[]" class="custom-select select2">
+                                    <option value="" selected>Pilih produk</option>
+                                    @foreach($barangs as $barang)
+                                        <option value="{{ $barang->id }}">{{ $barang->nama }}</option>
+                                    @endforeach
+                                </select>                             
+                                <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
+                                <button type="button" class="btn btn-danger ml-3 remove-product">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `);
+            });
+
+            $('#append-product').on('click', '.remove-product', function(){
+                $(this).parent().parent().remove();
+            });
+            
+            changeUnit();
+            
+            $("#unit").change(function() {
+                changeUnit();
+            });
+        });
+
+        function changeUnit() {
+            $('.select2').select2();
+            let unit = $(this).val();
+
+            if(unit == 'SERIES') {
+                $('#series').show();
+            } else {
+                $('#series').hide();
+            }
+        }
+
         // select2
         $('.select2').select2();
 
@@ -312,9 +384,5 @@
         $('#filecount').change(function() {
             $('#form-barang-image-update').submit();
         })
-
-        $(document).ready(function () {
-            $('.ckeditor').ckeditor();
-        });
     </script>
 @stop

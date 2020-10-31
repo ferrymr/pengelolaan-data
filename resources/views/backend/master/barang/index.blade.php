@@ -33,6 +33,7 @@
                         <th>Kode Barang</th>
                         <th>Nama Barang</th>
                         <th>Jenis</th>
+                        <th>Series</th>
                         <th>Stok</th>
                         <th>Poin</th>
                         <th>Action</th>
@@ -131,6 +132,7 @@
                     { data: 'kode_barang', name: 'kode_barang'},
                     { data: 'nama', name: 'nama' },
                     { data: 'jenis', name: 'jenis' },
+                    { data: 'unit', name: 'unit' },
                     { data: 'stok', name: 'stok' },
                     { data: 'poin', name: 'poin' },
                     {
