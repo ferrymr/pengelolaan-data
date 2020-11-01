@@ -20,7 +20,7 @@ building:
 testing:
   stage: test
   script:
-    - php ./vendor/bin/phpunit
+    - php -v
 deploying:
   stage: deploy
   script:
