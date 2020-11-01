@@ -26,7 +26,7 @@ class CreateTbShippingAddressTable extends Migration
             $table->integer('kecamatan_id');
             $table->string('kecamatan_nama');
             $table->text('alamat');
-            $table->string('kode_pos');
+            $table->string('kode_pos')->nullable();
             $table->integer('is_default');
             $table->timestamps();
         });

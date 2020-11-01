@@ -6,12 +6,12 @@
         <div class="site-main">
 
             <!--top control-->
-            {{-- <div class="shop-top-control">
+            <div class="shop-top-control">
 
                 <div class="select-item select-form">
                     <span class="title">
                         @if($categoryName)
-                            Semua produk di kategori <b>"{{ $categoryName }}"</b>
+                            Semua produk <b>"{{ $categoryName }}"</b>
                         @else
                             Semua kategori
                         @endif
@@ -23,14 +23,14 @@
                     <div class="inner">
                     <span class="title">Urut berdasarkan</span>&nbsp;
                     <select data-placeholder="Harga Tertinggi" class="chosen-select">
-                        <option value="best_selling">Terlaris</option>
+                        {{-- <option value="best_selling">Terlaris</option> --}}
                         <option value="highest_price" selected>Harga Tertinggi</option>
                         <option value="lowest_price">Harga Terendah</option>
                     </select>
                     </div>
                 </div>
 
-            </div> --}}
+            </div>
 
             <!--page title-->
             {{-- <h4>Menampilkan semua produk <b>{{ $category_name }}</b></h4><br/> --}}

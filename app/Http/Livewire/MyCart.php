@@ -13,6 +13,7 @@ class MyCart extends Component
     public $totalItems;
     public $subtotal;
     public $nextPageLink;
+    public $qty = 1;
 
     public function mount()
     {
@@ -42,9 +43,13 @@ class MyCart extends Component
         $product = Barang::with('barangImages')->where('kode_barang', $productCode)->first();
 
         if ($type == 'increment') {
+            $this->qty++;
             $product->qty = 1;
         } elseif ($type == 'decrement') {
-            $product->qty = -1;
+            if ($this->qty > 1) {
+                $this->qty--;
+                $product->qty = -1;
+            }            
         }
 
         Cart::add($product);

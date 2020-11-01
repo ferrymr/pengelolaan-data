@@ -20,6 +20,8 @@ class ProductController extends Controller
             $products = $this->barangRepo->getBarangSeries($user);
         } else if($category_name == "ALL") {
             $products = $this->barangRepo->getBarangAll($user);
+        } else if($category_name == "PROMO") {
+            $products = $this->barangRepo->getBarangPromo($user);
         } else {
             $products = $this->barangRepo->getBarangByCategory($category_name, $user);
         }
