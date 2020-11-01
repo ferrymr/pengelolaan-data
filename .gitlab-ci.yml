@@ -12,7 +12,7 @@ building:
     - php artisan cache:clear
     - php artisan config:clear
     - php artisan storage:link
-    - sudo -S chown -R deployer:www-data /var/www/dev-bellezkin
+    - echo GH65CvFdtfF1qt | sudo -S chown -R deployer:www-data /var/www/dev-bellezkin
     - find /var/www/dev-bellezkin -type f -exec chmod 664 {} \;
     - find /var/www/dev-bellezkin -type d -exec chmod 775 {} \;
     - chgrp -R www-data storage bootstrap/cache
