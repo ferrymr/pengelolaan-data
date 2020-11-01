@@ -44,7 +44,7 @@ class SliderController extends Controller
             })
             ->addColumn('action', function ($slider){
                 return [
-                    // 'edit' => route('admin.slider.edit', $slider->id),
+                    'edit' => route('admin.slider.edit', $slider->id),
                     'delete' => route('admin.slider.delete', $slider->id),
                 ];
             })
@@ -80,6 +80,31 @@ class SliderController extends Controller
         } else {
             flash('<strong>Foto Slider Gagal Ditambah</strong>')->error()->important();
             return redirect()->route('admin.slider.index');
+        }
+    }
+
+    public function edit($id) {
+        $user = Auth::user();
+        $slider = $this->sliderRepo->findId($id);
+
+        return view('backend.store.slider.edit')->with([
+            'user' => $user,
+            'slider' => $slider
+        ]);
+    }
+
+    public function update(Request $request, $id) {
+        $array = $request->all();
+        $param["link"] = $array['link'];
+
+        $slider = $this->sliderRepo->editSlider($param, $id);
+
+        if(!$this->sliderRepo->error) {
+            flash('<strong>Slider Berhasil Diedit</strong>')->success();
+            return redirect()->route('admin.slider.index');            
+        } else {
+            flash('<strong>Slider </strong> ' . $this->sliderRepo->error)->error()->important();
+            return redirect()->route('admin.slider.edit')->withInput()->withError();
         }
     }
 

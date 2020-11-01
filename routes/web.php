@@ -151,7 +151,9 @@ Route::group([
     Route::get('datatable', 'SliderController@datatable')->name('datatable');
     Route::get('delete/{id}', 'SliderController@destroy')->name('delete');
     Route::post('store', 'SliderController@store')->name('store');
+    Route::get('edit/{id?}', 'SliderController@edit')->name('edit');
     Route::get('shortable', 'SliderController@updateOrder')->name('shortable');
+    Route::post('update/{id?}', 'SliderController@update')->name('update');
 });
 
 // Slider Image

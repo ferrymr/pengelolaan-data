@@ -5,35 +5,67 @@
     <div class="content-area shop-grid-content full-width col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="site-main">
 
-            <!--top control-->
-            <div class="shop-top-control">
+            <form action="" method="GET">
 
-                <div class="select-item select-form">
-                    <span class="title">
-                        @if($categoryName)
-                            Semua produk <b>"{{ $categoryName }}"</b>
-                        @else
-                            Semua kategori
-                        @endif
-                    </span>
-                </div>
+                <!--top control-->
+                <div class="shop-top-control">
 
-                <!--order sort-->
-                <div class="grid-view-mode">
-                    <div class="inner">
-                    <span class="title">Urut berdasarkan</span>&nbsp;
-                    <select data-placeholder="Harga Tertinggi" class="chosen-select">
-                        {{-- <option value="best_selling">Terlaris</option> --}}
-                        <option value="highest_price" selected>Harga Tertinggi</option>
-                        <option value="lowest_price">Harga Terendah</option>
-                    </select>
+                    <div class="select-item select-form">
+                        <span class="title">
+                            @if($categoryName)
+                                Semua produk <b>"{{ $categoryName }}"</b>
+                            @else
+                                Semua kategori
+                            @endif
+                        </span>
                     </div>
+
+                    <!--order sort-->                   
+                    <div class="grid-view-mode">
+                        <div class="inner">                        
+                            <span class="title">Urut berdasarkan</span>&nbsp;
+                            <select onchange="submit()" data-placeholder="Harga Tertinggi" name="sorting" class="chosen-select">
+                                <option value="" selected>Pilih sorting</option>
+                                <option value="highest_price" @if(isset($_GET['sorting']) && $_GET['sorting'] == 'highest_price') selected @endif>Harga Tertinggi</option>
+                                <option value="lowest_price" @if(isset($_GET['sorting']) && $_GET['sorting'] == 'lowest_price') selected @endif>Harga Terendah</option>
+                            </select>
+                        </div>
+                    </div>
+                
                 </div>
 
-            </div>
+                @if($categoryName == "ALL")
+                    <p><b>Pilih berdasarkan kategori:</b></p>
+                    <div class="shop-top-control">
+
+                        <div class="select-item select-form">
+                            <span class="title">
+                                <div class="col-md-2">
+                                    <input onchange="submit()" type="checkbox" name="whitening" id="whitening" value="WHITENING" @if(isset($_GET['whitening']) && !empty($_GET['whitening'])) checked @endif> &nbsp;
+                                    <label for="whitening">Whitening</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input onchange="submit()" type="checkbox" name="purifiying" id="purifiying" value="PURIFYING" @if(isset($_GET['purifiying']) && !empty($_GET['purifiying'])) checked @endif> &nbsp;
+                                    <label for="purifiying">Purifiying</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input onchange="submit()" type="checkbox" name="decorative" id="decorative" value="DECORATIVE" @if(isset($_GET['decorative']) && !empty($_GET['decorative'])) checked @endif> &nbsp;
+                                    <label for="decorative">Decorative</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input onchange="submit()" type="checkbox" name="bodycare" id="bodycare" value="BODYCARE" @if(isset($_GET['bodycare']) && !empty($_GET['bodycare'])) checked @endif> &nbsp;
+                                    <label for="bodycare">Body Care</label>
+                                </div>
+                            </span>
+                        </div>
+                    
+                    </div>
+                @endif
+
+            </form>
 
             <!--page title-->
-            {{-- <h4>Menampilkan semua produk <b>{{ $category_name }}</b></h4><br/> --}}
+            <h4>Menampilkan semua produk <b>{{ $categoryName }}</b></h4><br/>
 
             <!-- wrap products-->
             <ul class="row list-products auto-clear equal-container product-grid">
@@ -113,3 +145,7 @@
     <!-- full width layout have no sidebar-->
 
 </div>
+
+@section('scripts')
+    <script></script>
+@stop

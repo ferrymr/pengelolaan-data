@@ -15,15 +15,25 @@ class ProductController extends Controller
     // sorted by category
     public function category($category_name)
     {
+        $sorting = isset($_GET['sorting']) ? $_GET['sorting'] : '';
+        
+        $byCategory = [];
+        $whitening = isset($_GET['whitening']) ? $byCategory[] = $_GET['whitening'] : '';
+        $purifiying = isset($_GET['purifiying']) ? $byCategory[] = $_GET['purifiying'] : '';
+        $decorative = isset($_GET['decorative']) ? $byCategory[] = $_GET['decorative'] : '';
+        $bodycare = isset($_GET['bodycare']) ? $byCategory[] = $_GET['bodycare'] : '';
+
+        // dd($byCategory);
+
         $user = Auth::user();
         if($category_name == "SERIES") {
-            $products = $this->barangRepo->getBarangSeries($user);
+            $products = $this->barangRepo->getBarangSeries($user, $sorting, $byCategory);
         } else if($category_name == "ALL") {
-            $products = $this->barangRepo->getBarangAll($user);
+            $products = $this->barangRepo->getBarangAll($user, $sorting, $byCategory);
         } else if($category_name == "PROMO") {
-            $products = $this->barangRepo->getBarangPromo($user);
+            $products = $this->barangRepo->getBarangPromo($user, $sorting, $byCategory);
         } else {
-            $products = $this->barangRepo->getBarangByCategory($category_name, $user);
+            $products = $this->barangRepo->getBarangByCategory($category_name, $user, $sorting, $byCategory);
         }
         
         $category_name = ucfirst($category_name);
