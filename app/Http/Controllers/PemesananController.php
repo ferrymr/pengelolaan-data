@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Barang;
 use App\Models\TbHeadJual;
-use App\Models\TbDetJual;
+use App\Models\TbDetSeries;
 use PDF;
 use App\Mail\OrderConfirmed;
 use App\Mail\OrderShipped;
@@ -55,13 +55,6 @@ class PemesananController extends Controller
                     $printRouting = route('admin.pemesanan.print_immadiate', $data->id);
                 }
 
-                // pengecekan delete
-                // if ($data->status_transaksi == "PAYMENT CONFIRMED") {
-                //     $hapusRouting = route('admin.pemesanan.delete', $data->id);
-                // } else {
-                //     $hapusRouting = route('admin.pemesanan.delete', $data->id);
-                // }
-
                 return [
                     'show' => route('admin.pemesanan.show', $data->id),
                     'cancel' => route('admin.pemesanan.cronCancelProduct', $data->id),
@@ -84,17 +77,17 @@ class PemesananController extends Controller
 
     public function printTrf($id)
     {
-        $headJual = TbHeadJual::with('items', 'address', 'user')->find($id)->first();
+        $data = TbHeadJual::with('items.itemDetailHas', 'address', 'user', 'spb', 'detjual')->find($id);
 
-        $pdf = PDF::loadView('backend.order.pemesanan.print_trf', compact('headJual'))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('backend.order.pemesanan.print_trf', compact('data'))->setPaper('a4', 'potrait');
         return $pdf->stream();
     }
 
     public function printImmadiate($id)
     {
-        $headJual = TbHeadJual::with('items', 'address', 'user')->find($id)->first();
+        $data = TbHeadJual::with('items.itemDetailHas', 'address', 'user', 'spb', 'detjual')->find($id);
 
-        $pdf = PDF::loadView('backend.order.pemesanan.print_immadiate', compact('headJual'))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('backend.order.pemesanan.print_immadiate', compact('data'))->setPaper('a4', 'potrait');
         return $pdf->stream();
     }
 
@@ -163,15 +156,34 @@ class PemesananController extends Controller
                 ->update(['status_transaksi' => 'CANCEL']);
 
             foreach ($transaction->items as $row) {
-                // get last stock
-                $barang = Barang::where('kode_barang', $row->kode_barang)
-                    ->first();
 
-                Barang::where('kode_barang', $row->kode_barang)
-                    ->update(['stok' => ($barang->stok + $row->jumlah)]);
+                if ($row->unit == "SERIES") {
+                    // get id from code barang
+                    $barang = Barang::where('kode_barang', $row->kode_barang)->first();
+
+                    $serieItems = TbDetSeries::where('tb_series_id', $barang->id)
+                        ->get();
+
+                    foreach ($serieItems as $serieItem) {
+                        $currentQuantity = Barang::select('stok')
+                            ->where('id', $serieItem->tb_barang_id)
+                            ->first()
+                            ->stok;
+                        Barang::where('id', $serieItem->tb_barang_id)
+                            ->update(['stok' => $currentQuantity - ($serieItem->qty * $row->jumlah)]);
+                    }
+                } else {
+                    // get last stock
+                    $barang = Barang::where('kode_barang', $row->kode_barang)
+                        ->first();
+
+                    Barang::where('kode_barang', $row->kode_barang)
+                        ->update(['stok' => ($barang->stok + $row->jumlah)]);
+                }
             }
         }
 
-        return "<h1>Sukses gan!</h1>";
+        flash('<i class="fa fa-info"></i>&nbsp; <strong>Status pemesanan berhasil dicancel</strong>')->success()->important();
+        return redirect()->route('admin.pemesanan.index');
     }
 }

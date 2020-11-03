@@ -42,7 +42,7 @@
                     <a href="#" class="btn btn-sm btn-warning btn-print" title="Print" style="display: none;">
                         <i class="fa fa-print"></i>
                     </a>
-                    <a href="#" target="" class="btn btn-default btn-cancel">
+                    <a href="#" class="btn btn-sm btn-default btn-cancel" title="Cancel" style="display: none;">
                         Cancel
                     </a>
                     {{-- <a class="btn btn-danger btn-sm btn-hapus actDelete" 

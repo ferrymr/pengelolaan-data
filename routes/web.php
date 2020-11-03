@@ -241,8 +241,8 @@ Route::group([
     Route::get('show/{id}', 'PemesananController@show')->name('show');
     Route::get('cronCancelProduct/{id}', 'PemesananController@cronCancelProduct')->name('cronCancelProduct');
     Route::post('update-status/{id?}', 'PemesananController@setStatus')->name('update-status');
-    Route::get('print_trf/{no_do?}', 'PemesananController@printTrf')->name('print_trf');
-    Route::get('print_immadiate/{no_do?}', 'PemesananController@printImmadiate')->name('print_immadiate');
+    Route::get('print_trf/{id?}', 'PemesananController@printTrf')->name('print_trf');
+    Route::get('print_immadiate/{id?}', 'PemesananController@printImmadiate')->name('print_immadiate');
 });
 
 // Cashback
