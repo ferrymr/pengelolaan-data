@@ -108,9 +108,9 @@
                             <div class="input-group">
                                 <select name="produk[]" class="custom-select select2">
                                     <option value="">Pilih produk</option>
-                                    @foreach($barangs as $barang)
-                                        <option value="{{ $barang->id }}" @if($series->tb_barang_id == $barang->id) selected @endif>
-                                            {{ $barang->nama }}
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}" @if($series->tb_barang_id == $barang->id) selected @endif>
+                                            {{ $product->nama }}
                                         </option>
                                     @endforeach
                                 </select> 
@@ -125,9 +125,9 @@
                             <div class="input-group">
                                 <select name="produk[]" class="custom-select select2">
                                     <option value="">Pilih produk</option>
-                                    @foreach($barangs as $barang)
-                                        <option value="{{ $barang->id }}">
-                                            {{ $barang->nama }}
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}">
+                                            {{ $product->nama }}
                                         </option>
                                     @endforeach
                                 </select> 
@@ -346,8 +346,8 @@
                             <div class="input-group col-md-12 mb-2">
                                 <select name="produk[]" class="custom-select select2">
                                     <option value="" selected>Pilih produk</option>
-                                    @foreach($barangs as $barang)
-                                        <option value="{{ $barang->id }}">{{ $barang->nama }}</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}">{{ $product->nama }}</option>
                                     @endforeach
                                 </select>                             
                                 <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
