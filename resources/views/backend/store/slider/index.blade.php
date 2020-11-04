@@ -44,9 +44,18 @@
 
             <div id="action-template" style="display:none">
                 <div class="action-content">
-                    <a class="btn btn-danger btn-xs btn-delete actDelete" data-placement="left" data-toggle="confirmation" data-title="Hapus data ?" style="display:none;">
-                        <i class="fa fa-trash fa-fw"></i>
-                    </a>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm btn-delete actDelete" 
+                            data-placement="left" 
+                            data-toggle="confirmation" 
+                            data-title="Hapus data ?" 
+                            style="display:none;">
+                            <i class="fa fa-trash fa-fw"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,6 +101,10 @@
             function renderAction(data) {
 
                 var wrapper = $('<p></p>').append($('#action-template .action-content').clone());
+
+                if(data.action.edit) {
+                    wrapper.find('.btn-edit').attr('href', data.action.edit).show();
+                }
 
                 if(data.action.delete) {
                     wrapper.find('.btn-delete')

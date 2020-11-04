@@ -214,6 +214,9 @@
                         <a href="{{ route('home') }}" class="kt-item-title" title="Shop">Home</a>
                     </li>
                     <li class="menu-item">
+                        <a href="{{ route('products.category', 'PROMO') }}" class="kt-item-title" title="Promo">Promo</a>
+                    </li>
+                    <li class="menu-item">
                         <a href="{{ route('products.category', 'ALL') }}" class="kt-item-title" title="All Products">All Products</a>
                     </li>
                     <li class="menu-item">
@@ -223,10 +226,10 @@
                         <a href="{{ route('products.category', 'PURIFYING') }}" class="kt-item-title" title="Purifying">Purifying</a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('products.category', 'ACCESORIES') }}" class="kt-item-title" title="Accesories">Accesories</a>
+                        <a href="{{ route('products.category', 'DECORATIVE') }}" class="kt-item-title" title="Decorative">Decorative</a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('products.category', 'OTHER') }}" class="kt-item-title" title="Other">Other</a>
+                        <a href="{{ route('products.category', 'BODYCARE') }}" class="kt-item-title" title="Body Care">Body Care</a>
                     </li>
                     <li class="menu-item">
                         <a href="{{ route('products.category', 'SERIES') }}" class="kt-item-title" title="Series">Series</a>

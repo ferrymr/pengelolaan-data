@@ -44,55 +44,99 @@ class Barang extends Model
 
     // ======================== frontend ========================
 
-    public function getBarangByCategory($category_name, $user) {
-        if(!isset($user) || $user->hasRole('user')) {
-            return Barang::where('jenis', $category_name)
-                    ->where('bpom', 1)
-                    ->where('stok','>',0)
-                    ->where('stats',1)
-                    ->where('h_nomem', '!=', 0)
-                    ->paginate(20);
-        } else {
-            return Barang::where('jenis', $category_name)
-                    ->where('h_nomem', '!=', 0)
-                    ->where('stok','>',0)
-                    ->where('stats',1)
-                    ->paginate(20);
-        }
+    public function getBarangByCategory($category_name, $user, $sorting, $byCategory) {
+        $barang = Barang::where('jenis', $category_name)
+                ->where('h_nomem', '!=', 0)
+                ->where('stok','>',0)
+                ->where('stats',1);
         
+        if(!empty($sorting)) {
+            if($sorting == "highest_price") {
+                $barang = $barang->orderBy('h_nomem', 'DESC');
+            } elseif($sorting == 'lowest_price') {
+                $barang = $barang->orderBy('h_nomem', 'ASC');
+            }            
+        } else {
+            $barang = $barang->orderBy('created_at', 'DESC');
+        }
+
+        if(!empty($byCategory)) {
+            $barang = $barang->whereIn('jenis', $byCategory);
+        }
+
+        $barang = $barang->paginate(16);
+        return $barang;
     }
 
-    public function getBarangSeries($user) {
-        if (!isset($user) || $user->hasRole('user')) {
-            return Barang::where('unit', "SERIES")
-                        ->where('bpom', 1)
-                        ->where('stok','>',0)
-                        ->where('stats',1)
-                            ->where('h_nomem', '!=', 0)
-                        ->paginate(20);
-        } else {
-            return Barang::where('unit', "SERIES")
-                        ->where('h_nomem', '!=', 0)
-                        ->where('stok','>',0)
-                        ->where('stats',1)
-                            ->paginate(20);
-        }
+    public function getBarangSeries($user, $sorting, $byCategory) {
+        $barang = Barang::where('unit', "SERIES")
+                    ->where('h_nomem', '!=', 0)
+                    ->where('stok','>',0)
+                    ->where('stats',1);
         
+        if(!empty($sorting)) {
+            if($sorting == "highest_price") {
+                $barang = $barang->orderBy('h_nomem', 'DESC');
+            } elseif($sorting == 'lowest_price') {
+                $barang = $barang->orderBy('h_nomem', 'ASC');
+            }            
+        } else {
+            $barang = $barang->orderBy('created_at', 'DESC');
+        }
+
+        if(!empty($byCategory)) {
+            $barang = $barang->whereIn('jenis', $byCategory);
+        }
+
+        $barang = $barang->paginate(16);
+        return $barang;
     }
 
-    public function getBarangAll($user) {
-        if (!isset($user) || $user->hasRole('user')) {
-            return Barang::where('h_nomem', '!=', 0)
-                        ->where('bpom', 1)
-                        ->where('stok','>',0)
-                        ->where('stats',1)
-                            ->paginate(20);
+    public function getBarangAll($user, $sorting, $byCategory) {
+        $barang = Barang::where('h_nomem', '!=', 0)
+                    ->where('stok','>',0)
+                    ->where('stats',1);
+        
+        if(!empty($sorting)) {
+            if($sorting == "highest_price") {
+                $barang = $barang->orderBy('h_nomem', 'DESC');
+            } elseif($sorting == 'lowest_price') {
+                $barang = $barang->orderBy('h_nomem', 'ASC');
+            }            
         } else {
-            return Barang::where('h_nomem', '!=', 0)
+            $barang = $barang->orderBy('created_at', 'DESC');
+        }
+
+        if(!empty($byCategory)) {
+            $barang = $barang->whereIn('jenis', $byCategory);
+        }
+
+        $barang = $barang->paginate(16);
+        return $barang;
+    }
+
+    public function getBarangPromo($user, $sorting, $byCategory) {
+        $barang = Barang::where('h_nomem', '!=', 0)
                         ->where('stok','>',0)
-                        ->where('stats',1)
-                            ->paginate(20);
-        }       
+                        ->where('flag_promo', 1)
+                        ->where('stats',1);
+        
+            if(!empty($sorting)) {
+                if($sorting == "highest_price") {
+                    $barang = $barang->orderBy('h_nomem', 'DESC');
+                } elseif($sorting == 'lowest_price') {
+                    $barang = $barang->orderBy('h_nomem', 'ASC');
+                }                
+            } else {
+                $barang = $barang->orderBy('created_at', 'DESC');
+         
+         
+                if(!empty($byCategory)) {
+                    $barang = $barang->whereIn('jenis', $byCategory);
+                }
+            }
+        $barang = $barang->paginate(16);
+        return $barang;
     }
 
     // ======================== backend ========================

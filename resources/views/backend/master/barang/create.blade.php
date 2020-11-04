@@ -60,8 +60,8 @@
                     <option value="" selected>Pilih jenis barang</option>
                     <option value="WHITENING">Whitening</option>
                     <option value="PURIFYING">Purifying</option>                  
-                    <option value="ACCESORIES">Accesories</option>
-                    <option value="OTHER">Other</option>
+                    <option value="DECORATIVE">Decorative</option>
+                    <option value="BODYCARE">Body Care</option>
                     </select>
                 </div>
             </div>
@@ -275,23 +275,17 @@
             $('#append-product').on('click', '.remove-product', function(){
                 $(this).parent().parent().remove();
             });
-            
-            changeUnit();
-            
+
             $("#unit").change(function() {
-                changeUnit();
+                $('.select2').select2();
+                let unit = $(this).val();
+
+                if(unit == 'SERIES') {
+                    $('#series').show();
+                } else {
+                    $('#series').hide();
+                }
             });
         });
-
-        function changeUnit() {
-            $('.select2').select2();
-            let unit = $(this).val();
-
-            if(unit == 'SERIES') {
-                $('#series').show();
-            } else {
-                $('#series').hide();
-            }
-        }
     </script>
 @stop

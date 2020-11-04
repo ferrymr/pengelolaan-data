@@ -41,11 +41,11 @@
                                         <div class="col-md-12"> 
                                             {{-- {{ dd($user->hasRole('member')) }} --}}
                                             @if($user->hasRole('member'))                                               
-                                                <button class="btn btn-success">User <b>Member</b></button>
+                                                <button class="btn btn-success"><b>Member</b></button>
                                             @elseif($user->hasRole('reseller'))
-                                                <button class="btn btn-info">User <b>Reseller</b></button>
+                                                <button class="btn btn-info"><b>Reseller</b></button>
                                             @else 
-                                                <button class="btn btn-default">User <b>Standar</b></button>
+                                                <button class="btn btn-default"><b>User</b></button>
                                             @endif
                                         </div>
                                     </div>

@@ -16,15 +16,17 @@
                 data-slick ='{"autoplay":true, "autoplaySpeed":9000, "arrows":true, "dots":false, "infinite":true, "speed":1000, "rows":1}' 
                 data-responsive='[{"breakpoint":"2000","settings":{"slidesToShow":1}}]'>
                 @foreach($sliders as $slider)
-                    <div class="slider-item style1">
-                        <div class="slider-inner equal-element" style="background-image: url({{route('admin.slider.slider-image', $slider->id)}})">
-                            <div class="slider-infor">
-                                <h5 class="title-small">&nbsp;</h5>
-                                <h3 class="title-big">&nbsp;</h3>
-                                <div class="price">&nbsp;</div>
+                    <a href="{{ $slider->link }}">
+                        <div class="slider-item style1">
+                            <div class="slider-inner equal-element" style="background-image: url({{route('admin.slider.slider-image', $slider->id)}})">
+                                <div class="slider-infor">
+                                    <h5 class="title-small">&nbsp;</h5>
+                                    <h3 class="title-big">&nbsp;</h3>
+                                    <div class="price">&nbsp;</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>

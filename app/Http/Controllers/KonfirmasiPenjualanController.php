@@ -10,6 +10,8 @@ use App\Models\TbHeadJual;
 use DB;
 use File;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
+use App\Helpers\Whatsapp;
 
 class KonfirmasiPenjualanController extends Controller
 {

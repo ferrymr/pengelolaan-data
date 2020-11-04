@@ -61,8 +61,8 @@
                     <option value="">Pilih jenis barang</option>
                     <option value="WHITENING" @if($barang->jenis == 'WHITENING') selected @endif>Whitening</option>
                     <option value="PURIFYING" @if($barang->jenis == 'PURIFYING') selected @endif>Purifying</option>                  
-                    <option value="ACCESORIES" @if($barang->jenis == 'ACCESORIES') selected @endif>Accesories</option>
-                    <option value="OTHER" @if($barang->jenis == 'OTHER') selected @endif>Other</option>
+                    <option value="DECORATIVE" @if($barang->jenis == 'DECORATIVE') selected @endif>Decorative</option>
+                    <option value="BODYCARE" @if($barang->jenis == 'BODYCARE') selected @endif>Body Care</option>
                     </select>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                 <div class="form-group @if($errors->has('unit')) has-error @endif">
                     <label for="unit" class="col-sm-12 control-label">Unit</label>    
                     <div class="col-sm-12">
-                        <select name="unit" class="form-control select2">
+                        <select name="unit" class="form-control select2" id="unit">
                             <option value="" selected>Pilih unit</option>
                             <option value="PIECES" @if($barang->unit == 'PIECES') selected @endif>PIECES</option>
                             <option value="SERIES" @if($barang->unit == 'SERIES') selected @endif>SERIES</option>
@@ -98,19 +98,19 @@
                 </div>
             </div>
 
-            @if($barang->unit == 'SERIES')
-                <div id="series" class="form-group row col-sm-12">
+            {{-- @if($barang->unit == 'SERIES') --}}
+                <div id="series" class="form-group row col-sm-12" style="display: none;">
                     <div class="col-md-12 mb-3">                    
                         <h5><b>Tambahkan produk ke dalam series</b></h5>
                     </div>
-                    @foreach($barang->series as $series)
+                    @forelse($barang->series as $series)
                         <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
                             <div class="input-group">
                                 <select name="produk[]" class="custom-select select2">
                                     <option value="">Pilih produk</option>
-                                    @foreach($barangs as $barang)
-                                        <option value="{{ $barang->id }}" @if($series->tb_barang_id == $barang->id) selected @endif>
-                                            {{ $barang->nama }}
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}" @if($series->tb_barang_id == $barang->id) selected @endif>
+                                            {{ $product->nama }}
                                         </option>
                                     @endforeach
                                 </select> 
@@ -120,10 +120,27 @@
                                 </button>
                             </div>
                         </div>
-                    @endforeach
+                    @empty 
+                        <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                            <div class="input-group">
+                                <select name="produk[]" class="custom-select select2">
+                                    <option value="">Pilih produk</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}">
+                                            {{ $product->nama }}
+                                        </option>
+                                    @endforeach
+                                </select> 
+                                <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
+                                <button type="button" class="btn btn-success ml-3" id="add-product">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    @endforelse
                     <table id="append-product" class="col-md-8"></table>
                 </div>
-            @endif
+            {{-- @endif --}}
 
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('poin')) has-error @endif">
@@ -329,8 +346,8 @@
                             <div class="input-group col-md-12 mb-2">
                                 <select name="produk[]" class="custom-select select2">
                                     <option value="" selected>Pilih produk</option>
-                                    @foreach($barangs as $barang)
-                                        <option value="{{ $barang->id }}">{{ $barang->nama }}</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}">{{ $product->nama }}</option>
                                     @endforeach
                                 </select>                             
                                 <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
@@ -346,24 +363,20 @@
             $('#append-product').on('click', '.remove-product', function(){
                 $(this).parent().parent().remove();
             });
-            
-            changeUnit();
-            
+                        
             $("#unit").change(function() {
-                changeUnit();
+                $('.select2').select2();
+                let unit = $(this).val();
+
+                if(unit == 'SERIES') {
+                    $('#series').show();
+                } else {
+                    $('#series').hide();
+                }
             });
         });
 
-        function changeUnit() {
-            $('.select2').select2();
-            let unit = $(this).val();
-
-            if(unit == 'SERIES') {
-                $('#series').show();
-            } else {
-                $('#series').hide();
-            }
-        }
+        
 
         // select2
         $('.select2').select2();

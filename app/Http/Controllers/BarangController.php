@@ -91,13 +91,13 @@ class BarangController extends Controller
         $user = Auth::user();
         $barang = $this->barangRepo->findId($id);
         $barangImages = BarangImages::where('tb_barang_id', $id)->get();
-        $barangs = Barang::where('unit', '!=', 'SERIES')->get();
+        $products = Barang::where('unit', '!=', 'SERIES')->get();
 
         return view('backend.master.barang.edit')->with([
             'user' => $user,
             'barang' => $barang,
             'barangImages' => $barangImages,
-            'barangs' => $barangs
+            'products' => $products
         ]);
     }
     
