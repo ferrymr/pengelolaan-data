@@ -163,13 +163,15 @@ Route::group([
 ], function(){
     Route::get('', 'ReferralController@index')->name('index');
     Route::get('datatable', 'ReferralController@datatable')->name('datatable');
-    Route::get('edit/{kode_pack}', 'ReferralController@edit')->name('edit');
-    Route::get('view/{kode_pack}', 'ReferralController@view')->name('view');
-    Route::get('delete/{kode_pack}', 'ReferralController@destroy')->name('delete');
+    Route::get('edit/{no_member}/{kode_up}', 'ReferralController@edit')->name('edit');
+    // Route::get('view/{no_member}', 'ReferralController@view')->name('view');
+    Route::get('delete/{no_member}', 'ReferralController@destroy')->name('delete');
     Route::get('add', 'ReferralController@create')->name('add');
     Route::post('store', 'ReferralController@store')->name('store');
-    Route::post('komposisi', 'ReferralController@komposisi')->name('komposisi');
-    Route::post('update/{kode_pack}', 'ReferralController@update')->name('update');
+    Route::post('leads', 'ReferralController@leads')->name('leads');
+    Route::post('down', 'ReferralController@down')->name('down');
+    // Route::post('downline', 'ReferralController@downline')->name('downline');
+    Route::post('update/{no_member}', 'ReferralController@update')->name('update');
 });
 
 // ORDER.PENJUALAN
