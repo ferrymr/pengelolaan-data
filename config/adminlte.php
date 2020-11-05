@@ -268,10 +268,7 @@ return [
                     'text' => 'Barang',
                     'url' => 'admin/barang'
                 ],
-                [
-                    'text' => 'Member',
-                    'url' => 'member'
-                ],
+                
                 [
                     'text' => 'Supplier',
                     'url' => 'admin/supplier'
@@ -410,7 +407,7 @@ return [
                 ],
                 [
                     'text' => 'SPB kontrol',
-                    'url' => 'spbkontrol'
+                    'url' => 'admin/barangspb'
                 ],
                 [
                     'text' => 'Calculate (barang)',

@@ -10,6 +10,7 @@ use App\Models\Barang;
 use App\Models\BarangImages;
 use App\Models\User;
 use App\Models\Gallery;
+use App\Models\Series;
 use Illuminate\Http\Response;
 use DB;
 use File;
@@ -58,11 +59,10 @@ class BarangController extends Controller
     public function create()
     {
         $user = Auth::user();
-        
         return view('backend.master.barang.create')->with([
             'user' => $user,
+            
         ]);
-
     }
 
     public function store(Request $request)
@@ -72,7 +72,7 @@ class BarangController extends Controller
         $input['update_at'] = date("Y-m-d H:i:s");
         $input['bpom'] = isset($input['bpom']) ? $input['bpom'] : 0;
         $input['cat'] = $input['bpom'];
-
+        
         $jumlah = Barang::where('kode_barang', $input['kode_barang'])->count();
 
         if ($jumlah>0){
@@ -105,16 +105,16 @@ class BarangController extends Controller
         // password kosong
         $param = array(
             "kode_barang" => $request->input('kode_barang'),
-            "nama" => $request->input('nama'),
-            "jenis" => $request->input('jenis'),
-            "stok" => $request->input('stok'),
-            "poin" => $request->input('poin'),
-            "berat" => $request->input('berat'),
-            "satuan" => $request->input('satuan'),
-            "h_nomem" => $request->input('h_nomem'),
-            "h_member" => $request->input('h_member'),
-            "deskripsi" => $request->input('deskripsi'),
-            "cara_pakai" => $request->input('cara_pakai')
+            "nama"        => $request->input('nama'),
+            "jenis"       => $request->input('jenis'),
+            "stok"        => $request->input('stok'),
+            "poin"        => $request->input('poin'),
+            "berat"       => $request->input('berat'),
+            "satuan"      => $request->input('satuan'),
+            "h_nomem"     => $request->input('h_nomem'),
+            "h_member"    => $request->input('h_member'),
+            "deskripsi"   => $request->input('deskripsi'),
+            "cara_pakai"  => $request->input('cara_pakai')
         );
     
         $barang = $this->barangRepo->editBarang($param, $kode_barang, $request->input('role_id'));
@@ -209,5 +209,27 @@ class BarangController extends Controller
             return redirect()->route('admin.barang.edit', $barangId)->withInput()->withError();
         }
     }
+    
+    public function create_kode(Request $request)
+    {
+        $kode_pack = $request->get('kode_pack');
+
+        if($request->ajax()) {
+            $data = '';
+            $qry = Series::where('kode_pack', $kode_pack)->get();
+            foreach ($qry as $value) {
+                $data = array(
+                    'nama'  =>  $value->nama_pack,
+                    'jenis'  =>  $value->jenis_pack,
+                    'h_nomem'  =>  $value->h_nomem,
+                    'h_member'  =>  $value->h_member,
+                    'berat'  =>  $value->berat,
+                );
+            }
+            echo json_encode($data);
+        }
+    
+    }
+
     
 }

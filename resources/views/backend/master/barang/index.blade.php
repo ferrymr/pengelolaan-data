@@ -52,7 +52,8 @@
                     <a class="btn btn-danger btn-sm btn-hapus actDelete" 
                         data-placement="left" 
                         data-toggle="confirmation" 
-                        data-title="Hapus data ?" 
+                        data-title="Hapus data ?"
+                        onclick="return confirm('Yakin hapus data?')" 
                         style="display:none;">
                         <i class="fa fa-trash fa-fw"></i>
                     </a>
