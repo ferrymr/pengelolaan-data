@@ -39,8 +39,10 @@ class CreateTbHeadJualTable extends Migration
             $table->double('shipping_fee')->nullable(); // additional
             $table->double('grand_total')->nullable(); // additional
             $table->double('total_berat')->nullable(); // additional
+            $table->double('total_item')->nullable(); // additional
+            $table->double('total_poin')->nullable(); // additional
             $table->string('jenis_platform')->nullable(); // additional
-            // $table->string('kode_spb')->nullable(); // todo move to user that status is stockist
+            $table->string('kode_spb')->nullable(); // todo move to user that status is stockist
             // $table->string('kode_aff')->nullable(); // todo move to user that status is reseller
             $table->string('status_transaksi')->nullable(); // additional
             // $table->string('resi')->nullable(); // additional // removed

@@ -268,18 +268,19 @@ return [
                     'text' => 'Barang',
                     'url' => 'admin/barang'
                 ],
-                [
-                    'text' => 'Member',
-                    'url' => 'member'
-                ],
+                // [
+                //     'text' => 'Member',
+                //     'url' => 'member'
+                // ],
                 [
                     'text' => 'Supplier',
                     'url' => 'admin/supplier'
                 ],
-                [
-                    'text' => 'Series',
-                    'url' => 'admin/series'
-                ],
+                // moved to master barang
+                // [
+                //     'text' => 'Series',
+                //     'url' => 'admin/series'
+                // ],
                 [
                     'text' => 'Referral',
                     'url' => 'admin/referral'
@@ -292,9 +293,17 @@ return [
             'icon' => 'fas fa-fw fa-shopping-bag',
             'submenu' => [
                 [
-                    'text' => 'Penjualan',
-                    'url' => 'admin/penjualan/index'
+                    'text' => 'Pemesanan',
+                    'url' => 'admin/pemesanan'
                 ],
+                [
+                    'text' => 'Konfirmasi pemesanan',
+                    'url' => 'admin/konfirmasi-penjualan'
+                ],
+                // [
+                //     'text' => 'Penjualan',
+                //     'url' => 'admin/penjualan'
+                // ],                
                 [
                     'text' => 'Pembelian',
                     'url' => 'pembelian'
@@ -303,10 +312,7 @@ return [
                     'text' => 'Movement',
                     'url' => 'movement'
                 ],
-                [
-                    'text' => 'Pemesanan',
-                    'url' => 'pemesanan'
-                ],
+                
 
             ],
         ],
@@ -438,9 +444,14 @@ return [
             'url'  => 'admin/slider',
             'icon' => 'fas fa-fw fa-image',
         ],
+        // [
+        //     'text' => 'Banner',
+        //     'url'  => 'admin/banner',
+        //     'icon' => 'fas fa-fw fa-tag',
+        // ],        
         [
-            'text' => 'Banner',
-            'url'  => 'admin/banner',
+            'text' => 'Coupon',
+            'url'  => 'admin/coupon',
             'icon' => 'fas fa-fw fa-tag',
         ],
         [
@@ -448,11 +459,21 @@ return [
             'url'  => 'admin/user',
             'icon' => 'fas fa-fw fa-users',
         ],
+        // [
+        //     'text' => 'Pendaftaran Member',
+        //     'url'  => 'admin/daftar-member',
+        //     'icon' => 'fas fa-fw fa-list',
+        // ],
+        [
+            'text' => 'Konfirmasi Pendaftaran',
+            'url'  => 'admin/konfirmasi-daftar',
+            'icon' => 'fas fa-fw fa-book',
+        ],
 
         ['header' => 'PROFILE'],
         [
             'text' => 'Logout',
-            'url'  => 'admin/settings',
+            'url'  => '/logout',
             'icon' => 'fas fa-fw fa-power-off',
         ],
         [
@@ -667,6 +688,21 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js',
+                ],
+            ],
+        ],
+        'Popup' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js',
                 ],
             ],
         ],

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTbOrderHistoryTable extends Migration
+class CreateTbDetSeriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateTbOrderHistoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_order_history', function (Blueprint $table) {
+        Schema::create('tb_det_series', function (Blueprint $table) {
             $table->id();
-            $table->integer('tb_head_jual_id');
-            $table->datetime('tanggal');
-            $table->string('keterangan');
+            $table->integer('tb_barang_id');
+            $table->integer('tb_series_id');
+            $table->double('qty');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateTbOrderHistoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_order_history');
+        Schema::dropIfExists('tb_det_series');
     }
 }

@@ -58,9 +58,10 @@ class BarangController extends Controller
     public function create()
     {
         $user = Auth::user();
-        
+        $barangs = Barang::where('unit', '!=', 'SERIES')->get();
         return view('backend.master.barang.create')->with([
             'user' => $user,
+            'barangs' => $barangs,
         ]);
     }
 
@@ -90,11 +91,13 @@ class BarangController extends Controller
         $user = Auth::user();
         $barang = $this->barangRepo->findId($id);
         $barangImages = BarangImages::where('tb_barang_id', $id)->get();
+        $products = Barang::where('unit', '!=', 'SERIES')->get();
 
         return view('backend.master.barang.edit')->with([
             'user' => $user,
             'barang' => $barang,
-            'barangImages' => $barangImages
+            'barangImages' => $barangImages,
+            'products' => $products
         ]);
     }
     
@@ -107,12 +110,16 @@ class BarangController extends Controller
             "jenis" => $request->input('jenis'),
             "stok" => $request->input('stok'),
             "poin" => $request->input('poin'),
+            "diskon" => $request->input('diskon'),
+            "bpom" => $request->input('bpom'),
             "berat" => $request->input('berat'),
             "satuan" => $request->input('satuan'),
             "h_nomem" => $request->input('h_nomem'),
             "h_member" => $request->input('h_member'),
             "deskripsi" => $request->input('deskripsi'),
-            "cara_pakai" => $request->input('cara_pakai')
+            "cara_pakai" => $request->input('cara_pakai'),
+            "flag_bestseller" => $request->input('flag_bestseller'),
+            "flag_promo" => $request->input('flag_promo')
         );
     
         $barang = $this->barangRepo->editBarang($param, $kode_barang, $request->input('role_id'));

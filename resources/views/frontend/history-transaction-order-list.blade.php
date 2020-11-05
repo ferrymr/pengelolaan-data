@@ -73,8 +73,8 @@
                                                                 <i class="fa fa-shopping-bag" aria-hidden="true"></i>
                                                             </div>
                                                             <div class="date-order">
-                                                                <span> {{ date_format(date_create($transaction->tgl_transaksi),"d F Y") }} </span>
-                                                                <span class="text-bold">{{ $transaction->nomor_transaksi }}</span>
+                                                                <span> {{ date_format(date_create($transaction->tanggal),"d F Y") }} </span>
+                                                                <span class="text-bold">{{ $transaction->no_do }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="hr-item-transaction"></div>
@@ -82,7 +82,7 @@
                                                             <div class="alert alert-{{ $transaction->status_transaksi != 'PLACE ORDER' ? 'success' : 'warning' }}">
                                                                 <b>Status: &nbsp;</b>
                                                                 @if ($transaction->status_transaksi == 'PLACE ORDER')
-                                                                    Lakukan pembayaran sebelum <b>{{ date_format(date_create($transaction->tgl_transaksi),"d F Y") }} pk 00:00</b>
+                                                                    Lakukan pembayaran sebelum <b>{{ date_format(date_create($transaction->tanggal),"d F Y") }} pk 00:00</b>
                                                                 @elseif ($transaction->status_transaksi == 'TRANSFERRED')
                                                                     Sudah melakukan konfirmasi pembayaran
                                                                 @elseif ($transaction->status_transaksi == 'PAYMENT CONFIRMED')

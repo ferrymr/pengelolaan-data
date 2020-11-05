@@ -13,5 +13,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(LaratrustSeeder::class);
         // $this->call(LocationsSeeder::class);
+        $this->call(OkProvincesTableSeeder::class);
+        $this->call(OkCitiesTableSeeder::class);
+        $this->call(OkSubdistrictsTableSeeder::class);
+        $this->call(SpbTableSeeder::class);
     }
 }

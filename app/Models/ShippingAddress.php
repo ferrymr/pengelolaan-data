@@ -8,20 +8,22 @@ class ShippingAddress extends Model
 {
     protected $table = 'tb_shipping_address';
 
+    protected $primaryKey = 'id';
+
     public $timestamps = false;
 
     protected $fillable = [
         'user_id',
         'no_member',
-        'nama', 
-        'telepon', 
-        'provinsi_id', 
-        'provinsi_nama', 
-        'kota_id', 
-        'kota_nama', 
-        'kecamatan_id', 
-        'kecamatan_nama', 
-        'alamat', 
+        'nama',
+        'telepon',
+        'provinsi_id',
+        'provinsi_nama',
+        'kota_id',
+        'kota_nama',
+        'kecamatan_id',
+        'kecamatan_nama',
+        'alamat',
         'kode_pos',
         'is_default'
     ];
@@ -33,7 +35,11 @@ class ShippingAddress extends Model
 
     public function transaction()
     {
-        return $this->hasMany(Transaction::class, 'shipping_address_id');
+        return $this->hasMany(TbHeadJual::class, 'shipping_address_id');
     }
 
+    public function headjual()
+    {
+        return $this->hasMany(TbHeadJual::class, 'shipping_address_id');
+    }
 }

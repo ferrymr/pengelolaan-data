@@ -59,6 +59,11 @@
                                             <option value="{{ $bank }}">{{ $bank }}</option>
                                         @endforeach
                                     </select>
+                                    <div wire:loading>
+                                        <div id="loading">
+                                            <img id="loading-image" src="{{ asset('assets/images/loader.gif') }}" alt="Loading..." />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             

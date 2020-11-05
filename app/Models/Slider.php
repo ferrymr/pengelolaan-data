@@ -19,6 +19,7 @@ class Slider extends Model
     protected $fillable = [
         'name', 
         'category', 
+        'link',
         'order', 
     ];
 
@@ -30,6 +31,7 @@ class Slider extends Model
         return Slider::insert([
             'name' => $filename,
             'category' => $category,
+            'link' => '#',
             'order' => $order,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

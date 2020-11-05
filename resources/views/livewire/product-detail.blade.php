@@ -36,23 +36,31 @@
                     <div class="details-product single-product-galery">
                         <div class="details-thumd" style="padding-top: 0px">
                             <div class="image-preview-container image-thick-box image_preview_container">
-                                <img id="img_zoom" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
-                                <a href="#" class="btn-zoom open_qv"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                @if(!empty($product->barangImages()->first()))
+                                    <img id="img_zoom" 
+                                        data-zoom-image="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" 
+                                        src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" 
+                                        alt="">
+                                    {{-- <a href="#" class="btn-zoom open_qv"><i class="fa fa-search" aria-hidden="true"></i></a> --}}
+                                @else
+                                    <img id="img_zoom" 
+                                            data-zoom-image="{{ asset('assets/images/product-1.jpg') }}" 
+                                            src="{{ asset('assets/images/product-1.jpg') }}" 
+                                            alt="">
+                                @endif
                             </div>
                             <div class="product_preview image-small">
                                 <div id="thumbnails" class="thumbnails_carousel owl-carousel" data-nav="true" data-autoplay="false" data-dots="false" data-loop="false" data-margin="25" data-responsive='{"0":{"items":3},"480":{"items":3},"600":{"items":3},"1000":{"items":3}}' >
-                                    <a href="#" data-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" class="active">
-                                        <img src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-large-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
-                                    </a>
-                                    <a href="#" data-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}">
-                                        <img src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-large-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
-                                    </a>
-                                    <a href="#" data-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}">
-                                        <img src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-large-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
-                                    </a>
-                                    <a href="#" data-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-zoom-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}">
-                                        <img src="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" data-large-image="{{ asset('assets/images/large/' . $product->kode_barang . '.jpg')}}" alt="">
-                                    </a>
+                                    @foreach($product->barangImages as $row)
+                                        <a href="#" data-image="{{ route('admin.barang.barang-image', $row->id) }}" 
+                                                data-zoom-image="{{ route('admin.barang.barang-image', $row->id) }}" 
+                                                @if ($row->first) class="active" @endif>
+                                            <img src="{{ route('admin.barang.barang-image', $row->id) }}" 
+                                                data-large-image="{{ route('admin.barang.barang-image', $row->id) }}" 
+                                                alt="">
+                                        </a>
+                                    @endforeach
+
                                 </div>
                             </div>
                         </div>
@@ -68,24 +76,54 @@
                             </div>
                             <div class="availability">availability:<a href="#">instock</a></div> --}}
                             <div class="price">
-                                <span>@currency($product->h_nomem)</span>
+                                <b>
+                                    @if(!isset($user) || $user->hasRole('user'))
+
+                                        @if($product->diskon > 0)
+                                            @php
+                                                $harga = $product->h_nomem;
+                                                $harga = $harga - ($harga * ($product->diskon/100));
+                                            @endphp
+                                            <span style="font-size: 25px; text-decoration:  line-through;">@currency($product->h_nomem)</span> 
+                                            <span style="color:#f00;">@currency($harga)</span>
+                                        @else
+                                            <span>@currency($product->h_nomem)</span>
+                                        @endif
+
+                                    @else
+
+                                        @if($product->diskon > 0)
+                                            @php
+                                                $harga = $product->h_member;
+                                                $harga = $harga - ($harga * ($product->diskon/100));
+                                            @endphp
+                                            <span style="font-size: 25px; text-decoration:  line-through;">@currency($product->h_member)</span> 
+                                            <span style="color:#f00;">@currency($harga)</span>
+                                        @else
+                                            <span>@currency($product->h_member)</span>
+                                        @endif
+                                        
+                                    @endif
+                                </b>                            
                             </div>
                             <div class="product-details-description">
                                 <p class="desc">{{ $product->deskripsi_lengkap }}</p>
                             </div>
                             <div class="group-button">
-                                <div class="quantity-add-to-cart">
-                                    <div class="quantity">
-                                        <div class="control">
-                                            <a wire:click="decrementQty" class="btn-number qtyminus quantity-minus" href="#">-</a>
-                                            <input type="text" wire:model="qty" data-step="1" data-min="1" value="{{ $qty }}" title="Qty" class="input-qty qty" size="4">
-                                            <a wire:click="incrementQty" href="#" class="btn-number qtyplus quantity-plus">+</a>
+                                @if(!empty($product->bpom))
+                                    <div class="quantity-add-to-cart">
+                                        <div class="quantity">
+                                            <div class="control">
+                                                <a wire:click="decrementQty" class="btn-number qtyminus quantity-minus" href="#">-</a>
+                                                <input type="text" wire:model="qty" data-step="1" data-min="1" value="{{ $qty }}" title="Qty" class="input-qty qty" size="4">
+                                                <a wire:click="incrementQty" href="#" class="btn-number qtyplus quantity-plus">+</a>
+                                            </div>
                                         </div>
+                                        <button wire:click="addToCart" class="single_add_to_cart_button button" onclick="tampilkanNotifikasi('{{ $product->nama }}', {{ $qty }})">Add to cart</button>
                                     </div>
-                                    <button wire:click="addToCart" class="single_add_to_cart_button button" onclick="tampilkanNotifikasi('{{ $product->nama }}', {{ $qty }})">Add to cart</button>
-                                </div>
-                                <p>&nbsp;</p>
-                                <p>&nbsp;</p>
+                                    <p>&nbsp;</p>
+                                    <p>&nbsp;</p>                                
+                                @endif
                                 <div class="contact-bc">
                                     <p>Temukan produk perawatan yang sesuai dengan kebutuhanmu hanya Bersama Bellezkin. Dapatkan gratis konsultasi bersama Beauty Consultant kami :)</p> 
                                 </div>
@@ -103,17 +141,17 @@
                     </div>
                     
                     {{-- details atbs --}}
-                    <div class="tab-details-product">
+                    <div class="tab-details-product" style="margin-bottom: 50px">
                         <ul class="tab-link">
-                            <li class="active"><a data-toggle="tab" aria-expanded="true" href="#product-descriptions">Deskripsi</a></li>
+                            <li class="active"><a data-toggle="tab" aria-expanded="true" href="#product-descriptions2">Deskripsi</a></li>
                             <li class=""><a data-toggle="tab" aria-expanded="true" href="#information ">Cara Pakai</a></li>
                         </ul>
                         <div class="tab-container">
-                            <div id="product-descriptions" class="tab-panel active">
-                                <p> {{ $product->deskripsi_lengkap }} </p>
+                            <div id="product-descriptions2" class="tab-panel active">
+                                <p> {!! $product->deskripsi !!} </p>
                             </div>
                             <div id="information" class="tab-panel">
-                                <p> {{ $product->cara_pakai }} </p>
+                                <p> {!! $product->cara_pakai !!} </p>
                             </div>
                         </div>
                     </div>
