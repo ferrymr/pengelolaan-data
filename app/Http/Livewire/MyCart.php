@@ -13,7 +13,6 @@ class MyCart extends Component
     public $totalItems;
     public $subtotal;
     public $nextPageLink;
-
     public $qty = 1;
 
     public function mount()

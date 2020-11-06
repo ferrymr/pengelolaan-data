@@ -10,13 +10,13 @@
         @media print {
             @page {
                 width: 8.27in;
-                height: 11.01in;
+                height: 11.69in;
             }
         }
 
         html,
         body {
-            width: 7.3in;
+            width: 8.27in;
             height: 11.69in;
             margin: 0;
         }
@@ -51,17 +51,17 @@
         }
 
         .s20 {
-            font-size: 30px;
+            font-size: 40px;
             font-weight: bold;
         }
 
         .s15 {
-            font-size: 15px;
+            font-size: 30px;
             font-weight: bold;
         }
 
         .s10 {
-            font-size: 10px;
+            font-size: 20px;
         }
 
         .text-right {
@@ -80,7 +80,6 @@
 </head>
 <body style="padding-left: 10px;">
     <table style="width=80%">
-        
         <thead>
             <tr>
                 <th>
@@ -104,7 +103,7 @@
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    SP002<br>
+                                    {{ $data->spb->name }}<br>
                                 </span>
                             </th>
                             <th class="text-right">
@@ -134,12 +133,12 @@
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    {{ $headJual->no_do }}<br>
+                                    {{ $data->no_do }}<br>
                                 </span>
                             </th>
                             <th class="text-right">
                                 <span class="times-new-roman s15">
-                                   {{$headJual->tanggal}}<br>
+                                    {{ $data->tanggal }}<br>
                                 </span>
                             </th>
                         </tr>
@@ -149,12 +148,12 @@
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    {{ $headJual->no_member }}<br>
+                                    {{ $data->user->no_member }}<br>
                                 </span>
                             </th>
-                            <th class="padding-right text-left">
+                            <th class="text-right">
                                 <span class="times-new-roman s15">
-                                    {{ $headJual->nama }}<br>
+                                    {{ $data->address->nama }}<br>
                                 </span>
                             </th>
                         </tr>
@@ -164,39 +163,40 @@
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    {{ $headJual->bayar }}<br>
+                                    TRF<br>
                                 </span>
                             </th>
-                            <th class="padding-right text-left">
+                            <th class="text-right">
                                 <span class="times-new-roman s15">
-                                    {{ $headJual->cc }}<br>
+                                    {{ $data->bank }}<br>
                                 </span>
                             </th>
                         </tr>
                     </table>
                     <hr>
+                    @foreach($data->items as $item)
                     <table width="100%">
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    {{ $headJual->detjual->kode_barang }}<br>
+                                    {{ $item->kode_barang }}<br>
                                 </span>
                             </th>
-                            <th class="padding-right text-left">
+                            <th class="text-right">
                                 <span class="times-new-roman s15">
-                                         {{ $headJual->detjual->nama }}<br>
+                                    {{ $item->itemDetailHas->nama }}<br>
                                 </span>
                             </th>
                         </tr>
                         <tr>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    {{ $headJual->detjual->jumlah }}<br>
+                                    {{ $item->jumlah }}<br>
                                 </span>
                             </th>
-                            <th class="padding-right text-left">
+                            <th class="text-right">
                                 <span class="times-new-roman s15">
-                                        {{ $headJual->detjual->harga }}<br>
+                                    @currency($item->harga)<br>
                                 </span>
                             </th>
                         </tr>
@@ -206,9 +206,24 @@
                                     <br>
                                 </span>
                             </th>
-                            <th class="padding-right text-left">
+                            <th class="text-right">
                                 <span class="times-new-roman s15">
-                                    {{ $headJual->detjual->promo }}<br>
+                                    {{ $data->promo }}%<br>
+                                </span>
+                            </th>
+                        </tr>
+                    </table>
+                    @endforeach
+                    <table width="100%">
+                        <tr>
+                            <th class="text-left">
+                                <span class="times-new-roman s15">
+                                    <br>
+                                </span>
+                            </th>
+                            <th class="text-right">
+                                <span class="times-new-roman s15">
+                                    @currency($data->shipping_fee) / {{ $data->kurir }}<br>
                                 </span>
                             </th>
                         </tr>
@@ -229,9 +244,9 @@
                                         TOTAL<br>
                                     </span>
                                 </th>
-                                <th class="padding-right text-left">
+                                <th class="text-right">
                                     <span class="times-new-roman s15">
-                                        {{ $headJual->sub_total }}<br>
+                                        @currency($data->grand_total)<br>
                                     </span>
                                 </th>
                             </tr>
@@ -243,7 +258,7 @@
                         <th>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    JNE UP ETIKA - BEKASI<br>
+                                    Lorm ip Sum<br>
                                 </span>
                             </th>
                         </th>
@@ -261,7 +276,6 @@
                 </th>
             </tr>
         </thead>
-        
     </table>
 </body>
 </html>

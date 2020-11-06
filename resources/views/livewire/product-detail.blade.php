@@ -76,50 +76,54 @@
                             </div>
                             <div class="availability">availability:<a href="#">instock</a></div> --}}
                             <div class="price">
-                                @if(!isset($user) || $user->hasRole('user'))
+                                <b>
+                                    @if(!isset($user) || $user->hasRole('user'))
 
-                                    @if($product->diskon > 0)
-                                        @php
-                                            $harga = $product->h_nomem;
-                                            $harga = $harga - ($harga * ($product->diskon/100));
-                                        @endphp
-                                        <span style="text-decoration:  line-through;">@currency($product->h_nomem)</span> 
-                                        <span>@currency($harga)</span>
+                                        @if($product->diskon > 0)
+                                            @php
+                                                $harga = $product->h_nomem;
+                                                $harga = $harga - ($harga * ($product->diskon/100));
+                                            @endphp
+                                            <span style="font-size: 25px; text-decoration:  line-through;">@currency($product->h_nomem)</span> 
+                                            <span style="color:#f00;">@currency($harga)</span>
+                                        @else
+                                            <span>@currency($product->h_nomem)</span>
+                                        @endif
+
                                     @else
-                                        <span>@currency($product->h_nomem)</span>
-                                    @endif
 
-                                @else
-
-                                    @if($product->diskon > 0)
-                                        @php
-                                            $harga = $product->h_member;
-                                            $harga = $harga - ($harga * ($product->diskon/100));
-                                        @endphp
-                                        <span style="text-decoration:  line-through;">@currency($product->h_member)</span> 
-                                        <span>@currency($harga)</span>
-                                    @else
-                                        <span>@currency($product->h_member)</span>
+                                        @if($product->diskon > 0)
+                                            @php
+                                                $harga = $product->h_member;
+                                                $harga = $harga - ($harga * ($product->diskon/100));
+                                            @endphp
+                                            <span style="font-size: 25px; text-decoration:  line-through;">@currency($product->h_member)</span> 
+                                            <span style="color:#f00;">@currency($harga)</span>
+                                        @else
+                                            <span>@currency($product->h_member)</span>
+                                        @endif
+                                        
                                     @endif
-                                    
-                                @endif                            
+                                </b>                            
                             </div>
                             <div class="product-details-description">
                                 <p class="desc">{{ $product->deskripsi_lengkap }}</p>
                             </div>
                             <div class="group-button">
-                                <div class="quantity-add-to-cart">
-                                    <div class="quantity">
-                                        <div class="control">
-                                            <a wire:click="decrementQty" class="btn-number qtyminus quantity-minus" href="#">-</a>
-                                            <input type="text" wire:model="qty" data-step="1" data-min="1" value="{{ $qty }}" title="Qty" class="input-qty qty" size="4">
-                                            <a wire:click="incrementQty" href="#" class="btn-number qtyplus quantity-plus">+</a>
+                                @if(!empty($product->bpom))
+                                    <div class="quantity-add-to-cart">
+                                        <div class="quantity">
+                                            <div class="control">
+                                                <a wire:click="decrementQty" class="btn-number qtyminus quantity-minus" href="#">-</a>
+                                                <input type="text" wire:model="qty" data-step="1" data-min="1" value="{{ $qty }}" title="Qty" class="input-qty qty" size="4">
+                                                <a wire:click="incrementQty" href="#" class="btn-number qtyplus quantity-plus">+</a>
+                                            </div>
                                         </div>
+                                        <button wire:click="addToCart" class="single_add_to_cart_button button" onclick="tampilkanNotifikasi('{{ $product->nama }}', {{ $qty }})">Add to cart</button>
                                     </div>
-                                    <button wire:click="addToCart" class="single_add_to_cart_button button" onclick="tampilkanNotifikasi('{{ $product->nama }}', {{ $qty }})">Add to cart</button>
-                                </div>
-                                <p>&nbsp;</p>
-                                <p>&nbsp;</p>
+                                    <p>&nbsp;</p>
+                                    <p>&nbsp;</p>                                
+                                @endif
                                 <div class="contact-bc">
                                     <p>Temukan produk perawatan yang sesuai dengan kebutuhanmu hanya Bersama Bellezkin. Dapatkan gratis konsultasi bersama Beauty Consultant kami :)</p> 
                                 </div>

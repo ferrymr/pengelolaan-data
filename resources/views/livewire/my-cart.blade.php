@@ -75,7 +75,7 @@
                                                                         wire:model="{{ $item['qty'] }}"
                                                                         {{-- wire:model="{{ $qty }}" --}}
                                                                         data-step="1" 
-                                                                        data-min="0" 
+                                                                        data-min="1" 
                                                                         title="Qty" 
                                                                         class="input-qty qty" 
                                                                         {{-- value="{{ $item['qty'] }}" --}}

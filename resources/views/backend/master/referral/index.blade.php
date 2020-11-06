@@ -10,7 +10,7 @@
         <div class="col-6">
             <div class="float-right">
                 <a href="{{ route('admin.referral.add') }}" class="btn btn-block btn-info">
-                    <i class="fa fa-plus-square"></i>&nbsp;Tambah
+                    <i class="fa fa-plus-square"></i>&nbsp; Tambah
                 </a>
             </div>
         </div>
@@ -30,7 +30,7 @@
                     <tr>
                         <th>No</th>
                         <th>Member</th>
-                        <th>Nama</th>
+                        <th>Nama Lengkap</th>
                         <th>Register</th>
                         <th>Upline</th>
                         <th>Direktur</th>
@@ -43,15 +43,15 @@
             <div id="action-template" style="display:none">
                 <div class="action-content">
                     <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
-                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-edit"></i>&nbsp; Update
                     </a>
-                    <a class="btn btn-danger btn-sm btn-hapus actDelete" title="Delete" 
+                    {{-- <a class="btn btn-danger btn-sm btn-hapus actDelete" title="Delete" 
                         data-placement="left" 
                         data-toggle="confirmation" 
                         data-title="Hapus data ?" 
                         style="display:none;">
                         <i class="fa fa-trash fa-fw"></i>
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>
@@ -94,12 +94,12 @@
                     wrapper.find('.btn-edit').attr('href', data.action.edit).show();
                 }
 
-                if(data.action.hapus) {
-                    wrapper.find('.btn-hapus')
-                        .attr('href', data.action.hapus)
-                        .attr('data-id', data.no_member)
-                        .attr('data-title', 'Delete ' + data.no_member + '?').show();
-                }
+                // if(data.action.hapus) {
+                //     wrapper.find('.btn-hapus')
+                //         .attr('href', data.action.hapus)
+                //         .attr('data-id', data.no_member)
+                //         .attr('data-title', 'Delete ' + data.no_member + '?').show();
+                // }
                 
                 return wrapper.html();
             }
