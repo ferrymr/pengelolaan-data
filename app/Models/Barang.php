@@ -22,7 +22,7 @@ class Barang extends Model
         // 'h_ppnj', 
         'h_nomem', 
         'h_member', 
-        // 'h_beli',
+        'hpp',
         // 'h_ppnb',
         // 'h_hpp',
         'berat',
@@ -158,7 +158,7 @@ class Barang extends Model
 
         $barang = Barang::create($request);
 
-        if($request['jenis'] == 'SERIES') {
+        if($request['unit'] == 'SERIES') {
             foreach($product as $key => $row) {
                 TbDetSeries::insert([
                     'tb_barang_id' => $row,

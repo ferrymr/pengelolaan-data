@@ -273,10 +273,14 @@
                                                     <select class="form-control" id="jenis" name="jenis" {{ $errors->has('jenis') ? 'is-invalid':'' }}" required>
                                                         <option value="" selected>Pilih jenis member</option>
                                                         @if(!$checkDaftarMember || $checkDaftarReseller)
-                                                            <option value="member">Member</option>
+                                                            @if( !$user->hasRole('member') )
+                                                                <option value="member">Member</option>
+                                                            @endif
                                                         @endif
                                                         @if(!$checkDaftarReseller)
-                                                            <option value="reseller">Reseller</option>
+                                                            @if( !$user->hasRole('reseller') )
+                                                                <option value="reseller">Reseller</option>
+                                                            @endif
                                                         @endif
                                                     </select>
                                                 </p>

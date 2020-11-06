@@ -92,6 +92,11 @@ Route::get('/login-administrator', function () {
     }
 });
 
+// Register direct to member
+Route::get('/register-member', function () {
+    return view('auth.register-member');   
+});
+
 // Dashboard
 Route::group([
     'middleware' => ['role:administrator|reseller|member|user'],
@@ -116,6 +121,9 @@ Route::group([
     Route::post('update/{kode_barang}', 'BarangController@update')->name('update');
     Route::post('create_kode', 'BarangController@create_kode')->name('create_kode');
     
+
+    // barang related
+    Route::post('barang-related', 'BarangController@barangRelated')->name('barang-related');
 
     Route::post('store-image', 'BarangController@storeBarangImage')->name('store-image');
     Route::get('delete-barang-image/{barangId?}/{id?}', 'BarangController@deleteBarangImage')->name('detele-barang-image');
@@ -300,4 +308,18 @@ Route::group([
     'as'     => 'admin.konfirmasi-daftar.'
 ], function () {
     Route::get('konfirmasi-daftar-image/{id?}', 'KonfirmasiDaftarController@getKonfirmasiDaftarImage')->name('konfirmasi-daftar-image');
+});
+
+// Barang SPB
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/barangspb/',
+    'as' => 'admin.barangspb.'
+], function () {
+    Route::get('', 'BarangSpbController@index')->name('index');
+    Route::get('datatable', 'BarangSpbController@datatable')->name('datatable');
+    Route::get('view/{id}', 'BarangSpbController@view')->name('view');
+    Route::get('delete/{id}', 'BarangSpbController@destroy')->name('delete');
+    Route::post('update/{id}', 'BarangSpbController@update')->name('update');
+    
 });

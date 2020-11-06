@@ -135,6 +135,7 @@
                     { data: 'unit', name: 'unit' },
                     { data: 'stok', name: 'stok' },
                     { data: 'poin', name: 'poin' },
+                    { data: 'created_at', name: 'created_at', visible:false },
                     {
                         // Define the action column
                         data: null,

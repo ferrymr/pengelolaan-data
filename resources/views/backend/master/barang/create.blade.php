@@ -105,7 +105,6 @@
                     </div>
                 </div>
             </div>
-            
             <div id="series" class="form-group row col-sm-12" style="display:none;">
                 <div class="col-md-12 mb-3">                    
                     <h5><b>Tambahkan produk ke dalam series</b></h5>
@@ -136,7 +135,7 @@
                         @endif
                     </div>
                 </div>            
-                <div class="form-group @if($errors->has('stok')) has-error @endif">
+                {{-- <div class="form-group @if($errors->has('stok')) has-error @endif">
                     <label for="stok" class="col-sm-12 control-label">Stock</label>    
                     <div class="col-sm-12">
                         <input value="{{ old('stok') }}" type="number" name="stok" class="form-control" id="stok" placeholder="Stock" min="0">
@@ -144,7 +143,7 @@
                             <span class="text-danger">{{ $errors->first('stok') }}</span>
                         @endif
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-group @if($errors->has('diskon')) has-error @endif">
                     <label for="diskon" class="col-sm-12 control-label">Diskon</label>    
                     <div class="col-sm-12">
@@ -175,7 +174,17 @@
                         @endif
                     </div>
                 </div>
+                <div class="form-group @if($errors->has('hpp')) has-error @endif">
+                    <label for="hpp" class="col-sm-12 control-label">Harga Hpp</label>    
+                    <div class="col-sm-12">
+                        <input value="{{ old('hpp') }}" type="number" name="hpp" class="form-control" id="hpp" placeholder="Harga Hpp" min="0">
+                        @if($errors->has('hpp'))
+                            <span class="text-danger">{{ $errors->first('hpp') }}</span>
+                        @endif
+                    </div>
+                </div>
             </div>
+        </div>
             <div class="form-grup @if($errors->has('bpom')) has-error @endif">
                 <div class="col-sm-6">
                     <div class="custom-control custom-checkbox">

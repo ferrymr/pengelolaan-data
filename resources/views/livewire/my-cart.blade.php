@@ -45,7 +45,9 @@
                                             @foreach($cartItems as $item)
                                                 <tr class="cart_item">
                                                     <td class="product-remove">
-                                                        <a class="remove" wire:click="removeFromCart('{{ $item['kode_barang'] }}')"></a>
+                                                        @if($item['kode_barang'] != "CATALO")
+                                                            <a class="remove" wire:click="removeFromCart('{{ $item['kode_barang'] }}')"></a>
+                                                        @endif
                                                     </td>
                                                     <td class="product-thumbnail">
                                                         <a href="#">
@@ -63,25 +65,29 @@
 
                                                         <div class="quantity">
                                                             <div class="control">
-                                                                <a class="btn-number qtyminus quantity-minus" 
-                                                                    href="#"
-                                                                    wire:click="updateQty('{{ $item['kode_barang'] }}', 'decrement')"
-                                                                    id='decrement'>-</a>
+                                                                @if($item['kode_barang'] != "CATALO" && $item['qty'] > 1)
+                                                                    <a class="btn-number qtyminus quantity-minus" 
+                                                                        href="#"
+                                                                        wire:click="updateQty('{{ $item['kode_barang'] }}', 'decrement')"
+                                                                        id='decrement-{{ $item['kode_barang'] }}'>-</a>
+                                                                @endif
                                                                 <input type="text" 
-                                                                        {{-- wire:model="{{ $item['qty'] }}" --}}
-                                                                        wire:model="qty"
+                                                                        wire:model="{{ $item['qty'] }}"
+                                                                        {{-- wire:model="{{ $qty }}" --}}
                                                                         data-step="1" 
                                                                         data-min="1" 
                                                                         title="Qty" 
                                                                         class="input-qty qty" 
                                                                         {{-- value="{{ $item['qty'] }}" --}}
-                                                                        value="{{ $qty }}"
-                                                                        id="qty-box"
-                                                                        size="4">
-                                                                <a href="#" 
-                                                                    wire:click="updateQty('{{ $item['kode_barang'] }}', 'increment')"
-                                                                    class="btn-number qtyplus quantity-plus"
-                                                                    >+</a>
+                                                                        value="{{ $item['qty'] }}"
+                                                                        id="qty-box-{{ $item['kode_barang'] }}"
+                                                                        size="4" readonly>
+                                                                @if($item['kode_barang'] != "CATALO")
+                                                                    <a href="#" 
+                                                                        wire:click="updateQty('{{ $item['kode_barang'] }}', 'increment')"
+                                                                        class="btn-number qtyplus quantity-plus"
+                                                                        id='increment-{{ $item['kode_barang'] }}'>+</a>
+                                                                @endif
 
                                                                 <div wire:loading>
                                                                     <div id="loading">

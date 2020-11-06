@@ -9,6 +9,7 @@ use Socialite;
 use Auth;
 use Exception;
 use App\Models\User;
+use App\Models\Barang;
 use App\Facades\Cart;
 
 class LoginController extends Controller
@@ -34,26 +35,35 @@ class LoginController extends Controller
     // protected $redirectTo = RouteServiceProvider::HOME;
     protected $redirectTo = '/';
 
-    public function authenticate(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
+    protected function redirectTo() {
+        $user = Auth::user();
 
-        if (Auth::attempt($credentials)) {
-            if($user->hasRole('administrator')) {
-                return redirect()->route('admin.dashboard.index');
-            } else {
+        if($user->hasRole('administrator')) {
+            return route('admin.dashboard.index');
+        } else {
 
-                if(!empty(Cart::get())) {
-                    return redirect()->route('checkout');
-                } else {
-                    return redirect()->route('home');
-                }
+            // user part of member 2424
+            if($user->status == 2424) {
+                $product = Barang::with('barangImages', 'barangRelated.barangDetail.barangImages')
+                            ->where('kode_barang', 'CATALO')
+                            ->first();
 
+                $product->qty = 1;
+                // insert cart catalog
+                Cart::add($product);
             }
-            // return redirect($this->redirectPath());
-        }
-        return redirect($this->redirectPath());
 
+            if(!empty(Cart::get())) {
+                if($user->status == 2424) { 
+                    return route('home');
+                } else {
+                    return route('checkout');
+                }                
+            } else {
+                return route('home');
+            }
+
+        }
     }
     
     /**

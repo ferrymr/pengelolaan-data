@@ -38,6 +38,7 @@ class MemberController extends Controller
 
         return view('frontend.profiles.members.signup-form', 
                 compact(
+                    'user',
                     'banks',
                     'transactions',
                     'checkDaftarMember',
