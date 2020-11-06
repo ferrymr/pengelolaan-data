@@ -145,7 +145,7 @@
                   <div class="form-group col-md-6 float-right">
                       <label for="status_transaksi" class="col-sm-9 control-label">Update Status: </label>    
                       <div class="col-sm-9">
-                          <select name="status_transaksi" class="form-control select2 jenis-bayar">
+                          <select name="status_transaksi" class="form-control select2 jenis-bayar" id="status_transaksi">
                               <option value="" selected>Pilih status</option>
                               @if(
                                 $data->status_transaksi != "PAYMENT CONFIRMED" &&
@@ -170,7 +170,9 @@
                               @endif
                               {{-- <option value="RECEIVED">RECEIVED</option> --}}
                           </select>
-                          <br><br>
+                          <br>
+                          <input type="text" name="input_resi" class="form-control" id="input_resi" placeholder="Input Resi" style="display:none;">
+                          <br>
                           <button type="submit" class="btn btn-success" style="margin-left: 10px;">
                             Update status pemesanan
                           </button>
@@ -196,6 +198,18 @@
     <script type="text/javascript">
     // select2
     $('.select2').select2();
+
+    $(document).ready(function() {
+      $("#status_transaksi").change(function() {
+        let status_transaksi = $(this).val();
+
+        if(status_transaksi == "SHIPPED") {
+          $('#input_resi').show();
+        } else {
+          $('#input_resi').hide();
+        }
+      });
+    });
 
     </script>
 @stop

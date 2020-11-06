@@ -34,6 +34,7 @@ class MyCart extends Component
     public function refreshData()
     {
         $this->cartItems = Cart::get();
+
         $this->hitungSubtotal();
         $this->hitungTotalItems();
     }
@@ -44,14 +45,15 @@ class MyCart extends Component
 
         if ($type == 'increment') {
             $this->qty++;
-            $product->qty = 1;
-        } elseif ($type == 'decrement') {
-            if ($this->qty > 1) {
-                $this->qty--;
-                $product->qty = -1;
-            }            
+            $product->qty = $product->qty + 1;
+        } 
+        if ($type == 'decrement') {
+            // if ($product->qty > 1) {
+            $this->qty--;
+            $product->qty = $product->qty - 1;
+            // }            
         }
-
+        // dd($product);
         Cart::add($product);
 
         $this->refreshData();

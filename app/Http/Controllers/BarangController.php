@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use App\Models\Barang;
 use App\Models\BarangImages;
+use App\Models\BarangRelated;
 use App\Models\User;
 use App\Models\Gallery;
 use App\Models\Series;
@@ -79,11 +80,11 @@ class BarangController extends Controller
         if ($jumlah>0){
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Kode barang sudah ada</strong>')->error()->important();
             return redirect()->route('admin.barang.add');
-        } else{
+        } else {
             // save template
-            $this->barangRepo->addBarang($input);
+            $barang = $this->barangRepo->addBarang($input);
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Data barang berhasil ditambah</strong>')->success()->important();
-            return redirect()->route('admin.barang.index');
+            return redirect()->route('admin.barang.edit', $barang->id);
         }        
 
     }    
@@ -93,13 +94,16 @@ class BarangController extends Controller
         $user = Auth::user();
         $barang = $this->barangRepo->findId($id);
         $barangImages = BarangImages::where('tb_barang_id', $id)->get();
+        $barangRelated = BarangRelated::where('tb_barang_id', $id)->get();
         $products = Barang::where('unit', '!=', 'SERIES')->get();
 
         return view('backend.master.barang.edit')->with([
             'user' => $user,
             'barang' => $barang,
             'barangImages' => $barangImages,
-            'products' => $products
+            'barangRelated' => $barangRelated,
+            'products' => $products,
+            'barangs' => $barangs
         ]);
     }
     
@@ -121,6 +125,7 @@ class BarangController extends Controller
             "deskripsi" => $request->input('deskripsi'),
             "cara_pakai" => $request->input('cara_pakai'),
             "flag_bestseller" => $request->input('flag_bestseller'),
+            "stats" => $request->input('stats'),
             "flag_promo" => $request->input('flag_promo')
         );
     
@@ -132,6 +137,32 @@ class BarangController extends Controller
         } else {
             flash('<i class="fa fa-info"></i>&nbsp; <strong>User </strong> ' . $this->barangRepo->error)->error()->important();
             return redirect()->route('admin.barang.edit')->withInput()->withError();
+        }
+    }
+
+    public function barangRelated(Request $request) {
+
+        $id = $request->barang_id;
+
+        foreach($request->input('barang_related') as $row) {
+            if(!empty($row)) {
+                $related[] = array(
+                    'tb_barang_id' => $request->barang_id,
+                    'tb_barang_related_id' => $row,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                );
+            }            
+        }
+
+        $barang = $this->barangRepo->addBarangRelated($related, $id);
+
+        if(!$this->barangRepo->error) {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Data barang berhasil diupdate</strong>')->success()->important();
+            return redirect()->route('admin.barang.edit', $id);
+        } else {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>User </strong> ' . $this->barangRepo->error)->error()->important();
+            return redirect()->route('admin.barang.edit', $id)->withInput()->withError();
         }
     }
     

@@ -109,7 +109,7 @@
 
                             <div class="row" style="margin-bottom: 1em;">
                                 <div class="col-md-12">
-                                    <b>{{ $transaction->metode_pengiriman == 'EXPEDITION' ? 'Dikirim dari:' : 'Diambil dari:'}}</b>
+                                    <b>{{ $transaction->metode_pengiriman == 'EXPEDITION' ? 'Stokist:' : 'Stokist:'}}</b>
                                     <br>
                                     <b>{{ $transaction->spb->name }}</b>
                                     <br>
@@ -117,7 +117,18 @@
                                 </div>
                             </div>
                             <div class="row section-desc-order">
-                                <div class="col-md-6"> 
+                                <div class="col-md-6">
+                                    @if ($transaction->metode_pengiriman == 'EXPEDITION')
+                                        <span>
+                                            <b>Dikirim dari:</b> 
+                                            <br> 
+                                            <u>{{ $shippingAddress->nama_pengirim }}</u> 
+                                            <br>
+                                            {{ $shippingAddress->telepon_pengirim }}
+                                            <br><br>
+                                        </span>
+                                    @endif
+
                                     @if ($transaction->metode_pengiriman == 'EXPEDITION')
                                         <span>
                                             <b>Dikirim ke:</b> 
@@ -310,10 +321,15 @@
                                     </div> 
                                     <div class="order-track-text">
                                         <span class="order-track-text-stat">Shipped</span>
-                                        {{-- <span class="order-track-text-sub">
-                                            No. resi
-                                            <b> 43243829442 </b>
-                                        </span> --}}
+                                        @if(!empty($transaction->resi))
+                                            <span class="order-track-text-sub">
+                                                No. resi
+                                                <b> {{ $transaction->resi }} </b>
+                                            </span>
+                                            <span class="order-track-text-sub">
+                                                Check di <a href="https://cekresi.com/" target="_blank" rel="nofollow"><u>https://cekresi.com/</u></a>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div> 
                                 {{-- <div title="" class="order-track-step

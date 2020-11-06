@@ -43,6 +43,7 @@
                         @if($errors->has('kode_barang'))
                             <span class="text-danger">{{ $errors->first('kode_barang') }}</span>
                         @endif
+                        <p class="text-muted">Ideal 6 character</p>
                     </div>
                 </div>
             </div>
