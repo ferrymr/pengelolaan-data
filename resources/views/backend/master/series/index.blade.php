@@ -10,7 +10,7 @@
         <div class="col-6">
             <div class="float-right">
                 <a href="{{ route('admin.series.add') }}" class="btn btn-block btn-info">
-                    <i class="fa fa-plus-square"></i>&nbsp;Tambah
+                    <i class="fa fa-plus-square"></i>&nbsp; Tambah
                 </a>
             </div>
         </div>

@@ -1,14 +1,18 @@
 <?php
 
-// use Illuminate\Routing\Route;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
 // =============================== FRONTEND ===============================
 
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 // Homepage
 Route::get('/', 'IndexController@index')->name('home');
+
+// Cron job
+Route::get('/cronjob-update-product', 'IndexController@cronCancelProduct')->name('cronjob-update-product');
 
 // Faqs
 Route::get('/faqs', function () {
@@ -44,19 +48,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('checkout/save-address-post-cart', 'AddressController@storePostCart')->name('address.save-address-post-cart');
     Route::get('checkout/set-default-post-cart/{addressId}', 'AddressController@setDefaultPostCart')->name('address.set-default-post-cart');
 
+    // Profile detail
     Route::resource('profile', 'ProfileController');
     Route::get('address/set-default/{addressId}', 'AddressController@setDefault')->name('address.setdefault');
     Route::resource('address', 'AddressController');
 
     // Daftar jadi member
     Route::get('member/signup', 'MemberController@signup')->name('member.signup');
+    Route::post('member/store', 'MemberController@store')->name('member.store');
+    Route::post('member/konfirmasi', 'MemberController@konfirmasi')->name('member.konfirmasi');
 
+    // History transaksi di profile
     Route::get('/order-history/{status?}', 'HistoryOrderController@index')->name('order-history-status');
     Route::livewire('/order-history/{transactionId}/detail', 'order-detail')->name('order-history.detail');
-
-    Route::get('/transaction', 'TransactionController@store');
-    Route::get('/transaction/delete', 'TransactionController@destroy');
-    Route::get('/transaction/set-status/{transactionId}/{status}', 'TransactionController@changeStatus')->name('transaction.change-status');
 });
 
 Route::get('/spb/check', 'SpbController@check');
@@ -74,14 +78,35 @@ Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
 
 // =============================== BACKEND ===============================
 
+// Login administrator
+Route::get('/login-administrator', function () {
+    $user = Auth::user();
+    if (!isset($user)) {
+        return view('auth.login-admin');
+    } else {
+        if ($user->hasRole('administrator')) {
+            return redirect()->route('admin.dashboard.index');
+        } else {
+            return redirect()->route('home');
+        }
+    }
+});
+
 // Dashboard
-Route::group(['prefix' => '/admin/dashboard/', 'as' => 'admin.dashboard.'], function () {
+Route::group([
+    'middleware' => ['role:administrator|reseller|member|user'],
+    'prefix' => '/admin/dashboard/',
+    'as' => 'admin.dashboard.'
+], function () {
     Route::get('', 'DashboardController@index')->name('index');
 });
 
 // Master Barang
-Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
-{
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/barang/',
+    'as' => 'admin.barang.'
+], function () {
     Route::get('', 'BarangController@index')->name('index');
     Route::get('datatable', 'BarangController@datatable')->name('datatable');
     Route::get('edit/{kode_barang}', 'BarangController@edit')->name('edit');
@@ -96,15 +121,20 @@ Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
     Route::get('delete-barang-image/{barangId?}/{id?}', 'BarangController@deleteBarangImage')->name('detele-barang-image');
 });
 
-Route::group(['prefix' => '/admin/barang/', 'as' => 'admin.barang.'], function()
-{
+// Master Barang Image
+Route::group([
+    'prefix' => '/admin/barang/',
+    'as' => 'admin.barang.'
+], function () {
     Route::get('barang-image/{id?}', 'BarangController@getBarangImage')->name('barang-image');
-
 });
 
 // Master Supplier
-Route::group(['prefix' => '/admin/supplier/', 'as' => 'admin.supplier.'], function()
-{
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/supplier/',
+    'as' => 'admin.supplier.'
+], function () {
     Route::get('', 'SupplierController@index')->name('index');
     Route::get('add', 'SupplierController@create')->name('add');
     Route::post('store', 'SupplierController@store')->name('store');
@@ -116,7 +146,7 @@ Route::group(['prefix' => '/admin/supplier/', 'as' => 'admin.supplier.'], functi
 
 // Slider
 Route::group([
-    // 'middleware' => ['permission:access-slider'], 
+    'middleware' => ['role:administrator'],
     'prefix' => '/admin/slider/',
     'as' => 'admin.slider.'
 ], function () {
@@ -124,12 +154,22 @@ Route::group([
     Route::get('datatable', 'SliderController@datatable')->name('datatable');
     Route::get('delete/{id}', 'SliderController@destroy')->name('delete');
     Route::post('store', 'SliderController@store')->name('store');
+    Route::get('edit/{id?}', 'SliderController@edit')->name('edit');
     Route::get('shortable', 'SliderController@updateOrder')->name('shortable');
+    Route::post('update/{id?}', 'SliderController@update')->name('update');
+});
+
+// Slider Image
+Route::group([
+    'prefix' => '/admin/slider/',
+    'as' => 'admin.slider.'
+], function () {
+    Route::get('slider-image/{id?}', 'SliderController@getSliderImage')->name('slider-image');
 });
 
 // User
 Route::group([
-    // 'middleware' => ['permission:access-user'], 
+    'middleware' => ['role:administrator'],
     'prefix' => '/admin/user/',
     'as' => 'admin.user.'
 ], function () {
@@ -145,10 +185,10 @@ Route::group([
 
 // Series
 Route::group([
-    // 'middleware' => ['permission:access-user'], 
-    'prefix' => '/admin/series/', 
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/series/',
     'as' => 'admin.series.'
-], function(){
+], function () {
     Route::get('', 'SeriesController@index')->name('index');
     Route::get('datatable', 'SeriesController@datatable')->name('datatable');
     Route::get('edit/{kode_pack}', 'SeriesController@edit')->name('edit');
@@ -162,23 +202,26 @@ Route::group([
 
 // Referral
 Route::group([
-    // 'middleware' => ['permission:access-user'], 
-    'prefix' => '/admin/referral/', 
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/referral/',
     'as' => 'admin.referral.'
-], function(){
+], function () {
     Route::get('', 'ReferralController@index')->name('index');
     Route::get('datatable', 'ReferralController@datatable')->name('datatable');
-    Route::get('edit/{kode_pack}', 'ReferralController@edit')->name('edit');
-    Route::get('view/{kode_pack}', 'ReferralController@view')->name('view');
-    Route::get('delete/{kode_pack}', 'ReferralController@destroy')->name('delete');
+    Route::get('edit/{no_member}/{kode_up}', 'ReferralController@edit')->name('edit');
+    // Route::get('view/{no_member}', 'ReferralController@view')->name('view');
+    Route::get('delete/{no_member}', 'ReferralController@destroy')->name('delete');
     Route::get('add', 'ReferralController@create')->name('add');
     Route::post('store', 'ReferralController@store')->name('store');
-    Route::post('komposisi', 'ReferralController@komposisi')->name('komposisi');
-    Route::post('update/{kode_pack}', 'ReferralController@update')->name('update');
+    Route::post('leads', 'ReferralController@leads')->name('leads');
+    Route::post('down', 'ReferralController@down')->name('down');
+    // Route::post('downline', 'ReferralController@downline')->name('downline');
+    Route::post('update/{no_member}', 'ReferralController@update')->name('update');
 });
 
-// ORDER.PENJUALAN
+// Penjualan
 Route::group([
+    'middleware' => ['role:administrator'],
     'prefix' => '/admin/penjualan/',
     'as'     => 'admin.penjualan.'
 ], function () {
@@ -193,58 +236,68 @@ Route::group([
     Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('update_penjualan');
 });
 
-//  Order Movement
-Route::group(['prefix' => '/admin/movement/', 'as' => 'admin.movement.'], function()
-{
-    Route::get('', 'MovementController@index')->name('index');
-    Route::get('datatable', 'MovementController@datatable')->name('datatable');
-    Route::get('add', 'MovementController@create')->name('add');
-    Route::post('add', 'MovementController@create')->name('add');
-    Route::post('store', 'MovementController@store')->name('store');
-    Route::get('edit/{no_sm}', 'MovementController@edit')->name('edit');
-    Route::get('delete/{no_sm}', 'MovementController@destroy')->name('delete');
-    Route::post('create_invoice', 'MovementController@create_invoice')->name('create.invoice');
-    Route::post('create_kode', 'MovementController@create_kode')->name('create.kode');
-    Route::get('', 'MovementController@getNama')->name('get.nama');
-    Route::POST('update_movement', 'MovementController@update_movement')->name('update_movement');
-    
-
+// Pemesanan
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/pemesanan/',
+    'as'     => 'admin.pemesanan.'
+], function () {
+    Route::get('', 'PemesananController@index')->name('index');
+    Route::get('datatable', 'PemesananController@datatable')->name('datatable');
+    Route::get('show/{id}', 'PemesananController@show')->name('show');
+    Route::get('cronCancelProduct/{id}', 'PemesananController@cronCancelProduct')->name('cronCancelProduct');
+    Route::post('update-status/{id?}', 'PemesananController@setStatus')->name('update-status');
+    Route::get('print_trf/{id?}', 'PemesananController@printTrf')->name('print_trf');
+    Route::get('print_immadiate/{id?}', 'PemesananController@printImmadiate')->name('print_immadiate');
 });
-
-
-// view mysql barang
-Route::group(['prefix' => '/admin/viewbarang/', 'as' => 'admin.viewbarang.'], function()
-{
-    Route::get('', 'ViewBarangController@index')->name('index');
-
-});
-
 
 // Cashback
 Route::group([
-    // 'middleware' => ['permission:access-user'], 
-    'prefix' => '/admin/cashback/', 
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/cashback/',
     'as' => 'admin.cashback.'
-], function(){
+], function () {
     Route::get('', 'CashbackController@index')->name('index');
     Route::get('datatable', 'CashbackController@datatable')->name('datatable');
     Route::post('hitung', 'CashbackController@hitung')->name('hitung');
 });
 
-//Barang SPB
-Route::group(['prefix' => '/admin/barangspb/', 'as' => 'admin.barangspb.'], function()
-{
-    Route::get('', 'BarangSpbController@index')->name('index');
-    Route::get('datatable', 'BarangSpbController@datatable')->name('datatable');
-    Route::get('edit/{id}', 'BarangSpbController@edit')->name('edit');
-    Route::get('delete/{id}', 'BarangSpbController@destroy')->name('delete');
-    Route::post('store', 'BarangController@store')->name('store');
-    Route::post('update/{id}', 'BarangController@update')->name('update');
-    Route::get('view/{id}', 'BarangSpbController@edit')->name('view');
-    
-
+// Konfirmasi penjualan
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/konfirmasi-penjualan/',
+    'as'     => 'admin.konfirmasi-penjualan.'
+], function () {
+    Route::get('/', 'KonfirmasiPenjualanController@index')->name('index');
+    Route::get('/datatable', 'KonfirmasiPenjualanController@datatable')->name('datatable');
+    Route::get('/edit/{id}', 'KonfirmasiPenjualanController@edit')->name('edit');
+    Route::get('/cancel/{id}', 'KonfirmasiPenjualanController@cancel')->name('cancel');
 });
 
+// Konfirmasi penjualan image
+Route::group([
+    'prefix' => '/admin/konfirmasi-penjualan/',
+    'as'     => 'admin.konfirmasi-penjualan.'
+], function () {
+    Route::get('konfirmasi-image/{id?}', 'KonfirmasiPenjualanController@getKonfirmasiImage')->name('konfirmasi-image');
+});
 
+// Konfirmasi daftar
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/konfirmasi-daftar/',
+    'as'     => 'admin.konfirmasi-daftar.'
+], function () {
+    Route::get('/', 'KonfirmasiDaftarController@index')->name('index');
+    Route::get('/datatable', 'KonfirmasiDaftarController@datatable')->name('datatable');
+    Route::get('/edit/{id}/{jenis?}', 'KonfirmasiDaftarController@edit')->name('edit');
+    Route::get('/cancel/{id}', 'KonfirmasiDaftarController@cancel')->name('cancel');
+});
 
-
+// Konfirmasi daftar image
+Route::group([
+    'prefix' => '/admin/konfirmasi-daftar/',
+    'as'     => 'admin.konfirmasi-daftar.'
+], function () {
+    Route::get('konfirmasi-daftar-image/{id?}', 'KonfirmasiDaftarController@getKonfirmasiDaftarImage')->name('konfirmasi-daftar-image');
+});

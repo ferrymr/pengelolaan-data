@@ -3,17 +3,22 @@
 namespace App\Http\Livewire;
 
 use App\Facades\Cart;
-use App\Models\Product;
+use App\Models\Barang;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class ProductDetail extends Component
 {
     public $product;
+    public $user;
     public $qty = 1;
 
     public function mount($productCode)
     {
-        $this->product = Product::find($productCode);
+        $this->product = Barang::with('barangImages')
+                            ->where('kode_barang', $productCode)
+                            ->first();
+        $this->user = Auth::user();
     }
 
     public function render()

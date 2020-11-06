@@ -9,6 +9,7 @@ use Socialite;
 use Auth;
 use Exception;
 use App\Models\User;
+use App\Facades\Cart;
 
 class LoginController extends Controller
 {
@@ -33,6 +34,28 @@ class LoginController extends Controller
     // protected $redirectTo = RouteServiceProvider::HOME;
     protected $redirectTo = '/';
 
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            if($user->hasRole('administrator')) {
+                return redirect()->route('admin.dashboard.index');
+            } else {
+
+                if(!empty(Cart::get())) {
+                    return redirect()->route('checkout');
+                } else {
+                    return redirect()->route('home');
+                }
+
+            }
+            // return redirect($this->redirectPath());
+        }
+        return redirect($this->redirectPath());
+
+    }
+    
     /**
      * Create a new controller instance.
      *

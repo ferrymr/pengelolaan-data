@@ -11,13 +11,4 @@ class ShoppingCart extends Model
     protected $fillable = [
         'users_id', 'kode_barang', 'qty', 'note'
     ];
-
-    // protected $hidden = [
-
-    // ];
-
-    // public function product()
-    // {
-    //    return $this->hasMany(Product::class, 'kode_barang'); 
-    // }
 }

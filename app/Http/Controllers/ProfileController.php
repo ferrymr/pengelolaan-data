@@ -23,7 +23,7 @@ class ProfileController extends Controller
         $profile = User::find($user->id);
 
         return view('frontend.profile', 
-            compact('profile'));
+            compact('profile', 'user'));
     }
 
     /**

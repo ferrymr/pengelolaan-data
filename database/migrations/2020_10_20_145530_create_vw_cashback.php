@@ -51,6 +51,8 @@ class CreateVwCashback extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vw_cashback');
+        DB::statement("
+            DROP VIEW vw_cashback; 
+        ");
     }
 }

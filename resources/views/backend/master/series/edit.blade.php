@@ -110,7 +110,7 @@
             </div>
 
             <div class="card-footer">
-                <button type="submit" class="btn btn-info">Update</button>
+                <button type="submit" class="btn btn-info">Simpan</button>
                 <a href="{{ route("admin.series.index") }}" class="btn btn-warning float-right" style="color: white;">Kembali</a>
             </div>
         </div>

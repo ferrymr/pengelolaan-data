@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\Models\HistoryTransaction;
 use App\Models\ShippingAddress;
-use App\Models\Transaction;
+use App\Models\TbDetJual;
 use App\Models\User;
 
 // use App\DetailTransaksi;
@@ -22,20 +21,10 @@ class HistoryOrderController extends Controller
     {
 
         $userId = auth()->user()->id;
-        $user = User::find($userId);
-        $transactions = $user->transactions()->with(
-            [
-                'items' => function($item) {
-                    $item->select('transaksi_id', 'kode_barang', 'harga', 'qty', 'subtotal');
-                },
-                'history' => function($history) {
-                    $history->select('transaksi_id', 'tanggal', 'keterangan');
-                },
-                'shippingAddress' => function($address) {
-                    $address->select('tb_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');
-                }
-            ]
-        );
+        $user = User::with('transactions.items','transactions.address')
+                    ->find($userId);
+
+        $transactions = $user->transactions;
         
         if($status == 'waiting') {
             $transactions = $transactions
@@ -48,7 +37,7 @@ class HistoryOrderController extends Controller
                             ->whereIn('status_transaksi', ['RECEIVED']);
         }
 
-        $transactions = $transactions->orderBy('tgl_transaksi', 'DESC')->get();
+        // $transactions = $transactions->orderBy('tanggal', 'DESC')->get();
         
         // Place order
         $totalPlaceOrder = $user->transactions()
@@ -96,13 +85,13 @@ class HistoryOrderController extends Controller
 
     public function detail($transactionId)
     {
-        $transaction = Transaction::find($transactionId)->with(
+        $transaction = TbDetJual::find($transactionId)->with(
             [
                 'items' => function($item) {
-                    $item->select('transaksi_id', 'kode_barang', 'harga', 'qty', 'subtotal');
+                    $item->select('tb_head_jual_id', 'kode_barang', 'harga', 'qty', 'subtotal');
                 },
                 'history' => function($history) {
-                    $history->select('transaksi_id', 'tanggal', 'keterangan');
+                    $history->select('tb_head_jual_id', 'tanggal', 'keterangan');
                 },
                 'shippingAddress' => function($address) {
                     $address->select('tb_shipping_address.nama', 'telepon', 'provinsi_nama', 'kota_nama', 'kecamatan_nama', 'alamat', 'kode_pos');

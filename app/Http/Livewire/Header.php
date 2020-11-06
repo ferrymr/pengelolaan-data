@@ -4,11 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Facades\Cart;
 use Livewire\Component;
+use App\Models\ShippingAddress;
 
 class Header extends Component
 {
     public $cartItems;
     public $cartTotal = 0;
+    public $nextPageLink;
 
     protected $listeners = [
         'refreshCartItems' => 'updateCartItems'
@@ -17,6 +19,7 @@ class Header extends Component
     public function mount()
     {
         $this->updateCartItems();
+        $this->nextPageLink = $this->getNextPageLink();
     }
 
     public function hydrate()
@@ -47,5 +50,28 @@ class Header extends Component
         }
 
         $this->cartTotal = $itemCount;
+    }
+
+    public function getNextPageLink()
+    {
+        $user = auth()->user();
+
+        if ($user) {
+
+            $defaultShippingAddress = ShippingAddress::where('user_id', $user->id)->where('is_default', 1)->first();
+
+            if (!$defaultShippingAddress) {
+
+                $countShippingAddress = ShippingAddress::where('user_id', $user->id)->count();
+
+                if ($countShippingAddress < 1) {
+                    return route('address.new-address-post-cart');
+                }
+
+                return route('address.select-address-post-cart');
+            }
+        }
+
+        return route('checkout');
     }
 }

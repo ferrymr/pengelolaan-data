@@ -21,15 +21,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'no_member', 
-        'nik', 
-        'name', 
-        'birthdate', 
-        'gender', 
-        'phone', 
-        'email', 
-        'password', 
-        'photo', 
+        'no_member',
+        'nik',
+        'name',
+        'birthdate',
+        'gender',
+        'phone',
+        'email',
+        'password',
+        'photo',
         'google_id'
     ];
 
@@ -39,7 +39,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 
+        'password',
         'remember_token',
     ];
 
@@ -52,40 +52,58 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getAll() {
-        return User::all();
+    // ========================== relations ==========================
+
+    public function transactions()
+    {
+        return $this->hasMany(TbHeadJual::class);
     }
 
-    public function getDistributor() {
-        return User::whereHas('roles', function($q)
-        {
+    public function shippingAddress()
+    {
+        return $this->hasMany(ShippingAddress::class);
+    }
+
+    public function headjual()
+    {
+        return $this->hasMany(TbHeadjual::class, 'user_id');
+    }
+
+    // ========================== backend ==========================
+
+    public function getAll()
+    {
+        return User::orderBy('id', 'DESC')->get();
+    }
+
+    public function getDistributor()
+    {
+        return User::whereHas('roles', function ($q) {
             $q->where('name', 'distributor');
         })->get();
     }
 
-    public function getUser($roleId) {
-        return User::whereHas('roles', function($q) use ($roleId)
-        {
+    public function getUser($roleId)
+    {
+        return User::whereHas('roles', function ($q) use ($roleId) {
             $q->where('id', $roleId);
         })->get();
-        
     }
 
-    public function getUserByEmail($email) {
+    public function getUserByEmail($email)
+    {
         return DB::table('users')->where('email', $email)->first();
-        
     }
 
-    public function getUserVerify($email, $code) {
-        return DB::table('users')->
-        where('email', $email)->
-        where('code_verify', $code)->first();
-        
+    public function getUserVerify($email, $code)
+    {
+        return DB::table('users')->where('email', $email)->where('code_verify', $code)->first();
     }
 
-    public function addUser($request) {
+    public function addUser($request)
+    {
         $digits = 4;
-        $code = rand(pow(10, $digits-1), pow(10, $digits)-1);
+        $code = rand(pow(10, $digits - 1), pow(10, $digits) - 1);
         $user = array(
             'no_member' => $request['no_member'],
             'nik' => $request['nik'],
@@ -109,47 +127,52 @@ class User extends Authenticatable
             'user_id' => $user['id'],
             'user_type' => 'App\Models\User'
         );
-        
+
         DB::table('role_user')->insert($role_user);
 
         return $user;
     }
 
-    public function updateStatusByEmail($email) {
+    public function updateStatusByEmail($email)
+    {
         $data = User::where('email', $email)
-                        ->update(['status_verify' => 1,'updated_at' => Carbon::now()]);
-        if(!empty($data)) {
+            ->update(['status_verify' => 1, 'updated_at' => Carbon::now()]);
+        if (!empty($data)) {
             return $data;
         } else {
             return false;
         }
     }
 
-    public function updateCodeByEmail($email) {
+    public function updateCodeByEmail($email)
+    {
         $digits = 4;
-        $code = rand(pow(10, $digits-1), pow(10, $digits)-1);
+        $code = rand(pow(10, $digits - 1), pow(10, $digits) - 1);
         $data = User::where('email', $email)
-                        ->update(['code_verify' => $code,'updated_at' => Carbon::now()]);
-        
+            ->update(['code_verify' => $code, 'updated_at' => Carbon::now()]);
+
         // get user data
         $user = User::where('email', $email)->first();
 
-        if(!empty($data)) {
+        if (!empty($data)) {
             return $user;
         } else {
             return false;
         }
     }
 
-    public function deleteUser($id) {
+    public function deleteUser($id)
+    {
         $data = User::find($id);
 
         $role = DB::table('role_user')->where('user_id', $id)->first();
-        
-        // delete the existing one
-        DB::table('role_user')->where('role_id', $role->role_id)->where('user_id', $id)->delete();
-        
-        if(!empty($data)) {
+
+        if(isset($role->role_id)) {
+            // delete the existing one
+            DB::table('role_user')->where('role_id', $role->role_id)->where('user_id', $id)->delete();
+        }
+
+        if (!empty($data)) {
             $data->delete();
             return $data;
         } else {
@@ -157,43 +180,47 @@ class User extends Authenticatable
         }
     }
 
-    public function findId($id) {
+    public function findId($id)
+    {
         $data = User::find($id);
-        if(!empty($data)) {
+        if (!empty($data)) {
             return $data;
         } else {
             return false;
         }
     }
 
-    public function updateAPIKey($request, $id) {
+    public function updateAPIKey($request, $id)
+    {
         $data = User::where('id', $id)
-                    ->update($request);
-        if(!empty($data)) {
+            ->update($request);
+        if (!empty($data)) {
             return $data;
         } else {
             return false;
         }
     }
 
-    public function editPassword($param, $id) {
+    public function editPassword($param, $id)
+    {
         $data = User::where('id', $id)
-        ->update($param);
-        
-        if(!empty($data)) {
+            ->update($param);
+
+        if (!empty($data)) {
             return $data;
         } else {
             return false;
         }
     }
 
-    public function editUser($request, $id, $role_id) {
-        
+    public function editUser($request, $id, $role_id)
+    {
+
         $data = User::where('id', $id)
-                    ->update($request);
+            ->update($request);
 
         $role = DB::table('role_user')->where('user_id', $id)->first();
-        
+
         // delete the existing one
         DB::table('role_user')->where('role_id', $role->role_id)->where('user_id', $id)->delete();
 
@@ -201,54 +228,57 @@ class User extends Authenticatable
         $role_user = array(
             'role_id' => $role_id,
             'user_id' => $id,
-            'user_type' => 'App\User'
+            'user_type' => 'App\Models\User'
         );
         return DB::table('role_user')->insert($role_user);
 
-        if(!empty($data)) {
+        if (!empty($data)) {
             return $data;
         } else {
             return false;
         }
     }
 
-    public function editUserMobile($request, $id) {
+    public function editUserMobile($request, $id)
+    {
         $data = User::where('id', $id)
-                    ->update($request);
+            ->update($request);
 
-        if(!empty($data)) {
+        if (!empty($data)) {
             return $data;
         } else {
             return false;
         }
     }
 
-    public function editPengaturanUser($request, $id, $for_what) {
-        
+    public function editPengaturanUser($request, $id, $for_what)
+    {
+
         // unlink old image
 
-        if(!empty($request['foto'])) {
+        if (!empty($request['foto'])) {
             $data2 = User::find($id);
-            if( ( file_exists(base_path(). '/storage/app/public/foto-dokter/'. $data2->foto)
-                && !empty($data2->foto) ) ) {
-                unlink(base_path(). '/storage/app/public/foto-dokter/'. $data2->foto);
+            if ((file_exists(base_path() . '/storage/app/public/foto-dokter/' . $data2->foto)
+                && !empty($data2->foto))) {
+                unlink(base_path() . '/storage/app/public/foto-dokter/' . $data2->foto);
             }
-        }        
+        }
 
         $data = user::where('id', $id)
-                    ->update($request);
+            ->update($request);
 
         // return userdata
-        $user = user::where('id', $id)->first();        
+        $user = user::where('id', $id)->first();
 
-        if(!empty($data)) {
+        if (!empty($data)) {
             return $data;
         } else {
             return false;
         }
     }
 
-    public function getRegisteredCustomer() {
+    public function getRegisteredCustomer()
+    {
         return DB::table('role_user')->where('role_id', 5)->count();
     }
 
@@ -263,24 +293,15 @@ class User extends Authenticatable
         $this->notify(new Notifications\MailResetPasswordNotification($token));
     }
 
-    public function activateAccount($user_id, $code) {
+    public function activateAccount($user_id, $code)
+    {
         $data = user::where('id', $user_id)
-                        ->where('code_verify', $code);
-        if($data) {
+            ->where('code_verify', $code);
+        if ($data) {
             $data->update(["code_verify" => 1]);
             return true;
         } else {
             return false;
         }
-    }
-
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class);
-    }
-
-    public function shippingAddress()
-    {
-        return $this->hasMany(ShippingAddress::class);
     }
 }

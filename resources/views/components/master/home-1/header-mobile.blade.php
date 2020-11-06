@@ -1,9 +1,9 @@
 <div class="header-device-mobile">
     <div class="wapper">
-        <div class="item mobile-logo">
+        <div class="item mobile-logo pr-3">
             <div class="logo">
-                <a href="#">
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="">
+                <a href="/">
+                    <img src="{{ asset('assets/images/logo_footer.png') }}" alt="">
                 </a>
             </div>
         </div>
@@ -26,46 +26,6 @@
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="item mobile-settings-box has-sub">
-            <a href="#">
-                <span class="icon">
-                    <i class="fa fa-cog" aria-hidden="true"></i>
-                </span>
-            </a>
-            {{-- <div class="block-sub">
-                <a href="#" class="close">
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </a>
-                <div class="block-sub-item">
-                    <h5 class="block-item-title">Currency</h5>
-                    <form class="currency-form turan-language">
-                        <ul class="turan-language-wrap">
-                            <li class="active">
-                                <a href="#">
-                                    <span>
-                                        English (USD)
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span>
-                                        French (EUR)
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span>
-                                        Japanese (JPY)
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </form>
-                </div>
-            </div> --}}
         </div>
         <div class="item menu-bar">
             <a class=" mobile-navigation" href="#">
