@@ -26,7 +26,7 @@
                 <div class="form-group @if($errors->has('unit')) has-error @endif">
                     <label for="unit" class="col-sm-12 control-label">Unit</label>    
                     <div class="col-sm-12">
-                        <select name="unit" class="form-control select2" required>
+                        <select name="unit" class="form-control select2" id="unit">
                             <option value="" selected>Pilih unit</option>
                             <option value="PIECES">PIECES</option>
                             <option value="SERIES">SERIES</option>
@@ -101,16 +101,6 @@
                             <option value="" selected>Pilih satuan</option>
                             <option value="PCS">PCS</option>
                             <option value="GRAM">GRAM</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group @if($errors->has('unit')) has-error @endif">
-                    <label for="unit" class="col-sm-12 control-label">Unit</label>    
-                    <div class="col-sm-12">
-                        <select name="unit" class="form-control select2" id="unit">
-                            <option value="" selected>Pilih unit</option>
-                            <option value="PIECES">PIECES</option>
-                            <option value="SERIES">SERIES</option>
                         </select>
                     </div>
                 </div>

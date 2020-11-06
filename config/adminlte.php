@@ -268,14 +268,10 @@ return [
                     'text' => 'Barang',
                     'url' => 'admin/barang'
                 ],
-<<<<<<< HEAD
-                
-=======
                 // [
                 //     'text' => 'Member',
                 //     'url' => 'member'
                 // ],
->>>>>>> dev
                 [
                     'text' => 'Supplier',
                     'url' => 'admin/supplier'
