@@ -11,6 +11,7 @@ use App\Models\BarangImages;
 use App\Models\BarangRelated;
 use App\Models\User;
 use App\Models\Gallery;
+use App\Models\Series;
 use Illuminate\Http\Response;
 use DB;
 use File;
@@ -73,7 +74,7 @@ class BarangController extends Controller
         $input['update_at'] = date("Y-m-d H:i:s");
         $input['bpom'] = isset($input['bpom']) ? $input['bpom'] : 0;
         $input['cat'] = $input['bpom'];
-
+        
         $jumlah = Barang::where('kode_barang', $input['kode_barang'])->count();
 
         if ($jumlah>0){
@@ -85,6 +86,7 @@ class BarangController extends Controller
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Data barang berhasil ditambah</strong>')->success()->important();
             return redirect()->route('admin.barang.edit', $barang->id);
         }        
+
     }    
 
     public function edit($id)
@@ -245,5 +247,27 @@ class BarangController extends Controller
             return redirect()->route('admin.barang.edit', $barangId)->withInput()->withError();
         }
     }
+    
+    public function create_kode(Request $request)
+    {
+        $kode_pack = $request->get('kode_pack');
+
+        if($request->ajax()) {
+            $data = '';
+            $qry = Series::where('kode_pack', $kode_pack)->get();
+            foreach ($qry as $value) {
+                $data = array(
+                    'nama'  =>  $value->nama_pack,
+                    'jenis'  =>  $value->jenis_pack,
+                    'h_nomem'  =>  $value->h_nomem,
+                    'h_member'  =>  $value->h_member,
+                    'berat'  =>  $value->berat,
+                );
+            }
+            echo json_encode($data);
+        }
+    
+    }
+
     
 }

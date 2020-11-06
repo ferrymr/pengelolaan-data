@@ -46,12 +46,12 @@
                 <div class="input-group col-sm-6">
                     <select name="tipe_kulit" class="custom-select select2">
                         <option value="">Pilih tipe kulit</option>
-                        <option value="OILY" @if($barang->tipe_kulit == 'OILY') selected @endif>Oily</option>
-                        <option value="NORMAL" @if($barang->tipe_kulit == 'NORMAL') selected @endif>Normal</option>                  
-                        <option value="DRY" @if($barang->tipe_kulit == 'DRY') selected @endif>Dry</option>
-                        <option value="COMBINATION" @if($barang->tipe_kulit == 'COMBINATION') selected @endif>Combination</option>
-                        <option value="SENSITIVE" @if($barang->tipe_kulit == 'SENSITIVE') selected @endif>Sensitive</option>
-                        <option value="OTHER" @if($barang->tipe_kulit == 'OTHER') selected @endif>Other</option>
+                        <option value="OILY" @if($barang->tipe_kulit == 'OILY') selected @endif>OILY</option>
+                        <option value="NORMAL" @if($barang->tipe_kulit == 'NORMAL') selected @endif>NORMAL</option>                  
+                        <option value="DRY" @if($barang->tipe_kulit == 'DRY') selected @endif>DRY</option>
+                        <option value="COMBINATION" @if($barang->tipe_kulit == 'COMBINATION') selected @endif>COMBINATION</option>
+                        <option value="SENSITIVE" @if($barang->tipe_kulit == 'SENSITIVE') selected @endif>SENSITIVE</option>
+                        <option value="OTHER" @if($barang->tipe_kulit == 'OTHER') selected @endif>OTHER</option>
                     </select>
                 </div>
             </div>

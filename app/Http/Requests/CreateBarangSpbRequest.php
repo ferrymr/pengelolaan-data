@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateBarangRequest extends FormRequest
+class CreateBarangSpbRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,10 +15,11 @@ class CreateBarangRequest extends FormRequest
     public function rules()
     {
         $arrays = [
+            "no_member" => "required",
             "kode_barang"          => "required",
             "nama" => "required",
-            "stok"       => "nullable",
-            "poin"         => "required",
+            "stok"       => "required",
+            "poin"         => "nullable",
             "berat" => "nullable",
             "jenis" => "required",
             "h_nomem" => "nullable",
@@ -28,20 +29,7 @@ class CreateBarangRequest extends FormRequest
             "stats" => "nullable",
             "deskripsi" => "nullable",
             "cara_pakai" => "nullable",
-            "image" => "nullable",
 
-            // "h_hpb"         => "required",
-            // "h_ppnj"         => "required",
-            // "h_beli"         => "required",
-            // "h_ppnb"         => "required",
-            // "bpom"         => "required",
-            // "tgl_eks"         => "required",
-            // "stats"         => "required",
-            // "stok_his"         => "required",
-            // "log_his"         => "required",
-            // "pic"         => "required",
-            // "cat"         => "required",
-            // "diskon"         => "required",
         ];
 
         return $arrays;

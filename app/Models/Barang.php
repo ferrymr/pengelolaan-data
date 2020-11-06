@@ -37,6 +37,7 @@ class Barang extends Model
         'unit',
         'deskripsi',
         'cara_pakai',
+        
         // 'stok_his',
         // 'log_his',
         'flag_bestseller',

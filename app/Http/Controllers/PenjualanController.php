@@ -175,16 +175,12 @@ class PenjualanController extends Controller
                             if ($cek->jumlah + $jumlah > 2) {
                                 TbHeadJual::find($headJual->no_do)->delete();
                                 abort(404);
-                                // return response()->json([
-                                //     'msg' => 'member telah membeli barang ini sebanyak 2x dalam sebulan'
-                                // ], 400);
                             }
                         }
                     }
 
                     if ($jumlah > 2) {
                         TbHeadJual::find($headJual->no_do)->delete();
-                        // abort(404);
                         return response()->json([
                             'msg' => 'member telah melebihi batas pembelian sebanyak 2x dalam sebulan'
                         ], 400);
@@ -196,9 +192,6 @@ class PenjualanController extends Controller
                             if ($cek->jumlah + $jumlah > 2) {
                                 TbHeadJual::find($headJual->no_do)->delete();
                                 abort(404);
-                                // return response()->json([
-                                //     'msg' => 'member telah melebihi batas pembelian 2x dalam sebulan'
-                                // ], 400);
                             }
                         }
                     }

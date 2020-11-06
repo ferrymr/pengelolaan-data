@@ -13,22 +13,38 @@
         'url' => route('admin.barang.store'),
         'method'=>'POST',
         'class'=>'form-horizontal',
-        'id'=>'form-user'
+        'id'=>'form-user',
+        'enctype'=>'multipart/form-data'
     ]) !!}
 
     <div class="card col-12">
         <div class="card-header">
             <h3 class="card-title">Tambah Data Barang</h3>
         </div>
-        <div class="card-body">
-            <div class="form-group @if($errors->has('no_member')) has-error @endif">
-                <label for="kode_barang" class="col-sm-12 control-label">Kode barang</label>    
-                <div class="col-sm-4">
-                    <input maxlength="6" value="{{ old('kode_barang') }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode barang" required>
-                    @if($errors->has('kode_barang'))
-                        <span class="text-danger">{{ $errors->first('kode_barang') }}</span>
-                    @endif
-                    <p class="text-muted">Ideal 6 character</p>
+        <div class="card-body barangs">
+            <div class="form-group row col-sm-12">
+                <div class="form-group @if($errors->has('unit')) has-error @endif">
+                    <label for="unit" class="col-sm-12 control-label">Unit</label>    
+                    <div class="col-sm-12">
+                        <select name="unit" class="form-control select2" id="unit">
+                            <option value="" selected>Pilih unit</option>
+                            <option value="PIECES">PIECES</option>
+                            <option value="SERIES">SERIES</option>
+                        </select>
+                    </div>
+                        @if($errors->has('unit'))
+                            <span class="text-danger">{{ $errors->first('unit') }}</span>
+                        @endif
+                </div>
+                <div class="form-group @if($errors->has('no_member')) has-error @endif">
+                    <label for="kode_barang" class="col-sm-12 control-label">Kode</label>    
+                    <div class="col-sm-12">
+                        <input  value="{{ old('kode_barang') }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode" required>
+                        @if($errors->has('kode_barang'))
+                            <span class="text-danger">{{ $errors->first('kode_barang') }}</span>
+                        @endif
+                        <p class="text-muted">Ideal 6 character</p>
+                    </div>
                 </div>
             </div>
             <div class="form-group @if($errors->has('nama')) has-error @endif">
@@ -45,19 +61,19 @@
                 <div class="input-group col-sm-6">
                     <select name="tipe_kulit" class="custom-select select2">
                         <option value="" selected>Pilih tipe kulit</option>
-                        <option value="OILY">Oily</option>
-                        <option value="NORMAL">Normal</option>                  
-                        <option value="DRY">Dry</option>
-                        <option value="COMBINATION">Combination</option>
-                        <option value="SENSITIVE">Sensitive</option>
-                        <option value="OTHER">Other</option>
+                        <option value="OILY">OILY</option>
+                        <option value="NORMAL">NORMAL</option>                  
+                        <option value="DRY">DRY</option>
+                        <option value="COMBINATION">COMBINATION</option>
+                        <option value="SENSITIVE">SENSITIVE</option>
+                        <option value="OTHER">OTHER</option>
                     </select>
                 </div>
             </div>
             <div class="form-group @if($errors->has('jenis')) has-error @endif">
                 <label for="jenis" class="col-sm-12 control-label">Jenis barang</label>    
                 <div class="input-group col-sm-6">
-                    <select name="jenis" class="custom-select select2">
+                    <select name="jenis" class="custom-select select2" required>
                     <option value="" selected>Pilih jenis barang</option>
                     <option value="WHITENING">Whitening</option>
                     <option value="PURIFYING">Purifying</option>                  
@@ -65,6 +81,9 @@
                     <option value="BODYCARE">Body Care</option>
                     </select>
                 </div>
+                @if($errors->has('jenis'))
+                    <span class="text-danger">{{ $errors->first('jenis') }}</span>
+                @endif
             </div>
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('berat')) has-error @endif">
@@ -83,16 +102,6 @@
                             <option value="" selected>Pilih satuan</option>
                             <option value="PCS">PCS</option>
                             <option value="GRAM">GRAM</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group @if($errors->has('unit')) has-error @endif">
-                    <label for="unit" class="col-sm-12 control-label">Unit</label>    
-                    <div class="col-sm-12">
-                        <select name="unit" class="form-control select2" id="unit">
-                            <option value="" selected>Pilih unit</option>
-                            <option value="PIECES">PIECES</option>
-                            <option value="SERIES">SERIES</option>
                         </select>
                     </div>
                 </div>
@@ -150,7 +159,7 @@
             
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('h_nomem')) has-error @endif">
-                    <label for="h_nomem" class="col-sm-12 control-label">Harga katalog (non member)</label>    
+                    <label for="h_nomem" class="col-sm-12 control-label">Harga User</label>    
                     <div class="col-sm-12">
                         <input value="{{ old('h_nomem') }}" type="number" name="h_nomem" class="form-control" id="h_nomem" placeholder="Harga katalog" min="0">
                         @if($errors->has('h_nomem'))
@@ -239,8 +248,11 @@
 
 @stop
 
+
+
 @section('js')
     <script>
+       
         // select2
         $('.select2').select2();
 
@@ -248,7 +260,8 @@
         $('.datepicker').datepicker({
             format: 'yyyy/mm/dd',
             autoclose: true
-        })
+        });
+
 
         $(document).ready(function () {
             $('#add-product').click(function() {
@@ -288,5 +301,49 @@
                 }
             });
         });
+
+
+        var delay = (function () {
+            var timer = 0;
+
+            return function (callback, ms) {
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        // add barang
+        $('[name="kode_barang"]').keyup(function () {
+                var self = $(this);
+                var kode_pack = $(this).val();
+                console.log(kode_pack);
+            
+                delay(function () {
+                    $.ajax({
+                        url: "{{ route('admin.barang.create_kode') }}",
+                        method:'POST',
+                        data:"kode_pack="+kode_pack ,
+                        success: function(data){
+                                var json = data,
+                                obj = JSON.parse(json);
+                                console.log(obj.nama);
+                                console.log(json);
+                                self.parents('.barangs').find('[name="nama"]').val(obj.nama);
+                                self.parents('.barangs').find('[name="jenis"]').val(obj.jenis);
+                                self.parents('.barangs').find('[name="h_nomem"]').val(obj.h_nomem);
+                                self.parents('.barangs').find('[name="h_member"]').val(obj.h_member);
+                                self.parents('.barangs').find('[name="berat"]').val(obj.berat);
+                            }
+                        });
+                    }, 100);
+                });
+
+        
     </script>
 @stop

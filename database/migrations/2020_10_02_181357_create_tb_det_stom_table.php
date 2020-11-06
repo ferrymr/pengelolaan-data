@@ -16,7 +16,7 @@ class CreateTbDetStomTable extends Migration
         Schema::create('tb_det_stom', function (Blueprint $table) {
             $table->string('no_sm', 15);
             $table->string('kode_barang', 6);
-            $table->string('nama', 35)->nullable();
+            $table->string('nama_barang', 35)->nullable();
             $table->string('jenis', 25)->nullable();
             $table->integer('jumlah')->nullable();
             $table->timestamps();

@@ -119,6 +119,8 @@ Route::group([
     Route::get('add', 'BarangController@create')->name('add');
     Route::post('store', 'BarangController@store')->name('store');
     Route::post('update/{kode_barang}', 'BarangController@update')->name('update');
+    Route::post('create_kode', 'BarangController@create_kode')->name('create_kode');
+    
 
     // barang related
     Route::post('barang-related', 'BarangController@barangRelated')->name('barang-related');
