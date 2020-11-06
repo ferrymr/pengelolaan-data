@@ -41,14 +41,61 @@
                                         @if ($errors->any())
                                             <x-alert type="danger" :message="$errors"/>
                                         @endif
+                                        
+                                        <h4>Pengirim:</h4>
 
                                         <p class="form-row form-row-wide">
-                                            <label class="text">Nama Lengkap <span style="color:red">*</span></label> 
-                                            <input type="text" id="nama" name="nama" class="input-text {{ $errors->has('nama') ? 'is-invalid':'' }}" value="{{ old('nama') }}" required>
+                                            <label class="text">Nama Lengkap pengirim <span style="color:red">*</span></label> 
+                                            <input style="width:100%" 
+                                                    wire:model = "nama_pengirim"
+                                                    type="text" 
+                                                    id="nama_pengirim" 
+                                                    name="nama_pengirim" 
+                                                    class="input-text {{ $errors->has('nama_pengirim') ? 'is-invalid':'' }}" 
+                                                    value="{{ old('nama_pengirim') }}" 
+                                                    required>
+                                            @error('nama_pengirim') <span class="error">{{ $message }}</span> @enderror
                                         </p>
                                         <p class="form-row form-row-wide">
                                             <label class="text">Telepon <span style="color:red">*</span></label> 
-                                            <input type="tel" placeholder="Contoh: 085642274427" id="telepon" name="telepon" class="input-text {{ $errors->has('telepon') ? 'is-invalid':'' }}" value="{{ old('telepon') }}" required>
+                                            <input style="width:100%"
+                                                    wire:model = "telepon_pengirim"
+                                                    type="tel" 
+                                                    placeholder="Contoh: 085642274427" 
+                                                    id="telepon_pengirim" 
+                                                    name="telepon_pengirim" 
+                                                    class="input-text {{ $errors->has('telepon_pengirim') ? 'is-invalid':'' }}" 
+                                                    value="{{ old('telepon_pengirim') }}" 
+                                                    required>
+                                            @error('telepon_pengirim') <span class="error">{{ $message }}</span> @enderror
+                                        </p>
+                                        
+                                        <h4>Penerima:</h4>
+
+                                        <p class="form-row form-row-wide">
+                                            <label class="text">Nama Lengkap Penerima <span style="color:red">*</span></label> 
+                                            <input style="width:100%" 
+                                                    wire:model = "nama"
+                                                    type="text" 
+                                                    id="nama" 
+                                                    name="nama" 
+                                                    class="input-text {{ $errors->has('nama') ? 'is-invalid':'' }}" 
+                                                    value="{{ old('nama') }}" 
+                                                    required>
+                                            @error('nama') <span class="error">{{ $message }}</span> @enderror
+                                        </p>
+                                        <p class="form-row form-row-wide">
+                                            <label class="text">Telepon Penerima <span style="color:red">*</span></label> 
+                                            <input style="width:100%"
+                                                    wire:model = "telepon"
+                                                    type="tel" 
+                                                    placeholder="Contoh: 085642274427" 
+                                                    id="telepon" 
+                                                    name="telepon" 
+                                                    class="input-text {{ $errors->has('telepon') ? 'is-invalid':'' }}" 
+                                                    value="{{ old('telepon') }}" 
+                                                    required>
+                                            @error('telepon') <span class="error">{{ $message }}</span> @enderror
                                         </p>
                                         <p class="form-row form-row-wide">
                                             <label for="provinsi">Provinsi <span style="color:red">*</span></label>

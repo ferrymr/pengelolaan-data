@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
+use App\Models\Role;
 use App\Models\TbHeadJual;
 use App\Models\TbDetJual;
 use PDF;
@@ -32,7 +33,7 @@ class PemesananController extends Controller
 
     public function datatable()
     {
-        $data = TbHeadJual::with('detjual');
+        $data = TbHeadJual::with('detjual')->orderBy('id', "DESC");
         return Datatables::of($data)
             ->addColumn('kode_barang', function ($data) {
                 return $data->detjual->kode_barang;
@@ -91,9 +92,7 @@ class PemesananController extends Controller
     public function setStatus(Request $request, $id)
     {
         // password kosong
-        $param = array(
-            "status_transaksi" => $request->input('status_transaksi')
-        );
+        $param["status_transaksi"] = $request->input('status_transaksi');
 
         // get transaction
         $getTrans = TbHeadJual::with('items', 'address', 'user')->where('id', $id);
@@ -115,6 +114,9 @@ class PemesananController extends Controller
                     Whatsapp::sendMSG($to, $message);
 
                 } else if($request->input('status_transaksi') == 'SHIPPED') {
+
+                    $param["resi"] = $request->input('input_resi');
+
                     // notif email
                     Mail::to($data->user->email)->send(new OrderShipped($data));
 
@@ -125,9 +127,29 @@ class PemesananController extends Controller
 
                     Whatsapp::sendMSG($to, $message);
 
+                    // update user to member if code status is 2424
+                    if($data->user->status == 2424) {
+                        $userUpdate = User::where('id', $data->user->id);
+                
+                        $userUpdate = $userUpdate->update([
+                            'status' => null
+                        ]);
+
+                        // get useragain
+                        $userUpdateRole = User::find($data->user->id);
+
+                        // check user role member
+                        $assign = Role::where('name', 'member')->first();
+
+                        // change role to member
+                        $userUpdateRole->attachRole($assign);
+                    }
+
                 }
             } 
         }
+
+        // dd($param);
 
         $trans = $getTrans->update($param);
         

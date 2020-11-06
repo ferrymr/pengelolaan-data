@@ -155,8 +155,81 @@
                     {{-- reset floading --}}
                     <div class="reset-floatding"></div>
 
-                    {{-- realated product --}}
-                    {{-- <x-related-products :related-products="$relatedProducts" /> --}}
+                    @if(count($product->barangRelated) > 0)
+                        {{-- related product --}}
+                        <div class="turan-product slider-product product-grid style2 rows-space-20 no-margin-on-mobile">
+                            <div class="container">
+                                <h3 class="custommenu-title-blog">#Produk yang mungkin cocok untuk Anda</h3>
+                                <div class="product-list-owl owl-slick equal-container nav-center" data-slick='{"autoplay":false, "autoplaySpeed":1000, "arrows":true, "dots":false, "infinite":true, "speed":800,"infinite":false}' data-responsive='[{"breakpoint":"2000","settings":{"slidesToShow":4}},{"breakpoint":"1200","settings":{"slidesToShow":3}},{"breakpoint":"992","settings":{"slidesToShow":2}},{"breakpoint":"768","settings":{"slidesToShow":2}},{"breakpoint":"530","settings":{"slidesToShow":1}}]'>
+
+
+                                    @forelse ($product->barangRelated as $related)
+                                        <div class="product-item style-1">
+                                            <div class="product-inner equal-element">
+                                                <div class="product-thumb">
+                                                    <div class="thumb-inner">
+                                                        
+                                                        <a href="{{ route('products.show', $related->barangDetail->kode_barang) }}">
+                                                            @if(!empty($related->barangDetail->barangImages->first()))
+                                                                <img src="{{ route('admin.barang.barang-image', $related->barangDetail->barangImages->first()->id) }}" alt="">
+                                                            @else
+                                                                <img id="img_zoom" 
+                                                                        data-zoom-image="{{ asset('assets/images/product-1.jpg') }}" 
+                                                                        src="{{ asset('assets/images/product-1.jpg') }}" 
+                                                                        alt="">
+                                                            @endif
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="product-info">
+                                                    <h5 class="product-name product_title">
+                                                        <a href="{{ route('products.show', $related->barangDetail->kode_barang) }}">{{ $related->barangDetail->nama }}</a>
+                                                    </h5>
+                                                    <div class="group-info">
+
+                                                        <div class="price">
+
+                                                            @if(!isset($user) || $user->hasRole('user'))
+
+                                                                @if($related->barangDetail->diskon > 0)
+                                                                    @php
+                                                                        $harga = $related->barangDetail->h_nomem;
+                                                                        $harga = $harga - ($harga * ($related->barangDetail->diskon/100));
+                                                                    @endphp
+                                                                    <span style="text-decoration:  line-through;">@currency($related->barangDetail->h_nomem)</span> 
+                                                                    <span>@currency($harga)</span>
+                                                                @else
+                                                                    <span>@currency($related->barangDetail->h_nomem)</span>
+                                                                @endif
+                        
+                                                            @else
+                        
+                                                                @if($related->barangDetail->diskon > 0)
+                                                                    @php
+                                                                        $harga = $related->barangDetail->h_member;
+                                                                        $harga = $harga - ($harga * ($related->barangDetail->diskon/100));
+                                                                    @endphp
+                                                                    <span style="text-decoration:  line-through;">@currency($related->barangDetail->h_member)</span> 
+                                                                    <span>@currency($harga)</span>
+                                                                @else
+                                                                    <span>@currency($related->barangDetail->h_member)</span>
+                                                                @endif
+                                                                
+                                                            @endif
+                                                            
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        
+                                    @endforelse
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
                 </div>
             </div>

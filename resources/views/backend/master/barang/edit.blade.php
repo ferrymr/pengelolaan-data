@@ -25,10 +25,11 @@
             <div class="form-group @if($errors->has('no_member')) has-error @endif">
                 <label for="kode_barang" class="col-sm-12 control-label">Kode barang</label>    
                 <div class="col-sm-4">
-                    <input value="{{ $barang->kode_barang }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode barang" required>
+                    <input maxlength="6" value="{{ $barang->kode_barang }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode barang" required>
                     @if($errors->has('kode_barang'))
                         <span class="text-danger">{{ $errors->first('kode_barang') }}</span>
                     @endif
+                    <p class="text-muted">Ideal 6 character</p>
                 </div>
             </div>
             <div class="form-group @if($errors->has('nama')) has-error @endif">
@@ -98,49 +99,47 @@
                 </div>
             </div>
 
-            {{-- @if($barang->unit == 'SERIES') --}}
-                <div id="series" class="form-group row col-sm-12" style="display: none;">
-                    <div class="col-md-12 mb-3">                    
-                        <h5><b>Tambahkan produk ke dalam series</b></h5>
-                    </div>
-                    @forelse($barang->series as $series)
-                        <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
-                            <div class="input-group">
-                                <select name="produk[]" class="custom-select select2">
-                                    <option value="">Pilih produk</option>
-                                    @foreach($barangs as $barang)
-                                        <option value="{{ $barang->id }}" @if($series->tb_barang_id == $barang->id) selected @endif>
-                                            {{ $barang->nama }}
-                                        </option>
-                                    @endforeach
-                                </select> 
-                                <input type="number" name="qty_product[]" class="form-control" placeholder="Qty" value="{{ $series->qty }}">
-                                <button type="button" class="btn btn-success ml-3" id="add-product">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    @empty 
-                        <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
-                            <div class="input-group">
-                                <select name="produk[]" class="custom-select select2">
-                                    <option value="">Pilih produk</option>
-                                    @foreach($barangs as $barang)
-                                        <option value="{{ $barang->id }}">
-                                            {{ $barang->nama }}
-                                        </option>
-                                    @endforeach
-                                </select> 
-                                <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
-                                <button type="button" class="btn btn-success ml-3" id="add-product">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    @endforelse
-                    <table id="append-product" class="col-md-8"></table>
+            <div id="series" class="form-group row col-sm-12" style="display: none;">
+                <div class="col-md-12 mb-3">                    
+                    <h5><b>Tambahkan produk ke dalam series</b></h5>
                 </div>
-            {{-- @endif --}}
+                @forelse($barang->series as $series)
+                    <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                        <div class="input-group">
+                            <select name="produk[]" class="custom-select select2">
+                                <option value="">Pilih produk</option>
+                                @foreach($products as $product)
+                                    <option value="{{ $product->id }}" @if($series->tb_barang_id == $barang->id) selected @endif>
+                                        {{ $product->nama }}
+                                    </option>
+                                @endforeach
+                            </select> 
+                            <input type="number" name="qty_product[]" class="form-control" placeholder="Qty" value="{{ $series->qty }}">
+                            <button type="button" class="btn btn-success ml-3" id="add-product">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                @empty 
+                    <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                        <div class="input-group">
+                            <select name="produk[]" class="custom-select select2">
+                                <option value="">Pilih produk</option>
+                                @foreach($products as $product)
+                                    <option value="{{ $product->id }}">
+                                        {{ $product->nama }}
+                                    </option>
+                                @endforeach
+                            </select> 
+                            <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
+                            <button type="button" class="btn btn-success ml-3" id="add-product">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                @endforelse
+                <table id="append-product" class="col-md-8"></table>
+            </div>
 
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('poin')) has-error @endif">
@@ -262,76 +261,185 @@
 
     {!! Form::close() !!}
 
-    {{-- ========================= foto barang ========================= --}}
+    <div class="row">
 
-    {!! Form::open([
-        'url' => route('admin.barang.store-image'),
-        'method'=>'POST',
-        'class'=>'form-horizontal',
-        'id'=>'form-barang-image-update',
-        'files'=>'true'
-    ]) !!}
-
-    <input type="hidden" name="barang_id" value="{{ $barang->id }}">
+        {{-- ========================= foto barang ========================= --}}        
         
-    <div class="card col-12">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="fa fa-image"></i> &nbsp;Foto barang
-            </h3>
-        </div>
+        <div class="col-6">
 
-        <div class="card-body">
-            
-            <div class="col-md-12">
-                <div class="row">
+            <div class="card">
 
-                    <input type="file" name="nama_file[]" id="filecount" multiple="multiple"><br>                                    
-                    {{-- <p class="text-muted">Maksimal ukuran file: <b>500KB</b> & Ukuran gambar: <b>1000 x 600 px</b></p><br> --}}
+                {!! Form::open([
+                    'url' => route('admin.barang.store-image'),
+                    'method'=>'POST',
+                    'class'=>'form-horizontal',
+                    'id'=>'form-barang-image-update',
+                    'files'=>'true'
+                ]) !!}
+        
+                <input type="hidden" name="barang_id" value="{{ $barang->id }}">
 
-                    @if(count($barangImages) > 0)
-                    <table class="table table-bordered table-striped" style="margin-top: 20px;">
-                        <tbody>
-                            <tr>
-                                <th style="width: 10px" class="text-center">No</th>
-                                <th class="text-center">Foto</th>
-                                {{-- <th class="text-center">Thumbnail</th> --}}
-                                <th class="text-center">Hapus</th>
-                            </tr>
-                            @php 
-                                $no=1; 
-                            @endphp
-                            @foreach($barangImages as $barangImage) 
-                                <tr>
-                                    <td class="text-center">{{ $no }}.</td>
-                                    <td class="text-center">
-                                        @if(file_exists(base_path(). '/storage/app/public/barang/'. $barangImage->nama_file))
-                                            <img style="width:20%;margin:0 auto;" class="thumbnail" src="{{ route('admin.barang.barang-image', $barangImage->id) }}" alt="">
-                                        @endif
-                                    </td>
-                                    {{-- <td class="text-center favourite">
-                                        <a href="#">
-                                            <i class="fa fa-star"></i>
-                                        </a>                                                    
-                                    </td> --}}
-                                    <td class="text-center">
-                                        <a href="{{ route('admin.barang.detele-barang-image', [$barang->id, $barangImage->id]) }}" class="btn btn-danger btn-xs btn-delete actDelete" data-placement="left" data-toggle="confirmation" data-title="Hapus foto ?">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr> 
-                                @php $no++; @endphp
-                            @endforeach                              
-                        </tbody>
-                    </table>
-                    @endif
-                </div>                                
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fa fa-image"></i> &nbsp;Foto barang
+                    </h3>
+                </div>
+
+                <div class="card-body">
+                    
+                    <div class="col-md-12">
+                        <div class="row">
+
+                            <input type="file" name="nama_file[]" id="filecount" multiple="multiple"><br>                                    
+                            {{-- <p class="text-muted">Maksimal ukuran file: <b>500KB</b> & Ukuran gambar: <b>1000 x 600 px</b></p><br> --}}
+
+                            @if(count($barangImages) > 0)
+                            <table class="table table-bordered table-striped" style="margin-top: 20px;">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 10px" class="text-center">No</th>
+                                        <th class="text-center">Foto</th>
+                                        {{-- <th class="text-center">Thumbnail</th> --}}
+                                        <th class="text-center">Hapus</th>
+                                    </tr>
+                                    @php 
+                                        $no=1; 
+                                    @endphp
+                                    @foreach($barangImages as $barangImage) 
+                                        <tr>
+                                            <td class="text-center">{{ $no }}.</td>
+                                            <td class="text-center">
+                                                @if(file_exists(base_path(). '/storage/app/public/barang/'. $barangImage->nama_file))
+                                                    <img style="width:20%;margin:0 auto;" class="thumbnail" src="{{ route('admin.barang.barang-image', $barangImage->id) }}" alt="">
+                                                @endif
+                                            </td>
+                                            {{-- <td class="text-center favourite">
+                                                <a href="#">
+                                                    <i class="fa fa-star"></i>
+                                                </a>                                                    
+                                            </td> --}}
+                                            <td class="text-center">
+                                                <a href="{{ route('admin.barang.detele-barang-image', [$barang->id, $barangImage->id]) }}" class="btn btn-danger btn-xs btn-delete actDelete" data-placement="left" data-toggle="confirmation" data-title="Hapus foto ?">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr> 
+                                        @php $no++; @endphp
+                                    @endforeach                              
+                                </tbody>
+                            </table>
+                            @endif
+                        </div>                                
+                    </div>
+
+                </div>
+
+                {!! Form::close() !!}
+
             </div>
 
         </div>
+
+        {{-- ========================= foto produk yang mungkin cocok untuk anda ========================= --}}        
+            
+        <div class="col-6">
+            <div class="card">
+
+                {!! Form::open([
+                    'url' => route('admin.barang.barang-related'),
+                    'method'=>'POST',
+                    'class'=>'form-horizontal',
+                    'id'=>'form-barang-image-update',
+                    'files'=>'true'
+                ]) !!}
+        
+                    <input type="hidden" name="barang_id" value="{{ $barang->id }}">
+
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fa fa-image"></i> &nbsp;Pilih produk yang mungkin cocok untuk anda
+                        </h3>
+                    </div>
+
+                    <div class="card-body">                    
+                        <div class="col-md-12" style="padding-top:10px;">
+                            <div class="row">
+                                <div id="series" class="form-group row col-sm-12">                                
+                                    <div class="col-md-12 @if($errors->has('barang_related')) has-error @endif mb-2" id="product-related">
+                                        <p class="text-muted">Pilih barang maksimal 4</p>
+                                        
+                                        @if(count($barangRelated) > 0)
+                                            <table id="append-product-related" class="col-md-8">
+                                                @foreach($barangRelated as $related)
+                                                    <tr>
+                                                        <td>
+                                                            <div class="input-group col-md-12 mb-2">
+                                                                <select name="barang_related[]" class="custom-select select2">
+                                                                    <option value="">Pilih produk</option>
+                                                                    @foreach($products as $product)
+                                                                        <option value="{{ $product->id }}" @if($related->tb_barang_related_id == $product->id) selected @endif>
+                                                                            {{ $product->nama }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select> 
+                                                                <button type="button" class="btn btn-danger ml-3 remove-product-related">
+                                                                    <i class="fa fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                <tr>
+                                                    <td>
+                                                        <div class="input-group col-md-12 mb-2">
+                                                            <select name="barang_related[]" class="custom-select select2">
+                                                                <option value="">Pilih produk</option>
+                                                                @foreach($products as $product)
+                                                                    <option value="{{ $product->id }}">
+                                                                        {{ $product->nama }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select> 
+                                                            <button type="button" class="btn btn-success ml-3" id="add-product-related">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        @else 
+                                            <div class="input-group">
+                                                <select name="barang_related[]" class="custom-select select2">
+                                                    <option value="">Pilih produk</option>
+                                                    @foreach($products as $product)
+                                                        <option value="{{ $product->id }}">
+                                                            {{ $product->nama }}
+                                                        </option>
+                                                    @endforeach
+                                                </select> 
+                                                <button type="button" class="btn btn-success ml-3" id="add-product-related">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <table id="append-product-related" class="col-md-8"></table>
+                                </div>                            
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-info">Simpan</button>
+                        <a href="{{ route("admin.barang.index") }}" class="btn btn-default float-right">Cancel</a>
+                    </div>
+
+                {!! Form::close() !!}
+
+            </div>        
+        </div>    
+
     </div>
-    
-    {!! Form::close() !!}
 
 @stop
 
@@ -361,6 +469,31 @@
             });
 
             $('#append-product').on('click', '.remove-product', function(){
+                $(this).parent().parent().remove();
+            });
+
+            $('#add-product-related').click(function() {
+                $('.select2').select2();
+                $('#append-product-related').append(`
+                    <tr>
+                        <td>
+                            <div class="input-group col-md-12 mb-2">
+                                <select name="barang_related[]" class="custom-select select2">
+                                    <option value="" selected>Pilih produk</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}">{{ $product->nama }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="button" class="btn btn-danger ml-3 remove-product-related">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `);
+            });
+
+            $('#append-product-related').on('click', '.remove-product-related', function(){
                 $(this).parent().parent().remove();
             });
                         

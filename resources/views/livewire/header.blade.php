@@ -51,11 +51,14 @@
                                                         </span>
                                                     </span>
                                                     <span class="product-quantity"> x {{ $cartItem['qty'] }}</span>
-                                                    <div class="product-remove">
-                                                        <a href="#" wire:click="removeFromCart('{{ $cartItem['kode_barang'] }}')">
-                                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                                        </a>
-                                                    </div>
+                                                    @if($cartItem['kode_barang'] != "CATALO")
+                                                        <div class="product-remove">
+                                                            <a href="#" wire:click="removeFromCart('{{ $cartItem['kode_barang'] }}')">
+                                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+                                                    @endif
+
                                                 </div>
                                             </li>
                                         @endforeach

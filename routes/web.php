@@ -91,6 +91,11 @@ Route::get('/login-administrator', function () {
     }    
 });
 
+// Register direct to member
+Route::get('/register-member', function () {
+    return view('auth.register-member');   
+});
+
 // Dashboard
 Route::group([
     'middleware' => ['role:administrator|reseller|member|user'],
@@ -113,6 +118,9 @@ Route::group([
     Route::get('add', 'BarangController@create')->name('add');
     Route::post('store', 'BarangController@store')->name('store');
     Route::post('update/{kode_barang}', 'BarangController@update')->name('update');
+
+    // barang related
+    Route::post('barang-related', 'BarangController@barangRelated')->name('barang-related');
 
     Route::post('store-image', 'BarangController@storeBarangImage')->name('store-image');
     Route::get('delete-barang-image/{barangId?}/{id?}', 'BarangController@deleteBarangImage')->name('detele-barang-image');

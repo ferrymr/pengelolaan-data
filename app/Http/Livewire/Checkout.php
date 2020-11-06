@@ -11,6 +11,7 @@ use App\Models\Provinsi;
 use App\Models\Kota;
 use App\Models\Kecamatan;
 use App\Models\Barang;
+use App\Models\User;
 use App\Http\Resources\CityResource;
 use App\Http\Resources\SubdistrictResource;
 
@@ -39,6 +40,9 @@ class Checkout extends Component
     public $total_poin;
 
     // for address part
+    public $nama_pengirim;
+    public $telepon_pengirim;
+
     public $nama;
     public $telepon;
     public $provinsi;
@@ -51,6 +55,8 @@ class Checkout extends Component
 
     public $listKota;
     public $listKecamatan;
+
+    public $profile;
 
     public function mount()
     {
@@ -79,6 +85,9 @@ class Checkout extends Component
         $this->alamatTujuan;
 
         // for address part
+        $this->nama_pengirim;
+        $this->telepon_pengirim;
+
         $this->nama;
         $this->telepon;
         $this->provinsi;
@@ -90,9 +99,13 @@ class Checkout extends Component
         $this->listKota;
         $this->listKecamatan;
 
+        $this->profile = User::find($this->user->id);
     }
 
     public function resetAddressInputFields() {
+        $this->nama_pengirim = '';
+        $this->telepon_pengirim = '';
+
         $this->nama = '';
         $this->telepon = '';
         $this->provinsi = '';
@@ -131,10 +144,12 @@ class Checkout extends Component
 
             $spbIndex = 'SPB' . $this->selectedSpb;
 
+            $totalBerat = $this->totalBerat + ($this->totalBerat) * 0.1;
+
             $rajaOngkir = RajaOngkir::ongkosKirim([
                 'origin' => $this->defaultShippingAddress->kecamatan_id,
                 'destination' => $this->spbList[$spbIndex]['subdistrict_id'],
-                'weight' => $this->totalBerat * 1000,
+                'weight' => $totalBerat,
                 'courier' => strtolower($this->courier),
                 'originType' => 'subdistrict',
                 'destinationType' => 'subdistrict'
@@ -384,6 +399,8 @@ class Checkout extends Component
     public function saveNewAddress() {
         
         $this->validate([
+            'nama_pengirim' => 'required',
+            'telepon_pengirim' => 'required',
             'nama' => 'required',
             'telepon' => 'required',
             'provinsi' => 'required',
@@ -400,6 +417,8 @@ class Checkout extends Component
 
         $input = [
             'user_id' => $this->user->id,
+            'nama_pengirim' => $this->nama_pengirim,
+            'telepon_pengirim' => $this->telepon,
             'nama' => $this->nama,
             'telepon' => $this->telepon,
             'provinsi_id' => $this->provinsi,

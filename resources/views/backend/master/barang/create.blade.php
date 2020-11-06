@@ -24,10 +24,11 @@
             <div class="form-group @if($errors->has('no_member')) has-error @endif">
                 <label for="kode_barang" class="col-sm-12 control-label">Kode barang</label>    
                 <div class="col-sm-4">
-                    <input value="{{ old('kode_barang') }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode barang" required>
+                    <input maxlength="6" value="{{ old('kode_barang') }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode barang" required>
                     @if($errors->has('kode_barang'))
                         <span class="text-danger">{{ $errors->first('kode_barang') }}</span>
                     @endif
+                    <p class="text-muted">Ideal 6 character</p>
                 </div>
             </div>
             <div class="form-group @if($errors->has('nama')) has-error @endif">

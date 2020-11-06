@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\BarangImages;
+use App\Models\BarangRelated;
 use App\Models\TbDetSeries;
 use Carbon\Carbon;
 
@@ -98,7 +99,15 @@ class Barang extends Model
     // ======================== backend ========================
 
     public function getAll() {
-        return Barang::all();
+        return Barang::orderBy('created_at', 'DESC')->get();
+    }
+
+    public function addBarangRelated($request, $id) {
+        // remove barang first
+        BarangRelated::where('tb_barang_id', $id)->delete();
+
+        // then save the new record
+        return BarangRelated::insert($request);
     }
 
     public function addBarang($request) 
@@ -170,6 +179,10 @@ class Barang extends Model
     // ======================== relations ========================
     public function barangImages() {
         return $this->hasMany('App\Models\BarangImages', 'tb_barang_id');
+    }
+
+    public function barangRelated() {
+        return $this->hasMany('App\Models\BarangRelated', 'tb_barang_id');
     }
     
     public function series() {
