@@ -31,7 +31,15 @@ class User extends Authenticatable
         'password',
         'photo',
         'google_id',
-        'status'
+        'status',
+        'alamat',
+        'propinsi',
+        'kota',
+        'kecamatan',
+        'foto_ktp',
+        'bank',
+        'norek',
+        'code_aff_ref',
     ];
 
     /**

@@ -5,7 +5,12 @@ namespace App\Http\Livewire;
 use App\Facades\Cart;
 use Livewire\Component;
 use App\Models\Barang;
+use App\Models\CouponUsed;
+use App\Models\Coupon;
+use App\Models\CouponByUser;
+use App\Models\CouponByProduct;
 use App\Models\ShippingAddress;
+use Session;
 
 class MyCart extends Component
 {
@@ -13,10 +18,14 @@ class MyCart extends Component
     public $totalItems;
     public $subtotal;
     public $nextPageLink;
+    public $coupon;
     public $qty = 1;
 
     public function mount()
     {
+        if(!empty(session('coupon'))){
+            $this->coupon = session('coupon');
+        }
         $this->nextPageLink = $this->getNextPageLink();
         $this->refreshData();
     }
@@ -114,5 +123,55 @@ class MyCart extends Component
         }
 
         return route('checkout');
+    }
+
+    public function inputCode() {
+        $user = auth()->user();
+
+        if(!empty($this->coupon)) {
+            // checking coupon already used by user or not 
+            $checkUsed = CouponUsed::where('user_id', $user->id)
+                                    ->where('coupon_code', $this->coupon)
+                                    ->count();
+            // checking coupon
+            if($checkUsed > 0) {
+                Session::forget('coupon');
+                flash('Maaf kupon anda sudah di pakai')->error();
+            } 
+
+            $checkCoupon = Coupon::with('couponUser', 'couponProduct')
+                                    ->where('code', $this->coupon)
+                                    ->whereDate('expired', '>', date('Y-m-d'))
+                                    ->where('flag_active', 1)->first();
+
+            if($checkCoupon) {
+
+                if(count($checkCoupon->couponUser)) {
+                    $checkFlagUser = CouponByUser::where('user_id', $user->id)
+                                            ->where('coupon_id', $checkCoupon->id)
+                                            ->first();
+                    if($checkFlagUser) {
+                        session(['coupon' => $this->coupon]);
+                    } else {
+                        Session::forget('coupon');
+                        flash('Maaf kupon anda tidak valid / tidak sesuai dengan usernya')->error();
+                    }
+                } else if (count($checkCoupon->couponProduct)) {
+
+                } else {
+                    session(['coupon' => $this->coupon]);
+                }
+
+            } else {
+                Session::forget('coupon');
+                flash('Maaf kupon anda tidak valid')->error();
+            }
+
+            flash('Selamat kupon anda mendapatkan potongan')->success();
+        } else {
+            Session::forget('coupon');
+            flash('Maaf kupon anda tidak valid / expired')->error();
+        }
+
     }
 }

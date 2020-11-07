@@ -92,10 +92,18 @@ Route::get('/login-administrator', function () {
     }
 });
 
-// Register direct to member
-Route::get('/register-member', function () {
-    return view('auth.register-member');   
+// Register direct to user
+Route::get('/register-user/{ref_code?}', function ($ref_code = '') {
+    return view('auth.register-user', compact('ref_code'));   
 });
+
+// Register direct to member
+Route::get('/register-member/{ref_code?}', function ($ref_code = '') {
+    return view('auth.register-member', compact('ref_code'));   
+});
+
+// Register direct to reseller
+Route::get('/register-reseller/{ref_code?}', 'AddressController@registerReseller')->name('register-reseller');
 
 // Dashboard
 Route::group([
@@ -308,4 +316,20 @@ Route::group([
     'as'     => 'admin.konfirmasi-daftar.'
 ], function () {
     Route::get('konfirmasi-daftar-image/{id?}', 'KonfirmasiDaftarController@getKonfirmasiDaftarImage')->name('konfirmasi-daftar-image');
+});
+
+// Coupon
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/coupon/',
+    'as' => 'admin.coupon.'
+], function () {
+    Route::get('', 'CouponController@index')->name('index');
+    Route::get('datatable', 'CouponController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'CouponController@edit')->name('edit');
+    Route::get('view/{id}', 'CouponController@view')->name('view');
+    Route::get('delete/{id}', 'CouponController@destroy')->name('delete');
+    Route::get('add', 'CouponController@create')->name('add');
+    Route::post('store', 'CouponController@store')->name('store');
+    Route::post('update/{id}', 'CouponController@update')->name('update');
 });

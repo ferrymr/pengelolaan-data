@@ -58,6 +58,8 @@ class Checkout extends Component
 
     public $profile;
 
+    public $coupon;
+
     public function mount()
     {
         $this->cartItems = Cart::get();
@@ -98,6 +100,8 @@ class Checkout extends Component
 
         $this->listKota;
         $this->listKecamatan;
+
+        $this->coupon;
 
         $this->profile = User::find($this->user->id);
     }
@@ -361,6 +365,7 @@ class Checkout extends Component
             'totalItems' => $this->totalItems, //$request->bank,
             'kodeUnik' => $this->kodeUnik, 
             'totalPoin' => $this->total_poin, 
+            'coupon' => $this->coupon, 
         ];
 
         session($summaryTrans);

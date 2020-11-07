@@ -162,6 +162,8 @@ blockquote::before {
     overflow: hidden;
 }
 
+input[type="number"],
+input[type="date"],
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -176,6 +178,8 @@ select {
     max-width: 100%;
     background: none;
 }
+input[type="number"],
+input[type="date"],
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -218,6 +222,8 @@ input[type="submit"] {
     font-size: 13px;
 }
 
+input[type="number"]:focus,
+input[type="date"]:focus,
 input[type="text"]:focus,
 input[type="number"]:focus,
 input[type="search"]:focus,
@@ -2817,6 +2823,8 @@ blockquote .author .desc {
 .customer_login .form-row-wide {
     margin-bottom: 23px;
 }
+.customer_login input[type="number"],
+.customer_login input[type="date"],
 .customer_login input[type="text"],
 .customer_login input[type="email"],
 .customer_login input[type="password"] {
@@ -6726,6 +6734,8 @@ ul.list-products {
 .review_form .comment-form-review .stars a.star-5::before {
     content: "\f005\f005\f005\f005\f005";
 }
+.comment-form-review input[type="number"],
+.comment-form-review input[type="date"],
 .comment-form-review input[type="text"],
 .comment-form-review input[type="email"],
 .comment-form input[type="url"] {

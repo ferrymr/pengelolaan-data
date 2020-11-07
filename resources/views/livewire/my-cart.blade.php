@@ -26,6 +26,8 @@
                 <div class="main-content-cart main-content col-sm-12">
                     <h3 class="custom_blog_title">#My Cart</h3>
 
+                    @include('flash::message')
+
                     <div class="page-main-content">
                         <div class="shoppingcart-content">
                             <form action="shoppingcart.html" class="cart-form">
@@ -107,30 +109,38 @@
 
                                             <tr>
                                                 <td class="actions">
-                                                    {{-- <div class="coupon">
-                                                        <label class="coupon_code">Coupon Code:</label>
+                                                    <div class="coupon">
+                                                        <label class="coupon_code">Coupon Code: &nbsp;</label>
                                                         <div class="coupon-wrapp">
-                                                            <input type="text" class="input-text" placeholder="Promotion code here">
-                                                            <a href="#"  class="button"></a>
+                                                            <input wire:model="coupon" type="text" class="input-text" placeholder="Promotion code here">
+                                                            <a href="#" wire:click="inputCode()" class="button"></a>
                                                         </div>
-                                                    </div> --}}
-                                                    <div class="order-total pull-left">
-                                                        <div>
+                                                    </div>
+                                                    <div class="order-total">
+                                                        <div class="mb-2 text-right">
                                                             <span class="title">
                                                                 Qty:
                                                             </span>
                                                             <span class="total-price">
-                                                                {{ $totalItems }} Pcs
+                                                                <b>{{ $totalItems }} Pcs</b>
                                                             </span>
                                                         </div>
-                                                    </div>
-                                                    <div class="order-total">
-                                                        <div>
-                                                            <span class="title">
+                                                        @if(!empty(session('coupon')))
+                                                            <div class="mb-2 text-right">
+                                                                <span class="title">
+                                                                    Discount / Potongan:
+                                                                </span>
+                                                                <span class="total-price">
+                                                                    <b>{{ session('coupon') }}</b>
+                                                                </span>
+                                                            </div>
+                                                        @endif
+                                                        <div class="text-right">
+                                                            <span class="title ">
                                                                 Subtotal:
                                                             </span>
                                                             <span class="total-price">
-                                                                @currency($subtotal)
+                                                                <b>@currency($subtotal)</b>
                                                             </span>
                                                         </div>
                                                     </div>

@@ -149,11 +149,30 @@ class PemesananController extends Controller
                         $userUpdateRole->attachRole($assign);
                     }
 
+                    // update user to reseller if code status is 2525
+                    if($data->user->status == 2525) {
+                        $userUpdate = User::where('id', $data->user->id);
+                        
+                        $randCodeReseller = substr(md5(uniqid(mt_rand(), true)) , 0, 10);
+
+                        $userUpdate = $userUpdate->update([
+                            'apro' => $randCodeReseller, 
+                            'status' => null
+                        ]);
+
+                        // get useragain
+                        $userUpdateRole = User::find($data->user->id);
+
+                        // check user role member
+                        $assign = Role::where('name', 'reseller')->first();
+
+                        // change role to member
+                        $userUpdateRole->attachRole($assign);
+                    }
+
                 }
             }
         }
-
-        // dd($param);
 
         $trans = $getTrans->update($param);
 

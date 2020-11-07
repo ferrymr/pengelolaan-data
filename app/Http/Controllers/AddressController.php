@@ -321,4 +321,13 @@ class AddressController extends Controller
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }
     }
+
+    public function registerReseller($ref_code = '') {
+        $daftarProvinsi  = $this->getProvinces();
+
+        return view('auth.register-reseller', compact(
+            'daftarProvinsi',
+            'ref_code'
+        ));
+    }
 }

@@ -28,7 +28,7 @@
             <div class="content-area col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="site-main">
 
-                    <h3 class="custom_blog_title" style="margin-bottom:0px">#Register Member</h3>
+                    <h3 class="custom_blog_title" style="margin-bottom:0px">#Authentication</h3>
                     <p>Untuk melakukan checkout silahkan login / register terlebih dahulu.</p>
                     
                     @if (count($errors))  
@@ -46,9 +46,9 @@
                     <div class="customer_login">
                         <div class="row">
 
-                            <div class="col-md-offset-2 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-md-offset-3 col-lg-6 col-md-6 col-sm-12">
                                 <div class="login-item">
-                                    <h5 class="title-login">Registrasi sebagai member</h5>
+                                    <h5 class="title-login">Don’t have an Account? Register now!</h5>
                                     <form method="POST" action="{{ route('register') }}" class="register">
                                         @csrf
 
@@ -70,14 +70,14 @@
                                             <label class="text">Re-type Password</label>
                                             <input type="password" name="password_confirmation" class="input-text" required>
                                         </p>
-                                        <p class="form-row check-box-field">
+                                        {{-- <p class="form-row check-box-field">
                                             <span class="inline">
-                                                <input type="checkbox" name="flag_role" id="member" checked readonly>
-                                                <label for="member" class="label-text">Register sebagai <span>member</span></label>
+                                                <input type="checkbox" id="cb2">
+                                                <label for="cb2" class="label-text">I agree to <span>Terms & Conditions</span></label>
                                             </span>
-                                        </p>
+                                        </p> --}}
                                         <p class="">
-                                            <input type="submit" class="button-submit" value="REGISTER MEMBER">
+                                            <input type="submit" class="button-submit" value="REGISTER NOW">
                                         </p>
                                     </form>
                                 </div>

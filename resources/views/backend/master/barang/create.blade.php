@@ -22,24 +22,11 @@
             <h3 class="card-title">Tambah Data Barang</h3>
         </div>
         <div class="card-body barangs">
-            <div class="form-group row col-sm-12">
-                <div class="form-group @if($errors->has('unit')) has-error @endif">
-                    <label for="unit" class="col-sm-12 control-label">Unit</label>    
-                    <div class="col-sm-12">
-                        <select name="unit" class="form-control select2" id="unit">
-                            <option value="" selected>Pilih unit</option>
-                            <option value="PIECES">PIECES</option>
-                            <option value="SERIES">SERIES</option>
-                        </select>
-                    </div>
-                        @if($errors->has('unit'))
-                            <span class="text-danger">{{ $errors->first('unit') }}</span>
-                        @endif
-                </div>
+            <div class="form-group">
                 <div class="form-group @if($errors->has('no_member')) has-error @endif">
                     <label for="kode_barang" class="col-sm-12 control-label">Kode</label>    
-                    <div class="col-sm-12">
-                        <input  value="{{ old('kode_barang') }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode" required>
+                    <div class="col-sm-4">
+                        <input  maxlength="6"  value="{{ old('kode_barang') }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode" required>
                         @if($errors->has('kode_barang'))
                             <span class="text-danger">{{ $errors->first('kode_barang') }}</span>
                         @endif
@@ -47,6 +34,41 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group @if($errors->has('unit')) has-error @endif">
+                <label for="unit" class="col-sm-12 control-label">Unit</label>    
+                <div class="col-sm-4">
+                    <select name="unit" class="form-control select2" id="unit">
+                        <option value="" selected>Pilih unit</option>
+                        <option value="PIECES">PIECES</option>
+                        <option value="SERIES">SERIES</option>
+                    </select>
+                </div>
+                @if($errors->has('unit'))
+                    <span class="text-danger">{{ $errors->first('unit') }}</span>
+                @endif
+            </div>
+
+            <div id="series" class="form-group row col-sm-12" style="display:none;">
+                <div class="col-md-12 mb-3">                    
+                    <h5><b>Tambahkan produk ke dalam series</b></h5>
+                </div>
+                <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                    <div class="input-group">
+                        <select name="produk[]" class="custom-select select2">
+                            <option value="" selected>Pilih produk</option>
+                            @foreach($barangs as $barang)
+                                <option value="{{ $barang->id }}">{{ $barang->nama }}</option>
+                            @endforeach
+                        </select> 
+                        <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
+                        <button type="button" class="btn btn-success ml-3" id="add-product">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <table id="append-product" class="col-md-8"></table>
+            </div>
+
             <div class="form-group @if($errors->has('nama')) has-error @endif">
                 <label for="nama" class="col-sm-12 control-label">Nama barang</label>    
                 <div class="col-sm-8">
@@ -107,26 +129,6 @@
                 </div>
             </div>
             
-            <div id="series" class="form-group row col-sm-12" style="display:none;">
-                <div class="col-md-12 mb-3">                    
-                    <h5><b>Tambahkan produk ke dalam series</b></h5>
-                </div>
-                <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
-                    <div class="input-group">
-                        <select name="produk[]" class="custom-select select2">
-                            <option value="" selected>Pilih produk</option>
-                            @foreach($barangs as $barang)
-                                <option value="{{ $barang->id }}">{{ $barang->nama }}</option>
-                            @endforeach
-                        </select> 
-                        <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
-                        <button type="button" class="btn btn-success ml-3" id="add-product">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <table id="append-product" class="col-md-8"></table>
-            </div>
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('poin')) has-error @endif">
                     <label for="poin" class="col-sm-12 control-label">Poin</label>    
@@ -258,7 +260,7 @@
 
         // date picker
         $('.datepicker').datepicker({
-            format: 'yyyy/mm/dd',
+            format: 'yyyy-mm-dd',
             autoclose: true
         });
 

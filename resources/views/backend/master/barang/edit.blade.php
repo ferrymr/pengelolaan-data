@@ -10,7 +10,7 @@
     @include('flash::message')
 
     {!! Form::open([
-        'url' => route('admin.barang.update', $barang->kode_barang),
+        'url' => route('admin.barang.update', $barang->id),
         'method'=>'POST',
         'class'=>'form-horizontal',
         'id'=>'form-user'
@@ -32,6 +32,77 @@
                     <p class="text-muted">Ideal 6 character</p>
                 </div>
             </div>
+            <div class="form-group @if($errors->has('unit')) has-error @endif">
+                <label for="unit" class="col-sm-12 control-label">Unit</label>    
+                <div class="col-sm-4">
+                    <select name="unit" class="form-control select2" id="unit" disabled>
+                        <option value="" selected>Pilih unit</option>
+                        <option value="PIECES" @if($barang->unit == 'PIECES') selected @endif>PIECES</option>
+                        <option value="SERIES" @if($barang->unit == 'SERIES') selected @endif>SERIES</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="series" class="form-group row col-sm-12">
+                <div class="col-md-12 mb-3">                    
+                    <h5><b>Tambahkan produk ke dalam series</b></h5>
+                </div>
+                @if(count($barang->series) > 0)
+                    @foreach($barang->series as $series)
+                        <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                            <div class="input-group">
+                                <select name="produk[]" class="custom-select select2">
+                                    <option value="">Pilih produk</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}" @if($series->tb_barang_id == $product->id) selected @endif>
+                                            {{ $product->nama }}
+                                        </option>
+                                    @endforeach
+                                </select> 
+                                <input type="number" name="qty_product[]" class="form-control" placeholder="Qty" value="{{ $series->qty }}">
+                                <button type="button" class="btn btn-danger ml-3 remove-product">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                        <div class="input-group">
+                            <select name="produk[]" class="custom-select select2">
+                                <option value="">Pilih produk</option>
+                                @foreach($products as $product)
+                                    <option value="{{ $product->id }}">
+                                        {{ $product->nama }}
+                                    </option>
+                                @endforeach
+                            </select> 
+                            <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
+                            <button type="button" class="btn btn-success ml-3" id="add-product">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                @else 
+                    <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                        <div class="input-group">
+                            <select name="produk[]" class="custom-select select2">
+                                <option value="">Pilih produk</option>
+                                @foreach($products as $product)
+                                    <option value="{{ $product->id }}">
+                                        {{ $product->nama }}
+                                    </option>
+                                @endforeach
+                            </select> 
+                            <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
+                            <button type="button" class="btn btn-success ml-3" id="add-product">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                @endif
+                <table id="append-product" class="col-md-8"></table>
+            </div>
+
             <div class="form-group @if($errors->has('nama')) has-error @endif">
                 <label for="nama" class="col-sm-12 control-label">Nama barang</label>    
                 <div class="col-sm-8">
@@ -87,58 +158,6 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group @if($errors->has('unit')) has-error @endif">
-                    <label for="unit" class="col-sm-12 control-label">Unit</label>    
-                    <div class="col-sm-12">
-                        <select name="unit" class="form-control select2" id="unit">
-                            <option value="" selected>Pilih unit</option>
-                            <option value="PIECES" @if($barang->unit == 'PIECES') selected @endif>PIECES</option>
-                            <option value="SERIES" @if($barang->unit == 'SERIES') selected @endif>SERIES</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div id="series" class="form-group row col-sm-12" style="display: none;">
-                <div class="col-md-12 mb-3">                    
-                    <h5><b>Tambahkan produk ke dalam series</b></h5>
-                </div>
-                @forelse($barang->series as $series)
-                    <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
-                        <div class="input-group">
-                            <select name="produk[]" class="custom-select select2">
-                                <option value="">Pilih produk</option>
-                                @foreach($products as $product)
-                                    <option value="{{ $product->id }}" @if($series->tb_barang_id == $barang->id) selected @endif>
-                                        {{ $product->nama }}
-                                    </option>
-                                @endforeach
-                            </select> 
-                            <input type="number" name="qty_product[]" class="form-control" placeholder="Qty" value="{{ $series->qty }}">
-                            <button type="button" class="btn btn-success ml-3" id="add-product">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                @empty 
-                    <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
-                        <div class="input-group">
-                            <select name="produk[]" class="custom-select select2">
-                                <option value="">Pilih produk</option>
-                                @foreach($products as $product)
-                                    <option value="{{ $product->id }}">
-                                        {{ $product->nama }}
-                                    </option>
-                                @endforeach
-                            </select> 
-                            <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
-                            <button type="button" class="btn btn-success ml-3" id="add-product">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                @endforelse
-                <table id="append-product" class="col-md-8"></table>
             </div>
 
             <div class="form-group row col-sm-12">
@@ -468,7 +487,7 @@
                 `);
             });
 
-            $('#append-product').on('click', '.remove-product', function(){
+            $('body').on('click', '.remove-product', function(){
                 $(this).parent().parent().remove();
             });
 
@@ -493,7 +512,7 @@
                 `);
             });
 
-            $('#append-product-related').on('click', '.remove-product-related', function(){
+            $('body').on('click', '.remove-product-related', function(){
                 $(this).parent().parent().remove();
             });
                         
