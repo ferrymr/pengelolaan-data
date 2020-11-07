@@ -11,6 +11,7 @@ use App\Models\TbHeadJual;
 use App\Models\TbDetJual;
 use App\Models\TbDetSeries;
 use App\Models\Barang;
+use App\Models\CouponUsed;
 use DB;
 use App\Mail\OrderCreated;
 use Illuminate\Support\Facades\Mail;
@@ -38,6 +39,7 @@ class CheckoutPayment extends Component
     public $inputsValid;
     public $transactionNumber;
     public $shippingAddressId;
+    public $coupon;
 
     public function mount()
     {
@@ -60,6 +62,7 @@ class CheckoutPayment extends Component
         $this->totalItems = session('totalItems');
         $this->totalPoin = session('totalPoin');
         $this->kodeUnik = session('kodeUnik');
+        $this->coupon = session('coupon');
         $this->validateAllInputs();
     }
 
@@ -229,6 +232,14 @@ class CheckoutPayment extends Component
                 Cart::remove($cartItem['kode_barang']);
             }
     
+            // to do if implement coupon need to submit to coupon used
+            if(isset($this->coupon) && !empty($this->coupon)) {
+                CouponUsed::insert([
+                    'user_id' => $this->user->id,
+                    'coupon_code' => $this->coupon
+                ]);
+            }
+
             session()->flash('success', 'Transaksi berhasil!');
             return redirect()->route('order-history-status');
         } catch (\Exception $e) {

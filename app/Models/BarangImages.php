@@ -14,5 +14,5 @@ class BarangImages extends Model
         'flag'
     ];
 
-    
+    protected $this='';
 }

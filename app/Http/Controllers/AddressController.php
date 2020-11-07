@@ -64,6 +64,8 @@ class AddressController extends Controller
         $userId = auth()->user()->id;
 
         $this->validate($request, [
+            'nama_pengirim' => 'required|string',
+            'telepon_pengirim' => 'required|numeric',
             'nama' => 'required|string',
             'telepon' => 'required|numeric',
             'provinsi' => 'required|numeric',
@@ -80,6 +82,8 @@ class AddressController extends Controller
 
             $newShippingAddress = ShippingAddress::create([
                 'user_id' => $userId,
+                'nama_pengirim' => $request->nama_pengirim,
+                'telepon_pengirim' => $request->telepon_pengirim,
                 'nama' => $request->nama,
                 'telepon' => $request->telepon,
                 'provinsi_id' => $provinsi->province_id,
@@ -163,6 +167,8 @@ class AddressController extends Controller
         try {
             ShippingAddress::find($id)->update([
                 'user_id' => $userId,
+                'nama_pengirim' => $request->nama_pengirim,
+                'telepon_pengirim' => $request->telepon_pengirim,
                 'nama' => $request->nama,
                 'telepon' => $request->telepon,
                 'provinsi_id' => $request->provinsi,
@@ -261,6 +267,8 @@ class AddressController extends Controller
         $userId = auth()->user()->id;
 
         $this->validate($request, [
+            'nama_pengirim' => 'required|string',
+            'telepon_pengirim' => 'required|numeric',
             'nama' => 'required|string',
             'telepon' => 'required|numeric',
             'provinsi' => 'required|numeric',
@@ -273,6 +281,8 @@ class AddressController extends Controller
         try {
             $newShippingAddress = ShippingAddress::create([
                 'user_id' => $userId,
+                'nama_pengirim' => $request->nama_pengirim,
+                'telepon_pengirim' => $request->telepon_pengirim,
                 'nama' => $request->nama,
                 'telepon' => $request->telepon,
                 'provinsi_id' => $request->provinsi,
@@ -310,5 +320,14 @@ class AddressController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }
+    }
+
+    public function registerReseller($ref_code = '') {
+        $daftarProvinsi  = $this->getProvinces();
+
+        return view('auth.register-reseller', compact(
+            'daftarProvinsi',
+            'ref_code'
+        ));
     }
 }

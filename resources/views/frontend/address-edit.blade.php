@@ -97,7 +97,7 @@
                                             <label class="text">Alamat Lengkap <span style="color:red">*</span></label> 
                                             <textarea id="alamat" 
                                                   name="alamat" rows="3" 
-                                                  class="input-text">{{ old('alamat') ? old('alamat') : $shipping->alamat }}></textarea>
+                                                  class="input-text">{{ old('alamat') ? old('alamat') : $shipping->alamat }}</textarea>
                                         </p>
                                         <p class="form-row form-row-wide">
                                             <label class="text">Kodepos</label> 

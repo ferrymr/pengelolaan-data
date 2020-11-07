@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\BarangImages;
+use App\Models\BarangRelated;
 use App\Models\TbDetSeries;
 use Carbon\Carbon;
 
@@ -36,6 +37,7 @@ class Barang extends Model
         'unit',
         'deskripsi',
         'cara_pakai',
+        
         // 'stok_his',
         // 'log_his',
         'flag_bestseller',
@@ -71,7 +73,7 @@ class Barang extends Model
     public function getBarangSeries($user, $sorting, $byCategory) {
         $barang = Barang::where('unit', "SERIES")
                     ->where('h_nomem', '!=', 0)
-                    ->where('stok','>',0)
+                    // ->where('stok','>',0)
                     ->where('stats',1);
         
         if(!empty($sorting)) {
@@ -142,7 +144,15 @@ class Barang extends Model
     // ======================== backend ========================
 
     public function getAll() {
-        return Barang::all();
+        return Barang::orderBy('created_at', 'DESC')->get();
+    }
+
+    public function addBarangRelated($request, $id) {
+        // remove barang first
+        BarangRelated::where('tb_barang_id', $id)->delete();
+
+        // then save the new record
+        return BarangRelated::insert($request);
     }
 
     public function addBarang($request) 
@@ -150,20 +160,22 @@ class Barang extends Model
         $product = $request['produk'];
         $qty_product = $request['qty_product'];
 
-        unset($request['produk']);
-        unset($request['qty_product']);
+        // unset($request['produk']);
+        // unset($request['qty_product']);
 
-        // dd($request);
+        // dd($product);
 
         $barang = Barang::create($request);
 
-        if($request['jenis'] == 'SERIES') {
+        if($request['unit'] == 'SERIES') {
             foreach($product as $key => $row) {
-                TbDetSeries::insert([
-                    'tb_barang_id' => $row,
-                    'tb_series_id' => $barang->id,
-                    'qty' => $qty_product[$key]
-                ]);
+                if(!empty($row)) {
+                    TbDetSeries::insert([
+                        'tb_barang_id' => $row,
+                        'tb_series_id' => $barang->id,
+                        'qty' => $qty_product[$key]
+                    ]);
+                }                
             }
         }        
 
@@ -190,9 +202,9 @@ class Barang extends Model
         }
     }
 
-    public function editBarang($request, $kode_barang) {
+    public function editBarang($request, $id) {
         
-        $data = Barang::where('kode_barang', $kode_barang)->update($request);
+        $data = Barang::where('id', $id)->update($request);
 
         if(!empty($data)) {
             return $data;
@@ -214,6 +226,10 @@ class Barang extends Model
     // ======================== relations ========================
     public function barangImages() {
         return $this->hasMany('App\Models\BarangImages', 'tb_barang_id');
+    }
+
+    public function barangRelated() {
+        return $this->hasMany('App\Models\BarangRelated', 'tb_barang_id');
     }
     
     public function series() {

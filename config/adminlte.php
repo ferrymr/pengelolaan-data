@@ -310,7 +310,7 @@ return [
                 ],
                 [
                     'text' => 'Movement',
-                    'url' => 'movement'
+                    'url' => 'admin/movement'
                 ],
 
 
@@ -416,7 +416,7 @@ return [
                 ],
                 [
                     'text' => 'SPB kontrol',
-                    'url' => 'spbkontrol'
+                    'url' => 'admin/barangspb'
                 ],
                 [
                     'text' => 'Calculate (barang)',

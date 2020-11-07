@@ -92,6 +92,20 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-8" style="margin-top: 16px">
+                                    <label for="deliverto" style="font-weight: bold">Dari alamat:</label>
+                                    @if($defaultShippingAddress)
+                                        <div class="payment-method-form checkout-form" style="padding: 18px 0px 0px 27px">
+                                            <div class="body-address">
+                                                <p class="receiver-name">
+                                                    <b>Pengirim:</b> {{ $defaultShippingAddress->nama_pengirim }}<br>
+                                                    <b>Telepon:</b> {{ $defaultShippingAddress->telepon_pengirim }}<br>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    <br>
+
                                     <label for="deliverto" style="font-weight: bold">Dikirim ke alamat:</label>
                                     @if($defaultShippingAddress)
                                         <div class="payment-method-form checkout-form" style="padding: 18px 0px 0px 27px">
@@ -118,7 +132,7 @@
                                             {{-- wire:click = "resetAddressInputFields"  --}}
                                             data-toggle="modal" 
                                             data-target="#tambahAlamat">
-                                        Tambah alamat
+                                        Kirim sebagai dropshipper
                                     </button>
                                     <button class="button btn-pay-now"                                    
                                             {{-- wire:click = "resetAddressInputFields"  --}}
@@ -206,9 +220,39 @@
                                             @if ($errors->any())
                                                 <x-alert type="danger" :message="$errors"/>
                                             @endif
-    
+
+                                            <h4>Pengirim:</h4>
+
                                             <p class="form-row form-row-wide">
-                                                <label class="text">Nama Lengkap <span style="color:red">*</span></label> 
+                                                <label class="text">Nama Lengkap Pengirim <span style="color:red">*</span></label> 
+                                                <input style="width:100%" 
+                                                        wire:model = "nama_pengirim"
+                                                        type="text" 
+                                                        id="nama_pengirim" 
+                                                        name="nama_pengirim" 
+                                                        class="input-text {{ $errors->has('nama_pengirim') ? 'is-invalid':'' }}" 
+                                                        value="{{ old('nama_pengirim') }}" 
+                                                        required>
+                                                @error('nama_pengirim') <span class="error">{{ $message }}</span> @enderror
+                                            </p>
+                                            <p class="form-row form-row-wide">
+                                                <label class="text">Telepon Pengirim<span style="color:red">*</span></label> 
+                                                <input style="width:100%"
+                                                        wire:model = "telepon_pengirim"
+                                                        type="tel" 
+                                                        placeholder="Contoh: 085642274427" 
+                                                        id="telepon_pengirim" 
+                                                        name="telepon_pengirim" 
+                                                        class="input-text {{ $errors->has('telepon_pengirim') ? 'is-invalid':'' }}" 
+                                                        value="{{ old('telepon_pengirim') }}" 
+                                                        required>
+                                                @error('telepon_pengirim') <span class="error">{{ $message }}</span> @enderror
+                                            </p>
+                                            
+                                            <h4>Penerima:</h4>
+
+                                            <p class="form-row form-row-wide">
+                                                <label class="text">Nama Lengkap Penerima <span style="color:red">*</span></label> 
                                                 <input style="width:100%" 
                                                         wire:model = "nama"
                                                         type="text" 
@@ -220,7 +264,7 @@
                                                 @error('nama') <span class="error">{{ $message }}</span> @enderror
                                             </p>
                                             <p class="form-row form-row-wide">
-                                                <label class="text">Telepon <span style="color:red">*</span></label> 
+                                                <label class="text">Telepon Penerima <span style="color:red">*</span></label> 
                                                 <input style="width:100%"
                                                         wire:model = "telepon"
                                                         type="tel" 

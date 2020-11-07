@@ -30,7 +30,16 @@ class User extends Authenticatable
         'email',
         'password',
         'photo',
-        'google_id'
+        'google_id',
+        'status',
+        'alamat',
+        'propinsi',
+        'kota',
+        'kecamatan',
+        'foto_ktp',
+        'bank',
+        'norek',
+        'code_aff_ref',
     ];
 
     /**
