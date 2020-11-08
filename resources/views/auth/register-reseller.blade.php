@@ -167,6 +167,29 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <p class="form-row form-row-wide">
+                                                    <label class="text">Pilihan produk series</label>
+                                                    <select class="form-control select2" id="product_series" name="product_series" {{ $errors->has('product_series') ? 'is-invalid':'' }}" required>
+                                                        <option value="" selected>Pilih product</option>
+                                                        @foreach($series as $seri)
+                                                            <option value="{{ $seri->id }}">{{ $seri->nama }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <p>Pilihan product series</p>
+                                                </p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p class="form-row form-row-wide">
+                                                    <label class="text">&nbsp;</label>
+                                                    <a href="https://api.whatsapp.com/send?phone=628112288142&amp;text=Halo!%0ASaya%20ingin%20ingin%20konsultasi%20lebih%20lanjut%20mengenai%20produk%20Bellezkin%0ASource : https://shop.bellezkin.com/products/19004/detail/" target="_blank" class="button btn-consultation-wa">
+                                                        <i class="fa fa-whatsapp logo_bc"></i>&nbsp; Contact untuk produk detail
+                                                    </a>
+                                                </p>
+                                            </div>                                            
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p class="form-row form-row-wide">
                                                     <label class="text">Password</label>
                                                     <input type="password" name="password" class="input-text @error('password') is-invalid @enderror" required>
                                                 </p>

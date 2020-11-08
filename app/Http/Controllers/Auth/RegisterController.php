@@ -9,11 +9,13 @@ use App\Models\Role;
 use App\Models\Provinsi;
 use App\Models\Kota;
 use App\Models\Kecamatan;
+use App\Models\Barang;
 use App\Models\ShippingAddress;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Facades\Cart;
+use Auth;
 
 
 class RegisterController extends Controller
@@ -41,8 +43,13 @@ class RegisterController extends Controller
 
     public function redirectTo()
     {
+        $user = Auth::user();
         if(!empty(Cart::get())) {
-            return 'transaction/checkout';
+            if($user->status == 2424) { 
+                return '/';
+            } else {
+                return 'transaction/checkout';
+            }
         } else {
             return '/';
         }
@@ -66,12 +73,33 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        // dd($data);
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        if (isset($data['flag_reseller']) && $data['flag_reseller'] == "on") {
+
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'birthdate' => ['required'],
+                'address' => ['required'],
+                'provinsi' => ['required'],
+                'kota' => ['required'],
+                'kecamatan' => ['required'],
+                'phone' => ['required'],
+                'nik' => ['required'],
+                'file' => ['required'],
+                'bank' => ['required'],
+                'bank_account' => ['required']
+            ]);
+
+        } else {
+
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+
+        }
     }
 
     /**
@@ -90,8 +118,19 @@ class RegisterController extends Controller
                 'password' => Hash::make($data['password']),
                 'status' => 2424 // flag_member
             ]);
-        } else if(isset($data['flag_reseller']) && $data['flag_reseller'] == "on") {
 
+            // user part of member 2424
+            if($user->status == 2424) {
+                $product = Barang::with('barangImages', 'barangRelated.barangDetail.barangImages')
+                            ->where('kode_barang', 'CATALO')
+                            ->first();
+
+                $product->qty = 1;
+                // insert cart catalog
+                Cart::add($product);
+            }
+        } else if(isset($data['flag_reseller']) && $data['flag_reseller'] == "on") {
+            
             // input file ktp
             if(!empty($data['file'])) {
                 $file = $data['file'];
@@ -142,6 +181,17 @@ class RegisterController extends Controller
                 'kode_pos' => null,
                 'is_default' => 1
             ]);
+
+            // user part of member 2525
+            if($user->status == 2525) {
+                $product = Barang::with('barangImages', 'barangRelated.barangDetail.barangImages')
+                            ->where('id', $data['product_series'])
+                            ->first();
+
+                $product->qty = 1;
+                // insert cart series
+                Cart::add($product);
+            }
 
         } else {
             $user = User::create([

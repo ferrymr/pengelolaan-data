@@ -13,6 +13,7 @@ use App\Models\Barang;
 use App\Models\TbHeadJual;
 use App\Models\TbDetSeries;
 use PDF;
+use DB;
 use App\Mail\OrderConfirmed;
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
@@ -64,6 +65,80 @@ class PemesananController extends Controller
             })
             ->escapeColumns([])
             ->make(true);
+    }
+
+    public function getSpbList() {
+        $spbList = DB::table('tb_spb')->get()->toArray();  
+        
+        // dd($spbList);
+
+        // foreach($spbListPrepare as $row) {
+        //     $spbList[$row->name] = (array) $row;
+        // }
+
+        // // CHECK KETERSEDIAAN STOK DI MASING-MASING SPB
+        // // JIKA STOK TIDAK TERSEDIA DI SALAH SATU SPB, MAKA DISABLE SPB TERSEBUT
+        // foreach($spbList as $spb) {
+
+        //     foreach ($newCartItems as $newCartItem) {
+
+        //         $spbIndex = 'SPB' . $spb['code'];
+
+        //         if ($spb['code'] == '00000') {
+
+        //             $stockAvailable = Barang::where('kode_barang', $newCartItem['kode_barang'])
+        //                                 ->where('stok', '>=', $newCartItem['qty'])
+        //                                 ->count();
+
+        //             // JIKA SALAH SATU STOK ITEM TIDAK MENCUKUPI DI SPB, SKIP PERULANGAN
+        //             // TIDAK PERLU CHECK STOK ITEM YANG LAIN, KARENA JIKA SALAH SATU ITEM STOKNYA TIDAK AVAILABLE DI SPB
+        //             // MAKA OTOMATIS SPB ITU AKAN DI DISABLE DI FRONT-END
+        //             if ($stockAvailable < 1) {
+        //                 $spbList[$spbIndex]['disabled'] = 'disabled';
+        //                 continue 2;
+        //             }
+
+        //         } else {
+
+        //             // todo checking ke pak alan
+        //             $stockAvailable = DB::table('tb_produk')
+        //                 ->where('no_member', $spb['code'])
+        //                 ->where('kode_barang', $newCartItem['kode_barang'])
+        //                 ->where('stok', '>=', $newCartItem['qty'])
+        //                 ->count();
+
+        //             // JIKA SALAH SATU STOK ITEM TIDAK MENCUKUPI DI SPB, SKIP PERULANGAN
+        //             // TIDAK PERLU CHECK STOK ITEM YANG LAIN, KARENA JIKA SALAH SATU ITEM STOKNYA TIDAK AVAILABLE DI SPB
+        //             // MAKA OTOMATIS SPB ITU AKAN DI DISABLE DI FRONT-END
+        //             if ($stockAvailable < 1) {
+        //                 $spbList[$spbIndex]['disabled'] = 'disabled';
+        //                 continue 2;
+        //             }
+        //         }
+        //     }
+        // }
+
+        return $spbList;
+    }
+
+    public function add() {
+        $user = Auth::user();
+        $products = Barang::get();
+        $users = User::get();
+        
+        $alphabet = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+        $no_do  = "TRX" . date('y') . $alphabet[date('m')-1] . date('d') . rand(1000,9999);
+
+        $spb = $this->getSpbList();
+        // dd($sbp);
+
+        return view('backend.order.pemesanan.create', compact(
+            'user',
+            'products',
+            'users',
+            'no_do',
+            'spb'
+        ));
     }
 
     public function show($id)

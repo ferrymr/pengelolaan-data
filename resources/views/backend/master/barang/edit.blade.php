@@ -43,65 +43,67 @@
                 </div>
             </div>
 
-            <div id="series" class="form-group row col-sm-12">
-                <div class="col-md-12 mb-3">                    
-                    <h5><b>Tambahkan produk ke dalam series</b></h5>
-                </div>
-                @if(count($barang->series) > 0)
-                    @foreach($barang->series as $series)
+            @if($barang->unit == 'SERIES')
+                <div id="series" class="form-group row col-sm-12">
+                    <div class="col-md-12 mb-3">                    
+                        <h5><b>Tambahkan produk ke dalam series</b></h5>
+                    </div>
+                    @if(count($barang->series) > 0)
+                        @foreach($barang->series as $series)
+                            <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                                <div class="input-group">
+                                    <select name="produk[]" class="custom-select select2">
+                                        <option value="">Pilih produk</option>
+                                        @foreach($products as $product)
+                                            <option value="{{ $product->id }}" @if($series->tb_barang_id == $product->id) selected @endif>
+                                                {{ $product->nama }}
+                                            </option>
+                                        @endforeach
+                                    </select> 
+                                    <input type="number" name="qty_product[]" class="form-control" placeholder="Qty" value="{{ $series->qty }}">
+                                    <button type="button" class="btn btn-danger ml-3 remove-product">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        @endforeach
                         <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
                             <div class="input-group">
                                 <select name="produk[]" class="custom-select select2">
                                     <option value="">Pilih produk</option>
                                     @foreach($products as $product)
-                                        <option value="{{ $product->id }}" @if($series->tb_barang_id == $product->id) selected @endif>
+                                        <option value="{{ $product->id }}">
                                             {{ $product->nama }}
                                         </option>
                                     @endforeach
                                 </select> 
-                                <input type="number" name="qty_product[]" class="form-control" placeholder="Qty" value="{{ $series->qty }}">
-                                <button type="button" class="btn btn-danger ml-3 remove-product">
-                                    <i class="fa fa-times"></i>
+                                <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
+                                <button type="button" class="btn btn-success ml-3" id="add-product">
+                                    <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                    @endforeach
-                    <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
-                        <div class="input-group">
-                            <select name="produk[]" class="custom-select select2">
-                                <option value="">Pilih produk</option>
-                                @foreach($products as $product)
-                                    <option value="{{ $product->id }}">
-                                        {{ $product->nama }}
-                                    </option>
-                                @endforeach
-                            </select> 
-                            <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
-                            <button type="button" class="btn btn-success ml-3" id="add-product">
-                                <i class="fa fa-plus"></i>
-                            </button>
+                    @else 
+                        <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                            <div class="input-group">
+                                <select name="produk[]" class="custom-select select2">
+                                    <option value="">Pilih produk</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}">
+                                            {{ $product->nama }}
+                                        </option>
+                                    @endforeach
+                                </select> 
+                                <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
+                                <button type="button" class="btn btn-success ml-3" id="add-product">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                @else 
-                    <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
-                        <div class="input-group">
-                            <select name="produk[]" class="custom-select select2">
-                                <option value="">Pilih produk</option>
-                                @foreach($products as $product)
-                                    <option value="{{ $product->id }}">
-                                        {{ $product->nama }}
-                                    </option>
-                                @endforeach
-                            </select> 
-                            <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
-                            <button type="button" class="btn btn-success ml-3" id="add-product">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                @endif
-                <table id="append-product" class="col-md-8"></table>
-            </div>
+                    @endif
+                    <table id="append-product" class="col-md-8"></table>
+                </div>
+            @endif
 
             <div class="form-group @if($errors->has('nama')) has-error @endif">
                 <label for="nama" class="col-sm-12 control-label">Nama barang</label>    
@@ -267,6 +269,14 @@
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="flag_promo" value="1" id="flag_promo" @if($barang->flag_promo == 1) checked @endif>
                         <label class="custom-control-label" for="flag_promo">Termasuk promo produk ?</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-grup @if($errors->has('flag_sell_to_reseller')) has-error @endif">
+                <div class="col-sm-6">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="flag_sell_to_reseller" value="1" id="flag_sell_to_reseller" @if($barang->flag_sell_to_reseller == 1) checked @endif>
+                        <label class="custom-control-label" for="flag_sell_to_reseller">Dijual ke reseller saat pertama kali daftar</label>
                     </div>
                 </div>
             </div>

@@ -42,6 +42,7 @@ class Barang extends Model
         // 'log_his',
         'flag_bestseller',
         'flag_promo',
+        'flag_sell_to_reseller'
     ];
 
     // ======================== frontend ========================

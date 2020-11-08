@@ -11,6 +11,7 @@ use App\Models\CouponByUser;
 use App\Models\CouponByProduct;
 use App\Models\ShippingAddress;
 use Session;
+use Auth;
 
 class MyCart extends Component
 {
@@ -19,10 +20,12 @@ class MyCart extends Component
     public $subtotal;
     public $nextPageLink;
     public $coupon;
+    public $user;
     public $qty = 1;
 
     public function mount()
     {
+        $this->user = Auth::user();
         if(!empty(session('coupon'))){
             $this->coupon = session('coupon');
         }

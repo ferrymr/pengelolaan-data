@@ -81,7 +81,8 @@ class Cart
                     'subtotal' => $product->qty * $harga,
                     'qty' => $product->qty,
                     'note' => '',
-                    'barang_image_id' => $product->barangImages->first()->id
+                    'barang_image_id' => $product->barangImages->first()->id,
+                    'flag_new_reseller' => $product->flag_sell_to_reseller
                 );
 
         } else {

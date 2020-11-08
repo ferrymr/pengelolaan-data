@@ -5,12 +5,14 @@ namespace App\Http\Livewire;
 use App\Facades\Cart;
 use Livewire\Component;
 use App\Models\ShippingAddress;
+use Illuminate\Support\Facades\Auth;
 
 class Header extends Component
 {
     public $cartItems;
     public $cartTotal = 0;
     public $nextPageLink;
+    public $user;
 
     protected $listeners = [
         'refreshCartItems' => 'updateCartItems'
@@ -18,6 +20,8 @@ class Header extends Component
 
     public function mount()
     {
+        $this->user = Auth::user();
+        // dd($this->user);
         $this->updateCartItems();
         $this->nextPageLink = $this->getNextPageLink();
     }
