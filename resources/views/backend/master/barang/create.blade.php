@@ -239,6 +239,14 @@
                     </div>
                 </div>
             </div>
+            <div class="form-grup @if($errors->has('flag_sell_to_reseller')) has-error @endif">
+                <div class="col-sm-6">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="flag_sell_to_reseller" value="1" id="flag_sell_to_reseller">
+                        <label class="custom-control-label" for="flag_sell_to_reseller">Dijual ke reseller saat pertama kali daftar</label>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-info">Simpan</button>

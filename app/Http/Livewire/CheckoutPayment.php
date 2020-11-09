@@ -240,8 +240,10 @@ class CheckoutPayment extends Component
                 ]);
             }
 
-            session()->flash('success', 'Transaksi berhasil!');
-            return redirect()->route('order-history-status');
+            // flash
+            flash('Transaksi berhasil!')->success();
+            // session()->flash('success', 'Transaksi berhasil!');
+            return redirect()->route('order-history-status', 'waiting');
         } catch (\Exception $e) {
             DB::rollback();
             dd($e->getMessage());

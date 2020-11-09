@@ -56,11 +56,14 @@
                             <div class="col-md-12 col-sm-12">
                                 <h3 class="custom_blog_title" style="margin-bottom:0px">#History Transaksi</h3>
                                 <br>
+
+                                @include('flash::message')
+
                                 <div class="tab">
                                     <a href="{{ route('order-history-status') }}" class="item-tab @if($status == '') active @endif">Semua Transaksi ({{ count($transactions) }})</a>
                                     <a href="{{ route('order-history-status', ['status' => 'waiting']) }}" class="item-tab @if($status == 'waiting') active @endif">Menunggu Pembayaran ({{ $totalMenungguPembayaran }})</a>
                                     <a href="{{ route('order-history-status', ['status' => 'process']) }}" class="item-tab @if($status == 'process') active @endif">Pesanan di Proses ({{ $totalPesananDiproses }})</a>
-                                    <a href="{{ route('order-history-status', ['status' => 'done']) }}" class="item-tab @if($status == 'done') active @endif">Pesanan Selesai ({{ $totalPesananSelesai }})</a>
+                                    <a href="{{ route('order-history-status', ['status' => 'done']) }}" class="item-tab @if($status == 'done') active @endif">Dikirim & Selesai ({{ $totalPesananSelesai }})</a>
                                 </div>
                                 <div class="transaction-list-item">
                                     <div class="row">
@@ -145,6 +148,11 @@
                                                 </div>
                                             </div>
                                         @endforelse
+
+                                        <!--pagination-->
+                                        @if(method_exists($transactions, 'links'))
+                                            {{ $transactions->links() }}
+                                        @endif
                                     </div>
 
                                 </div>

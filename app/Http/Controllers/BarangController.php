@@ -126,7 +126,8 @@ class BarangController extends Controller
             "cara_pakai" => $request->input('cara_pakai'),
             "flag_bestseller" => $request->input('flag_bestseller'),
             "stats" => $request->input('stats'),
-            "flag_promo" => $request->input('flag_promo')
+            "flag_promo" => $request->input('flag_promo'),
+            "flag_sell_to_reseller" => $request->input('flag_sell_to_reseller')
         );
     
         $barang = $this->barangRepo->editBarang($param, $id);

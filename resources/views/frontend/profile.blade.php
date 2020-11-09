@@ -40,7 +40,7 @@
                                     <div class="row">
                                         <div class="col-md-12"> 
                                             {{-- {{ dd($user->hasRole('member')) }} --}}
-                                            @if($user->hasRole('member'))                                               
+                                            @if($user->hasRole('member'))
                                                 <button class="btn btn-success"><b>Member</b></button>
                                             @elseif($user->hasRole('reseller'))
                                                 <button class="btn btn-info"><b>Reseller</b></button>
@@ -69,6 +69,19 @@
                                 <div class="col-md-6 col-12">
                                     <div class="card-body-profile">
                                         <div class="menu-ui">
+                                            @if(Auth::user()->hasRole('reseller'))
+                                            <a href="https://bedroom.bellezkin.com" rel="nofollow" target="_blank">
+                                                <div class="menu-ui-item">
+                                                    <div class="menu-ui-left">
+                                                        <div class="title-item-menu">Akses bedroom</div>
+                                                        <div class="desc-item-menu">Untuk melihat seluruh laporan reseller</div>
+                                                    </div>
+                                                    <div class="menu-ui-icon">
+                                                        <i class="fa fa-chevron-right"></i>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            @endif
                                             <a href="{{ route('order-history-status') }}">
                                                 <div class="menu-ui-item">
                                                     <div class="menu-ui-left">

@@ -103,7 +103,8 @@ Route::get('/register-member/{ref_code?}', function ($ref_code = '') {
 });
 
 // Register direct to reseller
-Route::get('/register-reseller/{ref_code?}', 'AddressController@registerReseller')->name('register-reseller');
+Route::get('/register-reseller/{ref_code?}', 'AddressController@registerReseller')
+    ->name('register-reseller');
 
 // Dashboard
 Route::group([
@@ -262,6 +263,7 @@ Route::group([
     Route::get('datatable', 'PemesananController@datatable')->name('datatable');
     Route::get('show/{id}', 'PemesananController@show')->name('show');
     Route::get('show_immediate/{id}', 'PemesananController@showImmediate')->name('show_immediate');
+    Route::get('add', 'PemesananController@add')->name('add');
     Route::get('cronCancelProduct/{id}', 'PemesananController@cronCancelProduct')->name('cronCancelProduct');
     Route::post('update-status/{id?}', 'PemesananController@setStatus')->name('update-status');
     Route::get('print_trf/{id?}', 'PemesananController@printTrf')->name('print_trf');

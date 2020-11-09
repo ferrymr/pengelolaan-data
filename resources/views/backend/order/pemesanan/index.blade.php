@@ -7,6 +7,13 @@
         <div class="col-6">
             <h1>Pemesanan</h1>
         </div>
+        <div class="col-6">
+            <div class="float-right">
+                <a href="{{ route('admin.pemesanan.add') }}" class="btn btn-block btn-info">
+                    <i class="fa fa-plus-square"></i>&nbsp;Tambah
+                </a>
+            </div>
+        </div>
     </div>
 @stop
 
