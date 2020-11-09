@@ -336,3 +336,19 @@ Route::group([
     Route::post('store', 'CouponController@store')->name('store');
     Route::post('update/{id}', 'CouponController@update')->name('update');
 });
+
+// Bank
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/bank/',
+    'as' => 'admin.bank.'
+], function () {
+    Route::get('', 'BankController@index')->name('index');
+    Route::get('datatable', 'BankController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'BankController@edit')->name('edit');
+    // Route::get('view/{id}', 'CouponController@view')->name('view');
+    Route::get('delete/{id}', 'BankController@destroy')->name('delete');
+    Route::get('add', 'BankController@create')->name('add');
+    Route::post('store', 'BankController@store')->name('store');
+    Route::post('update/{id}', 'BankController@update')->name('update');
+});
