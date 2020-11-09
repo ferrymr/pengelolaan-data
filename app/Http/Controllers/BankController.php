@@ -85,9 +85,6 @@ class BankController extends Controller
 
     public function update(CreateBankRequest $request, $id)
     {
-        // dd($request->all());
-
-        // password kosong
         $param = array(
             "bank_name" => $request->input('bank_name'),
             "bank_account" => $request->input('bank_account'),

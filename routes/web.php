@@ -346,9 +346,23 @@ Route::group([
     Route::get('', 'BankController@index')->name('index');
     Route::get('datatable', 'BankController@datatable')->name('datatable');
     Route::get('edit/{id}', 'BankController@edit')->name('edit');
-    // Route::get('view/{id}', 'CouponController@view')->name('view');
     Route::get('delete/{id}', 'BankController@destroy')->name('delete');
     Route::get('add', 'BankController@create')->name('add');
     Route::post('store', 'BankController@store')->name('store');
     Route::post('update/{id}', 'BankController@update')->name('update');
+});
+
+// Setting
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/setting/',
+    'as' => 'admin.setting.'
+], function () {
+    Route::get('', 'SettingController@index')->name('index');
+    Route::get('datatable', 'SettingController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'SettingController@edit')->name('edit');
+    Route::get('delete/{id}', 'SettingController@destroy')->name('delete');
+    Route::get('add', 'SettingController@create')->name('add');
+    Route::post('store', 'SettingController@store')->name('store');
+    Route::post('update/{id}', 'SettingController@update')->name('update');
 });
