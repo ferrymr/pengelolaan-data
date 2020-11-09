@@ -94,12 +94,12 @@ Route::get('/login-administrator', function () {
 
 // Register direct to user
 Route::get('/register-user/{ref_code?}', function ($ref_code = '') {
-    return view('auth.register-user', compact('ref_code'));   
+    return view('auth.register-user', compact('ref_code'));
 });
 
 // Register direct to member
 Route::get('/register-member/{ref_code?}', function ($ref_code = '') {
-    return view('auth.register-member', compact('ref_code'));   
+    return view('auth.register-member', compact('ref_code'));
 });
 
 // Register direct to reseller
@@ -128,7 +128,7 @@ Route::group([
     Route::post('store', 'BarangController@store')->name('store');
     Route::post('update/{kode_barang}', 'BarangController@update')->name('update');
     Route::post('create_kode', 'BarangController@create_kode')->name('create_kode');
-    
+
 
     // barang related
     Route::post('barang-related', 'BarangController@barangRelated')->name('barang-related');
@@ -261,6 +261,7 @@ Route::group([
     Route::get('', 'PemesananController@index')->name('index');
     Route::get('datatable', 'PemesananController@datatable')->name('datatable');
     Route::get('show/{id}', 'PemesananController@show')->name('show');
+    Route::get('show_immediate/{id}', 'PemesananController@showImmediate')->name('show_immediate');
     Route::get('cronCancelProduct/{id}', 'PemesananController@cronCancelProduct')->name('cronCancelProduct');
     Route::post('update-status/{id?}', 'PemesananController@setStatus')->name('update-status');
     Route::get('print_trf/{id?}', 'PemesananController@printTrf')->name('print_trf');

@@ -17,6 +17,7 @@ use App\Mail\OrderConfirmed;
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
 use App\Helpers\Whatsapp;
+use App\Models\ShippingAddress;
 
 class PemesananController extends Controller
 {
@@ -52,12 +53,14 @@ class PemesananController extends Controller
 
                 if ($data->metode_pengiriman == "EXPEDITION") {
                     $printRouting = route('admin.pemesanan.print_trf', $data->id);
+                    $showRouting = route('admin.pemesanan.show', $data->id);
                 } else {
                     $printRouting = route('admin.pemesanan.print_immadiate', $data->id);
+                    $showRouting = route('admin.pemesanan.show_immediate', $data->id);
                 }
 
                 return [
-                    'show' => route('admin.pemesanan.show', $data->id),
+                    'show' => $showRouting,
                     'cancel' => route('admin.pemesanan.cronCancelProduct', $data->id),
                     'print' => $printRouting,
                 ];
@@ -72,6 +75,16 @@ class PemesananController extends Controller
             ->findOrFail($id);
         return view(
             'backend.order.pemesanan.show',
+            compact('data')
+        );
+    }
+
+    public function showImmediate($id)
+    {
+        $data = TbHeadJual::with('items.itemDetailHas', 'address', 'user', 'spb')
+            ->findOrFail($id);
+        return view(
+            'backend.order.pemesanan.show-immediate',
             compact('data')
         );
     }
@@ -116,8 +129,7 @@ class PemesananController extends Controller
                     Kami akan segera memproses pesanannya, ditunggu ya kak.";
 
                     Whatsapp::sendMSG($to, $message);
-
-                } else if($request->input('status_transaksi') == 'SHIPPED') {
+                } else if ($request->input('status_transaksi') == 'SHIPPED') {
 
                     $param["resi"] = $request->input('input_resi');
 
@@ -132,9 +144,9 @@ class PemesananController extends Controller
                     Whatsapp::sendMSG($to, $message);
 
                     // update user to member if code status is 2424
-                    if($data->user->status == 2424) {
+                    if ($data->user->status == 2424) {
                         $userUpdate = User::where('id', $data->user->id);
-                
+
                         $userUpdate = $userUpdate->update([
                             'status' => null
                         ]);
@@ -150,13 +162,13 @@ class PemesananController extends Controller
                     }
 
                     // update user to reseller if code status is 2525
-                    if($data->user->status == 2525) {
+                    if ($data->user->status == 2525) {
                         $userUpdate = User::where('id', $data->user->id);
-                        
-                        $randCodeReseller = substr(md5(uniqid(mt_rand(), true)) , 0, 10);
+
+                        $randCodeReseller = substr(md5(uniqid(mt_rand(), true)), 0, 10);
 
                         $userUpdate = $userUpdate->update([
-                            'apro' => $randCodeReseller, 
+                            'apro' => $randCodeReseller,
                             'status' => null
                         ]);
 
@@ -169,7 +181,6 @@ class PemesananController extends Controller
                         // change role to member
                         $userUpdateRole->attachRole($assign);
                     }
-
                 }
             }
         }
