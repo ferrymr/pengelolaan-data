@@ -55,7 +55,7 @@ figure figcaption h6 {
 }
 .order-track-step:last-child {
     overflow: hidden;
-    height: 4rem;
+    height: 8rem;
 }
 .order-track-step:last-child .order-track-status span:last-of-type {
     display: none;

@@ -15,6 +15,8 @@ class ShippingAddress extends Model
     protected $fillable = [
         'user_id',
         'no_member',
+        'nama_pengirim',
+        'telepon_pengirim',
         'nama',
         'telepon',
         'provinsi_id',

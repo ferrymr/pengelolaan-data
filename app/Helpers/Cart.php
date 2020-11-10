@@ -33,14 +33,18 @@ class Cart
         $cart = $this->get();
         $user = Auth::user();
 
-        // $productCode = (strlen($product->kode_barang) < 5 ? sprintf('%05d', $product->kode_barang) : (string) $product->kode_barang);
-        $productCode = $product->kode_barang;
+        $productCode = (strlen($product->kode_barang) < 5 ? 
+                    str_pad($product->kode_barang, 5, '0', STR_PAD_LEFT) : 
+                    (string) $product->kode_barang);
+        // $productCode = $product->kode_barang;
 
         // KODE BARANG YANG DIAWALI ANGKA 0, BIASANYA HILANG ANGKA 0 AWALNYA
         // TERUTAMA KETIKA DI RE-RENDER OLEH LIVEWIRE, KARENA OTOMATIS DI KONVERSI MENJADI INTEGER
         // JIKA ANGKA 0 DI AWAL PADA KODE BARANG HILANG MAKA TAMBAHKAN KARAKTER DI AWALNYA
         // SUPAYA TIDAK DI KONVERSI MENJADI INTEGER
         $cartIndex = 'x' . $productCode;
+
+        // dd($cartIndex);
 
         // define user price
         if(!isset($user) || $user->hasRole('user')) {
@@ -77,7 +81,8 @@ class Cart
                     'subtotal' => $product->qty * $harga,
                     'qty' => $product->qty,
                     'note' => '',
-                    'barang_image_id' => $product->barangImages->first()->id
+                    'barang_image_id' => $product->barangImages->first()->id,
+                    'flag_new_reseller' => $product->flag_sell_to_reseller
                 );
 
         } else {

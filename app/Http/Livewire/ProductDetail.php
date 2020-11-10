@@ -15,9 +15,10 @@ class ProductDetail extends Component
 
     public function mount($productCode)
     {
-        $this->product = Barang::with('barangImages')
+        $this->product = Barang::with('barangImages', 'barangRelated.barangDetail.barangImages')
                             ->where('kode_barang', $productCode)
                             ->first();
+        // dd($this->product->barangRelated->first()->barangDetail->barangImages->first());
         $this->user = Auth::user();
     }
 

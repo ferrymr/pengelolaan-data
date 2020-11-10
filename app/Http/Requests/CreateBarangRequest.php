@@ -28,6 +28,7 @@ class CreateBarangRequest extends FormRequest
             "stats" => "nullable",
             "deskripsi" => "nullable",
             "cara_pakai" => "nullable",
+            "image" => "nullable",
 
             // "h_hpb"         => "required",
             // "h_ppnj"         => "required",

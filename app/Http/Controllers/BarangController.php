@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use App\Models\Barang;
 use App\Models\BarangImages;
+use App\Models\BarangRelated;
 use App\Models\User;
 use App\Models\Gallery;
+use App\Models\Series;
+use App\Models\TbDetSeries;
 use Illuminate\Http\Response;
 use DB;
 use File;
@@ -72,18 +75,19 @@ class BarangController extends Controller
         $input['update_at'] = date("Y-m-d H:i:s");
         $input['bpom'] = isset($input['bpom']) ? $input['bpom'] : 0;
         $input['cat'] = $input['bpom'];
-
+        
         $jumlah = Barang::where('kode_barang', $input['kode_barang'])->count();
 
         if ($jumlah>0){
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Kode barang sudah ada</strong>')->error()->important();
             return redirect()->route('admin.barang.add');
-        } else{
+        } else {
             // save template
-            $this->barangRepo->addBarang($input);
+            $barang = $this->barangRepo->addBarang($input);
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Data barang berhasil ditambah</strong>')->success()->important();
-            return redirect()->route('admin.barang.index');
+            return redirect()->route('admin.barang.edit', $barang->id);
         }        
+
     }    
 
     public function edit($id)
@@ -91,17 +95,19 @@ class BarangController extends Controller
         $user = Auth::user();
         $barang = $this->barangRepo->findId($id);
         $barangImages = BarangImages::where('tb_barang_id', $id)->get();
+        $barangRelated = BarangRelated::where('tb_barang_id', $id)->get();
         $products = Barang::where('unit', '!=', 'SERIES')->get();
-
+        // dd($barang->series);
         return view('backend.master.barang.edit')->with([
             'user' => $user,
             'barang' => $barang,
             'barangImages' => $barangImages,
-            'products' => $products
+            'barangRelated' => $barangRelated,
+            'products' => $products,
         ]);
     }
     
-    public function update(CreateBarangRequest $request, $kode_barang)
+    public function update(CreateBarangRequest $request, $id)
     {
         // password kosong
         $param = array(
@@ -119,17 +125,65 @@ class BarangController extends Controller
             "deskripsi" => $request->input('deskripsi'),
             "cara_pakai" => $request->input('cara_pakai'),
             "flag_bestseller" => $request->input('flag_bestseller'),
-            "flag_promo" => $request->input('flag_promo')
+            "stats" => $request->input('stats'),
+            "flag_promo" => $request->input('flag_promo'),
+            "flag_sell_to_reseller" => $request->input('flag_sell_to_reseller')
         );
     
-        $barang = $this->barangRepo->editBarang($param, $kode_barang, $request->input('role_id'));
+        $barang = $this->barangRepo->editBarang($param, $id);
+
+        if(!empty($request->input('produk'))) {
+            
+            // remove det series first then update again
+            TbDetSeries::where('tb_series_id', $id)->delete();
+
+            $qty_product = $request->input('qty_product');
+
+            // insert
+            foreach($request->input('produk') as $key => $row) {
+                if(!empty($row)) {
+                    TbDetSeries::insert([
+                        'tb_barang_id' => $row,
+                        'tb_series_id' => $id,
+                        'qty' => $qty_product[$key]
+                    ]);
+                }
+            }
+
+        }
 
         if(!$this->barangRepo->error) {
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Data barang berhasil diupdate</strong>')->success()->important();
-            return redirect()->route('admin.barang.index');
+            return redirect()->route('admin.barang.edit', $id);
         } else {
             flash('<i class="fa fa-info"></i>&nbsp; <strong>User </strong> ' . $this->barangRepo->error)->error()->important();
-            return redirect()->route('admin.barang.edit')->withInput()->withError();
+            return redirect()->route('admin.barang.edit', $id)->withInput()->withError();
+        }
+    }
+
+    public function barangRelated(Request $request) {
+
+        $id = $request->barang_id;
+
+        foreach($request->input('barang_related') as $row) {
+            if(!empty($row)) {
+                $related[] = array(
+                    'tb_barang_id' => $request->barang_id,
+                    'tb_barang_related_id' => $row,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                );
+            }            
+        }
+
+        $barang = $this->barangRepo->addBarangRelated($related, $id);
+
+        if(!$this->barangRepo->error) {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Data barang berhasil diupdate</strong>')->success()->important();
+            return redirect()->route('admin.barang.edit', $id);
+        } else {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>User </strong> ' . $this->barangRepo->error)->error()->important();
+            return redirect()->route('admin.barang.edit', $id)->withInput()->withError();
         }
     }
     
@@ -214,5 +268,27 @@ class BarangController extends Controller
             return redirect()->route('admin.barang.edit', $barangId)->withInput()->withError();
         }
     }
+    
+    public function create_kode(Request $request)
+    {
+        $kode_pack = $request->get('kode_pack');
+
+        if($request->ajax()) {
+            $data = '';
+            $qry = Series::where('kode_pack', $kode_pack)->get();
+            foreach ($qry as $value) {
+                $data = array(
+                    'nama'  =>  $value->nama_pack,
+                    'jenis'  =>  $value->jenis_pack,
+                    'h_nomem'  =>  $value->h_nomem,
+                    'h_member'  =>  $value->h_member,
+                    'berat'  =>  $value->berat,
+                );
+            }
+            echo json_encode($data);
+        }
+    
+    }
+
     
 }

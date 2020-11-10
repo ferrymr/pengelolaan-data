@@ -92,6 +92,20 @@ Route::get('/login-administrator', function () {
     }
 });
 
+// Register direct to user
+Route::get('/register-user/{ref_code?}', function ($ref_code = '') {
+    return view('auth.register-user', compact('ref_code'));   
+});
+
+// Register direct to member
+Route::get('/register-member/{ref_code?}', function ($ref_code = '') {
+    return view('auth.register-member', compact('ref_code'));   
+});
+
+// Register direct to reseller
+Route::get('/register-reseller/{ref_code?}', 'AddressController@registerReseller')
+        ->name('register-reseller');
+
 // Dashboard
 Route::group([
     'middleware' => ['role:administrator|reseller|member|user'],
@@ -114,6 +128,11 @@ Route::group([
     Route::get('add', 'BarangController@create')->name('add');
     Route::post('store', 'BarangController@store')->name('store');
     Route::post('update/{kode_barang}', 'BarangController@update')->name('update');
+    Route::post('create_kode', 'BarangController@create_kode')->name('create_kode');
+    
+
+    // barang related
+    Route::post('barang-related', 'BarangController@barangRelated')->name('barang-related');
 
     Route::post('store-image', 'BarangController@storeBarangImage')->name('store-image');
     Route::get('delete-barang-image/{barangId?}/{id?}', 'BarangController@deleteBarangImage')->name('detele-barang-image');
@@ -243,6 +262,7 @@ Route::group([
     Route::get('', 'PemesananController@index')->name('index');
     Route::get('datatable', 'PemesananController@datatable')->name('datatable');
     Route::get('show/{id}', 'PemesananController@show')->name('show');
+    Route::get('add', 'PemesananController@add')->name('add');
     Route::get('cronCancelProduct/{id}', 'PemesananController@cronCancelProduct')->name('cronCancelProduct');
     Route::post('update-status/{id?}', 'PemesananController@setStatus')->name('update-status');
     Route::get('print_trf/{id?}', 'PemesananController@printTrf')->name('print_trf');
@@ -298,4 +318,20 @@ Route::group([
     'as'     => 'admin.konfirmasi-daftar.'
 ], function () {
     Route::get('konfirmasi-daftar-image/{id?}', 'KonfirmasiDaftarController@getKonfirmasiDaftarImage')->name('konfirmasi-daftar-image');
+});
+
+// Coupon
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/coupon/',
+    'as' => 'admin.coupon.'
+], function () {
+    Route::get('', 'CouponController@index')->name('index');
+    Route::get('datatable', 'CouponController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'CouponController@edit')->name('edit');
+    Route::get('view/{id}', 'CouponController@view')->name('view');
+    Route::get('delete/{id}', 'CouponController@destroy')->name('delete');
+    Route::get('add', 'CouponController@create')->name('add');
+    Route::post('store', 'CouponController@store')->name('store');
+    Route::post('update/{id}', 'CouponController@update')->name('update');
 });
