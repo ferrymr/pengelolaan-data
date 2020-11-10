@@ -244,7 +244,7 @@
                         <th>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    Lorm ip Sum<br>
+                                    {{ $data->note }}<br>
                                 </span>
                             </th>
                         </th>

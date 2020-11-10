@@ -70,9 +70,10 @@ class PemesananController extends Controller
             ->make(true);
     }
 
-    public function getSpbList() {
-        $spbList = DB::table('tb_spb')->get()->toArray();  
-        
+    public function getSpbList()
+    {
+        $spbList = DB::table('tb_spb')->get()->toArray();
+
         // dd($spbList);
 
         // foreach($spbListPrepare as $row) {
@@ -124,13 +125,14 @@ class PemesananController extends Controller
         return $spbList;
     }
 
-    public function add() {
+    public function add()
+    {
         $user = Auth::user();
         $products = Barang::get();
         $users = User::get();
-        
-        $alphabet = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
-        $no_do  = "TRX" . date('y') . $alphabet[date('m')-1] . date('d') . rand(1000,9999);
+
+        $alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+        $no_do  = "TRX" . date('y') . $alphabet[date('m') - 1] . date('d') . rand(1000, 9999);
 
         $spb = $this->getSpbList();
         // dd($sbp);
