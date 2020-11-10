@@ -94,17 +94,17 @@ Route::get('/login-administrator', function () {
 
 // Register direct to user
 Route::get('/register-user/{ref_code?}', function ($ref_code = '') {
-    return view('auth.register-user', compact('ref_code'));   
+    return view('auth.register-user', compact('ref_code'));
 });
 
 // Register direct to member
 Route::get('/register-member/{ref_code?}', function ($ref_code = '') {
-    return view('auth.register-member', compact('ref_code'));   
+    return view('auth.register-member', compact('ref_code'));
 });
 
 // Register direct to reseller
 Route::get('/register-reseller/{ref_code?}', 'AddressController@registerReseller')
-        ->name('register-reseller');
+    ->name('register-reseller');
 
 // Dashboard
 Route::group([
@@ -129,7 +129,7 @@ Route::group([
     Route::post('store', 'BarangController@store')->name('store');
     Route::post('update/{kode_barang}', 'BarangController@update')->name('update');
     Route::post('create_kode', 'BarangController@create_kode')->name('create_kode');
-    
+
 
     // barang related
     Route::post('barang-related', 'BarangController@barangRelated')->name('barang-related');
@@ -262,6 +262,7 @@ Route::group([
     Route::get('', 'PemesananController@index')->name('index');
     Route::get('datatable', 'PemesananController@datatable')->name('datatable');
     Route::get('show/{id}', 'PemesananController@show')->name('show');
+    Route::get('show_immediate/{id}', 'PemesananController@showImmediate')->name('show_immediate');
     Route::get('add', 'PemesananController@add')->name('add');
     Route::get('cronCancelProduct/{id}', 'PemesananController@cronCancelProduct')->name('cronCancelProduct');
     Route::post('update-status/{id?}', 'PemesananController@setStatus')->name('update-status');
@@ -334,4 +335,34 @@ Route::group([
     Route::get('add', 'CouponController@create')->name('add');
     Route::post('store', 'CouponController@store')->name('store');
     Route::post('update/{id}', 'CouponController@update')->name('update');
+});
+
+// Bank
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/bank/',
+    'as' => 'admin.bank.'
+], function () {
+    Route::get('', 'BankController@index')->name('index');
+    Route::get('datatable', 'BankController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'BankController@edit')->name('edit');
+    Route::get('delete/{id}', 'BankController@destroy')->name('delete');
+    Route::get('add', 'BankController@create')->name('add');
+    Route::post('store', 'BankController@store')->name('store');
+    Route::post('update/{id}', 'BankController@update')->name('update');
+});
+
+// Setting
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/setting/',
+    'as' => 'admin.setting.'
+], function () {
+    Route::get('', 'SettingController@index')->name('index');
+    Route::get('datatable', 'SettingController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'SettingController@edit')->name('edit');
+    Route::get('delete/{id}', 'SettingController@destroy')->name('delete');
+    Route::get('add', 'SettingController@create')->name('add');
+    Route::post('store', 'SettingController@store')->name('store');
+    Route::post('update/{id}', 'SettingController@update')->name('update');
 });

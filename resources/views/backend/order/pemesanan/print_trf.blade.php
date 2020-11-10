@@ -264,7 +264,7 @@
                             </tr>
                         </tr>
                     </table>
-                    <hr>
+                    {{-- <hr>
                     <hr>
                     <table width="100%">
                         <th>
@@ -274,7 +274,7 @@
                                 </span>
                             </th>
                         </th>
-                    </table>
+                    </table> --}}
                     <hr>
                     <hr>
                     <table width="100%" class="text-center">
@@ -460,7 +460,7 @@
                            </th>
                        </tr>
                    </table>
-                    <hr>
+                    {{-- <hr>
                     <table width="100%">
                         <tr>
                             <th class="text-left">
@@ -474,7 +474,7 @@
                                 </span>
                             </th>
                         </tr>
-                    </table>
+                    </table> --}}
                     <hr>
                     <hr>
                 </th>

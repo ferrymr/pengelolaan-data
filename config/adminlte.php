@@ -285,6 +285,14 @@ return [
                     'text' => 'Referral',
                     'url' => 'admin/referral'
                 ],
+                [
+                    'text' => 'Bank',
+                    'url' => 'admin/bank'
+                ],
+                [
+                    'text' => 'Setting',
+                    'url' => 'admin/setting'
+                ],
             ],
         ],
         [
@@ -312,7 +320,7 @@ return [
                     'text' => 'Movement',
                     'url' => 'admin/movement'
                 ],
-                
+
 
             ],
         ],

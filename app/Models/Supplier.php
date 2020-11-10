@@ -1,6 +1,5 @@
 <?php
 
-namespace App;
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -20,18 +19,19 @@ class Supplier extends Model
         'email'
     ];
 
-    public function getAll() {
+    public function getAll()
+    {
         return Supplier::all();
     }
 
-    public function getSupplier($roleId) {
-        return Supplier::whereHas('roles', function($q) use ($roleId)
-        {
+    public function getSupplier($roleId)
+    {
+        return Supplier::whereHas('roles', function ($q) use ($roleId) {
             $q->where('kode_supp', $roleId);
         })->get();
     }
 
-    public function addSupplier($request) 
+    public function addSupplier($request)
     {
         $supplier = array(
             'kode_supp' => $request['kode_supp'],
@@ -41,18 +41,19 @@ class Supplier extends Model
             'pos' => $request['pos'],
             'telp' => $request['telp'],
             'email' => $request['email'],
-            
+
         );
 
         $supplier = Supplier::create($supplier);
         return $supplier;
     }
 
-    public function editSupplier($request, $kode_supp) {
-        
+    public function editSupplier($request, $kode_supp)
+    {
+
         $data = Supplier::where('kode_supp', $kode_supp)->update($request);
 
-        if(!empty($data)) {
+        if (!empty($data)) {
             return $data;
         } else {
             return false;
