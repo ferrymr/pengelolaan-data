@@ -33,14 +33,14 @@
                                         </div>
                                         <div class="product-thumb">
                                             <div class="thumb-inner">
-                                                <a href="{{ route('products.show', $item->kode_barang) }}">
+                                                <a href="{{ route('products.show', [$item->kode_barang, Illuminate\Support\Str::slug($item->nama, '-')]) }}">
                                                     <img src="{{ asset('assets/images/thumbnails/' . $item->kode_barang . '.jpg') }}" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="product-info">
                                             <h5 class="product-name product_title">
-                                                <a href="{{ route('products.show', $item->kode_barang) }}">
+                                                <a href="{{ route('products.show', [$item->kode_barang, Illuminate\Support\Str::slug($item->nama, '-')]) }}">
                                                     {{ $item->nama }} 
                                                 </a>
                                             </h5>

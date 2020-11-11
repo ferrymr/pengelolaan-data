@@ -11,6 +11,7 @@ use App\Models\TbHeadJual;
 use App\Models\TbDetJual;
 use App\Models\TbDetSeries;
 use App\Models\Barang;
+use App\Models\Setting;
 use App\Models\CouponUsed;
 use DB;
 use App\Mail\OrderCreated;
@@ -213,20 +214,34 @@ class CheckoutPayment extends Component
 
             DB::commit();
 
+            if(!empty($this->defaultShippingAddress->telepon_pengirim)) {
+                $phone = $this->defaultShippingAddress->telepon_pengirim;
+            } else if (!empty($this->user->phone)) {
+                $phone = $this->user->phone;
+            } else {
+                $phone = 0;
+            }
+
             // notify to whatsapp
-            $to = $this->defaultShippingAddress;
+            $to = $phone;
             $message = "Terimakasih telah melakukan pembelian di Toko Kami. 
             Segera lakukan pembayaran dan konfirmasi pembayaran 
             (melalui menu profile > transaksi > detail transaksi)";
 
             Whatsapp::sendMSG($to, $message);
 
-            $orderFinal = TbHeadJual::with('items', 'address', 'user')->where('id', $transactionId)->first();
-
             // notify to email
             if(isset($user->email)) {
                 Mail::to($user->email)->send(new OrderCreated($orderFinal));
-            }            
+            }
+
+            // send to admin
+            $toAdmin = Setting::where('slug', 'phone_admin')->first()->name;
+            $messageAdmin = "[NEW ORDER] Ada order baru masuk dari ".$this->user->name.". Silahkan segera di proses.";
+
+            Whatsapp::sendMSG($toAdmin, $messageAdmin);
+
+            $orderFinal = TbHeadJual::with('items', 'address', 'user')->where('id', $transactionId)->first();
 
             foreach ($cartItems as $cartItem) {
                 Cart::remove($cartItem['kode_barang']);

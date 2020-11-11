@@ -247,6 +247,26 @@
                     </div>
                 </div>
             </div>
+            <hr>
+            <h5 class="col-md-12">Search Engine Optimation (SEO)</h5>
+            <div class="form-group @if($errors->has('meta_title')) has-error @endif">
+                <label for="meta_title" class="col-sm-12 control-label">Meta Title</label>    
+                <div class="col-sm-8">
+                    <input value="{{ old('meta_title') }}" type="text" name="meta_title" class="form-control" id="meta_title" placeholder="Meta Title" required>
+                    @if($errors->has('meta_title'))
+                        <span class="text-danger">{{ $errors->first('meta_title') }}</span>
+                    @endif
+                </div>
+            </div>
+            <div class="form-group @if($errors->has('meta_description')) has-error @endif">
+                <label for="meta_description" class="col-sm-12 control-label">Meta Description</label>    
+                <div class="col-sm-8">
+                    <textarea name="meta_description" class="form-control" id="meta_description" placeholder="Meta Description">{{ old('meta_description') }}</textarea>
+                    @if($errors->has('meta_description'))
+                        <span class="text-danger">{{ $errors->first('meta_description') }}</span>
+                    @endif
+                </div>
+            </div>
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-info">Simpan</button>

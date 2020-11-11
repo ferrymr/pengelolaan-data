@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{-- @yield('meta') --}}
+
     <link href="https://fonts.googleapis.com/css?family=Arimo:400,400i,700,700i%7CLato:300,300i,400,400i,700,700i,900%7COpen+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">

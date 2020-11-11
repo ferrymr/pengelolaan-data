@@ -10,10 +10,10 @@
     @include('flash::message')
 
     {!! Form::open([
-        'url' => route('admin.coupon.store'),
+        'url' => route('admin.penjualan.store'),
         'method'=>'POST',
         'class'=>'form-horizontal',
-        'id'=>'form-coupon'
+        'id'=>'form-penjualan'
     ]) !!}
 
     <div class="card col-12">
@@ -21,6 +21,14 @@
             <h3 class="card-title">Tambah Pemesanan</h3>
         </div>
         <div class="card-body">
+            <div class="row">
+                <div class="main-content col-md-12">
+                    <div class="alert alert-info alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        Apabila ingin menambahkan user baru silahkan <a href="{{ route('admin.user.add') }}" target="_blank">tambah disini</a>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="form-group col-sm-4 @if($errors->has('no_do')) has-error @endif">
                     <label for="no_do" class="col-sm-12 control-label">No Transaksi *</label>    
@@ -100,65 +108,75 @@
                         @endif
                     </div>
                 </div>
-                <div class="form-grup col-sm-12 @if($errors->has('flag_active')) has-error @endif">
+                <div class="form-grup col-sm-12 mb-3 @if($errors->has('metode_pengiriman')) has-error @endif">
                     <div class="col-sm-12">
                         <div class="custom-control custom-checkbox">
-                            <input type="radio" class="custom-control-input" name="flag_active" value="1" id="flag_active" checked>
-                            <label class="custom-control-label" for="flag_active">Via Kurir</label>
+                            <input type="radio" class="custom-control-input" name="metode_pengiriman" value="EXPEDITION" id="EXPEDITION">
+                            <label class="custom-control-label" for="EXPEDITION">Via Kurir</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="radio" class="custom-control-input" name="flag_active" value="1" id="flag_active" checked>
-                            <label class="custom-control-label" for="flag_active">Ambil di Tempat</label>
+                            <input type="radio" class="custom-control-input" name="metode_pengiriman" value="IMMEDIATE" id="IMMEDIATE">
+                            <label class="custom-control-label" for="IMMEDIATE">Ambil di Tempat</label>
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-sm-8 @if($errors->has('value')) has-error @endif">
-                    <label for="value" class="col-sm-12 control-label">Value</label>    
-                    <div class="col-sm-12">
-                        <input type="number" name="value" class="form-control" id="value" placeholder="Value" required>
-                        @if($errors->has('value'))
-                            <span class="text-danger">{{ $errors->first('value') }}</span>
-                        @endif
-                        <p class="text-muted"><br>Kalau pilihanya discount valuenya %, kalau pilihannya potongan valuenya rupiah</p>
-                    </div>                    
-                </div>
-                <div class="form-group col-sm-12 @if($errors->has('description')) has-error @endif">
-                    <label for="description" class="col-sm-12 control-label">Deskripsi</label>    
-                    <div class="col-sm-12">
-                        <textarea name="description" class="form-control ckeditor" id="description" placeholder="Deskripsi">{{ old('description') }}</textarea>
-                        @if($errors->has('description'))
-                            <span class="text-danger">{{ $errors->first('description') }}</span>
+
+                <div id="content_EXPEDITION" class="form-group col-sm-8 @if($errors->has('kurir')) has-error @endif" style="display:none;">
+                    <label for="kurir" class="col-sm-12 control-label">Pilih Kurir</label>    
+                    <div class="col-sm-6">
+                        <select name="kurir" class="select2" style="width:80%">
+                            <option value="">Pilih Kurir</option>
+                            <option value="JNE">JNE</option>
+                            <option value="JNT">JNT</option>
+                        </select> 
+                        @if($errors->has('kurir'))
+                            <span class="text-danger">{{ $errors->first('kurir') }}</span>
                         @endif
                     </div>
                 </div>
-            </div>
-            
-            <div class="row">
-                <div class="form-group col-sm-3 @if($errors->has('expired')) has-error @endif">
-                    <label for="expired" class="col-sm-12 control-label">Expired *</label>    
-                    <div class="col-sm-12">
-                        {{-- <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" im-insert="false"> --}}
-                        <input type="text" value="{{ date('Y-m-d') }}" name="expired" class="form-control datepicker" placeholder="Expired">
-                        @if($errors->has('expired'))
-                            <span class="text-danger">{{ $errors->first('expired') }}</span>
+                
+                <div id="content_IMMEDIATE" class="form-group col-sm-12 @if($errors->has('note')) has-error @endif" style="display:none;">
+                    <label for="note" class="col-sm-12 control-label">Notes</label>    
+                    <div class="col-sm-6">
+                        <textarea name="note" class="form-control" id="note" placeholder="Notes">{{ old('note') }}</textarea>
+                        @if($errors->has('note'))
+                            <span class="text-danger">{{ $errors->first('note') }}</span>
                         @endif
                     </div>
                 </div>
-            </div>
-            
-            <div class="form-grup @if($errors->has('flag_active')) has-error @endif">
-                <div class="col-sm-6">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="flag_active" value="1" id="flag_active" checked>
-                        <label class="custom-control-label" for="flag_active">Aktifasi kupon ini?</label>
+
+                <div class="form-group col-sm-8 @if($errors->has('payment_method')) has-error @endif">
+                    <label for="payment_method" class="col-sm-12 control-label">Pilih Metode Pembayaran</label>    
+                    <div class="col-sm-6">
+                        <select name="payment_method" class="select2" style="width:80%" disabled>
+                            <option value="" selected>Bank transfer</option>
+                        </select> 
+                        @if($errors->has('payment_method'))
+                            <span class="text-danger">{{ $errors->first('payment_method') }}</span>
+                        @endif
                     </div>
                 </div>
-            </div>
+                <div class="form-group col-sm-8 @if($errors->has('bank')) has-error @endif">
+                    <label for="bank" class="col-sm-12 control-label">Pilih Bank</label>    
+                    <div class="col-sm-6">
+                        <select name="bank" class="select2" style="width:80%">
+                            <option value="">Pilih Bank</option>
+                            <option value="BCA">BCA</option>
+                            <option value="BNI">BNI</option>
+                            <option value="BRI">BRI</option>
+                            <option value="MANDIRI">MANDIRI</option>
+                        </select> 
+                        @if($errors->has('bank'))
+                            <span class="text-danger">{{ $errors->first('bank') }}</span>
+                        @endif
+                    </div>
+                </div>
+            </div>            
         </div>
 
         <div class="card-footer">
             <button type="submit" class="btn btn-info">Simpan</button>
-            <a href="{{ route("admin.coupon.index") }}" class="btn btn-default float-right">Cancel</a>
+            <a href="{{ route("admin.penjualan.index") }}" class="btn btn-default float-right">Cancel</a>
         </div>
     </div>    
 
@@ -177,64 +195,16 @@
         })
 
         $(document).ready(function() {
-            $('#add-product').click(function() {
-                $('.select2').select2();
-                $('#append-product').append(`
-                    <tr>
-                        <td>
-                            <div class="form-group mb-2">
-                                <div class="row col-md-12">
-                                    <div class="col-md-4">
-                                        <select name="tb_barang_id[]" class="form-control select2">
-                                            <option value="" selected>Pilih produk</option>
-                                            @foreach($products as $product)
-                                                <option value="{{ $product->id }}">{{ $product->nama }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-danger remove-product">
-                                            <i class="fa fa-times"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                `);
+            
+            $("#EXPEDITION").click(function() {
+                $('#content_EXPEDITION').show();
+                $('#content_IMMEDIATE').hide();
+            });
+            $("#IMMEDIATE").click(function() {
+                $('#content_IMMEDIATE').show();
+                $('#content_EXPEDITION').hide();
             });
 
-            $('#append-product').on('click', '.remove-product', function(){
-                $(this).parent().parent().remove();
-            });
-
-            $('#add-user').click(function() {
-                $('.select2').select2();
-                $('#append-user').append(`
-                    <tr>
-                        <td>
-                            <div class="input-group col-md-12 mb-2">
-                                <select name="user_id[]" class="select2" style="width:80%">
-                                    <option value="" selected>Pilih user</option>
-                                    @foreach($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                                <button type="button" class="btn btn-danger ml-3 remove-user">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `);
-            });
-
-            $('#append-user').on('click', '.remove-user', function(){
-                $(this).parent().parent().remove();
-            });
         });
     </script>
 @stop

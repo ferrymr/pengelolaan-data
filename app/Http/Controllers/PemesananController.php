@@ -146,6 +146,18 @@ class PemesananController extends Controller
         ));
     }
 
+    public function store(Request $request) {
+        
+
+        if(!$this->pemesananRepo->error) {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>pemesanan Berhasil Ditambah</strong>')->success();
+            return redirect()->route('admin.pemesanan.index');
+        } else {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>pemesanan </strong> ' . $this->pemesananRepo->error)->error()->important();
+            return redirect()->route('admin.pemesanan.add')->withInput()->withError();
+        }
+    }
+
     public function show($id)
     {
         $data = TbHeadJual::with('items.itemDetailHas', 'address', 'user', 'spb')
@@ -200,8 +212,15 @@ class PemesananController extends Controller
                     // notif email
                     Mail::to($data->user->email)->send(new OrderConfirmed($data));
 
+                    if(!empty($data->address->telepon_pengirim)) {
+                        $phone = $data->address->telepon_pengirim;
+                    } else if (!empty($data->user->phone)) {
+                        $phone = $data->user->phone;
+                    } else {
+                        $phone = 0;
+                    }
                     // notify to whatsapp
-                    $to = $data->user->email;
+                    $to = $phone;
                     $message = "Terimakasih telah melakukan pembayaran di Toko Kami, pembayaran kakak telah terkonfirmasi. 
                     Kami akan segera memproses pesanannya, ditunggu ya kak.";
 
@@ -213,10 +232,17 @@ class PemesananController extends Controller
                     // notif email
                     Mail::to($data->user->email)->send(new OrderShipped($data));
 
+                    if(!empty($data->address->telepon_pengirim)) {
+                        $phone = $data->address->telepon_pengirim;
+                    } else if (!empty($data->user->phone)) {
+                        $phone = $data->user->phone;
+                    } else {
+                        $phone = 0;
+                    }
                     // notify to whatsapp
-                    $to = $data->user->email;
-                    $message = "Pesanan kakak telah kami pack dan sedang dalam proses pengiriman, ditunggu ya kakak :). 
-                    Terimakasih";
+                    $to = $phone;
+                    $message = "Pesanan kakak telah kami pack dan sedang dalam proses pengiriman, ditunggu ya kakak :).
+                    Berikut ini nomor resinya ".$param["resi"].", bisa di check di https://cekresi.com/. Terimakasih";
 
                     Whatsapp::sendMSG($to, $message);
 

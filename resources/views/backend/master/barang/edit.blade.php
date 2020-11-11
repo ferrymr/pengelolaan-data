@@ -280,6 +280,26 @@
                     </div>
                 </div>
             </div>
+            <hr>
+            <h5 class="col-md-12">Search Engine Optimation (SEO)</h5>
+            <div class="form-group @if($errors->has('meta_title')) has-error @endif">
+                <label for="meta_title" class="col-sm-12 control-label">Meta Title</label>    
+                <div class="col-sm-8">
+                    <input value="{{ $barang->meta_title }}" type="text" name="meta_title" class="form-control" id="meta_title" placeholder="Meta Title" required>
+                    @if($errors->has('meta_title'))
+                        <span class="text-danger">{{ $errors->first('meta_title') }}</span>
+                    @endif
+                </div>
+            </div>
+            <div class="form-group @if($errors->has('meta_description')) has-error @endif">
+                <label for="meta_description" class="col-sm-12 control-label">Meta Description</label>    
+                <div class="col-sm-8">
+                    <textarea name="meta_description" class="form-control" id="meta_description" placeholder="Meta Description">{{ $barang->meta_description }}</textarea>
+                    @if($errors->has('meta_description'))
+                        <span class="text-danger">{{ $errors->first('meta_description') }}</span>
+                    @endif
+                </div>
+            </div>
         </div>
 
         <div class="card-footer">
@@ -328,7 +348,7 @@
                                     <tr>
                                         <th style="width: 10px" class="text-center">No</th>
                                         <th class="text-center">Foto</th>
-                                        {{-- <th class="text-center">Thumbnail</th> --}}
+                                        <th class="text-center">Edit</th>
                                         <th class="text-center">Hapus</th>
                                     </tr>
                                     @php 
@@ -342,11 +362,11 @@
                                                     <img style="width:20%;margin:0 auto;" class="thumbnail" src="{{ route('admin.barang.barang-image', $barangImage->id) }}" alt="">
                                                 @endif
                                             </td>
-                                            {{-- <td class="text-center favourite">
-                                                <a href="#">
-                                                    <i class="fa fa-star"></i>
-                                                </a>                                                    
-                                            </td> --}}
+                                            <td class="text-center">
+                                                <a href="{{ route('admin.barang.edit-barang-image', [$barang->id, $barangImage->id]) }}" class="btn btn-info btn-xs btn-edit actDelete" data-placement="left" data-toggle="confirmation" data-title="Tambah Alt ?">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </td>
                                             <td class="text-center">
                                                 <a href="{{ route('admin.barang.detele-barang-image', [$barang->id, $barangImage->id]) }}" class="btn btn-danger btn-xs btn-delete actDelete" data-placement="left" data-toggle="confirmation" data-title="Hapus foto ?">
                                                     <i class="fa fa-trash"></i>

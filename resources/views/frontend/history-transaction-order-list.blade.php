@@ -66,6 +66,34 @@
                                     <a href="{{ route('order-history-status', ['status' => 'done']) }}" class="item-tab @if($status == 'done') active @endif">Dikirim & Selesai ({{ $totalPesananSelesai }})</a>
                                 </div>
                                 <div class="transaction-list-item">
+                                    
+                                    <form action="" method="get">
+                                        @csrf
+                                        <div class="shop-top-control">                                            
+                                            <div class="select-item select-form">
+                                                <div class="inner">                        
+                                                    <span class="title"><b>Filter by tanggal transaksi:</b> &nbsp; &nbsp; &nbsp; Dari</span>&nbsp;
+                                                    <input type="date" 
+                                                            name="start_date" 
+                                                            placeholder="YYYY-MM-DD" 
+                                                            required
+                                                            value="{{ isset($_GET['start_date']) ? $_GET['start_date'] : '' }}"
+                                                            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" 
+                                                            title="Enter a date in this formart YYYY-MM-DD">
+                                                    <span class="title">&nbsp;sampai</span>&nbsp;
+                                                    <input type="date" 
+                                                            name="finish_date" 
+                                                            placeholder="YYYY-MM-DD" 
+                                                            required 
+                                                            value="{{ isset($_GET['finish_date']) ? $_GET['finish_date'] : '' }}"
+                                                            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" 
+                                                            title="Enter a date in this formart YYYY-MM-DD">
+                                                    &nbsp; <button class="btn btn-info" type="submit">Cari</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
                                     <div class="row">
                                         @forelse($transactions as $transaction)                                        
                                             <div class="col-12 col-md-6">

@@ -42,7 +42,9 @@ class Barang extends Model
         // 'log_his',
         'flag_bestseller',
         'flag_promo',
-        'flag_sell_to_reseller'
+        'flag_sell_to_reseller',
+        'meta_title',
+        'meta_description',
     ];
 
     // ======================== frontend ========================
@@ -95,7 +97,7 @@ class Barang extends Model
         return $barang;
     }
 
-    public function getBarangAll($user, $sorting, $byCategory) {
+    public function getBarangAll($user, $sorting, $byCategory, $search) {
         $barang = Barang::where('h_nomem', '!=', 0)
                     ->where('stok','>',0)
                     ->where('stats',1);
@@ -108,6 +110,10 @@ class Barang extends Model
             }            
         } else {
             $barang = $barang->orderBy('created_at', 'DESC');
+        }
+
+        if(!empty($search)) {
+            $barang = $barang->where('nama', 'like', '%'.$search.'%');
         }
 
         if(!empty($byCategory)) {

@@ -11,8 +11,8 @@ class Setting extends Model
         'name',
         'slug',
         'category',
-        'description'
-        // 'soft_delete'
+        'description',
+        'soft_delete'
     ];
 
     public function getAll()
@@ -27,7 +27,7 @@ class Setting extends Model
             'slug' => $request['slug'],
             'category' => $request['category'],
             'description' => $request['description'],
-            // 'soft_delete' => $request['soft_delete'],
+            'soft_delete' => 0,
         );
 
         $setting = Setting::create($setting);

@@ -55,7 +55,7 @@
                                 {{-- <div class="yith-wcwl-add-to-wishlist"><div class="yith-wcwl-add-button"><a href="#">Add to Wishlist</a></div></div> --}}
                             </div>
                             <div class="thumb-inner">
-                                <a href="{{ route('products.show', $product->kode_barang) }}">
+                                <a href="{{ route('products.show', [$product->kode_barang, Illuminate\Support\Str::slug($product->nama, '-')]) }}">
                                     <img src="{{ asset('assets/images/thumbnails/' . $product->kode_barang . '.jpg')}}" alt="">
                                 </a>
                             </div>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="product-info">
                             <h5 class="product-name product_title">
-                                <a href="{{ route('products.show', $product->kode_barang) }}">
+                                <a href="{{ route('products.show', [$product->kode_barang, Illuminate\Support\Str::slug($product->nama, '-')]) }}">
                                     {{ $product->nama }} 
                                 </a>
                             </h5>
@@ -75,7 +75,7 @@
                             </div>
                             <div class="group-buttons">
                                 <div class="price"><span>@currency($product->harga)</span></div>
-                                <a href="{{ route('products.show', $product->kode_barang) }}" class="add_to_cart_button button" tabindex="0">
+                                <a href="{{ route('products.show', [$product->kode_barang, Illuminate\Support\Str::slug($product->nama, '-')]) }}" class="add_to_cart_button button" tabindex="0">
                                     SHOP NOW
                                 </a>
                             </div>

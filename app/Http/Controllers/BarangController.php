@@ -127,7 +127,9 @@ class BarangController extends Controller
             "flag_bestseller" => $request->input('flag_bestseller'),
             "stats" => $request->input('stats'),
             "flag_promo" => $request->input('flag_promo'),
-            "flag_sell_to_reseller" => $request->input('flag_sell_to_reseller')
+            "flag_sell_to_reseller" => $request->input('flag_sell_to_reseller'),
+            "meta_title" => $request->input('meta_title'),
+            "meta_description" => $request->input('meta_description')
         );
     
         $barang = $this->barangRepo->editBarang($param, $id);
@@ -290,5 +292,29 @@ class BarangController extends Controller
     
     }
 
+    public function editBarangImage($barangId, $id) {
+        $image = BarangImages::find($id);
+
+        return view('backend.master.barang.edit-barang-image')->with([
+            'image' => $image,
+            'barangId' => $barangId,
+            'id' => $id
+        ]);
+    }
+
+    public function updateBarangImage(Request $request, $barangId, $id) {
+        $array = $request->all();
+        $param["alt"] = $array['alt'];
+
+        $image = BarangImages::where('id', $id)->update($param);
+
+        if($image) {
+            flash('<strong>Foto barang berhasil diedit</strong>')->success();
+            return redirect()->route('admin.barang.edit', $barangId);            
+        } else {
+            flash('<strong>Foto barang gagal diedit</strong>')->error()->important();
+            return redirect()->route('admin.barang.edit', $barangId)->withInput()->withError();
+        }
+    }
     
 }
