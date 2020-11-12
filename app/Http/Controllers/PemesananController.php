@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
 
+use Kavist\RajaOngkir\Facades\RajaOngkir;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Barang;
 use App\Models\TbHeadJual;
+use App\Models\TbDetJual;
 use App\Models\TbDetSeries;
+use App\Models\Spb;
 use PDF;
 use DB;
 use App\Mail\OrderConfirmed;
@@ -19,6 +22,7 @@ use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
 use App\Helpers\Whatsapp;
 use App\Models\ShippingAddress;
+use App\Mail\OrderCreated;
 
 class PemesananController extends Controller
 {
@@ -148,12 +152,251 @@ class PemesananController extends Controller
 
     public function store(Request $request) {
         
+        $TbHeadJual = new TbHeadJual();
+        $TbDetJual = new TbDetJual();
 
-        if(!$this->pemesananRepo->error) {
-            flash('<i class="fa fa-info"></i>&nbsp; <strong>pemesanan Berhasil Ditambah</strong>')->success();
+        $user = Auth::user();
+
+        DB::beginTransaction();
+
+        try {
+
+            $userNama = User::find($request->user_id);
+            $shippingAddress = ShippingAddress::where('user_id', $request->user_id)
+                                            ->where('is_default', 1)
+                                            ->first();
+
+            $spb = Spb::where('code', $request->kode_spb)->first();
+
+            // todo
+            $subtotal = 0;
+            $shipping_fee = 0;
+            $grand_total = 0;
+            $total_berat = 0;
+            $total_item = 0;
+            $total_poin = 0;
+
+            foreach($request->tb_barang_id as $key => $barang_id) {
+
+                $barang = Barang::find($barang_id);
+                
+                // subtotal
+                // check if user, member or reseller
+                if($userNama->hasRole('user')) {
+                    $subtotal = $subtotal + ($barang->h_nomem * $request->qty_product[$key]);
+                } else {
+                    $subtotal = $subtotal + ($barang->h_member * $request->qty_product[$key]);
+                }
+
+                // shipping_fee
+                $total_berat = $total_berat + $barang->berat;
+                
+                $total_item = $total_item + $request->qty_product[$key];
+
+                $total_poin = $total_poin + $barang->poin;
+
+            }           
+
+            // check rajaongkir
+            $rajaOngkir = RajaOngkir::ongkosKirim([
+                'origin' => $spb->subdistrict_id,
+                'destination' => $shippingAddress->kecamatan_id,
+                'weight' => $total_berat,
+                'courier' => strtolower($request->kurir),
+                'originType' => 'subdistrict',
+                'destinationType' => 'subdistrict'
+            ])->get()[0];            
+            
+            if ($rajaOngkir['code'] == 'jne') {
+                $shipping_fee = $shipping_fee + $rajaOngkir['costs'][1]['cost'][0]['value'];
+            } elseif ($rajaOngkir['code'] == 'J&T') {
+                $shipping_fee = $shipping_fee + $rajaOngkir['costs'][0]['cost'][0]['value'];
+            }
+
+            $grand_total = $grand_total + $subtotal + $shipping_fee;
+
+            $input = array(
+                'tanggal' => date('Y-m-d'),
+                'no_do' => $request->no_do,
+                // 'no_member' => $userNama->no_member,
+                'user_id' => $request->user_id,
+                'nama' => $userNama->name,
+                'metode_pengiriman' => $request->metode_pengiriman,
+                'kurir' => $request->kurir,
+                'shipping_address_id' => ($request->metode_pengiriman == 'EXPEDITION') ? $shippingAddress->id : null,
+                'sub_total' => $subtotal,
+                'shipping_fee' => $shipping_fee,
+                'grand_total' => $grand_total,
+                'total_berat' => $total_berat,
+                'total_item' => $total_item,
+                'total_poin' => $total_poin,
+                'note' => $request->note,
+                'kode_spb' => $request->kode_spb,
+                'jenis_platform' => 'SHOP',
+                'bank' => $request->bank,
+                'status_transaksi' => 'PLACE ORDER',
+            );
+
+            // dd($request->tb_barang_id);
+
+            // todo change to model, add data to tbheadjual
+            $resultId = $TbHeadJual->addData($input);
+    
+            $transactionId = DB::getPDO()->lastInsertId();            
+
+            // insert into Detail Penjualan table
+            foreach($request->tb_barang_id as $key => $barang_id) {
+
+                $barang = Barang::find($barang_id);
+
+                // subtotal
+                // check if user, member or reseller
+                if($userNama->hasRole('user')) {
+                    $subtotal = $subtotal + ($barang->h_nomem * $request->qty_product[$key]);
+                    $harga = $barang->h_nomem;
+                } else {
+                    $subtotal = $subtotal + ($barang->h_member * $request->qty_product[$key]);
+                    $harga = $barang->h_member;
+                }
+
+                $inputDetJual = array(
+                    'tb_head_jual_id' => $transactionId,
+                    'kode_barang' => $barang->kode_barang,
+                    // 'barang_id' => $barang->barang_id,
+                    'harga' => $harga,
+                    'jumlah' => $request->qty_product[$key],
+                    'total' => $subtotal,
+                    // 'total_vc' => 0,
+                    'poin' => 0,
+                    'note' => '',
+                    'promo' => 0
+                );
+                // insert method
+                $TbDetJual->addData($inputDetJual);
+            }
+            
+            // todo refactoring this part
+            // decrease stock
+            // if ($request->kode_spb == "00000") {
+
+                foreach($request->tb_barang_id as $key => $barang_id) {
+
+                    $barang = Barang::find($barang_id);
+
+                    if ($barang->unit == "SERIES") {
+
+                        $serieItems = TbDetSeries::where('tb_series_id', $barang_id)
+                                            ->get();
+                        
+                        foreach($serieItems as $serieItem) {
+                            $currentQuantity = Barang::select('stok')
+                                                ->where('id', $serieItem->tb_barang_id)
+                                                ->first()
+                                                ->stok;
+                            Barang::where('id', $serieItem->tb_barang_id)
+                                ->update([
+                                    'stok' => $currentQuantity - ($serieItem->qty * $request->qty_product[$key])
+                                ]);
+                        }
+
+                    } else {
+                        $currentQuantity = Barang::select('stok')
+                                            ->where('kode_barang', $barang->kode_barang)
+                                            ->first()
+                                            ->stok;
+                        Barang::where('kode_barang', $barang->kode_barang)
+                            ->update([
+                                'stok' => $currentQuantity - $request->qty_product[$key]
+                            ]);
+                    }
+                }
+
+            // todo ooooooo
+            // } else {
+            //     // todo master product
+            //     foreach($cartItems as $item) {
+            //         if ($item['unit'] == "SERIES") {
+
+            //             $serieItems = DB::table('tb_det_pack')
+            //                             ->select('kode_barang', 'jumlah')
+            //                             ->where('kode_pack', $item['kode_barang'])
+            //                             ->get();
+                        
+            //             foreach($serieItems as $serieItem) {
+            //                 $currentQuantity = DB::table('tb_produk')
+            //                                     ->select('stok')
+            //                                     ->where('kode_barang', $serieItem->kode_barang)
+            //                                     ->where('no_member', $request->kode_spb)
+            //                                     ->first()
+            //                                     ->stok;
+            //                 DB::table('tb_produk')
+            //                     ->where('kode_barang', $serieItem->kode_barang)
+            //                     ->where('no_member', $request->kode_spb)
+            //                     ->update(['stok' => $currentQuantity - ($serieItem->jumlah * $item['qty'])]);
+            //             }
+            //         } else {
+            //             $currentQuantity = DB::table('tb_produk')
+            //                                 ->select('stok')
+            //                                 ->where('kode_barang', $item['kode_barang'])
+            //                                 ->where('no_member', $request->kode_spb)
+            //                                 ->first()
+            //                                 ->stok;
+            //             DB::table('tb_produk')
+            //                 ->where('kode_barang', $item['kode_barang'])
+            //                 ->where('no_member', $request->kode_spb)
+            //                 ->update(['stok' => $currentQuantity - $item['qty']]);
+            //         }
+            //     }
+
+            // }
+
+            DB::commit();
+
+            $orderFinal = TbHeadJual::with('items', 'address', 'user')->where('id', $transactionId)->first();
+
+            if(!empty($shippingAddress->telepon_pengirim)) {
+                $phone = $shippingAddress->telepon_pengirim;
+            } else if (!empty($userNama->phone)) {
+                $phone = $userNama->phone;
+            } else {
+                $phone = 0;
+            }
+
+            // notify to whatsapp
+            $to = $phone;
+            $message = "Terimakasih telah melakukan pembelian di Toko Kami. 
+            Segera lakukan pembayaran dan konfirmasi pembayaran 
+            (melalui menu profile > transaksi > detail transaksi)";
+
+            Whatsapp::sendMSG($to, $message);
+
+            // notify to email
+            if(isset($userNama->email)) {
+                Mail::to($userNama->email)->send(new OrderCreated($orderFinal));
+            }
+
+            // send to admin
+            $toAdmin = Setting::where('slug', 'phone_admin')->first()->name;
+            $messageAdmin = "[NEW ORDER] Ada order baru masuk dari ".$userNama->name.". Silahkan segera di proses.";
+
+            Whatsapp::sendMSG($toAdmin, $messageAdmin);
+    
+            // to do if implement coupon need to submit to coupon used
+            // if(isset($this->coupon) && !empty($this->coupon)) {
+            //     CouponUsed::insert([
+            //         'user_id' => $userNama->id,
+            //         'coupon_code' => $this->coupon
+            //     ]);
+            // }
+
+            // flash
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Pemesanan Berhasil Diinputkan</strong>')->success();
             return redirect()->route('admin.pemesanan.index');
-        } else {
-            flash('<i class="fa fa-info"></i>&nbsp; <strong>pemesanan </strong> ' . $this->pemesananRepo->error)->error()->important();
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e->getMessage());
+            // return redirect()->back()->with(['error' => $e->getMessage()]);
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Pemesanan gagal di inputkan</strong>')->error()->important();
             return redirect()->route('admin.pemesanan.add')->withInput()->withError();
         }
     }

@@ -222,6 +222,8 @@ class CheckoutPayment extends Component
                 $phone = 0;
             }
 
+            $orderFinal = TbHeadJual::with('items', 'address', 'user')->where('id', $transactionId)->first();
+
             // notify to whatsapp
             $to = $phone;
             $message = "Terimakasih telah melakukan pembelian di Toko Kami. 
@@ -240,8 +242,6 @@ class CheckoutPayment extends Component
             $messageAdmin = "[NEW ORDER] Ada order baru masuk dari ".$this->user->name.". Silahkan segera di proses.";
 
             Whatsapp::sendMSG($toAdmin, $messageAdmin);
-
-            $orderFinal = TbHeadJual::with('items', 'address', 'user')->where('id', $transactionId)->first();
 
             foreach ($cartItems as $cartItem) {
                 Cart::remove($cartItem['kode_barang']);

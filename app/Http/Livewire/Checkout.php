@@ -159,8 +159,8 @@ class Checkout extends Component
         $totalBerat = $this->totalBerat + ($this->totalBerat) * 0.1;
 
         $rajaOngkir = RajaOngkir::ongkosKirim([
-            'origin' => $this->defaultShippingAddress->kecamatan_id,
-            'destination' => $this->spbList[$spbIndex]['subdistrict_id'],
+            'origin' => $this->spbList[$spbIndex]['subdistrict_id'],
+            'destination' => $this->defaultShippingAddress->kecamatan_id,
             'weight' => $totalBerat,
             'courier' => strtolower($this->courier),
             'originType' => 'subdistrict',
