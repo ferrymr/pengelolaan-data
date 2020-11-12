@@ -35,13 +35,15 @@ class ProductDetail extends Component
         
         setcookie('see_product', serialize($seeProducts), time() + (86400 * 30), "/");
 
-        $unserialize = unserialize($_COOKIE['see_product']);
+        if (isset($_COOKIE['see_product'])) {
+            $unserialize = unserialize($_COOKIE['see_product']);
 
-        $this->seeProducts = Barang::with('barangImages', 'barangRelated.barangDetail.barangImages')
+            $this->seeProducts = Barang::with('barangImages', 'barangRelated.barangDetail.barangImages')
                             ->whereIn('id', $unserialize)
                             ->orderBy('id', "DESC")
                             ->take(4)
                             ->get();
+        }
 
         // dd($this->seeProducts);
         // dd(unserialize($_COOKIE['see_product']));
