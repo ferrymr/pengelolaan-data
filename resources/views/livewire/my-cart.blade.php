@@ -48,7 +48,7 @@
                                                 <tr class="cart_item">
                                                     <td class="product-remove">
                                                         @if(($item['kode_barang'] == "CATALO" && isset($user->status) && $user->status == 2424))
-                                                        @elseif(($cartItem['flag_new_reseller'] == 1 && isset($user->status) && $user->status == 2525))
+                                                        @elseif(($item['flag_new_reseller'] == 1 && isset($user->status) && $user->status == 2525))
                                                         @else
                                                             <a class="remove" wire:click="removeFromCart('{{ $item['kode_barang'] }}')"></a>
                                                         @endif
@@ -70,7 +70,7 @@
                                                         <div class="quantity">
                                                             <div class="control">
                                                                 @if(($item['kode_barang'] == "CATALO" && isset($user->status) && $user->status == 2424))
-                                                                @elseif(($cartItem['flag_new_reseller'] == 1 && isset($user->status) && $user->status == 2525))
+                                                                @elseif(($item['flag_new_reseller'] == 1 && isset($user->status) && $user->status == 2525))
                                                                 @else
                                                                     @if($item['qty'] > 1)
                                                                         <a class="btn-number qtyminus quantity-minus" 
@@ -91,7 +91,7 @@
                                                                         id="qty-box-{{ $item['kode_barang'] }}"
                                                                         size="4" readonly>
                                                                 @if(($item['kode_barang'] == "CATALO" && isset($user->status) && $user->status == 2424))
-                                                                @elseif(($cartItem['flag_new_reseller'] == 1 && isset($user->status) && $user->status == 2525))
+                                                                @elseif(($item['flag_new_reseller'] == 1 && isset($user->status) && $user->status == 2525))
                                                                 @else
                                                                     <a href="#" 
                                                                         wire:click="updateQty('{{ $item['kode_barang'] }}', 'increment')"
