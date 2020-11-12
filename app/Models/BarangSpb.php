@@ -13,22 +13,8 @@ class BarangSpb extends Model
         'no_member',
         'kode_barang', 
         'nama', 
-        'jenis', 
-        'stok', 
-        'poin', 
-        'h_nomem', 
-        'h_member', 
-        'berat',
-        'satuan',
-        'bpom',
-        'tgl_eks',
-        'stats',
-        'pic', // blm
-        'cat', // blm
-        'diskon',
-        'unit',
-        'deskripsi',
-        'cara_pakai',
+        'jenis',
+        'stok',
     ];
 
     public function getAll() {
@@ -80,4 +66,9 @@ class BarangSpb extends Model
     public function series() {
         return $this->hasMany('App\Models\TbDetSeries', 'tb_series_id');
     }
+    public function barang()
+    {
+    	return $this->belongsToMany('App\Models\Barang');
+    }
+
 }

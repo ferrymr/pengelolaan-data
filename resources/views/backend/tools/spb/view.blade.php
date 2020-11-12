@@ -97,25 +97,25 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            {{-- <th style="width: 200px;">Kode Barang</th> --}}
+                            <th style="width: 200px;">Kode Barang</th>
                             <th>Nama Barang</th>
                             <th style="width: 100px;">Qty</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach($detail as $item) --}}
-                            <tr class="detailItem">
-                                {{-- <td>
-                                    <input type="text" maxlength="5" name="kode_barang[]" id="kode_barang" value="" class="form-control" readonly>
-                                </td> --}}
+                        @foreach($komposisi as $item)
+                            <tr>
                                 <td>
-                                    <input type="text" name="nama[]" id="nama" class="form-control" value="" readonly>
+                                    <input type="text" maxlength="5" name="kode_barang[]" id="kode_barang" value="{{ $item->barang->kode_barang }}" class="form-control" readonly>
                                 </td>
                                 <td>
-                                    <input type="number" name="jumlah[]" id="jumlah" min="1" class="form-control" value="" readonly>
+                                    <input type="text" name="nama[]" id="nama" class="form-control" value="{{ $item->barang->nama }}" readonly>
+                                </td>
+                                <td>
+                                    <input type="number" name="jumlah[]" id="jumlah" min="1" class="form-control" value="{{ $item->qty }}" readonly>
                                 </td>
                             </tr>
-                        {{-- @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>

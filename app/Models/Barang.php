@@ -221,4 +221,10 @@ class Barang extends Model
         return $this->hasMany('App\Models\TbDetSeries', 'tb_series_id');
     }
 
+    public function barangspb()
+    {
+    	return $this->belongsToMany('App\Models\BarangSpb');
+    }
+
+
 }

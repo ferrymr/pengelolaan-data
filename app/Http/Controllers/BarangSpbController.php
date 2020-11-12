@@ -10,6 +10,7 @@ use Yajra\DataTables\DataTables;
 use App\Models\User;
 use App\Models\BarangSpb;
 use App\Models\TbDetSeries;
+use App\Models\Series;
 
 class BarangSpbController extends Controller
 {
@@ -25,12 +26,10 @@ class BarangSpbController extends Controller
     {
         $user = Auth::user();
         $barangspb = $this->barangspbRepo->getAll();
-        // $detail = TbDetSeries::with('barangspb')->get();
 
         return view('backend.tools.spb.index')->with([
             'user' => $user,
-            'barang' => $barangspb,
-            // 'detail' => $detail,
+            'barangspb' => $barangspb,
         ]);
         
     }
@@ -65,34 +64,19 @@ class BarangSpbController extends Controller
             ->escapeColumns([])
             ->make(true);
     }
- 
-    // public function edit($id)
-    // {        
-    //     $user = Auth::user();
-    //     $barangspb = $this->barangspbRepo->findId($id);
-    //     // return $barangspb;
-    //     // $detail = SeriesDetail::where('kode_pack', $id)->get();
-
-    //     return view('backend.tools.spb.edit')->with([
-    //         'user' => $user,
-    //         'barangspb' => $barangspb,
-    //         // 'detail' => $detail,
-    //     ]);
-    // }
 
     public function view($id)
     {        
         $user = Auth::user();
         $barangspb = $this->barangspbRepo->findId($id);
-        // $detail = $this->detailRepo->findId('tb_series_id', $id);
-        $barang = $this->barangRepo->getAll();
+        $komposisi = TbDetSeries::where('tb_series_id', $id)->get();
 
         return view('backend.tools.spb.view')->with([
             'user' => $user,
             'barangspb' => $barangspb,
-            // 'detail' => $detail,
-            'barang' => $barang,
+            'komposisi' =>$komposisi,
         ]);
+        
         
     }
 

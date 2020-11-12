@@ -305,4 +305,13 @@ class User extends Authenticatable
             return false;
         }
     }
+
+    public function roleuser() {
+        return $this->hasMany('App\Models\RoleUser', 'user_id');
+    }
+
+    public function role()
+    {
+    	return $this->belongsToMany('App\Models\Role');
+    }
 }
