@@ -117,7 +117,6 @@ class BarangController extends Controller
             'barangImages' => $barangImages,
             'barangRelated' => $barangRelated,
             'products' => $products,
-            // 'barangs' => $barangs,
         ]);
     }
     
