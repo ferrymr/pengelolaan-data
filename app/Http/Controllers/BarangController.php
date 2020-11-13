@@ -9,8 +9,9 @@ use Yajra\DataTables\DataTables;
 use App\Models\Barang;
 use App\Models\BarangImages;
 use App\Models\BarangRelated;
+use App\Models\BarangSpb;
+use App\Models\RoleUser;
 use App\Models\User;
-use App\Models\Gallery;
 use App\Models\Series;
 use App\Models\TbDetSeries;
 use Illuminate\Http\Response;
@@ -34,6 +35,7 @@ class BarangController extends Controller
             'user' => $user,
             'barang' => $barang
         ]);
+        
     }
 
     public function datatable() 
@@ -61,15 +63,18 @@ class BarangController extends Controller
     public function create()
     {
         $user = Auth::user();
+        $users = User::all();
         $barangs = Barang::where('unit', '!=', 'SERIES')->get();
         return view('backend.master.barang.create')->with([
             'user' => $user,
             'barangs' => $barangs,
+            'users' => $users,
         ]);
     }
 
     public function store(Request $request)
     {
+        $data = $request->all();
         $input = $request->except(['_token']);
         $input['created_at'] = date("Y-m-d H:i:s");
         $input['update_at'] = date("Y-m-d H:i:s");
@@ -78,6 +83,15 @@ class BarangController extends Controller
         
         $jumlah = Barang::where('kode_barang', $input['kode_barang'])->count();
 
+        foreach ($data['no_member'] as $key => $value) {
+        $barangspb = new BarangSpb;
+        $barangspb->no_member = $data['no_member'][$key];
+        $barangspb->kode_barang = $data['kode_barang'];
+        $barangspb->nama = $data['nama'];
+        $barangspb->jenis = $data['jenis'];
+        $barangspb->save();
+        }
+            
         if ($jumlah>0){
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Kode barang sudah ada</strong>')->error()->important();
             return redirect()->route('admin.barang.add');
@@ -127,7 +141,9 @@ class BarangController extends Controller
             "flag_bestseller" => $request->input('flag_bestseller'),
             "stats" => $request->input('stats'),
             "flag_promo" => $request->input('flag_promo'),
-            "flag_sell_to_reseller" => $request->input('flag_sell_to_reseller')
+            "flag_sell_to_reseller" => $request->input('flag_sell_to_reseller'),
+            "meta_title" => $request->input('meta_title'),
+            "meta_description" => $request->input('meta_description')
         );
     
         $barang = $this->barangRepo->editBarang($param, $id);
@@ -290,5 +306,29 @@ class BarangController extends Controller
     
     }
 
+    public function editBarangImage($barangId, $id) {
+        $image = BarangImages::find($id);
+
+        return view('backend.master.barang.edit-barang-image')->with([
+            'image' => $image,
+            'barangId' => $barangId,
+            'id' => $id
+        ]);
+    }
+
+    public function updateBarangImage(Request $request, $barangId, $id) {
+        $array = $request->all();
+        $param["alt"] = $array['alt'];
+
+        $image = BarangImages::where('id', $id)->update($param);
+
+        if($image) {
+            flash('<strong>Foto barang berhasil diedit</strong>')->success();
+            return redirect()->route('admin.barang.edit', $barangId);            
+        } else {
+            flash('<strong>Foto barang gagal diedit</strong>')->error()->important();
+            return redirect()->route('admin.barang.edit', $barangId)->withInput()->withError();
+        }
+    }
     
 }

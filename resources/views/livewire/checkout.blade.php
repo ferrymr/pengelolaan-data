@@ -40,6 +40,19 @@
 
                             @include('flash::message')
 
+                            @if($flagFreeOngkir == 1)
+                                <div class="row">
+                                    <div class="main-content col-md-12">
+                                        <div class="alert alert-info alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                            <ul>
+                                               <li>Gratis ongkos kirim untuk reseller baru</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+
                             {{-- print error --}}
                             @if ($errors->any())
                                 <x-alert type="danger" :message="$errors"/>

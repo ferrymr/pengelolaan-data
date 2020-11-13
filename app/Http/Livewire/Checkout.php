@@ -7,11 +7,13 @@ use App\Models\ShippingAddress;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
 use Livewire\Component;
 use DB;
+use Auth;
 use App\Models\Provinsi;
 use App\Models\Kota;
 use App\Models\Kecamatan;
 use App\Models\Barang;
 use App\Models\User;
+use App\Models\Setting;
 use App\Http\Resources\CityResource;
 use App\Http\Resources\SubdistrictResource;
 
@@ -59,9 +61,17 @@ class Checkout extends Component
     public $profile;
 
     public $coupon;
+    public $flagSettingFreeOngkir;
+
+    public $flagFreeOngkir;
 
     public function mount()
     {
+        $this->user = Auth::user();
+        $this->flagSettingFreeOngkir = Setting::where('slug', 'flag_free_ongkir_reseller')
+                                        ->where('soft_delete', 0)
+                                        ->count();
+        $this->flagFreeOngkir = (($this->user->status == 2525) && $this->flagSettingFreeOngkir > 0) ? 1 : 0;
         $this->cartItems = Cart::get();
         $this->hitungTotalItems();
         $this->hitungTotalBerat();
@@ -143,26 +153,46 @@ class Checkout extends Component
         $this->getSubdistrictsCheckout();
     }
 
+    public function checkShipping() {
+        $spbIndex = 'SPB' . $this->selectedSpb;
+
+        $totalBerat = $this->totalBerat + ($this->totalBerat) * 0.1;
+
+        $rajaOngkir = RajaOngkir::ongkosKirim([
+            'origin' => $this->spbList[$spbIndex]['subdistrict_id'],
+            'destination' => $this->defaultShippingAddress->kecamatan_id,
+            'weight' => $totalBerat,
+            'courier' => strtolower($this->courier),
+            'originType' => 'subdistrict',
+            'destinationType' => 'subdistrict'
+        ])->get()[0];
+        
+        if ($rajaOngkir['code'] == 'jne') {
+            $this->ongkosKirim = $rajaOngkir['costs'][1]['cost'][0]['value'];
+        } elseif ($rajaOngkir['code'] == 'J&T') {
+            $this->ongkosKirim = $rajaOngkir['costs'][0]['cost'][0]['value'];
+        }
+    }
+
     public function checkRajaOngkir() {
         if ($this->courier && $this->defaultShippingAddress && $this->selectedSpb) {
 
-            $spbIndex = 'SPB' . $this->selectedSpb;
+            $user = Auth::user();
 
-            $totalBerat = $this->totalBerat + ($this->totalBerat) * 0.1;
+            // get setting free ongkir for new reseller
+            // if user status 2525 == new reseller
+            // if in setting table is enabled
+            if($user->status == 2525) {
+                
+                if($this->flagSettingFreeOngkir > 0) {
+                    // free ongkir
+                    $this->ongkosKirim == 0;
+                } else {
+                    $this->checkShipping();
+                }
 
-            $rajaOngkir = RajaOngkir::ongkosKirim([
-                'origin' => $this->defaultShippingAddress->kecamatan_id,
-                'destination' => $this->spbList[$spbIndex]['subdistrict_id'],
-                'weight' => $totalBerat,
-                'courier' => strtolower($this->courier),
-                'originType' => 'subdistrict',
-                'destinationType' => 'subdistrict'
-            ])->get()[0];
-            
-            if ($rajaOngkir['code'] == 'jne') {
-                $this->ongkosKirim = $rajaOngkir['costs'][1]['cost'][0]['value'];
-            } elseif ($rajaOngkir['code'] == 'J&T') {
-                $this->ongkosKirim = $rajaOngkir['costs'][0]['cost'][0]['value'];
+            } else {
+                $this->checkShipping();
             }
         }
     }

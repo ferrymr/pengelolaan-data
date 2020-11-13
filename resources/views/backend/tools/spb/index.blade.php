@@ -49,7 +49,7 @@
                             <th>Nama Barang</th>
                             <th>Jenis</th>
                             <th>Stok</th>
-                            <th>Poin</th>
+                            {{-- <th>Poin</th> --}}
                             <th>Action</th>
                             <th>&nbsp;</th>
                         </tr>
@@ -58,10 +58,10 @@
                 <div id="action-template"  style="display:none">
                     <div class="action-content">
                         <a class              = "btn btn-warning btn-sm btn-info btn-detail"
-                            title             = "detail"
-                            style             = "display: none; color: white">
-                            <i class          = "fa fa-eye"></i>
-                        </a>
+                        title             = "detail"
+                        style             = "display: none; color: white">
+                        <i class          = "fa fa-eye"></i>
+                        </a> 
                         <a class              = "btn btn-danger btn-sm btn-hapus actDelete"
                             data-placement    = "left"
                             data-toggle       = "confirmation"
@@ -146,10 +146,10 @@
                         data:'stok',
                         name:'stok'
                     },
-                    {
-                        data:'poin',
-                        name:'poin'
-                    },
+                    // {
+                    //     data:'poin',
+                    //     name:'poin'
+                    // },
                     {
                         // Define the action column
                         data: null,
@@ -204,10 +204,10 @@
                         data:'stok',
                         name:'stok'
                     },
-                    {
-                        data:'poin',
-                        name:'poin'
-                    },
+                    // {
+                    //     data:'poin',
+                    //     name:'poin'
+                    // },
                     {
                         // Define the action column
                         data: null,

@@ -78,8 +78,15 @@ class KonfirmasiPenjualanController extends Controller
             if(isset($data->user->email)) {
                 Mail::to($data->user->email)->send(new OrderConfirmed($data));
 
+                if(!empty($data->address->telepon_pengirim)) {
+                    $phone = $data->address->telepon_pengirim;
+                } else if (!empty($data->user->phone)) {
+                    $phone = $data->user->phone;
+                } else {
+                    $phone = 0;
+                }
                 // notify to whatsapp
-                $to = $data->user->email;
+                $to = $phone;
                 $message = "Terimakasih telah melakukan pembayaran di Toko Kami, pembayaran kakak telah terkonfirmasi. 
                 Kami akan segera memproses pesanannya, ditunggu ya kak.";
 

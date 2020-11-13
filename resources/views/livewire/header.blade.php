@@ -41,7 +41,7 @@
                                                     <img src="{{ route('admin.barang.barang-image', $cartItem['barang_image_id']) }}" alt="{{ $cartItem['nama'] }}">
                                                 </a>
                                                 <div class="product-details">
-                                                    <h5 class="product-name"><a href="{{ route('products.show', $cartItem['kode_barang']) }}">{{ $cartItem['nama'] }}</a></h5>
+                                                    <h5 class="product-name"><a href="{{ route('products.show', [$cartItem['kode_barang'], Illuminate\Support\Str::slug($cartItem['nama'], '-')]) }}">{{ $cartItem['nama'] }}</a></h5>
                                                     <div class="variations">
                                                         <span class="attribute_color"><a href="#">{{ $cartItem['jenis'] }}</a></span>
                                                     </div>
@@ -91,11 +91,11 @@
                                     
                                 </span>
                             </a>
-                            <form class="form-search turan-submenu">
-                                <h4 class="title-search">Store Search</h4>
+                            <form class="form-search turan-submenu" action="{{ route('products.category', 'ALL') }}" method="GET">
+                                <h4 class="title-search">Product Search</h4>
                                 <div class="form-content">
                                     <div class="inner">
-                                        <input type="text" class="input" placeholder="Your search here">
+                                        <input type="text" name="search" class="input" placeholder="Your search here">
                                         <button class="btn-search" type="submit">Search</button>
                                     </div>
                                 </div>

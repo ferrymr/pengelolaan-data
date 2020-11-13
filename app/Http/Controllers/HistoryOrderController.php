@@ -20,6 +20,8 @@ class HistoryOrderController extends Controller
      */
     public function index($status = '')
     {
+        $startDate = isset($_GET['start_date']) ? $_GET['start_date'] : '';
+        $finishDate = isset($_GET['finish_date']) ? $_GET['finish_date'] : '';
 
         $userId = auth()->user()->id;
         $user = User::with('transactions.items','transactions.address')
@@ -28,6 +30,10 @@ class HistoryOrderController extends Controller
         $transactions = $user->transactions;
 
         $transaksi = TbHeadJual::where('user_id', $userId);
+
+        if(!empty($startDate) && !empty($finishDate)) {
+            $transaksi = $transaksi->whereBetween('tanggal', [$startDate, $finishDate]);
+        }
         
         if($status == 'waiting') {
             $transaksi = $transaksi

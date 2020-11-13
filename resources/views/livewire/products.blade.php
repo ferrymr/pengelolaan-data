@@ -12,7 +12,7 @@
             <ul class="row list-products auto-clear equal-container product-grid">
 
                 @forelse ($products as $product)
-                    <a href="{{ route('products.show', $product->kode_barang) }}">
+                    <a href="{{ route('products.show', [$product->kode_barang, Illuminate\Support\Str::slug($product->nama, '-')]) }}">
                     <li class="product-item  col-lg-3 col-md-4 col-sm-6 col-xs-6 style-1">
                         <div class="product-inner equal-element">
                             <div class="product-top">
@@ -28,8 +28,8 @@
                             <div class="product-thumb">
                                 <div class="thumb-inner">
                                     @if(!empty($product->barangImages()->first()))
-                                        <a href="{{ route('products.show', $product->kode_barang) }}">                                        
-                                            <img src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" alt="{{ $product->nama }}">
+                                        <a href="{{ route('products.show', [$product->kode_barang, Illuminate\Support\Str::slug($product->nama, '-')]) }}">                                        
+                                            <img src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" alt="{{ $product->barangImages()->first()->alt }}">
                                         </a>
                                     @else
                                         <img id="img_zoom" 
@@ -43,7 +43,7 @@
                             </div>
                             <div class="product-info">
                                 <h5 class="product-name product_title">
-                                    <a href="{{ route('products.show', $product->kode_barang) }}">
+                                    <a href="{{ route('products.show', [$product->kode_barang, Illuminate\Support\Str::slug($product->nama, '-')]) }}">
                                         {{ $product->nama }}
                                     </a>
                                 </h5>

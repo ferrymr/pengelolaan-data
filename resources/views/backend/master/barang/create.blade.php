@@ -97,10 +97,10 @@
                 <div class="input-group col-sm-6">
                     <select name="jenis" class="custom-select select2" required>
                     <option value="" selected>Pilih jenis barang</option>
-                    <option value="WHITENING">Whitening</option>
-                    <option value="PURIFYING">Purifying</option>                  
-                    <option value="DECORATIVE">Decorative</option>
-                    <option value="BODYCARE">Body Care</option>
+                    <option value="WHITENING">WHITENING</option>
+                    <option value="PURIFYING">PURIFYING</option>                  
+                    <option value="DECORATIVE">DECORATIVE</option>
+                    <option value="BODYCARE">BODYCARE</option>
                     </select>
                 </div>
                 @if($errors->has('jenis'))
@@ -128,7 +128,30 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
+            <div id="series" class="form-group row col-sm-12" style="display:none;">
+                <div class="col-md-12 mb-3">                    
+                    <h5><b>Tambahkan produk ke dalam series</b></h5>
+                </div>
+                <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                    <div class="input-group">
+                        <select name="produk[]" class="custom-select select2">
+                            <option value="" selected>Pilih produk</option>
+                            @foreach($barangs as $barang)
+                                <option value="{{ $barang->id }}">{{ $barang->nama }}</option>
+                            @endforeach
+                        </select> 
+                        <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
+                        <button type="button" class="btn btn-success ml-3" id="add-product">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <table id="append-product" class="col-md-8"></table>
+            </div>
+=======
             
+>>>>>>> dev
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('poin')) has-error @endif">
                     <label for="poin" class="col-sm-12 control-label">Poin</label>    
@@ -139,15 +162,6 @@
                         @endif
                     </div>
                 </div>            
-                <div class="form-group @if($errors->has('stok')) has-error @endif">
-                    <label for="stok" class="col-sm-12 control-label">Stock</label>    
-                    <div class="col-sm-12">
-                        <input value="{{ old('stok') }}" type="number" name="stok" class="form-control" id="stok" placeholder="Stock" min="0">
-                        @if($errors->has('stok'))
-                            <span class="text-danger">{{ $errors->first('stok') }}</span>
-                        @endif
-                    </div>
-                </div>
                 <div class="form-group @if($errors->has('diskon')) has-error @endif">
                     <label for="diskon" class="col-sm-12 control-label">Diskon</label>    
                     <div class="col-sm-12">
@@ -178,7 +192,17 @@
                         @endif
                     </div>
                 </div>
+                <div class="form-group @if($errors->has('hpp')) has-error @endif">
+                    <label for="hpp" class="col-sm-12 control-label">Harga Hpp</label>    
+                    <div class="col-sm-12">
+                        <input value="{{ old('hpp') }}" type="number" name="hpp" class="form-control" id="hpp" placeholder="Harga Hpp" min="0">
+                        @if($errors->has('hpp'))
+                            <span class="text-danger">{{ $errors->first('hpp') }}</span>
+                        @endif
+                    </div>
+                </div>
             </div>
+        </div>
             <div class="form-grup @if($errors->has('bpom')) has-error @endif">
                 <div class="col-sm-6">
                     <div class="custom-control custom-checkbox">
@@ -188,15 +212,6 @@
                 </div>
             </div>
             <br>
-            <div class="form-group @if($errors->has('tgl_eks')) has-error @endif">
-                <label for="tgl_eks" class="col-sm-12 control-label">Tanggal expired</label>    
-                <div class="col-sm-6">
-                    <input value="{{ old('tgl_eks') }}" type="text" name="tgl_eks" class="form-control datepicker" id="tgl_exp" placeholder="Tanggal expired" required>
-                    @if($errors->has('tgl_eks'))
-                        <span class="text-danger">{{ $errors->first('tgl_eks') }}</span>
-                    @endif
-                </div>
-            </div>
             <div class="form-group @if($errors->has('deskripsi')) has-error @endif">
                 <label for="deskripsi" class="col-sm-12 control-label">Deskripsi</label>    
                 <div class="col-sm-12">
@@ -238,7 +253,23 @@
                         <label class="custom-control-label" for="flag_promo">Termasuk promo produk ?</label>
                     </div>
                 </div>
+            </div>&nbsp;
+            <div class="col-md-12">                    
+                <h5><b>Tambahkan produk ke SPB</b></h5>
             </div>
+            <div class="col-md-8 @if($errors->has('no_member')) has-error @endif mb-2" id="product-series">
+                <div class="form-inline">
+                    <select name="no_member[]" class="custom-select select2">
+                        <option value="" selected>Pilih ID SPB</option>
+                            <option value="00005">00005</option>
+                            <option value="00042">00042</option>
+                    </select> 
+                    <button type="button" class="btn btn-success ml-3" id="add-productspb">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <table id="append-productspb" class="col-md-8"></table>
+            </div>    
             <div class="form-grup @if($errors->has('flag_sell_to_reseller')) has-error @endif">
                 <div class="col-sm-6">
                     <div class="custom-control custom-checkbox">
@@ -247,21 +278,39 @@
                     </div>
                 </div>
             </div>
+            <hr>
+            <h5 class="col-md-12">Search Engine Optimation (SEO)</h5>
+            <div class="form-group @if($errors->has('meta_title')) has-error @endif">
+                <label for="meta_title" class="col-sm-12 control-label">Meta Title</label>    
+                <div class="col-sm-8">
+                    <input value="{{ old('meta_title') }}" type="text" name="meta_title" class="form-control" id="meta_title" placeholder="Meta Title" required>
+                    @if($errors->has('meta_title'))
+                        <span class="text-danger">{{ $errors->first('meta_title') }}</span>
+                    @endif
+                </div>
+            </div>
+            <div class="form-group @if($errors->has('meta_description')) has-error @endif">
+                <label for="meta_description" class="col-sm-12 control-label">Meta Description</label>    
+                <div class="col-sm-8">
+                    <textarea name="meta_description" class="form-control" id="meta_description" placeholder="Meta Description">{{ old('meta_description') }}</textarea>
+                    @if($errors->has('meta_description'))
+                        <span class="text-danger">{{ $errors->first('meta_description') }}</span>
+                    @endif
+                </div>
+            </div>
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-info">Simpan</button>
             <a href="{{ route("admin.barang.index") }}" class="btn btn-default float-right">Cancel</a>
         </div>
-    </div>
 
     {!! Form::close() !!}
-
+    
+    
 @stop
 
-
-
 @section('js')
-    <script>
+    <script type="text/javascript">
        
         // select2
         $('.select2').select2();
@@ -270,6 +319,10 @@
         $('.datepicker').datepicker({
             format: 'yyyy-mm-dd',
             autoclose: true
+        });
+
+        $(document).ready(function () {
+            $('.ckeditor').ckeditor();
         });
 
 
@@ -310,8 +363,32 @@
                     $('#series').hide();
                 }
             });
-        });
 
+
+            $('#add-productspb').click(function() {
+                $('.select2').select2();
+                $('#append-productspb').append(`
+                    <tr>
+                        <td>
+                            <div class="form-inline">
+                                <select name="no_member[]" class="custom-select select2">
+                                    <option value="" selected>Pilih ID SPB</option>
+                                    <option value="00005">00005</option>
+                                    <option value="00042">00042</option>
+                                </select>                             
+                                <button type="button" class="btn btn-danger ml-3 remove-product">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    `);
+            });
+
+            $('#append-productspb').on('click', '.remove-product', function(){
+                $(this).parent().parent().remove();
+            });
+        });
 
         var delay = (function () {
             var timer = 0;

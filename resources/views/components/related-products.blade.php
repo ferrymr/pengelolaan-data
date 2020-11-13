@@ -24,7 +24,7 @@
                         </div> --}}
                         <div class="product-thumb">
                             <div class="thumb-inner">
-                                <a href="{{ route('products.show', $product->kode) }}">
+                                <a href="{{ route('products.show', [$product->kode, Illuminate\Support\Str::slug($product->nama, '-')]) }}">
                                     <img src="{{ asset('assets/images/thumbnails/' . $product->kode . '.jpg') }}" alt="">
                                 </a>
                             </div>
@@ -32,7 +32,9 @@
                         </div>
                         <div class="product-info">
                             <h5 class="product-name product_title">
-                                <a href="{{ route('products.show', $product->kode) }}">{{ $product->nama }}</a>
+                                <a href="{{ route('products.show', [$product->kode, Illuminate\Support\Str::slug($product->nama, '-')]) }}">
+                                    {{ $product->nama }}
+                                </a>
                             </h5>
                             <div class="group-info">
                                 {{-- <div class="stars-rating">

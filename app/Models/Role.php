@@ -11,4 +11,8 @@ class Role extends LaratrustRole
     public function getAll() {
         return Role::all();
     }
+    public function user()
+    {
+    	return $this->belongsToMany('App\Models\User');
+    }
 }

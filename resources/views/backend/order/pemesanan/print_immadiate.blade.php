@@ -10,13 +10,13 @@
         @media print {
             @page {
                 width: 8.27in;
-                height: 11.69in;
+                height: 11.01in;
             }
         }
 
         html,
         body {
-            width: 8.27in;
+            width: 7.3in;
             height: 11.69in;
             margin: 0;
         }
@@ -79,7 +79,7 @@
     </style>
 </head>
 <body style="padding-left: 10px;">
-    <table style="width=80%">
+    <table style="width=80%">        
         <thead>
             <tr>
                 <th>
@@ -153,7 +153,7 @@
                             </th>
                             <th class="text-right">
                                 <span class="times-new-roman s15">
-                                    {{ $data->address->nama }}<br>
+                                    {{ $data->user->name }}<br>
                                 </span>
                             </th>
                         </tr>
@@ -208,26 +208,12 @@
                             </th>
                             <th class="text-right">
                                 <span class="times-new-roman s15">
-                                    {{ $data->promo }}%<br>
+                                    {{ $data->detjual->promo }}%<br>
                                 </span>
                             </th>
                         </tr>
                     </table>
                     @endforeach
-                    <table width="100%">
-                        <tr>
-                            <th class="text-left">
-                                <span class="times-new-roman s15">
-                                    <br>
-                                </span>
-                            </th>
-                            <th class="text-right">
-                                <span class="times-new-roman s15">
-                                    @currency($data->shipping_fee) / {{ $data->kurir }}<br>
-                                </span>
-                            </th>
-                        </tr>
-                    </table>
                     <br>
                     <hr>
                     <hr>
@@ -258,7 +244,7 @@
                         <th>
                             <th class="text-left">
                                 <span class="times-new-roman s15">
-                                    Lorm ip Sum<br>
+                                    {{ $data->note }}<br>
                                 </span>
                             </th>
                         </th>
@@ -273,6 +259,9 @@
                         </tr>
                     </table>
                     <hr>
+                    <br>
+                    <br>
+                    <br>
                 </th>
             </tr>
         </thead>
