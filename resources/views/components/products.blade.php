@@ -65,7 +65,7 @@
             </form>
 
             <!--page title-->
-            <h4>Menampilkan semua produk <b>{{ $categoryName }}</b></h4><br/>
+            <h4>Menampilkan semua produk <b>{{ isset($_GET['search']) ? 'dengan keyword "' . $_GET['search'] . '"': $categoryName }}</b></h4><br/>
 
             <!-- wrap products-->
             <ul class="row list-products auto-clear equal-container product-grid">
@@ -86,22 +86,22 @@
                             <div class="product-thumb">
                                 <div class="thumb-inner">
                                     @if(!empty($product->barangImages()->first()))
-                                        <a href="{{ route('products.show', $product->kode_barang) }}">
+                                        <a href="{{ route('products.show', [$product->kode_barang, Illuminate\Support\Str::slug($product->nama, '-')]) }}">
                                             <img src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" 
-                                                    alt="{{ $product->nama }}">
+                                                    alt="{{ $product->barangImages()->first()->alt }}">
                                         </a>
                                     @else
                                         <img id="img_zoom" 
                                                 data-zoom-image="{{ asset('assets/images/product-1.jpg') }}" 
                                                 src="{{ asset('assets/images/product-1.jpg') }}" 
-                                                alt="">
+                                                alt="image-broken">
                                     @endif
                                 </div>
                                 {{-- <a href="#" class="button quick-wiew-button">Quick View</a> --}}
                             </div>
                             <div class="product-info">
                                 <h5 class="product-name product_title">
-                                    <a href="{{ route('products.show', $product->kode_barang) }}">
+                                    <a href="{{ route('products.show', [$product->kode_barang, Illuminate\Support\Str::slug($product->nama, '-')]) }}">
                                         {{ $product->nama }}
                                     </a>
                                 </h5>

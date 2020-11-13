@@ -13,10 +13,11 @@ class ProductController extends Controller
     }
 
     // sorted by category
-    public function category($category_name)
+    public function category($category_name, $slug = '')
     {
         $sorting = isset($_GET['sorting']) ? $_GET['sorting'] : '';
-        
+        $search = isset($_GET['search']) ? $_GET['search'] : '';
+                
         $byCategory = [];
         $whitening = isset($_GET['whitening']) ? $byCategory[] = $_GET['whitening'] : '';
         $purifiying = isset($_GET['purifiying']) ? $byCategory[] = $_GET['purifiying'] : '';
@@ -29,7 +30,7 @@ class ProductController extends Controller
         if($category_name == "SERIES") {
             $products = $this->barangRepo->getBarangSeries($user, $sorting, $byCategory);
         } else if($category_name == "ALL") {
-            $products = $this->barangRepo->getBarangAll($user, $sorting, $byCategory);
+            $products = $this->barangRepo->getBarangAll($user, $sorting, $byCategory, $search);
         } else if($category_name == "PROMO") {
             $products = $this->barangRepo->getBarangPromo($user, $sorting, $byCategory);
         } else {

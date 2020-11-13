@@ -26,10 +26,10 @@ Route::get('/return-policy', function () {
 
 // Detail product
 Route::resource('products', 'ProductController')->except(['show']);
-Route::livewire('/products/{productCode}', 'product-detail')->name('products.show');
+Route::livewire('/products/detail/{productCode?}/{slug?}', 'product-detail')->name('products.show');
 
 // List product by category
-Route::get('/products/category/{category}', 'ProductController@category')->name('products.category');
+Route::get('/products/category/{category?}/{slug?}', 'ProductController@category')->name('products.category');
 
 // Cart
 Route::livewire('/mycart', 'my-cart')->name('mycart');
@@ -92,10 +92,19 @@ Route::get('/login-administrator', function () {
     }
 });
 
-// Register direct to member
-Route::get('/register-member', function () {
-    return view('auth.register-member');   
+// Register direct to user
+Route::get('/register-user/{ref_code?}', function ($ref_code = '') {
+    return view('auth.register-user', compact('ref_code'));
 });
+
+// Register direct to member
+Route::get('/register-member/{ref_code?}', function ($ref_code = '') {
+    return view('auth.register-member', compact('ref_code'));
+});
+
+// Register direct to reseller
+Route::get('/register-reseller/{ref_code?}', 'AddressController@registerReseller')
+    ->name('register-reseller');
 
 // Dashboard
 Route::group([
@@ -120,13 +129,17 @@ Route::group([
     Route::post('store', 'BarangController@store')->name('store');
     Route::post('update/{kode_barang}', 'BarangController@update')->name('update');
     Route::post('create_kode', 'BarangController@create_kode')->name('create_kode');
-    
+
 
     // barang related
     Route::post('barang-related', 'BarangController@barangRelated')->name('barang-related');
 
     Route::post('store-image', 'BarangController@storeBarangImage')->name('store-image');
     Route::get('delete-barang-image/{barangId?}/{id?}', 'BarangController@deleteBarangImage')->name('detele-barang-image');
+    
+    // edit barang image
+    Route::get('edit-barang-image/{barangId?}/{id?}', 'BarangController@editBarangImage')->name('edit-barang-image');
+    Route::post('update-barang-image/{barangId?}/{id?}', 'BarangController@updateBarangImage')->name('update-barang-image');
 });
 
 // Master Barang Image
@@ -253,6 +266,9 @@ Route::group([
     Route::get('', 'PemesananController@index')->name('index');
     Route::get('datatable', 'PemesananController@datatable')->name('datatable');
     Route::get('show/{id}', 'PemesananController@show')->name('show');
+    Route::get('show_immediate/{id}', 'PemesananController@showImmediate')->name('show_immediate');
+    Route::get('add', 'PemesananController@add')->name('add');
+    Route::post('store', 'PemesananController@store')->name('store');
     Route::get('cronCancelProduct/{id}', 'PemesananController@cronCancelProduct')->name('cronCancelProduct');
     Route::post('update-status/{id?}', 'PemesananController@setStatus')->name('update-status');
     Route::get('print_trf/{id?}', 'PemesananController@printTrf')->name('print_trf');
@@ -355,6 +371,7 @@ Route::group([
     Route::post('store', 'SettingController@store')->name('store');
     Route::post('update/{id}', 'SettingController@update')->name('update');
 });
+<<<<<<< HEAD
 
 // Barang SPB
 Route::group([
@@ -369,3 +386,5 @@ Route::group([
     Route::post('update/{id}', 'BarangSpbController@update')->name('update');
     
 });
+=======
+>>>>>>> dev

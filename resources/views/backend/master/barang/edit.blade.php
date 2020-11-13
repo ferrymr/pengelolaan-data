@@ -10,7 +10,7 @@
     @include('flash::message')
 
     {!! Form::open([
-        'url' => route('admin.barang.update', $barang->kode_barang),
+        'url' => route('admin.barang.update', $barang->id),
         'method'=>'POST',
         'class'=>'form-horizontal',
         'id'=>'form-user'
@@ -43,6 +43,79 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group @if($errors->has('unit')) has-error @endif">
+                <label for="unit" class="col-sm-12 control-label">Unit</label>    
+                <div class="col-sm-4">
+                    <select name="unit" class="form-control select2" id="unit" disabled>
+                        <option value="" selected>Pilih unit</option>
+                        <option value="PIECES" @if($barang->unit == 'PIECES') selected @endif>PIECES</option>
+                        <option value="SERIES" @if($barang->unit == 'SERIES') selected @endif>SERIES</option>
+                    </select>
+                </div>
+            </div>
+
+            @if($barang->unit == 'SERIES')
+                <div id="series" class="form-group row col-sm-12">
+                    <div class="col-md-12 mb-3">                    
+                        <h5><b>Tambahkan produk ke dalam series</b></h5>
+                    </div>
+                    @if(count($barang->series) > 0)
+                        @foreach($barang->series as $series)
+                            <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                                <div class="input-group">
+                                    <select name="produk[]" class="custom-select select2">
+                                        <option value="">Pilih produk</option>
+                                        @foreach($products as $product)
+                                            <option value="{{ $product->id }}" @if($series->tb_barang_id == $product->id) selected @endif>
+                                                {{ $product->nama }}
+                                            </option>
+                                        @endforeach
+                                    </select> 
+                                    <input type="number" name="qty_product[]" class="form-control" placeholder="Qty" value="{{ $series->qty }}">
+                                    <button type="button" class="btn btn-danger ml-3 remove-product">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        @endforeach
+                        <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                            <div class="input-group">
+                                <select name="produk[]" class="custom-select select2">
+                                    <option value="">Pilih produk</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}">
+                                            {{ $product->nama }}
+                                        </option>
+                                    @endforeach
+                                </select> 
+                                <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
+                                <button type="button" class="btn btn-success ml-3" id="add-product">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    @else 
+                        <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                            <div class="input-group">
+                                <select name="produk[]" class="custom-select select2">
+                                    <option value="">Pilih produk</option>
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}">
+                                            {{ $product->nama }}
+                                        </option>
+                                    @endforeach
+                                </select> 
+                                <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
+                                <button type="button" class="btn btn-success ml-3" id="add-product">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    @endif
+                    <table id="append-product" class="col-md-8"></table>
+                </div>
+            @endif
+
             <div class="form-group @if($errors->has('nama')) has-error @endif">
                 <label for="nama" class="col-sm-12 control-label">Nama barang</label>    
                 <div class="col-sm-8">
@@ -98,6 +171,7 @@
                         </select>
                     </div>
                 </div>
+<<<<<<< HEAD
             </div>
 
             <div id="series" class="form-group row col-sm-12" style="display: none;">
@@ -140,6 +214,8 @@
                     </div>
                 @endforelse
                 <table id="append-product" class="col-md-8"></table>
+=======
+>>>>>>> dev
             </div>
 
             <div class="form-group row col-sm-12">
@@ -243,6 +319,34 @@
                     </div>
                 </div>
             </div>
+            <div class="form-grup @if($errors->has('flag_sell_to_reseller')) has-error @endif">
+                <div class="col-sm-6">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="flag_sell_to_reseller" value="1" id="flag_sell_to_reseller" @if($barang->flag_sell_to_reseller == 1) checked @endif>
+                        <label class="custom-control-label" for="flag_sell_to_reseller">Dijual ke reseller saat pertama kali daftar</label>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h5 class="col-md-12">Search Engine Optimation (SEO)</h5>
+            <div class="form-group @if($errors->has('meta_title')) has-error @endif">
+                <label for="meta_title" class="col-sm-12 control-label">Meta Title</label>    
+                <div class="col-sm-8">
+                    <input value="{{ $barang->meta_title }}" type="text" name="meta_title" class="form-control" id="meta_title" placeholder="Meta Title" required>
+                    @if($errors->has('meta_title'))
+                        <span class="text-danger">{{ $errors->first('meta_title') }}</span>
+                    @endif
+                </div>
+            </div>
+            <div class="form-group @if($errors->has('meta_description')) has-error @endif">
+                <label for="meta_description" class="col-sm-12 control-label">Meta Description</label>    
+                <div class="col-sm-8">
+                    <textarea name="meta_description" class="form-control" id="meta_description" placeholder="Meta Description">{{ $barang->meta_description }}</textarea>
+                    @if($errors->has('meta_description'))
+                        <span class="text-danger">{{ $errors->first('meta_description') }}</span>
+                    @endif
+                </div>
+            </div>
         </div>
 
         <div class="card-footer">
@@ -291,7 +395,7 @@
                                     <tr>
                                         <th style="width: 10px" class="text-center">No</th>
                                         <th class="text-center">Foto</th>
-                                        {{-- <th class="text-center">Thumbnail</th> --}}
+                                        <th class="text-center">Edit</th>
                                         <th class="text-center">Hapus</th>
                                     </tr>
                                     @php 
@@ -305,11 +409,11 @@
                                                     <img style="width:20%;margin:0 auto;" class="thumbnail" src="{{ route('admin.barang.barang-image', $barangImage->id) }}" alt="">
                                                 @endif
                                             </td>
-                                            {{-- <td class="text-center favourite">
-                                                <a href="#">
-                                                    <i class="fa fa-star"></i>
-                                                </a>                                                    
-                                            </td> --}}
+                                            <td class="text-center">
+                                                <a href="{{ route('admin.barang.edit-barang-image', [$barang->id, $barangImage->id]) }}" class="btn btn-info btn-xs btn-edit actDelete" data-placement="left" data-toggle="confirmation" data-title="Tambah Alt ?">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </td>
                                             <td class="text-center">
                                                 <a href="{{ route('admin.barang.detele-barang-image', [$barang->id, $barangImage->id]) }}" class="btn btn-danger btn-xs btn-delete actDelete" data-placement="left" data-toggle="confirmation" data-title="Hapus foto ?">
                                                     <i class="fa fa-trash"></i>
@@ -460,7 +564,7 @@
                 `);
             });
 
-            $('#append-product').on('click', '.remove-product', function(){
+            $('body').on('click', '.remove-product', function(){
                 $(this).parent().parent().remove();
             });
 
@@ -485,7 +589,7 @@
                 `);
             });
 
-            $('#append-product-related').on('click', '.remove-product-related', function(){
+            $('body').on('click', '.remove-product-related', function(){
                 $(this).parent().parent().remove();
             });
                         

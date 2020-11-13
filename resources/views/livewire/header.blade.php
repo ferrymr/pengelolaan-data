@@ -41,7 +41,7 @@
                                                     <img src="{{ route('admin.barang.barang-image', $cartItem['barang_image_id']) }}" alt="{{ $cartItem['nama'] }}">
                                                 </a>
                                                 <div class="product-details">
-                                                    <h5 class="product-name"><a href="{{ route('products.show', $cartItem['kode_barang']) }}">{{ $cartItem['nama'] }}</a></h5>
+                                                    <h5 class="product-name"><a href="{{ route('products.show', [$cartItem['kode_barang'], Illuminate\Support\Str::slug($cartItem['nama'], '-')]) }}">{{ $cartItem['nama'] }}</a></h5>
                                                     <div class="variations">
                                                         <span class="attribute_color"><a href="#">{{ $cartItem['jenis'] }}</a></span>
                                                     </div>
@@ -51,7 +51,10 @@
                                                         </span>
                                                     </span>
                                                     <span class="product-quantity"> x {{ $cartItem['qty'] }}</span>
-                                                    @if($cartItem['kode_barang'] != "CATALO")
+                                                    {{-- bukan termasuk user member yang baru daftar --}}
+                                                    @if(($cartItem['kode_barang'] == "CATALO" && isset($user->status) && $user->status == 2424))
+                                                    @elseif(($cartItem['flag_new_reseller'] == 1 && isset($user->status) && $user->status == 2525))
+                                                    @else    
                                                         <div class="product-remove">
                                                             <a href="#" wire:click="removeFromCart('{{ $cartItem['kode_barang'] }}')">
                                                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -88,11 +91,11 @@
                                     
                                 </span>
                             </a>
-                            <form class="form-search turan-submenu">
-                                <h4 class="title-search">Store Search</h4>
+                            <form class="form-search turan-submenu" action="{{ route('products.category', 'ALL') }}" method="GET">
+                                <h4 class="title-search">Product Search</h4>
                                 <div class="form-content">
                                     <div class="inner">
-                                        <input type="text" class="input" placeholder="Your search here">
+                                        <input type="text" name="search" class="input" placeholder="Your search here">
                                         <button class="btn-search" type="submit">Search</button>
                                     </div>
                                 </div>
@@ -158,6 +161,9 @@
                                                 @if(Auth::user()->hasRole('administrator'))
                                                     <a class="dropdown-item" href="{{ route('admin.dashboard.index') }}">Admin Panel</a>
                                                 @endif
+                                                @if(Auth::user()->hasRole('reseller'))
+                                                    <a class="dropdown-item" href="https://bedroom.bellezkin.com" rel="nofollow" target="_blank">Bedroom</a>
+                                                @endif
                                                 <a class="dropdown-item" href="{{ route('order-history-status') }}">History Transaksi</a>
                                                 <a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a>                                                
                                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -217,9 +223,6 @@
                         <a href="{{ route('home') }}" class="kt-item-title" title="Shop">Home</a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('products.category', 'PROMO') }}" class="kt-item-title" title="Promo">Promo</a>
-                    </li>
-                    <li class="menu-item">
                         <a href="{{ route('products.category', 'ALL') }}" class="kt-item-title" title="All Products">All Products</a>
                     </li>
                     <li class="menu-item">
@@ -236,6 +239,9 @@
                     </li>
                     <li class="menu-item">
                         <a href="{{ route('products.category', 'SERIES') }}" class="kt-item-title" title="Series">Series</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('products.category', 'PROMO') }}" class="kt-item-title" title="Promo" style="color: #ec268f">Promo</a>
                     </li>
                     <li class="menu-item mobile-only" style="margin-top: 16px">
                         <a href="{{ route('login') }}" class="kt-item-title" title="Login">Login Register</a>

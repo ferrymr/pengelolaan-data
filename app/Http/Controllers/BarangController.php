@@ -13,6 +13,7 @@ use App\Models\BarangSpb;
 use App\Models\RoleUser;
 use App\Models\User;
 use App\Models\Series;
+use App\Models\TbDetSeries;
 use Illuminate\Http\Response;
 use DB;
 use File;
@@ -110,7 +111,7 @@ class BarangController extends Controller
         $barangImages = BarangImages::where('tb_barang_id', $id)->get();
         $barangRelated = BarangRelated::where('tb_barang_id', $id)->get();
         $products = Barang::where('unit', '!=', 'SERIES')->get();
-
+        // dd($barang->series);
         return view('backend.master.barang.edit')->with([
             'user' => $user,
             'barang' => $barang,
@@ -120,7 +121,7 @@ class BarangController extends Controller
         ]);
     }
     
-    public function update(CreateBarangRequest $request, $kode_barang)
+    public function update(CreateBarangRequest $request, $id)
     {
         // password kosong
         $param = array(
@@ -139,17 +140,40 @@ class BarangController extends Controller
             "cara_pakai" => $request->input('cara_pakai'),
             "flag_bestseller" => $request->input('flag_bestseller'),
             "stats" => $request->input('stats'),
-            "flag_promo" => $request->input('flag_promo')
+            "flag_promo" => $request->input('flag_promo'),
+            "flag_sell_to_reseller" => $request->input('flag_sell_to_reseller'),
+            "meta_title" => $request->input('meta_title'),
+            "meta_description" => $request->input('meta_description')
         );
     
-        $barang = $this->barangRepo->editBarang($param, $kode_barang, $request->input('role_id'));
+        $barang = $this->barangRepo->editBarang($param, $id);
+
+        if(!empty($request->input('produk'))) {
+            
+            // remove det series first then update again
+            TbDetSeries::where('tb_series_id', $id)->delete();
+
+            $qty_product = $request->input('qty_product');
+
+            // insert
+            foreach($request->input('produk') as $key => $row) {
+                if(!empty($row)) {
+                    TbDetSeries::insert([
+                        'tb_barang_id' => $row,
+                        'tb_series_id' => $id,
+                        'qty' => $qty_product[$key]
+                    ]);
+                }
+            }
+
+        }
 
         if(!$this->barangRepo->error) {
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Data barang berhasil diupdate</strong>')->success()->important();
-            return redirect()->route('admin.barang.index');
+            return redirect()->route('admin.barang.edit', $id);
         } else {
             flash('<i class="fa fa-info"></i>&nbsp; <strong>User </strong> ' . $this->barangRepo->error)->error()->important();
-            return redirect()->route('admin.barang.edit')->withInput()->withError();
+            return redirect()->route('admin.barang.edit', $id)->withInput()->withError();
         }
     }
 
@@ -282,5 +306,29 @@ class BarangController extends Controller
     
     }
 
+    public function editBarangImage($barangId, $id) {
+        $image = BarangImages::find($id);
+
+        return view('backend.master.barang.edit-barang-image')->with([
+            'image' => $image,
+            'barangId' => $barangId,
+            'id' => $id
+        ]);
+    }
+
+    public function updateBarangImage(Request $request, $barangId, $id) {
+        $array = $request->all();
+        $param["alt"] = $array['alt'];
+
+        $image = BarangImages::where('id', $id)->update($param);
+
+        if($image) {
+            flash('<strong>Foto barang berhasil diedit</strong>')->success();
+            return redirect()->route('admin.barang.edit', $barangId);            
+        } else {
+            flash('<strong>Foto barang gagal diedit</strong>')->error()->important();
+            return redirect()->route('admin.barang.edit', $barangId)->withInput()->withError();
+        }
+    }
     
 }

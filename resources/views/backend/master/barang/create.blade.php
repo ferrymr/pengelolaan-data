@@ -22,30 +22,53 @@
             <h3 class="card-title">Tambah Data Barang</h3>
         </div>
         <div class="card-body barangs">
-            <div class="form-group row col-sm-12">
-                <div class="form-group @if($errors->has('unit')) has-error @endif">
-                    <label for="unit" class="col-sm-12 control-label">Unit</label>    
-                    <div class="col-sm-12">
-                        <select name="unit" class="form-control select2" id="unit">
-                            <option value="" selected>Pilih unit</option>
-                            <option value="PIECES">PIECES</option>
-                            <option value="SERIES">SERIES</option>
-                        </select>
-                    </div>
-                        @if($errors->has('unit'))
-                            <span class="text-danger">{{ $errors->first('unit') }}</span>
-                        @endif
-                </div>
+            <div class="form-group">
                 <div class="form-group @if($errors->has('no_member')) has-error @endif">
                     <label for="kode_barang" class="col-sm-12 control-label">Kode</label>    
-                    <div class="col-sm-12">
-                        <input  value="{{ old('kode_barang') }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode" required>
+                    <div class="col-sm-4">
+                        <input  maxlength="6"  value="{{ old('kode_barang') }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode" required>
                         @if($errors->has('kode_barang'))
                             <span class="text-danger">{{ $errors->first('kode_barang') }}</span>
                         @endif
+                        <p class="text-muted">Ideal 6 character</p>
                     </div>
                 </div>
             </div>
+            <div class="form-group @if($errors->has('unit')) has-error @endif">
+                <label for="unit" class="col-sm-12 control-label">Unit</label>    
+                <div class="col-sm-4">
+                    <select name="unit" class="form-control select2" id="unit">
+                        <option value="" selected>Pilih unit</option>
+                        <option value="PIECES">PIECES</option>
+                        <option value="SERIES">SERIES</option>
+                    </select>
+                </div>
+                @if($errors->has('unit'))
+                    <span class="text-danger">{{ $errors->first('unit') }}</span>
+                @endif
+            </div>
+
+            <div id="series" class="form-group row col-sm-12" style="display:none;">
+                <div class="col-md-12 mb-3">                    
+                    <h5><b>Tambahkan produk ke dalam series</b></h5>
+                </div>
+                <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
+                    <div class="input-group">
+                        <select name="produk[]" class="custom-select select2">
+                            <option value="" selected>Pilih produk</option>
+                            @foreach($barangs as $barang)
+                                <option value="{{ $barang->id }}">{{ $barang->nama }}</option>
+                            @endforeach
+                        </select> 
+                        <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
+                        <button type="button" class="btn btn-success ml-3" id="add-product">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <table id="append-product" class="col-md-8"></table>
+            </div>
+
             <div class="form-group @if($errors->has('nama')) has-error @endif">
                 <label for="nama" class="col-sm-12 control-label">Nama barang</label>    
                 <div class="col-sm-8">
@@ -105,6 +128,7 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <div id="series" class="form-group row col-sm-12" style="display:none;">
                 <div class="col-md-12 mb-3">                    
                     <h5><b>Tambahkan produk ke dalam series</b></h5>
@@ -125,6 +149,9 @@
                 </div>
                 <table id="append-product" class="col-md-8"></table>
             </div>
+=======
+            
+>>>>>>> dev
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('poin')) has-error @endif">
                     <label for="poin" class="col-sm-12 control-label">Poin</label>    
@@ -230,6 +257,7 @@
             <div class="col-md-12">                    
                 <h5><b>Tambahkan produk ke SPB</b></h5>
             </div>
+<<<<<<< HEAD
             <div class="col-md-8 @if($errors->has('no_member')) has-error @endif mb-2" id="product-series">
                 <div class="form-inline">
                     <select name="no_member[]" class="custom-select select2">
@@ -243,6 +271,36 @@
                 </div>
                 <table id="append-productspb" class="col-md-8"></table>
             </div>    
+=======
+            <div class="form-grup @if($errors->has('flag_sell_to_reseller')) has-error @endif">
+                <div class="col-sm-6">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="flag_sell_to_reseller" value="1" id="flag_sell_to_reseller">
+                        <label class="custom-control-label" for="flag_sell_to_reseller">Dijual ke reseller saat pertama kali daftar</label>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h5 class="col-md-12">Search Engine Optimation (SEO)</h5>
+            <div class="form-group @if($errors->has('meta_title')) has-error @endif">
+                <label for="meta_title" class="col-sm-12 control-label">Meta Title</label>    
+                <div class="col-sm-8">
+                    <input value="{{ old('meta_title') }}" type="text" name="meta_title" class="form-control" id="meta_title" placeholder="Meta Title" required>
+                    @if($errors->has('meta_title'))
+                        <span class="text-danger">{{ $errors->first('meta_title') }}</span>
+                    @endif
+                </div>
+            </div>
+            <div class="form-group @if($errors->has('meta_description')) has-error @endif">
+                <label for="meta_description" class="col-sm-12 control-label">Meta Description</label>    
+                <div class="col-sm-8">
+                    <textarea name="meta_description" class="form-control" id="meta_description" placeholder="Meta Description">{{ old('meta_description') }}</textarea>
+                    @if($errors->has('meta_description'))
+                        <span class="text-danger">{{ $errors->first('meta_description') }}</span>
+                    @endif
+                </div>
+            </div>
+>>>>>>> dev
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-info">Simpan</button>
@@ -262,7 +320,7 @@
 
         // date picker
         $('.datepicker').datepicker({
-            format: 'yyyy/mm/dd',
+            format: 'yyyy-mm-dd',
             autoclose: true
         });
 

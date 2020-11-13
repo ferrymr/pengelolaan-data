@@ -11,6 +11,8 @@ use App\Models\TbHeadJual;
 use App\Models\TbDetJual;
 use App\Models\TbDetSeries;
 use App\Models\Barang;
+use App\Models\Setting;
+use App\Models\CouponUsed;
 use DB;
 use App\Mail\OrderCreated;
 use Illuminate\Support\Facades\Mail;
@@ -38,6 +40,7 @@ class CheckoutPayment extends Component
     public $inputsValid;
     public $transactionNumber;
     public $shippingAddressId;
+    public $coupon;
 
     public function mount()
     {
@@ -60,6 +63,7 @@ class CheckoutPayment extends Component
         $this->totalItems = session('totalItems');
         $this->totalPoin = session('totalPoin');
         $this->kodeUnik = session('kodeUnik');
+        $this->coupon = session('coupon');
         $this->validateAllInputs();
     }
 
@@ -210,27 +214,51 @@ class CheckoutPayment extends Component
 
             DB::commit();
 
+            if(!empty($this->defaultShippingAddress->telepon_pengirim)) {
+                $phone = $this->defaultShippingAddress->telepon_pengirim;
+            } else if (!empty($this->user->phone)) {
+                $phone = $this->user->phone;
+            } else {
+                $phone = 0;
+            }
+
+            $orderFinal = TbHeadJual::with('items', 'address', 'user')->where('id', $transactionId)->first();
+
             // notify to whatsapp
-            $to = $this->defaultShippingAddress;
+            $to = $phone;
             $message = "Terimakasih telah melakukan pembelian di Toko Kami. 
             Segera lakukan pembayaran dan konfirmasi pembayaran 
             (melalui menu profile > transaksi > detail transaksi)";
 
             Whatsapp::sendMSG($to, $message);
 
-            $orderFinal = TbHeadJual::with('items', 'address', 'user')->where('id', $transactionId)->first();
-
             // notify to email
             if(isset($user->email)) {
                 Mail::to($user->email)->send(new OrderCreated($orderFinal));
-            }            
+            }
+
+            // send to admin
+            $toAdmin = Setting::where('slug', 'phone_admin')->first()->name;
+            $messageAdmin = "[NEW ORDER] Ada order baru masuk dari ".$this->user->name.". Silahkan segera di proses.";
+
+            Whatsapp::sendMSG($toAdmin, $messageAdmin);
 
             foreach ($cartItems as $cartItem) {
                 Cart::remove($cartItem['kode_barang']);
             }
     
-            session()->flash('success', 'Transaksi berhasil!');
-            return redirect()->route('order-history-status');
+            // to do if implement coupon need to submit to coupon used
+            if(isset($this->coupon) && !empty($this->coupon)) {
+                CouponUsed::insert([
+                    'user_id' => $this->user->id,
+                    'coupon_code' => $this->coupon
+                ]);
+            }
+
+            // flash
+            flash('Transaksi berhasil!')->success();
+            // session()->flash('success', 'Transaksi berhasil!');
+            return redirect()->route('order-history-status', 'waiting');
         } catch (\Exception $e) {
             DB::rollback();
             dd($e->getMessage());

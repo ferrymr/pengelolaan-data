@@ -11,7 +11,8 @@ class BarangImages extends Model
     protected $fillable = [ 
         'nama_file',
         'tb_barang_id',
-        'flag'
+        'flag',
+        'alt'
     ];
 
     protected $this='';

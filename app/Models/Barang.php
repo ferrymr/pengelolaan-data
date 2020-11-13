@@ -41,6 +41,9 @@ class Barang extends Model
         // 'log_his',
         'flag_bestseller',
         'flag_promo',
+        'flag_sell_to_reseller',
+        'meta_title',
+        'meta_description',
     ];
 
     // ======================== frontend ========================
@@ -72,7 +75,7 @@ class Barang extends Model
     public function getBarangSeries($user, $sorting, $byCategory) {
         $barang = Barang::where('unit', "SERIES")
                     ->where('h_nomem', '!=', 0)
-                    ->where('stok','>',0)
+                    // ->where('stok','>',0)
                     ->where('stats',1);
         
         if(!empty($sorting)) {
@@ -93,7 +96,7 @@ class Barang extends Model
         return $barang;
     }
 
-    public function getBarangAll($user, $sorting, $byCategory) {
+    public function getBarangAll($user, $sorting, $byCategory, $search) {
         $barang = Barang::where('h_nomem', '!=', 0)
                     ->where('stok','>',0)
                     ->where('stats',1);
@@ -106,6 +109,10 @@ class Barang extends Model
             }            
         } else {
             $barang = $barang->orderBy('created_at', 'DESC');
+        }
+
+        if(!empty($search)) {
+            $barang = $barang->where('nama', 'like', '%'.$search.'%');
         }
 
         if(!empty($byCategory)) {
@@ -151,20 +158,22 @@ class Barang extends Model
         $product = $request['produk'];
         $qty_product = $request['qty_product'];
 
-        unset($request['produk']);
-        unset($request['qty_product']);
+        // unset($request['produk']);
+        // unset($request['qty_product']);
 
-        // dd($request);
+        // dd($product);
 
         $barang = Barang::create($request);
 
         if($request['unit'] == 'SERIES') {
             foreach($product as $key => $row) {
-                TbDetSeries::insert([
-                    'tb_barang_id' => $row,
-                    'tb_series_id' => $barang->id,
-                    'qty' => $qty_product[$key]
-                ]);
+                if(!empty($row)) {
+                    TbDetSeries::insert([
+                        'tb_barang_id' => $row,
+                        'tb_series_id' => $barang->id,
+                        'qty' => $qty_product[$key]
+                    ]);
+                }                
             }
         }        
 
@@ -191,9 +200,9 @@ class Barang extends Model
         }
     }
 
-    public function editBarang($request, $kode_barang) {
+    public function editBarang($request, $id) {
         
-        $data = Barang::where('kode_barang', $kode_barang)->update($request);
+        $data = Barang::where('id', $id)->update($request);
 
         if(!empty($data)) {
             return $data;

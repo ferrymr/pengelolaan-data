@@ -1,3 +1,8 @@
+@section('meta')
+    <meta name="title" content="{{ isset($product->meta_title) ? $product->meta_title : '' }}">
+    <meta name="description" content="{{ isset($product->meta_description) ? $product->meta_description : '' }}">
+@endsection
+
 @section('styles')
     <link rel="stylesheet" href="{{ asset('assets/css/snackbar.min.css') }}" />
     <style>
@@ -40,13 +45,13 @@
                                     <img id="img_zoom" 
                                         data-zoom-image="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" 
                                         src="{{ route('admin.barang.barang-image', $product->barangImages()->first()->id) }}" 
-                                        alt="">
+                                        alt="{{ $product->barangImages()->first()->alt }}">
                                     {{-- <a href="#" class="btn-zoom open_qv"><i class="fa fa-search" aria-hidden="true"></i></a> --}}
                                 @else
                                     <img id="img_zoom" 
                                             data-zoom-image="{{ asset('assets/images/product-1.jpg') }}" 
                                             src="{{ asset('assets/images/product-1.jpg') }}" 
-                                            alt="">
+                                            alt="image broken">
                                 @endif
                             </div>
                             <div class="product_preview image-small">
@@ -57,7 +62,7 @@
                                                 @if ($row->first) class="active" @endif>
                                             <img src="{{ route('admin.barang.barang-image', $row->id) }}" 
                                                 data-large-image="{{ route('admin.barang.barang-image', $row->id) }}" 
-                                                alt="">
+                                                alt="{{ $row->alt }}">
                                         </a>
                                     @endforeach
 
@@ -173,7 +178,7 @@
                                                 <div class="product-thumb">
                                                     <div class="thumb-inner">
                                                         
-                                                        <a href="{{ route('products.show', $related->barangDetail->kode_barang) }}">
+                                                        <a href="{{ route('products.show', [$related->barangDetail->kode_barang, Illuminate\Support\Str::slug($related->barangDetail->nama, '-')]) }}">
                                                             @if(!empty($related->barangDetail->barangImages->first()))
                                                                 <img src="{{ route('admin.barang.barang-image', $related->barangDetail->barangImages->first()->id) }}" alt="">
                                                             @else
@@ -187,7 +192,7 @@
                                                 </div>
                                                 <div class="product-info">
                                                     <h5 class="product-name product_title">
-                                                        <a href="{{ route('products.show', $related->barangDetail->kode_barang) }}">{{ $related->barangDetail->nama }}</a>
+                                                        <a href="{{ route('products.show', [$related->barangDetail->kode_barang, Illuminate\Support\Str::slug($related->barangDetail->nama, '-')]) }}">{{ $related->barangDetail->nama }}</a>
                                                     </h5>
                                                     <div class="group-info">
 
@@ -217,6 +222,83 @@
                                                                     <span>@currency($harga)</span>
                                                                 @else
                                                                     <span>@currency($related->barangDetail->h_member)</span>
+                                                                @endif
+                                                                
+                                                            @endif
+                                                            
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        
+                                    @endforelse
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+
+                    @if(isset($_COOKIE['see_product']))
+                        {{-- related product --}}
+                        <div class="turan-product slider-product product-grid style2 rows-space-20 no-margin-on-mobile">
+                            <div class="container">
+                                <h3 class="custommenu-title-blog">#Anda sudah pernah melihat produk ini</h3>
+                                <div class="product-list-owl owl-slick equal-container nav-center" data-slick='{"autoplay":false, "autoplaySpeed":1000, "arrows":true, "dots":false, "infinite":true, "speed":800,"infinite":false}' data-responsive='[{"breakpoint":"2000","settings":{"slidesToShow":4}},{"breakpoint":"1200","settings":{"slidesToShow":3}},{"breakpoint":"992","settings":{"slidesToShow":2}},{"breakpoint":"768","settings":{"slidesToShow":2}},{"breakpoint":"530","settings":{"slidesToShow":1}}]'>
+
+
+                                    @forelse ($seeProducts as $seeProduct)
+                                        <div class="product-item style-1">
+                                            <div class="product-inner equal-element">
+                                                <div class="product-thumb">
+                                                    <div class="thumb-inner">
+                                                        
+                                                        <a href="{{ route('products.show', [$seeProduct->kode_barang, Illuminate\Support\Str::slug($seeProduct->nama, '-')]) }}">
+                                                            @if(!empty($seeProduct->barangImages->first()))
+                                                                <img src="{{ route('admin.barang.barang-image', $seeProduct->barangImages->first()->id) }}" alt="">
+                                                            @else
+                                                                <img id="img_zoom" 
+                                                                        data-zoom-image="{{ asset('assets/images/product-1.jpg') }}" 
+                                                                        src="{{ asset('assets/images/product-1.jpg') }}" 
+                                                                        alt="">
+                                                            @endif
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="product-info">
+                                                    <h5 class="product-name product_title">
+                                                        <a href="{{ route('products.show', [$seeProduct->kode_barang, Illuminate\Support\Str::slug($seeProduct->nama, '-')]) }}">{{ $seeProduct->nama }}</a>
+                                                    </h5>
+                                                    <div class="group-info">
+
+                                                        <div class="price">
+
+                                                            @if(!isset($user) || $user->hasRole('user'))
+
+                                                                @if($seeProduct->diskon > 0)
+                                                                    @php
+                                                                        $harga = $seeProduct->h_nomem;
+                                                                        $harga = $harga - ($harga * ($seeProduct->diskon/100));
+                                                                    @endphp
+                                                                    <span style="text-decoration:  line-through;">@currency($seeProduct->h_nomem)</span> 
+                                                                    <span>@currency($harga)</span>
+                                                                @else
+                                                                    <span>@currency($seeProduct->h_nomem)</span>
+                                                                @endif
+                        
+                                                            @else
+                        
+                                                                @if($seeProduct->diskon > 0)
+                                                                    @php
+                                                                        $harga = $seeProduct->h_member;
+                                                                        $harga = $harga - ($harga * ($seeProduct->diskon/100));
+                                                                    @endphp
+                                                                    <span style="text-decoration:  line-through;">@currency($seeProduct->h_member)</span> 
+                                                                    <span>@currency($harga)</span>
+                                                                @else
+                                                                    <span>@currency($seeProduct->h_member)</span>
                                                                 @endif
                                                                 
                                                             @endif

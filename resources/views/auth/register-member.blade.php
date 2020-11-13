@@ -28,7 +28,7 @@
             <div class="content-area col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="site-main">
 
-                    <h3 class="custom_blog_title" style="margin-bottom:0px">#Authentication</h3>
+                    <h3 class="custom_blog_title" style="margin-bottom:0px">#Register Member</h3>
                     <p>Untuk melakukan checkout silahkan login / register terlebih dahulu.</p>
                     
                     @if (count($errors))  
@@ -48,9 +48,12 @@
 
                             <div class="col-md-offset-2 col-lg-8 col-md-8 col-sm-12">
                                 <div class="login-item">
-                                    <h5 class="title-login">Register sebagai member</h5>
+                                    <h5 class="title-login">Registrasi sebagai member</h5>
                                     <form method="POST" action="{{ route('register') }}" class="register">
                                         @csrf
+
+                                        <input type="hidden" name="code_aff_ref" value="{{ $ref_code }}">
+
                                         <p class="form-row form-row-wide">
                                             <label class="text">Nama Lengkap</label>
                                             <input type="text" name="name" value="{{ old('name') }}" class="input-text @error('name') is-invalid @enderror" required>

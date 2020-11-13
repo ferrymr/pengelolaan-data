@@ -7,6 +7,7 @@ use App\Models\Provinsi;
 use App\Models\Kota;
 use App\Models\Kecamatan;
 use App\Models\User;
+use App\Models\Barang;
 use Illuminate\Http\Request;
 // use DB;
 use Illuminate\Support\Facades\Http;
@@ -320,5 +321,16 @@ class AddressController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }
+    }
+
+    public function registerReseller($ref_code = '') {
+        $daftarProvinsi  = $this->getProvinces();
+        $series = Barang::where('flag_sell_to_reseller', '1')->get();
+
+        return view('auth.register-reseller', compact(
+            'daftarProvinsi',
+            'ref_code',
+            'series'
+        ));
     }
 }

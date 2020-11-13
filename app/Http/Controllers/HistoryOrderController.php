@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Models\ShippingAddress;
 use App\Models\TbDetJual;
+use App\Models\TbHeadJual;
 use App\Models\User;
 
 // use App\DetailTransaksi;
@@ -19,25 +20,39 @@ class HistoryOrderController extends Controller
      */
     public function index($status = '')
     {
+        $startDate = isset($_GET['start_date']) ? $_GET['start_date'] : '';
+        $finishDate = isset($_GET['finish_date']) ? $_GET['finish_date'] : '';
 
         $userId = auth()->user()->id;
         $user = User::with('transactions.items','transactions.address')
                     ->find($userId);
 
         $transactions = $user->transactions;
+
+        $transaksi = TbHeadJual::where('user_id', $userId);
+
+        if(!empty($startDate) && !empty($finishDate)) {
+            $transaksi = $transaksi->whereBetween('tanggal', [$startDate, $finishDate]);
+        }
         
         if($status == 'waiting') {
-            $transactions = $transactions
+            $transaksi = $transaksi
                             ->whereIn('status_transaksi', ['PLACE ORDER', 'TRANSFERRED']);
         }  else if ($status == 'process') {
-            $transactions = $transactions
-                            ->whereIn('status_transaksi', ['PAYMENT CONFIRMED', 'PACKED', 'SHIPPED']);        
+            $transaksi = $transaksi
+                            ->whereIn('status_transaksi', ['PAYMENT CONFIRMED', 'PACKED']);        
         } else if ($status == 'done') {
-            $transactions = $transactions
-                            ->whereIn('status_transaksi', ['RECEIVED']);
-        }
+            $transaksi = $transaksi
+                            ->whereIn('status_transaksi', ['RECEIVED', 'SHIPPED']);
+        }        
 
-        // $transactions = $transactions->orderBy('tanggal', 'DESC')->get();
+        $transaksi = $transaksi
+                            ->orderBy('id', 'DESC')
+                            ->paginate(6);
+
+        $transactions = $transaksi;
+
+        // dd($transactions->sortBy('id'));
         
         // Place order
         $totalPlaceOrder = $user->transactions()
