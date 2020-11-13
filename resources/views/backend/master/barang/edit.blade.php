@@ -171,9 +171,7 @@
                         </select>
                     </div>
                 </div>
-<<<<<<< HEAD
             </div>
-
             <div id="series" class="form-group row col-sm-12" style="display: none;">
                 <div class="col-md-12 mb-3">                    
                     <h5><b>Tambahkan produk ke dalam series</b></h5>
@@ -214,10 +212,7 @@
                     </div>
                 @endforelse
                 <table id="append-product" class="col-md-8"></table>
-=======
->>>>>>> dev
             </div>
-
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('poin')) has-error @endif">
                     <label for="poin" class="col-sm-12 control-label">Poin</label>    
@@ -247,7 +242,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('h_nomem')) has-error @endif">
                     <label for="h_nomem" class="col-sm-12 control-label">Harga katalog (non member)</label>    
@@ -348,7 +342,6 @@
                 </div>
             </div>
         </div>
-
         <div class="card-footer">
             <button type="submit" class="btn btn-info">Simpan</button>
             <a href="{{ route("admin.barang.index") }}" class="btn btn-default float-right">Cancel</a>

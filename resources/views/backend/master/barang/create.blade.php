@@ -257,7 +257,6 @@
             <div class="col-md-12">                    
                 <h5><b>Tambahkan produk ke SPB</b></h5>
             </div>
-<<<<<<< HEAD
             <div class="col-md-8 @if($errors->has('no_member')) has-error @endif mb-2" id="product-series">
                 <div class="form-inline">
                     <select name="no_member[]" class="custom-select select2">
@@ -271,7 +270,6 @@
                 </div>
                 <table id="append-productspb" class="col-md-8"></table>
             </div>    
-=======
             <div class="form-grup @if($errors->has('flag_sell_to_reseller')) has-error @endif">
                 <div class="col-sm-6">
                     <div class="custom-control custom-checkbox">
@@ -300,7 +298,6 @@
                     @endif
                 </div>
             </div>
->>>>>>> dev
         </div>
         <div class="card-footer">
             <button type="submit" class="btn btn-info">Simpan</button>

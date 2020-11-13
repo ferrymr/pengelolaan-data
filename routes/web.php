@@ -371,7 +371,6 @@ Route::group([
     Route::post('store', 'SettingController@store')->name('store');
     Route::post('update/{id}', 'SettingController@update')->name('update');
 });
-<<<<<<< HEAD
 
 // Barang SPB
 Route::group([
@@ -386,5 +385,3 @@ Route::group([
     Route::post('update/{id}', 'BarangSpbController@update')->name('update');
     
 });
-=======
->>>>>>> dev
