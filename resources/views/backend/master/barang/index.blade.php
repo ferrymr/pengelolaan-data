@@ -148,7 +148,7 @@
                     },
                     { data: 'nama', name: 'nama', visible: false },
                 ],
-                order: [[ 2, 'asc' ]]
+                order: [[ 8, 'desc' ]]
                
             });
         });
