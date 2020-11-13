@@ -310,20 +310,6 @@ Route::group([
     Route::get('konfirmasi-daftar-image/{id?}', 'KonfirmasiDaftarController@getKonfirmasiDaftarImage')->name('konfirmasi-daftar-image');
 });
 
-// Barang SPB
-Route::group([
-    'middleware' => ['role:administrator'],
-    'prefix' => '/admin/barangspb/',
-    'as' => 'admin.barangspb.'
-], function () {
-    Route::get('', 'BarangSpbController@index')->name('index');
-    Route::get('datatable', 'BarangSpbController@datatable')->name('datatable');
-    Route::get('view/{id}', 'BarangSpbController@view')->name('view');
-    Route::get('delete/{id}', 'BarangSpbController@destroy')->name('delete');
-    Route::post('update/{id}', 'BarangSpbController@update')->name('update');
-    
-});
-
 // Coupon
 Route::group([
     'middleware' => ['role:administrator'],
