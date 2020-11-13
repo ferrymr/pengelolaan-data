@@ -323,3 +323,49 @@ Route::group([
     Route::post('update/{id}', 'BarangSpbController@update')->name('update');
     
 });
+
+// Coupon
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/coupon/',
+    'as' => 'admin.coupon.'
+], function () {
+    Route::get('', 'CouponController@index')->name('index');
+    Route::get('datatable', 'CouponController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'CouponController@edit')->name('edit');
+    Route::get('view/{id}', 'CouponController@view')->name('view');
+    Route::get('delete/{id}', 'CouponController@destroy')->name('delete');
+    Route::get('add', 'CouponController@create')->name('add');
+    Route::post('store', 'CouponController@store')->name('store');
+    Route::post('update/{id}', 'CouponController@update')->name('update');
+});
+
+// Bank
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/bank/',
+    'as' => 'admin.bank.'
+], function () {
+    Route::get('', 'BankController@index')->name('index');
+    Route::get('datatable', 'BankController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'BankController@edit')->name('edit');
+    Route::get('delete/{id}', 'BankController@destroy')->name('delete');
+    Route::get('add', 'BankController@create')->name('add');
+    Route::post('store', 'BankController@store')->name('store');
+    Route::post('update/{id}', 'BankController@update')->name('update');
+});
+
+// Setting
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/setting/',
+    'as' => 'admin.setting.'
+], function () {
+    Route::get('', 'SettingController@index')->name('index');
+    Route::get('datatable', 'SettingController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'SettingController@edit')->name('edit');
+    Route::get('delete/{id}', 'SettingController@destroy')->name('delete');
+    Route::get('add', 'SettingController@create')->name('add');
+    Route::post('store', 'SettingController@store')->name('store');
+    Route::post('update/{id}', 'SettingController@update')->name('update');
+});
