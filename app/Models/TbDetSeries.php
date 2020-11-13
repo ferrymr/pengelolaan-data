@@ -18,9 +18,4 @@ class TbDetSeries extends Model
     {
         return $this->belongsTo(Barang::class, 'tb_barang_id');
     }
-
-    public function barangspb()
-    {
-        return $this->belongsTo(BarangSpb::class, 'tb_barang_id');
-    }
 }

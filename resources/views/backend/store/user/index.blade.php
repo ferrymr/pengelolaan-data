@@ -121,7 +121,7 @@
                     },
                     { data: 'id', name: 'id', visible: false },
                 ],
-                order: [[ 1, 'asc' ]]
+                order: [[ 5, 'desc' ]]
             });
         
         });

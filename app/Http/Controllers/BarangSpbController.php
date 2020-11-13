@@ -9,12 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use App\Models\User;
 use App\Models\BarangSpb;
-use App\Models\TbDetSeries;
-use App\Models\Series;
+use App\Models\SeriesDetail;
 
 class BarangSpbController extends Controller
 {
-    public function __construct (User $user, BarangSpb $barangspb, TbDetSeries $detail, Barang $barang) 
+    public function __construct (User $user, BarangSpb $barangspb, SeriesDetail $detail, Barang $barang) 
     {
         $this->userRepo     = $user;
         $this->barangspbRepo   = $barangspb;
@@ -26,12 +25,12 @@ class BarangSpbController extends Controller
     {
         $user = Auth::user();
         $barangspb = $this->barangspbRepo->getAll();
+        // return $barang;
 
         return view('backend.tools.spb.index')->with([
             'user' => $user,
-            'barangspb' => $barangspb,
+            'barang' => $barangspb
         ]);
-        
     }
 
     public function datatable(Request $request) 
@@ -64,21 +63,31 @@ class BarangSpbController extends Controller
             ->escapeColumns([])
             ->make(true);
     }
-
-    public function view($id)
+ 
+    public function edit($id)
     {        
         $user = Auth::user();
         $barangspb = $this->barangspbRepo->findId($id);
-        $komposisi = TbDetSeries::where('tb_series_id', $id)->get();
+        // return $barangspb;
+        // $detail = SeriesDetail::where('kode_pack', $id)->get();
 
-        return view('backend.tools.spb.view')->with([
+        return view('backend.tools.spb.edit')->with([
             'user' => $user,
             'barangspb' => $barangspb,
-            'komposisi' =>$komposisi,
+            // 'detail' => $detail,
         ]);
-        
-        
     }
+
+    // public function view($id)
+    // {        
+    //     $user = Auth::user();
+    //     $barangspb = $this->barangspbRepo->findId($id);
+
+    //     return view('backend.tools.spb.view')->with([
+    //         'user' => $user,
+    //         'barangspb' => $barangspb,
+    //     ]);
+    // }
 
     public function update(CreateBarangSpbRequest $request, $kode_barang)
     {
