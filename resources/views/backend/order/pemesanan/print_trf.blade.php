@@ -350,7 +350,7 @@
                             </th>
                             <th class="text-right">
                                 <span class="times-new-roman s15">
-                                    {{ $data->spb->name }}<br>
+                                    {{ $data->address->nama_pengirim }}<br>
                                 </span>
                             </th>
                         </tr>
@@ -362,7 +362,7 @@
                             </th>
                             <th class="text-right">
                                 <span class="times-new-roman s15">
-                                    {{ $data->spb->phone }}<br>
+                                    {{ $data->address->telepon_pengirim }}<br>
                                 </span>
                             </th>
                         </tr>

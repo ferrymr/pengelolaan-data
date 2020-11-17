@@ -136,7 +136,7 @@ Route::group([
 
     Route::post('store-image', 'BarangController@storeBarangImage')->name('store-image');
     Route::get('delete-barang-image/{barangId?}/{id?}', 'BarangController@deleteBarangImage')->name('detele-barang-image');
-    
+
     // edit barang image
     Route::get('edit-barang-image/{barangId?}/{id?}', 'BarangController@editBarangImage')->name('edit-barang-image');
     Route::post('update-barang-image/{barangId?}/{id?}', 'BarangController@updateBarangImage')->name('update-barang-image');
@@ -383,5 +383,17 @@ Route::group([
     Route::get('view/{id}', 'BarangSpbController@view')->name('view');
     Route::get('delete/{id}', 'BarangSpbController@destroy')->name('delete');
     Route::post('update/{id}', 'BarangSpbController@update')->name('update');
-    
+});
+
+// PEMBELIAN
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/pembelian/',
+    'as' => 'admin.pembelian.'
+], function () {
+    Route::get('', 'PembelianController@index')->name('index');
+    Route::get('datatable', 'PembelianController@datatable')->name('datatable');
+    Route::get('show/{no_po}', 'PembelianController@show')->name('show');
+    Route::get('edit/{no_po}', 'PembelianController@edit')->name('edit');
+    Route::get('delete/{no_po}', 'PembelianController@destroy')->name('delete');
 });
