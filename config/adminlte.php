@@ -314,7 +314,7 @@ return [
                 // ],                
                 [
                     'text' => 'Pembelian',
-                    'url' => 'pembelian'
+                    'url' => 'admin/pembelian'
                 ],
                 [
                     'text' => 'Movement',
