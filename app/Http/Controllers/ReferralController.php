@@ -30,8 +30,6 @@ class ReferralController extends Controller
             'user' => $user,
             'referral' => $referral
         ]);
-
-        return $referral;
     }
 
     public function edit($no_member, $kode_up)

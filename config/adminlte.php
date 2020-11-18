@@ -268,13 +268,13 @@ return [
                     'text' => 'Barang',
                     'url' => 'admin/barang'
                 ],
-                // [
-                //     'text' => 'Member',
-                //     'url' => 'member'
-                // ],
                 [
                     'text' => 'Supplier',
                     'url' => 'admin/supplier'
+                ],
+                [
+                    'text' => 'Reseller',
+                    'url' => 'admin/reseller'
                 ],
                 // moved to master barang
                 // [
@@ -282,12 +282,12 @@ return [
                 //     'url' => 'admin/series'
                 // ],
                 [
-                    'text' => 'Referral',
-                    'url' => 'admin/referral'
-                ],
-                [
                     'text' => 'Bank',
                     'url' => 'admin/bank'
+                ],
+                [
+                    'text' => 'Referral',
+                    'url' => 'admin/referral'
                 ],
                 [
                     'text' => 'Setting',
@@ -308,13 +308,13 @@ return [
                     'text' => 'Konfirmasi pemesanan',
                     'url' => 'admin/konfirmasi-penjualan'
                 ],
-                // [
-                //     'text' => 'Penjualan',
-                //     'url' => 'admin/penjualan'
-                // ],                
+                [
+                    'text' => 'Penjualan',
+                    'url' => 'admin/penjualan'
+                ],                
                 [
                     'text' => 'Pembelian',
-                    'url' => 'pembelian'
+                    'url' => 'admin/pembelian'
                 ],
                 [
                     'text' => 'Movement',
