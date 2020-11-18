@@ -322,4 +322,10 @@ class User extends Authenticatable
     {
     	return $this->belongsToMany('App\Models\Role');
     }
+
+    public function getUserData() 
+{
+    return User::with('roleuser')->get();    
+} 
+
 }

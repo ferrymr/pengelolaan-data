@@ -172,47 +172,7 @@
                     </div>
                 </div>
             </div>
-            <div id="series" class="form-group row col-sm-12" style="display: none;">
-                <div class="col-md-12 mb-3">                    
-                    <h5><b>Tambahkan produk ke dalam series</b></h5>
-                </div>
-                @forelse($barang->series as $series)
-                    <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
-                        <div class="input-group">
-                            <select name="produk[]" class="custom-select select2">
-                                <option value="">Pilih produk</option>
-                                @foreach($products as $product)
-                                    <option value="{{ $product->id }}" @if($series->tb_barang_id == $barang->id) selected @endif>
-                                        {{ $product->nama }}
-                                    </option>
-                                @endforeach
-                            </select> 
-                            <input type="number" name="qty_product[]" class="form-control" placeholder="Qty" value="{{ $series->qty }}">
-                            <button type="button" class="btn btn-success ml-3" id="add-product">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                @empty 
-                    <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
-                        <div class="input-group">
-                            <select name="produk[]" class="custom-select select2">
-                                <option value="">Pilih produk</option>
-                                @foreach($products as $product)
-                                    <option value="{{ $product->id }}">
-                                        {{ $product->nama }}
-                                    </option>
-                                @endforeach
-                            </select> 
-                            <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
-                            <button type="button" class="btn btn-success ml-3" id="add-product">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                @endforelse
-                <table id="append-product" class="col-md-8"></table>
-            </div>
+
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('poin')) has-error @endif">
                     <label for="poin" class="col-sm-12 control-label">Poin</label>    
@@ -242,6 +202,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('h_nomem')) has-error @endif">
                     <label for="h_nomem" class="col-sm-12 control-label">Harga katalog (non member)</label>    
@@ -271,6 +232,15 @@
                 </div>
             </div>
             <br>
+            {{-- <div class="form-group @if($errors->has('tgl_eks')) has-error @endif">
+                <label for="tgl_eks" class="col-sm-12 control-label">Tanggal expired</label>    
+                <div class="col-sm-6">
+                    <input value="{{ $barang->tgl_eks }}" type="text" name="tgl_eks" class="form-control datepicker" id="tgl_exp" placeholder="Tanggal expired" required>
+                    @if($errors->has('tgl_eks'))
+                        <span class="text-danger">{{ $errors->first('tgl_eks') }}</span>
+                    @endif
+                </div>
+            </div> --}}
             <div class="form-group @if($errors->has('deskripsi')) has-error @endif">
                 <label for="deskripsi" class="col-sm-12 control-label">Deskripsi</label>    
                 <div class="col-sm-12">
@@ -342,6 +312,7 @@
                 </div>
             </div>
         </div>
+
         <div class="card-footer">
             <button type="submit" class="btn btn-info">Simpan</button>
             <a href="{{ route("admin.barang.index") }}" class="btn btn-default float-right">Cancel</a>

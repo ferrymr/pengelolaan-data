@@ -35,7 +35,6 @@ class BarangController extends Controller
             'user' => $user,
             'barang' => $barang
         ]);
-        
     }
 
     public function datatable() 
@@ -84,12 +83,12 @@ class BarangController extends Controller
         $jumlah = Barang::where('kode_barang', $input['kode_barang'])->count();
 
         foreach ($data['no_member'] as $key => $value) {
-        $barangspb = new BarangSpb;
-        $barangspb->no_member = $data['no_member'][$key];
-        $barangspb->kode_barang = $data['kode_barang'];
-        $barangspb->nama = $data['nama'];
-        $barangspb->jenis = $data['jenis'];
-        $barangspb->save();
+            $barangspb = new BarangSpb;
+            $barangspb->no_member = $data['no_member'][$key];
+            $barangspb->kode_barang = $data['kode_barang'];
+            $barangspb->nama = $data['nama'];
+            $barangspb->jenis = $data['jenis'];
+            $barangspb->save();
         }
             
         if ($jumlah>0){

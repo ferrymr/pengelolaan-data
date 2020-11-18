@@ -128,30 +128,7 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-            <div id="series" class="form-group row col-sm-12" style="display:none;">
-                <div class="col-md-12 mb-3">                    
-                    <h5><b>Tambahkan produk ke dalam series</b></h5>
-                </div>
-                <div class="col-md-8 @if($errors->has('produk')) has-error @endif mb-2" id="product-series">
-                    <div class="input-group">
-                        <select name="produk[]" class="custom-select select2">
-                            <option value="" selected>Pilih produk</option>
-                            @foreach($barangs as $barang)
-                                <option value="{{ $barang->id }}">{{ $barang->nama }}</option>
-                            @endforeach
-                        </select> 
-                        <input type="number" name="qty_product[]" class="form-control" placeholder="Qty">
-                        <button type="button" class="btn btn-success ml-3" id="add-product">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <table id="append-product" class="col-md-8"></table>
-            </div>
-=======
-            
->>>>>>> dev
+
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('poin')) has-error @endif">
                     <label for="poin" class="col-sm-12 control-label">Poin</label>    
@@ -162,6 +139,15 @@
                         @endif
                     </div>
                 </div>            
+                {{-- <div class="form-group @if($errors->has('stok')) has-error @endif">
+                    <label for="stok" class="col-sm-12 control-label">Stock</label>    
+                    <div class="col-sm-12">
+                        <input value="{{ old('stok') }}" type="number" name="stok" class="form-control" id="stok" placeholder="Stock" min="0">
+                        @if($errors->has('stok'))
+                            <span class="text-danger">{{ $errors->first('stok') }}</span>
+                        @endif
+                    </div>
+                </div> --}}
                 <div class="form-group @if($errors->has('diskon')) has-error @endif">
                     <label for="diskon" class="col-sm-12 control-label">Diskon</label>    
                     <div class="col-sm-12">
@@ -202,7 +188,6 @@
                     </div>
                 </div>
             </div>
-        </div>
             <div class="form-grup @if($errors->has('bpom')) has-error @endif">
                 <div class="col-sm-6">
                     <div class="custom-control custom-checkbox">
@@ -212,6 +197,15 @@
                 </div>
             </div>
             <br>
+            {{-- <div class="form-group @if($errors->has('tgl_eks')) has-error @endif">
+                <label for="tgl_eks" class="col-sm-12 control-label">Tanggal expired</label>    
+                <div class="col-sm-6">
+                    <input value="{{ old('tgl_eks') }}" type="text" name="tgl_eks" class="form-control datepicker" id="tgl_exp" placeholder="Tanggal expired" required>
+                    @if($errors->has('tgl_eks'))
+                        <span class="text-danger">{{ $errors->first('tgl_eks') }}</span>
+                    @endif
+                </div>
+            </div> --}}
             <div class="form-group @if($errors->has('deskripsi')) has-error @endif">
                 <label for="deskripsi" class="col-sm-12 control-label">Deskripsi</label>    
                 <div class="col-sm-12">
@@ -303,6 +297,7 @@
             <button type="submit" class="btn btn-info">Simpan</button>
             <a href="{{ route("admin.barang.index") }}" class="btn btn-default float-right">Cancel</a>
         </div>
+    </div>
 
     {!! Form::close() !!}
     
