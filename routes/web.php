@@ -393,7 +393,11 @@ Route::group([
 ], function () {
     Route::get('', 'PembelianController@index')->name('index');
     Route::get('datatable', 'PembelianController@datatable')->name('datatable');
-    Route::get('show/{no_po}', 'PembelianController@show')->name('show');
-    Route::get('edit/{no_po}', 'PembelianController@edit')->name('edit');
-    Route::get('delete/{no_po}', 'PembelianController@destroy')->name('delete');
+    Route::get('show/{id}', 'PembelianController@show')->name('show');
+    Route::get('add', 'PembelianController@add')->name('add');
+    Route::get('get.nama', 'PembelianController@getNama')->name('get.nama');
+    Route::post('create_kode', 'PembelianController@create_kode')->name('create.kode');
+    Route::post('store', 'PembelianController@store')->name('store');
+    Route::get('edit/{id}', 'PembelianController@edit')->name('edit');
+    Route::get('delete/{id}', 'PembelianController@destroy')->name('delete');
 });

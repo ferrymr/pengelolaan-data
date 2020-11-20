@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TbDetBeli extends Model
 {
     protected $table = 'tb_det_beli';
-    protected $primaryKey = 'no_po';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'no_po',
@@ -19,8 +19,8 @@ class TbDetBeli extends Model
     ];
 
     // =============================Relation=================================
-    public function headBeli()
+    public function headbeli()
     {
-        return $this->belongsTo(TbHeadBeli::class, 'no_po');
+        return $this->belongsTo(TbHeadBeli::class, 'tb_head_beli_id', 'id');
     }
 }
