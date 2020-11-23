@@ -3,7 +3,7 @@
 @section('title', 'Ubah Referral')
 
 @section('content_header')
-    <h1>Ubah Referral</h1>
+    <h1>Referral</h1>
 @stop
 
 @section('content')
@@ -19,7 +19,7 @@
 <div class="row">
     <div class="card col-12">
         <div class="card-header">
-            <h3 class="card-title">Tambah Referral</h3>
+            <h3 class="card-title">Ubah Referral</h3>
         </div>
         
         <div class="dataDownline">
