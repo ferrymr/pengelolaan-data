@@ -18,9 +18,7 @@ class CreateTbHeadSoTable extends Migration
             $table->date('tanggal')->nullable();
             $table->string('kasir', 8)->nullable();
             $table->longText('jenis')->nullable();
-            $table->longText('catatan')->nullable();
             $table->longText('note')->nullable();
-            $table->double('sub_total');
             $table->string('pos', 5);
             $table->timestamps();
         });
