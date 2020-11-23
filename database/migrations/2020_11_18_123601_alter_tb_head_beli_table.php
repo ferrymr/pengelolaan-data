@@ -15,7 +15,6 @@ class AlterTbHeadBeliTable extends Migration
     {
         Schema::table('tb_head_beli', function (Blueprint $table) {
             $table->dropPrimary('no_po');
-            // $table->renameColumn('nama', 'nama_supp');
         });
 
         if (!Schema::hasColumn('tb_head_beli', 'id')) {
@@ -52,7 +51,6 @@ class AlterTbHeadBeliTable extends Migration
 
         Schema::table('tb_head_beli', function (Blueprint $table) {
             $table->primary('no_po');
-            // $table->renameColumn('nama_supp', 'nama');
         });
     }
 }
