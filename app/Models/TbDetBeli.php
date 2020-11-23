@@ -9,15 +9,9 @@ class TbDetBeli extends Model
     protected $table = 'tb_det_beli';
     protected $primaryKey = 'id';
 
-    protected $fillable = [
-        'no_po',
-        'kode_barang',
-        'jenis',
-        'jumlah',
-        'harga',
-        'total'
-    ];
-
+    // no protection on field
+    protected $guarded = ['id'];
+    
     // =============================Relation=================================
     public function headbeli()
     {

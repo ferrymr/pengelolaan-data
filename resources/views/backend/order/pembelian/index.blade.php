@@ -116,7 +116,7 @@
                     { data: 'no_po', name: 'no_po' },
                     { data: 'tanggal', name: 'tanggal' },
                     { data: 'kode_supp', name: 'kode_supp' },
-                    { data: 'nama_supp', name: 'nama_supp' },
+                    { data: 'nama', name: 'nama' },
                     { data: 'sub_total', name: 'sub_total' },
                     {
                         // Define the action column

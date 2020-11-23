@@ -13,9 +13,20 @@ class AlterTbHeadBeliTable extends Migration
      */
     public function up()
     {
+        Schema::table('tb_head_beli', function (Blueprint $table) {
+            $table->dropPrimary('no_po');
+            // $table->renameColumn('nama', 'nama_supp');
+        });
+
         if (!Schema::hasColumn('tb_head_beli', 'id')) {
             Schema::table('tb_head_beli', function (Blueprint $table) {
-                $table->bigIncrements('id')->first();
+                $table->id()->first();
+            });
+        }
+
+        if (!Schema::hasColumn('tb_head_beli', 'status')) {
+            Schema::table('tb_head_beli', function (Blueprint $table) {
+                $table->string('status')->after('waktu')->default('created');
             });
         }
     }
@@ -32,5 +43,16 @@ class AlterTbHeadBeliTable extends Migration
                 $table->dropColumn('id');
             });
         }
+
+        if (Schema::hasColumn('tb_head_beli', 'status')) {
+            Schema::table('tb_head_beli', function (Blueprint $table) {
+                $table->dropColumn('status');
+            });
+        }
+
+        Schema::table('tb_head_beli', function (Blueprint $table) {
+            $table->primary('no_po');
+            // $table->renameColumn('nama_supp', 'nama');
+        });
     }
 }

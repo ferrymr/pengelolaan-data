@@ -58,15 +58,20 @@ class PembelianController extends Controller
 
     public function add()
     {
-        $data = TbHeadBeli::orderBy('created_at', 'DESC')->limit(1)->get();
+        $data = TbHeadBeli::orderBy('created_at', 'DESC')->first();
 
-        $invoice = isset($data[0]['no_po']);
-        $invoice = substr($data[0]['no_po'], 9);
+        if(!empty($data)) {
+            $invoice = isset($data[0]['no_po']);
+            $invoice = substr($data[0]['no_po'], 9);
+        } else {            
+            $invoice = 0;
+        }
+        
         $invoice = abs($invoice) + 1;
         $invoice = str_pad($invoice, 5, '0', STR_PAD_LEFT);
         $dates = Carbon::now();
         $index = $dates->format('Y') . '-PO' . '-' . $invoice;
-
+        
         return view('backend.order.pembelian.create', compact('index'));
     }
 
@@ -95,29 +100,30 @@ class PembelianController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->all();
+        $input = array(
+            'no_po' => $request->no_po,
+            'tanggal' => $request->tanggal,
+            'kode_supp' => $request->kode_supp,
+            'nama' => $request->nama_supp,
+            'sub_total' => $request->sub_total,
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s")
+        );
 
-        $headbeli = new TbHeadBeli;
-        $headbeli->no_po = $data['no_po'];
-        $headbeli->tanggal = $data['tanggal'];
-        $headbeli->kode_supp = $data['kode_supp'];
-        $headbeli->nama_supp = $data['nama_supp'];
-        $headbeli->sub_total = $data['sub_total'];
-        $headbeli->save();
-        // dd($headbeli);
+        $beli = TbHeadBeli::create($input);
 
         $headbeliId = DB::getPDO()->lastInsertId();
-        dd($request->kode_barang);
         foreach ($request->kode_barang as $item => $kode_barang) {
             $data2 = array(
-                'tb_head_beli_id' => $headbeliId,
+                'tb_head_beli_id' => $beli->id,
                 'no_po' => $request['no_po'],
                 'kode_barang' => $request->kode_barang[$item],
-                'nama' => $request->nama[$item],
                 'jenis' => $request->jenis[$item],
                 'jumlah' => $request->jumlah[$item],
                 'harga' => $request->harga[$item],
                 'total' => $request->total[$item],
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s")
             );
             TbDetBeli::insert($data2);
 
@@ -126,9 +132,9 @@ class PembelianController extends Controller
                 $barang->stok = $barang->stok + $request->jumlah[$item];
                 $barang->save();
             }
-
-            flash('<i class="fa fa-info"></i>&nbsp; <strong>Pemesanan Berhasil Diinputkan</strong>')->success();
-            return redirect()->route('admin.pembelian.index');
         }
+
+        flash('<i class="fa fa-info"></i>&nbsp; <strong>Pemesanan Berhasil Diinputkan</strong>')->success();
+        return redirect()->route('admin.pembelian.index');
     }
 }

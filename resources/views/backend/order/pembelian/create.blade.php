@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="form-group col-md-6 @if($errors->has('kode_supp')) has-error @endif">
-                <label for="kode_supp" class="col-sm-12 control-label">Kede Supplier *</label>    
+                <label for="kode_supp" class="col-sm-12 control-label">Kode Supplier *</label>    
                 <div class="col-sm-10">
                     <input type="text" name="kode_supp" class="form-control" id="kode_supp" placeholder="Kode Supplier" >
                     @if($errors->has('kode_supp'))
@@ -51,12 +51,12 @@
                     @endif
                 </div>
             </div>
-            <div class="form-group col-md-6 @if($errors->has('nama_supp')) has-error @endif">
-                <label for="nama_supp" class="col-sm-12 control-label">Nama *</label>    
+            <div class="form-group col-md-6 @if($errors->has('nama')) has-error @endif">
+                <label for="nama" class="col-sm-12 control-label">Nama *</label>    
                 <div class="col-sm-10">
                     <input type="text" name="nama_supp" class="form-control" id="nama" placeholder="Nama Supplier" readonly="true" >
-                    @if($errors->has('nama_supp'))
-                        <span class="text-danger">{{ $errors->first('nama_supp') }}</span>
+                    @if($errors->has('nama'))
+                        <span class="text-danger">{{ $errors->first('nama') }}</span>
                     @endif
                 </div>
             </div>
@@ -75,7 +75,7 @@
                     <th width="100px">Quantity</th>
                     <th width="150px">Harga</th>
                     <th width="170px">Total</th>
-                    <th style="text-align: center"><a href="#" class="btn btn-info addRow">+</a></th>
+                    <th style="text-align: center"><a href="javascript:void(0)" class="btn btn-info addRow">+</a></th>
                 </tr>
             </thead>
             <tbody>

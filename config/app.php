@@ -170,6 +170,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Orangehill\Iseed\IseedServiceProvider::class,
+        Doctrine\DBAL\Driver\PDOMySql\Driver::class,
 
         /*
          * Application Service Providers...

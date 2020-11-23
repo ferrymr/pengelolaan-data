@@ -9,14 +9,8 @@ class TbHeadBeli extends Model
     protected $table = 'tb_head_beli';
     protected $primaryKey = 'id';
 
-    protected $fillable = [
-        'no_po',
-        'tanggal',
-        'kode_supp',
-        'nama',
-        'sub_total',
-        'note'
-    ];
+    // no protection on field
+    protected $guarded = ['id'];
 
     // ================================== methods ==================================
 
