@@ -20,8 +20,6 @@ class CreateTbDetSoTable extends Migration
             $table->double('stok')->nullable();
             $table->double('jumlah')->nullable();
             $table->double('hasil')->nullable();
-            $table->double('harga')->nullable();
-            $table->double('total');
             $table->timestamps();
             $table->primary(['no_so','kode_barang']);
         });

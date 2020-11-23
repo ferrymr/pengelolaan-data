@@ -420,7 +420,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Adjusment',
-                    'url' => 'adjusment'
+                    'url' => 'admin/adjusment'
                 ],
                 [
                     'text' => 'SPB kontrol',

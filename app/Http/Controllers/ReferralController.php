@@ -7,6 +7,7 @@ use App\Http\Requests\CreateReferralRequest;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use App\Models\Referral;
+use App\Models\RoleView;
 use App\Models\User;
 use App\Models\Role;
 use Exception;
@@ -14,21 +15,27 @@ use Symfony\Component\Console\Input\Input;
 
 class ReferralController extends Controller
 {
-    public function __construct(User $user, Role $role, Referral $referral)
+    public function __construct(
+        User $user, 
+        Role $role, 
+        Referral $referral,
+        RoleView $view
+        )
     {
         $this->userRepo     = $user;
         $this->roleRepo     = $role;
         $this->referralRepo = $referral;
+        $this->viewRepo     = $view;
     }
 
     public function index()
     {
         $user = Auth::user();
-        $referral = $this->referralRepo->getAll();
+        $view = $this->viewRepo->getAll();
         
         return view('backend.master.referral.index')->with([
             'user' => $user,
-            'referral' => $referral
+            'view' => $view
         ]);
     }
 
@@ -38,7 +45,7 @@ class ReferralController extends Controller
         $referral = $this->referralRepo->findId($no_member);
         $upline = $this->referralRepo->getUpline($kode_up);
         $roles = $this->roleRepo->getAll();
-        // dd($leader->name);
+        
         return view('backend.master.referral.edit')->with([
             'user' => $user,
             'upline' => $upline,
@@ -49,20 +56,20 @@ class ReferralController extends Controller
 
     public function datatable() 
     {
-        $referral = $this->referralRepo->getAll();
+        $view = $this->viewRepo->getAll();
 
-        return Datatables::of($referral)
-            ->editColumn('name', function($referral) {
-                return strtoupper($referral->name);
+        return Datatables::of($view)
+            ->editColumn('name', function($view) {
+                return strtoupper($view->nama);
             })
-            ->editColumn('daftar', function($referral) {
-                return date('d F Y', strtotime($referral->daftar));
+            ->editColumn('daftar', function($view) {
+                return date('d F Y', strtotime($view->daftar));
             })
 
             ->addColumn('action', function ($referral){
                 return [
                     'edit' => route('admin.referral.edit', [$referral->no_member, $referral->kode_up]),
-                    // 'hapus' => route('admin.referral.delete', $referral->no_member),
+                    // 'hapus' => route('admin.referral.delete', [$referral->no_member, $referral->kode_up]),
                 ];
             })
             ->escapeColumns([])

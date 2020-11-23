@@ -21,7 +21,6 @@ class Adjusment extends Model
         'jenis',
         'catatan', 
         'note', 
-        'sub_total', 
         'pos'
     ];
 
@@ -51,6 +50,13 @@ class Adjusment extends Model
         } else {
             return false;
         }
+    }
+
+    public function autoCode()
+    {
+        $data = Adjusment::select('no_so')->orderBy('no_so', 'DESC')->first();
+
+        return $data;
     }
 
     public function editAdjusment($request, $no_so) 

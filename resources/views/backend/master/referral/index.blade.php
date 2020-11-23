@@ -58,7 +58,7 @@
     </div>
 
     <!-- modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    {{-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -75,7 +75,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @stop
 
 @section('css')
@@ -121,7 +121,7 @@
                         }
                     },
                     { data: 'no_member', name: 'no_member' },
-                    { data: 'name', name: 'name' },
+                    { data: 'nama', name: 'nama' },
                     { data: 'daftar', name: 'daftar' },
                     { data: 'kode_up', name: 'kode_up' },
                     { data: 'kode_dr', name: 'kode_dr' },
@@ -133,7 +133,7 @@
                         className: 'dt-body-center',
                         render: renderAction
                     },
-                    { data: 'name', name: 'name', visible: false },
+                    { data: 'nama', name: 'nama', visible: false },
                 ],
                 order: [[ 1, 'asc' ]]
             });

@@ -23,8 +23,6 @@ class AdjusmentDetail extends Model
         'stok',
         'jumlah',
         'hasil',
-        'harga',
-        'total'
     ];
 
     public function getAll() 
@@ -54,9 +52,4 @@ class AdjusmentDetail extends Model
             return false;
         }
     }
-
-    // public function series()
-    // {
-    //     return $this->belongsTo(Series::class,'kode_pack','kode_pack');
-    // }
 }
