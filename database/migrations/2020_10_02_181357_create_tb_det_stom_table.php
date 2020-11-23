@@ -14,13 +14,14 @@ class CreateTbDetStomTable extends Migration
     public function up()
     {
         Schema::create('tb_det_stom', function (Blueprint $table) {
+            $table->id();
+            $table->string('tb_head_stom_id');
             $table->string('no_sm', 15);
             $table->string('kode_barang', 6);
             $table->string('nama_barang', 35)->nullable();
             $table->string('jenis', 25)->nullable();
             $table->integer('jumlah')->nullable();
             $table->timestamps();
-            $table->primary(['no_sm','kode_barang']);
         });
     }
 

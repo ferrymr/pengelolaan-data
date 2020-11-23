@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Movement extends Model
 {
-    protected $table = 'view_stom';
+    protected $table = 'tb_movement';
     protected $primarykey = 'no_faktur';
     public $incrementing = false;
     protected $fillable = [
@@ -39,18 +39,18 @@ class Movement extends Model
     public function addMovement($request) 
     {
         $movement = array(
-            'no_faktur' => $request['no_faktur'],
-            'id_member' => $request['id_member'],
+            'no_faktur' => $request['no_sm'],
+            'id_member' => $request['no_member'],
             'nama' => $request['nama'],
-            'tanggal' => $request['tanggal'],
-            'jenis_movement' => $request['jenis_movement'],
+            'tanggal' => $request['tgl_pinjam'],
+            'jenis_movement' => $request['tipe_move'],
             'kode_barang' => $request['kode_barang'],
-            'nama_barang' => $request['nama_barang'],
-            'jenis_barang' => $request['jenis_barang'],
+            'nama_barang' => $request['nama'],
+            'jenis_barang' => $request['jenis'],
             'jumlah' => $request['jumlah'],
             'user' => $request['user'],
             'waktu' => $request['waktu'],
-            'note' => $request['note']
+            'note' => $request['keterangan']
         );
 
         $movement = Movement::create($movement);

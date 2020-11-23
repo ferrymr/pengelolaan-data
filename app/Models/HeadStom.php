@@ -8,14 +8,42 @@ class HeadStom extends Model
 {
     protected $table    = 'tb_head_stom';
     public $incrementing = false;
-    protected $primaryKey = 'no_sm';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'no_sm','no_member','nama','tgl_pinjam', 'tgl_kembai', 'keterangan','tipe_move','kassir','waktu'
+     'no_sm','no_member','nama','tgl_pinjam', 'tgl_kembai', 'keterangan','tipe_move','kassir','waktu'
     ];
 
-    // public function detjual()
-    // {
-    //    return $this->hasMany(TbDetJual::class, 'no_do'); 
-    // }
+    public function getAll() 
+    {
+        return HeadStom::all();
+    }
+
+    public function findId($id) 
+    {
+        $data = HeadStom::find($id);
+
+        if(!empty($data)) {
+            return $data;
+        } else {
+            return false;
+        }
+    }
+
+    public function editMovement($request, $id) 
+    {
+        $data = HeadStom::where('id', $id)->update($request);
+
+        if(!empty($data)) {
+            return $data;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function detstom()
+    {
+        return $this->hasMany('App\Models\DetStom');
+    }
 }
