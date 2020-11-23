@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTbDetJualTable extends Migration
+class AlterTbHeadStomTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AlterTbDetJualTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasColumn('tb_head_jual', 'resi')) {
-            Schema::table('tb_head_jual', function(Blueprint $table) {
-                $table->string('resi')->after('move')->nullable();
+        if (!Schema::hasColumn('tb_head_stom', 'id')) {
+            Schema::table('tb_head_stom', function(Blueprint $table) {
+                $table->id()->first();
             });
         }
     }
@@ -27,9 +27,9 @@ class AlterTbDetJualTable extends Migration
      */
     public function down()
     {
-        if (Schema::hasColumn('tb_head_jual', 'resi')) {
-            Schema::table('tb_head_jual', function(Blueprint $table) {
-                $table->dropColumn('resi');
+        if (Schema::hasColumn('tb_head_stom', 'id')) {
+            Schema::table('tb_head_stom', function(Blueprint $table) {
+                $table->dropColumn('id');
             });
         }
     }

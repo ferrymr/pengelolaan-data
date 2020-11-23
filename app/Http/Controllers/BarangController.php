@@ -37,7 +37,7 @@ class BarangController extends Controller
         ]);
     }
 
-    public function datatable() 
+    public function datatable()
     {
         $barang = $this->barangRepo->getAll();
 

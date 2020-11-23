@@ -22,10 +22,10 @@
             <h3 class="card-title">Tambah Data Barang</h3>
         </div>
         <div class="card-body barangs">
-            <div class="form-group">
-                <div class="form-group @if($errors->has('no_member')) has-error @endif">
+            <div class="row">
+                <div class="form-group col-md-4 @if($errors->has('no_member')) has-error @endif">
                     <label for="kode_barang" class="col-sm-12 control-label">Kode</label>    
-                    <div class="col-sm-4">
+                    <div class="col-sm-12">
                         <input  maxlength="6"  value="{{ old('kode_barang') }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode" required>
                         @if($errors->has('kode_barang'))
                             <span class="text-danger">{{ $errors->first('kode_barang') }}</span>
@@ -33,19 +33,19 @@
                         <p class="text-muted">Ideal 6 character</p>
                     </div>
                 </div>
-            </div>
-            <div class="form-group @if($errors->has('unit')) has-error @endif">
-                <label for="unit" class="col-sm-12 control-label">Unit</label>    
-                <div class="col-sm-4">
-                    <select name="unit" class="form-control select2" id="unit">
-                        <option value="" selected>Pilih unit</option>
-                        <option value="PIECES">PIECES</option>
-                        <option value="SERIES">SERIES</option>
-                    </select>
+                <div class="form-group col-md-4 @if($errors->has('unit')) has-error @endif">
+                    <label for="unit" class="col-sm-12 control-label">Unit</label>    
+                    <div class="col-sm-12">
+                        <select name="unit" class="form-control select2" id="unit">
+                            <option value="" selected>Pilih unit</option>
+                            <option value="PIECES">PIECES</option>
+                            <option value="SERIES">SERIES</option>
+                        </select>
+                    </div>
+                    @if($errors->has('unit'))
+                        <span class="text-danger">{{ $errors->first('unit') }}</span>
+                    @endif
                 </div>
-                @if($errors->has('unit'))
-                    <span class="text-danger">{{ $errors->first('unit') }}</span>
-                @endif
             </div>
 
             <div id="series" class="form-group row col-sm-12" style="display:none;">
@@ -78,34 +78,37 @@
                     @endif
                 </div>
             </div>
-            <div class="form-group @if($errors->has('tipe_kulit')) has-error @endif">
-                <label for="tipe_kulit" class="col-sm-12 control-label">Tipe kulit</label>    
-                <div class="input-group col-sm-6">
-                    <select name="tipe_kulit" class="custom-select select2">
-                        <option value="" selected>Pilih tipe kulit</option>
-                        <option value="OILY">OILY</option>
-                        <option value="NORMAL">NORMAL</option>                  
-                        <option value="DRY">DRY</option>
-                        <option value="COMBINATION">COMBINATION</option>
-                        <option value="SENSITIVE">SENSITIVE</option>
-                        <option value="OTHER">OTHER</option>
-                    </select>
+
+            <div class="row">
+                <div class="form-group col-md-4 @if($errors->has('tipe_kulit')) has-error @endif">
+                    <label for="tipe_kulit" class="col-sm-12 control-label">Tipe kulit</label>    
+                    <div class="input-group col-sm-12">
+                        <select name="tipe_kulit" class="custom-select select2">
+                            <option value="" selected>Pilih tipe kulit</option>
+                            <option value="OILY">OILY</option>
+                            <option value="NORMAL">NORMAL</option>                  
+                            <option value="DRY">DRY</option>
+                            <option value="COMBINATION">COMBINATION</option>
+                            <option value="SENSITIVE">SENSITIVE</option>
+                            <option value="OTHER">OTHER</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group @if($errors->has('jenis')) has-error @endif">
-                <label for="jenis" class="col-sm-12 control-label">Jenis barang</label>    
-                <div class="input-group col-sm-6">
-                    <select name="jenis" class="custom-select select2" required>
-                    <option value="" selected>Pilih jenis barang</option>
-                    <option value="WHITENING">WHITENING</option>
-                    <option value="PURIFYING">PURIFYING</option>                  
-                    <option value="DECORATIVE">DECORATIVE</option>
-                    <option value="BODYCARE">BODYCARE</option>
-                    </select>
+                <div class="form-group col-md-4 @if($errors->has('jenis')) has-error @endif">
+                    <label for="jenis" class="col-sm-12 control-label">Jenis barang</label>    
+                    <div class="input-group col-sm-12">
+                        <select name="jenis" class="custom-select select2" required>
+                        <option value="" selected>Pilih jenis barang</option>
+                        <option value="WHITENING">WHITENING</option>
+                        <option value="PURIFYING">PURIFYING</option>                  
+                        <option value="DECORATIVE">DECORATIVE</option>
+                        <option value="BODYCARE">BODYCARE</option>
+                        </select>
+                    </div>
+                    @if($errors->has('jenis'))
+                        <span class="text-danger">{{ $errors->first('jenis') }}</span>
+                    @endif
                 </div>
-                @if($errors->has('jenis'))
-                    <span class="text-danger">{{ $errors->first('jenis') }}</span>
-                @endif
             </div>
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('berat')) has-error @endif">
@@ -139,17 +142,27 @@
                         @endif
                     </div>
                 </div>            
-                {{-- <div class="form-group @if($errors->has('stok')) has-error @endif">
-                    <label for="stok" class="col-sm-12 control-label">Stock</label>    
+                <div class="form-group @if($errors->has('stok')) has-error @endif">
+                    <label for="stok" class="col-sm-12 control-label">Stock HO</label>    
                     <div class="col-sm-12">
-                        <input value="{{ old('stok') }}" type="number" name="stok" class="form-control" id="stok" placeholder="Stock" min="0">
+                        <input value="{{ old('stok') ? old('stok') : 0 }}" type="number" name="stok" class="form-control" id="stok" placeholder="Stock" min="0" readonly>
                         @if($errors->has('stok'))
                             <span class="text-danger">{{ $errors->first('stok') }}</span>
                         @endif
                     </div>
-                </div> --}}
+                </div>                
+                <div class="form-group @if($errors->has('satuan')) has-error @endif">
+                    <label for="satuan" class="col-sm-12 control-label">Pilihan Diskon</label>    
+                    <div class="col-sm-12">
+                        <select name="satuan" class="form-control select2">
+                            <option value="" selected>Pilih Jenis</option>
+                            <option value="PERSEN">PERSEN</option>
+                            <option value="POTONGAN">POTONGAN</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group @if($errors->has('diskon')) has-error @endif">
-                    <label for="diskon" class="col-sm-12 control-label">Diskon</label>    
+                    <label for="diskon" class="col-sm-12 control-label">Value</label>    
                     <div class="col-sm-12">
                         <input value="{{ old('diskon') ? old('diskon') : 0 }}" type="number" name="diskon" class="form-control" id="diskon" placeholder="Diskon" min="0">
                         @if($errors->has('diskon'))
@@ -188,15 +201,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-grup @if($errors->has('bpom')) has-error @endif">
-                <div class="col-sm-6">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="bpom" id="bpom" value="1">
-                        <label class="custom-control-label" for="bpom">BPOM</label>
-                    </div>
-                </div>
-            </div>
-            <br>
+            
             {{-- <div class="form-group @if($errors->has('tgl_eks')) has-error @endif">
                 <label for="tgl_eks" class="col-sm-12 control-label">Tanggal expired</label>    
                 <div class="col-sm-6">
@@ -222,6 +227,14 @@
                     @if($errors->has('cara_pakai'))
                         <span class="text-danger">{{ $errors->first('cara_pakai') }}</span>
                     @endif
+                </div>
+            </div>
+            <div class="form-grup @if($errors->has('bpom')) has-error @endif">
+                <div class="col-sm-6">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="bpom" id="bpom" value="1">
+                        <label class="custom-control-label" for="bpom">BPOM</label>
+                    </div>
                 </div>
             </div>
             <div class="form-grup @if($errors->has('stats')) has-error @endif">
@@ -257,7 +270,7 @@
                 </div>
             </div>
 
-            <hr>
+            {{-- <hr>
 
             <div class="col-md-12">                    
                 <h5>Tambahkan produk ke SPB</h5>
@@ -274,7 +287,7 @@
                     </button>
                 </div>
                 <table id="append-productspb" class="col-md-8"></table>
-            </div>
+            </div> --}}
 
             <hr>
             

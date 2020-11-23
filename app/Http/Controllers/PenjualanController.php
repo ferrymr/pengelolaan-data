@@ -81,17 +81,17 @@ class PenjualanController extends Controller
             $dates = Carbon::now();
             $index = $dates->format('Y') . '/INV' . '/' . $invoice;
 
-            $create = TbHeadJual::create([
-                'no_do' => $index
-            ]);
+            // $create = TbHeadJual::create([
+                // 'no_do' => $index
+            // ]);
             return $index;
         } else {
             $dates = Carbon::now();
             $index = $dates->format('Y') . '/INV' . '/00001';
 
-            $create = TbHeadJual::create([
-                'no_do' => $index
-            ]);
+            // $create = TbHeadJual::create([
+            //     'no_do' => $index
+            // ]);
 
             return $index;
         }

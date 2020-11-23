@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\HeadStom;
 use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
@@ -400,4 +401,22 @@ Route::group([
     Route::post('store', 'PembelianController@store')->name('store');
     Route::get('edit/{id}', 'PembelianController@edit')->name('edit');
     Route::get('delete/{id}', 'PembelianController@destroy')->name('delete');
+});
+
+// movement
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/movement/',
+    'as' => 'admin.movement.'
+], function () {
+    Route::get('', 'MovementController@index')->name('index');
+    Route::get('datatable', 'MovementController@datatable')->name('datatable');
+    Route::get('edit/{no_sm}', 'MovementController@edit')->name('edit');
+    // Route::get('delete/{kode_barang}', 'BarangController@destroy')->name('delete');
+    Route::get('add', 'MovementController@create')->name('add');
+    Route::post('store', 'MovementController@store')->name('store');
+    Route::get('get.nama', 'MovementController@getNama')->name('get.nama');
+    Route::post('update_movement/{id}', 'MovementController@update_movement')->name('update_movement');
+    Route::post('addinvoice', 'MovementController@addinvoice')->name('addinvoice');
+    Route::post('create.kode', 'MovementController@create_kode')->name('create.kode');
 });
