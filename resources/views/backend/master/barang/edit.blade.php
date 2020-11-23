@@ -23,18 +23,8 @@
 
         <div class="card-body">
             <div class="form-group row col-sm-12">
-                <div class="form-group @if($errors->has('unit')) has-error @endif">
-                    <label for="unit" class="col-sm-12 control-label">Unit</label>    
-                    <div class="col-sm-12">
-                        <select name="unit" class="form-control select2" id="unit">
-                            <option value="" selected>Pilih unit</option>
-                            <option value="PIECES" @if($barang->unit == 'PIECES') selected @endif>PIECES</option>
-                            <option value="SERIES" @if($barang->unit == 'SERIES') selected @endif>SERIES</option>
-                        </select>
-                    </div>
-                </div>
                 <div class="form-group @if($errors->has('no_member')) has-error @endif">
-                    <label for="kode_barang" class="col-sm-12 control-label">Kode barang</label>    
+                    <label for="kode_barang" maxlength="6" class="col-sm-12 control-label">Kode barang</label>    
                     <div class="col-sm-12">
                         <input maxlength="6" value="{{ $barang->kode_barang }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode barang" required>
                         @if($errors->has('kode_barang'))

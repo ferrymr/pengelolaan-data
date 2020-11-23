@@ -52,7 +52,7 @@ class Barang extends Model
     public function getBarangByCategory($category_name, $user, $sorting, $byCategory) {
         $barang = Barang::where('jenis', $category_name)
                 ->where('h_nomem', '!=', 0)
-                ->where('stok','>',0)
+                // ->where('stok','>',0)
                 ->where('stats',1);
         
         if(!empty($sorting)) {
@@ -99,7 +99,7 @@ class Barang extends Model
 
     public function getBarangAll($user, $sorting, $byCategory, $search) {
         $barang = Barang::where('h_nomem', '!=', 0)
-                    ->where('stok','>',0)
+                    // ->where('stok','>',0)
                     ->where('stats',1);
         
         if(!empty($sorting)) {
@@ -126,7 +126,7 @@ class Barang extends Model
 
     public function getBarangPromo($user, $sorting, $byCategory) {
         $barang = Barang::where('h_nomem', '!=', 0)
-                        ->where('stok','>',0)
+                        // ->where('stok','>',0)
                         ->where('flag_promo', 1)
                         ->where('stats',1);
         

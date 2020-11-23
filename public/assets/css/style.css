@@ -13453,6 +13453,10 @@ iframe {
 /* End @media max-width 530*/
 
 @media (max-width: 500px) {
+    .tab-details-product .tab-link {
+        border-bottom:none;
+        padding-bottom: 30px;
+    }
     .tab-details-product .tab-link li {
         width: 100%;
         padding: 0;
@@ -13473,6 +13477,8 @@ iframe {
         padding: 4px;
         text-align: left;
         border-bottom: 2px solid;
+        width: 50%;
+        float: left;
     }
     .tab-details-product {
         margin-top: 35px;

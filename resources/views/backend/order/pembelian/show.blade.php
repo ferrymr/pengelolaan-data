@@ -62,11 +62,11 @@
               <tbody>
                 @foreach($data->items as $item)
                   <tr>
-                    <td>{{ $data->detBeli->jumlah }}</td>
-                    <td>{{ $data->detBeli->kode_barang }}</td>
-                    <td>{{ $data->detBeli->jenis }}</td>
-                    <td>@currency($data->detBeli->harga)</td>
-                    <td>@currency($data->detBeli->total)</td>
+                    <td>{{ $item->jumlah }}</td>
+                    <td>{{ $item->kode_barang }}</td>
+                    <td>{{ $item->jenis }}</td>
+                    <td>@currency($item->harga)</td>
+                    <td>@currency($item->total)</td>
                   </tr>
                 @endforeach
               </tbody>
@@ -86,7 +86,7 @@
                 <table class="table">
                   <tr>
                     <th style="width:50%">Jumlah Barang:</th>
-                    <td>{{ $data->detBeli->jumlah }}</td>
+                    <td>{{ $item->jumlah }}</td>
                   </tr>
                   <tr>
                     <th>Total:</th>

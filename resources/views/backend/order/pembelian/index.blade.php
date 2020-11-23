@@ -9,7 +9,7 @@
         </div>
         <div class="col-6">
             <div class="float-right">
-                <a href="#" class="btn btn-block btn-info">
+                <a href="{{ route('admin.pembelian.add') }}" class="btn btn-block btn-info">
                     <i class="fa fa-plus-square"></i>&nbsp;Tambah
                 </a>
             </div>
@@ -90,8 +90,8 @@
                 if(data.action.hapus) {
                     wrapper.find('.btn-hapus')
                         .attr('href', data.action.hapus)
-                        .attr('data-id', data.no_po)
-                        .attr('data-title', 'Delete ' + data.no_po + '?').show();
+                        .attr('data-id', data.id)
+                        .attr('data-title', 'Delete ' + data.id + '?').show();
                 }
 
                 //return the buttons
@@ -126,7 +126,7 @@
                         className: 'dt-body-center',
                         render: renderAction
                     },
-                    { data: 'no_po', name: 'no_po', visible: false },
+                    { data: 'id', name: 'id', visible: false },
                 ],
                 order: [[ 5, 'desc' ]]
             });

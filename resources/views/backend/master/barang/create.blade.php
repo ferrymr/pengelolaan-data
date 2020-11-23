@@ -247,9 +247,20 @@
                         <label class="custom-control-label" for="flag_promo">Termasuk promo produk ?</label>
                     </div>
                 </div>
-            </div>&nbsp;
+            </div>
+            <div class="form-grup @if($errors->has('flag_sell_to_reseller')) has-error @endif">
+                <div class="col-sm-6">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="flag_sell_to_reseller" value="1" id="flag_sell_to_reseller">
+                        <label class="custom-control-label" for="flag_sell_to_reseller">Dijual ke reseller saat pertama kali daftar</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
             <div class="col-md-12">                    
-                <h5><b>Tambahkan produk ke SPB</b></h5>
+                <h5>Tambahkan produk ke SPB</h5>
             </div>
             <div class="col-md-8 @if($errors->has('no_member')) has-error @endif mb-2" id="product-series">
                 <div class="form-inline">
@@ -263,16 +274,10 @@
                     </button>
                 </div>
                 <table id="append-productspb" class="col-md-8"></table>
-            </div>    
-            <div class="form-grup @if($errors->has('flag_sell_to_reseller')) has-error @endif">
-                <div class="col-sm-6">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="flag_sell_to_reseller" value="1" id="flag_sell_to_reseller">
-                        <label class="custom-control-label" for="flag_sell_to_reseller">Dijual ke reseller saat pertama kali daftar</label>
-                    </div>
-                </div>
             </div>
+
             <hr>
+            
             <h5 class="col-md-12">Search Engine Optimation (SEO)</h5>
             <div class="form-group @if($errors->has('meta_title')) has-error @endif">
                 <label for="meta_title" class="col-sm-12 control-label">Meta Title</label>    
