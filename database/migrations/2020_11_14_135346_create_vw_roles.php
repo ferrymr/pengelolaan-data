@@ -14,7 +14,10 @@ class CreateVwRoles extends Migration
      */
     public function up()
     {
-        DB::dropIfExists('vw_roles');
+        DB::statement("
+            DROP VIEW IF EXISTS vw_roles; 
+        ");
+
         DB::statement("
             CREATE VIEW `vw_roles` AS select 
                 `users`.`id` AS `id`,
