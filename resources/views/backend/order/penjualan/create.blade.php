@@ -253,7 +253,7 @@
                         
                 }});
             
-            var no_invoice = '2020/INV/00001';
+            var no_invoice = '2020INV00001';
             $('[name=no_do]').val(no_invoice); 
             return (false);
         }
@@ -261,7 +261,7 @@
         // =====================================ADD ROW TABEL==================================================
         initKodeBarang();
             function initKodeBarang(){
-                console.log('initKodeBarang');
+                // console.log('initKodeBarang');
             $('[name="kode_barang[]"]').keyup(function () {
                 var self = $(this);
                 var kode_barang = $(this).val();
@@ -376,6 +376,7 @@
             updateData();
         });
         function updateData(){
+            console.log(1);
             var no_invoice = $('input[name="no_do"]').val();
             var tanggal = $('input[name="tanggal"]').val();
             var no_member = $('input[name="no_member"]').val();
@@ -418,10 +419,11 @@
                
             });
             var sub_total = grandTotal;
-
+            // console.log(no_invoice);
+            // return false;
             $.ajax({
                 method: "POST",
-                url: "{{ route('admin.penjualan.update_penjualan') }}",
+                url: "{{ route('admin.penjualan.xyz') }}",
                 data: { 
                     _token :"{{ csrf_token() }}",
                     no_invoice: no_invoice, 

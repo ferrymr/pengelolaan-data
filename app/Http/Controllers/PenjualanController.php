@@ -9,12 +9,17 @@ use Illuminate\Support\Facades\Hash;
 use DB;
 use Carbon\Carbon;
 
+use App\Models\Role;
 use App\Models\TbHeadJual;
 use App\Models\TbDetJual;
-use App\Models\TbMember;
 use App\Models\Barang;
-use App\Models\TbHeadPack;
 use App\Models\User;
+use App\Mail\OrderConfirmed;
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
+use App\Helpers\Whatsapp;
+use App\Models\ShippingAddress;
+use App\Mail\OrderCreated;
 
 
 class PenjualanController extends Controller
@@ -30,9 +35,18 @@ class PenjualanController extends Controller
     public function datatable()
     {
 
-        $items = TbHeadJual::with('detjual')->get();
+        $data = TbHeadJual::with('detjual')->orderBy('id', "DESC");
+        return Datatables::of($data)
+            ->addColumn('status', function ($data) {
+                return '<span class="badge bg-success">' . $data->status_transaksi . '</span>';
+            })
 
-        return Datatables::of($items)
+            ->addColumn('action', function ($data) {
+
+                return [
+                    'show' => route('admin.penjualan.show', $data->id),
+                ];
+            })
             ->escapeColumns([])
             ->make(true);
     }
@@ -45,7 +59,7 @@ class PenjualanController extends Controller
     public function store(Request $request)
     {
         $dates = Carbon::now();
-        $index = $dates->format('Y') . '/INV' . '/' . substr(rand(), 0, 5);
+        $index = $dates->format('Y') . 'INV' . substr(rand(), 0, 5);
 
         $this->validate($request, [
             'no_do' => 'required|string',
@@ -59,6 +73,16 @@ class PenjualanController extends Controller
         return view('backend.order.penjualan.index');
     }
 
+    public function show($id)
+    {
+        $data = TbHeadJual::with('items.itemDetailHas', 'address', 'user', 'spb')
+            ->findOrFail($id);
+        return view(
+            'backend.order.penjualan.show',
+            compact('data')
+        );
+    }
+
 
     // ====================================GET NAMA MEMBER===========================================
     public function getNama(Request $request)
@@ -66,7 +90,7 @@ class PenjualanController extends Controller
         $no_member = $request->get('no_member');
 
         $data = User::select('name as nama')->where('no_member', $no_member)->firstOrFail();
-        // $data = TbMember::select('nama')->where('no_member', $no_member)->firstOrFail();
+
         return response()->json($data);
     }
 
@@ -79,15 +103,16 @@ class PenjualanController extends Controller
             $invoice = abs($invoice) + 1;
             $invoice = str_pad($invoice, 5, '0', STR_PAD_LEFT);
             $dates = Carbon::now();
-            $index = $dates->format('Y') . '/INV' . '/' . $invoice;
+            $index = $dates->format('Y') . 'INV' . $invoice;
 
             $create = TbHeadJual::create([
                 'no_do' => $index
             ]);
+
             return $index;
         } else {
             $dates = Carbon::now();
-            $index = $dates->format('Y') . '/INV' . '/00001';
+            $index = $dates->format('Y') . 'INV' . '00001';
 
             $create = TbHeadJual::create([
                 'no_do' => $index
@@ -103,108 +128,57 @@ class PenjualanController extends Controller
         if ($request->ajax()) {
             $no_member = $request->no_member;
             $kode_barang = $request->kode_barang;
-            $jmljual = \App\Models\TbDetJual::where('kode_barang', $kode_barang)
-                ->whereHas('headjual', function ($query) use ($no_member) {
-                    $query->where('kode_cust', $no_member);
-                })
-                ->where('created_at', '>', date('Y-m-d', strtotime('-30 days')))
-                ->sum('jumlah');
-            if ($jmljual >= 2) {
-                return response()->json([
-                    'msg' => 'member telah membeli barang ini sebanyak 2x dalam sebulan'
-                ], 400);
-            }
 
             $data = Barang::select('nama', 'jenis', 'h_member')->where('kode_barang', $kode_barang)->first();
-            if ($data == null) {
-                $data = TbHeadPack::select('nama_pack as nama', 'jenis_pack as jenis', 'h_member')->where('kode_pack', $kode_barang)->first();
-            }
+            // if ($data == null) {
+            //     $data = TbHeadPack::select('nama_pack as nama', 'jenis_pack as jenis', 'h_member')->where('kode_pack', $kode_barang)->first();
+            // }
             return response()->json($data, 200);
         }
     }
 
     public function update_penjualan(Request $request)
     {
-        $headJual = TbHeadJual::find($request['no_invoice']);
-        if ($headJual) {
-            $headJual->tanggal = date('Y-m-d', strtotime($request['tanggal']));
-            $headJual->kode_cust = $request['no_member'];
-            $headJual->nama = $request['nama'];
-            $headJual->sub_total = $request['sub_total'];
-            $headJual->trans = $request['trans'];
-            $headJual->bayar = $request['bayar'];
-            $headJual->cc = $request['cc'];
-            $headJual->note = $request['note'];
+        // dd($request->all());
+        $data = TbHeadJual::where('no_do', $request['no_invoice'])->first();
+        $dataHead = [
+            'user_id' => $request['user_id'],
+            'tanggal' => date('Y-m-d', strtotime($request['tanggal'])),
+            'no_member' => $request['no_member'],
+            'nama' => $request['nama'],
+            'sub_total' => $request['sub_total'],
+            'trans' => $request['trans'],
+            'bayar' => $request['bayar'],
+            'cc' => $request['cc'],
+            'note' => $request['note'],
+            'status_transaksi' => 'PLACE ORDER',
+        ];
 
+        $prosesUpdate = TbHeadJual::where('id', $data->id)->update($dataHead);
+        // dd($prosesUpdate);
 
+        // dd($data->id);
+        $headJual = TbHeadJual::where('id', $data->id);
+        // dd($headJual);
+        if ($prosesUpdate == 1) {
 
-            if ($headJual->save()) {
-                foreach ($request['detail_barang'] as $row) {
-                    $data[] = explode(',', $row);
-                }
-                unset($data[0]);
-
-                foreach ($data as $row) {
-                    $kode_barang = str_replace('undefined', '', $row[0]);
-                    $nama       = $row[1];
-                    $jenis      = $row[2];
-                    $jumlah     = $row[3];
-                    $harga      = $row[4];
-                    $total      = $row[5];
-
-                    $detail = TbDetJual::select('tb_det_jual.*')
-                        ->join('tb_head_jual', 'tb_head_jual.no_do', 'tb_det_jual.no_do')
-                        ->where('tb_det_jual.no_do', $request['no_invoice'])
-                        ->where('tb_det_jual.kode_barang', $kode_barang)
-                        ->where('tb_head_jual.kode_cust', $request['no_member'])
-                        ->whereNotIn('tb_det_jual.kode_barang', ['OK001', 'OK002'])
-                        ->whereMonth('tb_det_jual.created_at', date('m'))
-                        ->get();
-
-                    $detail2 = TbDetJual::select('tb_det_jual.*')
-                        ->join('tb_head_jual', 'tb_head_jual.no_do', 'tb_det_jual.no_do')
-                        ->where('tb_det_jual.kode_barang', $kode_barang)
-                        ->where('tb_head_jual.kode_cust', $request['no_member'])
-                        ->whereNotIn('tb_det_jual.kode_barang', ['OK001', 'OK002'])
-                        ->whereMonth('tb_det_jual.created_at', date('m'))
-                        ->get();
-
-                    if ($detail->count() != 0) {
-                        foreach ($detail as $cek) {
-
-                            if ($cek->jumlah + $jumlah > 2) {
-                                TbHeadJual::find($headJual->no_do)->delete();
-                                abort(404);
-                            }
-                        }
-                    }
-
-                    if ($jumlah > 2) {
-                        TbHeadJual::find($headJual->no_do)->delete();
-                        return response()->json([
-                            'msg' => 'member telah melebihi batas pembelian sebanyak 2x dalam sebulan'
-                        ], 400);
-                    }
-
-                    if ($detail2->count() != 0) {
-                        foreach ($detail2 as $cek) {
-
-                            if ($cek->jumlah + $jumlah > 2) {
-                                TbHeadJual::find($headJual->no_do)->delete();
-                                abort(404);
-                            }
-                        }
-                    }
-
-                    if ($jumlah > 2) {
-                        TbHeadJual::find($headJual->no_do)->delete();
-                        // abort(404);
-                        return response()->json([
-                            'msg' => 'member telah membeli barang sebelumnya & tidak bisa membeli lebih dari 2x'
-                        ], 400);
-                    }
+            foreach ($request['detail_barang'] as $row => $value) {
+                // dd($value);
+                if ($value != null) {
+                    // dd($value);
+                    $detail = explode(',', $value);
+                    // dd($detail[0][1]);
+                    $kode_barang = str_replace('undefined', '', $detail[0]);
+                    $nama       = $detail[1];
+                    $jenis      = $detail[2];
+                    $jumlah     = $detail[3];
+                    $harga      = $detail[4];
+                    $total      = $detail[5];
+                    $no_do      = $detail[6];
+                    // dd($nama);
 
                     $detJual = TbDetJual::create([
+                        'tb_head_jual_id' => $data->id,
                         'no_do'       => $request['no_invoice'],
                         'kode_barang' => $kode_barang,
                         'nama'        => $nama,
@@ -213,35 +187,143 @@ class PenjualanController extends Controller
                         'harga'       => $harga,
                         'total'       => $total
                     ]);
-                    if ($detJual) {
-                        $barang = Barang::find($kode_barang);
-                        if ($barang == null) {
-                            $barang = TbHeadPack::findOrFail($kode_barang);
-                        }
-                        $barang->stok = $barang->stok - $jumlah;
-                        $barang->save();
-                    }
+                    // dd($detJual);
+                    // if ($detJual) {
+                    $barang = Barang::where('kode_barang', $kode_barang)->first();
+                    // dd($barang->stok);
+                    // if ($barang == null) {
+                    //     $barang = TbHeadPack::findOrFail($kode_barang);
+                    // }
+                    $barang->stok = $barang->stok - $jumlah;
+                    $barang->save();
+                    // }
                 }
-
-                if ($request['ongkir'] == 'OK001') {
-                    $nama_ongkir = "ONGKIR DALAM KOTA";
-                } else {
-                    $nama_ongkir = "ONGKIR LUAR KOTA";
-                }
-                $ongkir = TbDetJual::create([
-                    'no_do'       => $request['no_invoice'],
-                    'kode_barang' => $request['ongkir'],
-                    'nama'        => $nama_ongkir,
-                    'jenis'       => 'BIAYA LAIN-LAIN',
-                    'jumlah'      => '1',
-                    'harga'       => $request['harga'],
-                    'total'       => $request['harga']
-                ]);
             }
+
+            if ($request['ongkir'] == 'OK001') {
+                $nama_ongkir = "ONGKIR DALAM KOTA";
+            } else {
+                $nama_ongkir = "ONGKIR LUAR KOTA";
+            }
+            $ongkir = TbDetJual::create([
+                'tb_head_jual_id' => $data->id,
+                'no_do'       => $request['no_invoice'],
+                'kode_barang' => $request['ongkir'],
+                'nama'        => $nama_ongkir,
+                'jenis'       => 'BIAYA LAIN-LAIN',
+                'jumlah'      => '1',
+                'harga'       => $request['harga'],
+                'total'       => $request['harga']
+            ]);
+
             return response()->json([
                 'success' => true,
                 'redirect_url' => route('admin.penjualan.index'),
             ]);
+        }
+    }
+
+    public function setStatus(Request $request, $id)
+    {
+        // password kosong
+        $param["status_transaksi"] = $request->input('status_transaksi');
+
+        // get transaction
+        $getTrans = TbHeadJual::with('items', 'address', 'user')->where('id', $id);
+
+        $data = $getTrans->first();
+
+        if ($data) {
+            if (isset($data->user->email)) {
+                if ($request->input('status_transaksi') == 'PAYMENT CONFIRMED') {
+
+                    // notif email
+                    Mail::to($data->user->email)->send(new OrderConfirmed($data));
+
+                    if (!empty($data->address->telepon_pengirim)) {
+                        $phone = $data->address->telepon_pengirim;
+                    } else if (!empty($data->user->phone)) {
+                        $phone = $data->user->phone;
+                    } else {
+                        $phone = 0;
+                    }
+                    // notify to whatsapp
+                    $to = $phone;
+                    $message = "Terimakasih telah melakukan pembayaran di Toko Kami, pembayaran kakak telah terkonfirmasi. 
+                    Kami akan segera memproses pesanannya, ditunggu ya kak.";
+
+                    Whatsapp::sendMSG($to, $message);
+                } else if ($request->input('status_transaksi') == 'SHIPPED') {
+
+                    $param["resi"] = $request->input('input_resi');
+
+                    // notif email
+                    Mail::to($data->user->email)->send(new OrderShipped($data));
+
+                    if (!empty($data->address->telepon_pengirim)) {
+                        $phone = $data->address->telepon_pengirim;
+                    } else if (!empty($data->user->phone)) {
+                        $phone = $data->user->phone;
+                    } else {
+                        $phone = 0;
+                    }
+                    // notify to whatsapp
+                    $to = $phone;
+                    $message = "Pesanan kakak telah kami pack dan sedang dalam proses pengiriman, ditunggu ya kakak :).
+                    Berikut ini nomor resinya " . $param["resi"] . ", bisa di check di https://cekresi.com/. Terimakasih";
+
+                    Whatsapp::sendMSG($to, $message);
+
+                    // update user to member if code status is 2424
+                    if ($data->user->status == 2424) {
+                        $userUpdate = User::where('id', $data->user->id);
+
+                        $userUpdate = $userUpdate->update([
+                            'status' => null
+                        ]);
+
+                        // get useragain
+                        $userUpdateRole = User::find($data->user->id);
+
+                        // check user role member
+                        $assign = Role::where('name', 'member')->first();
+
+                        // change role to member
+                        $userUpdateRole->attachRole($assign);
+                    }
+
+                    // update user to reseller if code status is 2525
+                    if ($data->user->status == 2525) {
+                        $userUpdate = User::where('id', $data->user->id);
+
+                        $randCodeReseller = substr(md5(uniqid(mt_rand(), true)), 0, 10);
+
+                        $userUpdate = $userUpdate->update([
+                            'apro' => $randCodeReseller,
+                            'status' => null
+                        ]);
+
+                        // get useragain
+                        $userUpdateRole = User::find($data->user->id);
+
+                        // check user role member
+                        $assign = Role::where('name', 'reseller')->first();
+
+                        // change role to member
+                        $userUpdateRole->attachRole($assign);
+                    }
+                }
+            }
+        }
+
+        $trans = $getTrans->update($param);
+
+        if ($trans) {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Status pemesanan berhasil diupdate</strong>')->success()->important();
+            return redirect()->route('admin.penjualan.index');
+        } else {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Status pemesanan gagal diupdate </strong>')->error()->important();
+            return redirect()->route('admin.penjualan.index')->withError();
         }
     }
 }

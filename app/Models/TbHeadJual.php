@@ -12,9 +12,21 @@ class TbHeadJual extends Model
     // no protection on field
     protected $guarded = ['id'];
 
+    protected $fillable = [
+        'no_do',
+        'user_id',
+        'tanggal',
+        'no_member',
+        'nama',
+        'harga',
+        'note',
+        'trans',
+        'bayar',
+        'cc'
+    ];
     // ================================== methods ==================================
 
-    public function addData($input) 
+    public function addData($input)
     {
         return TbHeadJual::create($input);
     }
