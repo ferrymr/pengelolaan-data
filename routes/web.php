@@ -247,14 +247,16 @@ Route::group([
     'as'     => 'admin.penjualan.'
 ], function () {
     Route::get('index', 'PenjualanController@index')->name('index');
-    Route::get('', 'PenjualanController@getNama')->name('get.nama');
+    Route::get('/', 'PenjualanController@getNama')->name('get.nama');
     Route::get('datatable', 'PenjualanController@datatable')->name('datatable');
     Route::get('add', 'PenjualanController@create')->name('add');
     Route::post('add', 'PenjualanController@create')->name('add');
     Route::post('store', 'PenjualanController@store')->name('store');
     Route::post('create_invoice', 'PenjualanController@create_invoice')->name('create.invoice');
     Route::post('create_kode', 'PenjualanController@create_kode')->name('create.kode');
-    Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('update_penjualan');
+    Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('xyz');
+    Route::get('show/{id}', 'PenjualanController@show')->name('show');
+    Route::post('update-status/{id?}', 'PenjualanController@setStatus')->name('update-status');
 });
 
 // Pemesanan
@@ -399,5 +401,6 @@ Route::group([
     Route::post('create_kode', 'PembelianController@create_kode')->name('create.kode');
     Route::post('store', 'PembelianController@store')->name('store');
     Route::get('edit/{id}', 'PembelianController@edit')->name('edit');
+    Route::post('update/{id}', 'PembelianController@update')->name('update');
     Route::get('delete/{id}', 'PembelianController@destroy')->name('delete');
 });

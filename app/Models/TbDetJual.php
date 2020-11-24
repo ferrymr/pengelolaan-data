@@ -13,9 +13,20 @@ class TbDetJual extends Model
     // no protection on field
     protected $guarded = ['id'];
 
+    protected $fillable = [
+        'tb_head_jual_id',
+        'no_do',
+        'kode_barang',
+        'nama',
+        'jenis',
+        'jumlah',
+        'harga',
+        'total'
+    ];
+
     // ================================== methods ==================================
 
-    public function addData($input) 
+    public function addData($input)
     {
         return TbDetJual::insert($input);
     }

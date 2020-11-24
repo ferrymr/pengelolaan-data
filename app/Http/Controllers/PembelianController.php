@@ -60,18 +60,21 @@ class PembelianController extends Controller
     {
         $data = TbHeadBeli::orderBy('created_at', 'DESC')->first();
 
-        if(!empty($data)) {
+        $dates = Carbon::now();
+        $index = $dates->format('Y') . 'INV' . substr(rand(), 0, 5);
+
+        if (!empty($data)) {
             $invoice = isset($data[0]['no_po']);
             $invoice = substr($data[0]['no_po'], 9);
-        } else {            
+        } else {
             $invoice = 0;
         }
-        
+
         $invoice = abs($invoice) + 1;
         $invoice = str_pad($invoice, 5, '0', STR_PAD_LEFT);
         $dates = Carbon::now();
         $index = $dates->format('Y') . '-PO' . '-' . $invoice;
-        
+
         return view('backend.order.pembelian.create', compact('index'));
     }
 
@@ -135,6 +138,69 @@ class PembelianController extends Controller
         }
 
         flash('<i class="fa fa-info"></i>&nbsp; <strong>Pemesanan Berhasil Diinputkan</strong>')->success();
+        return redirect()->route('admin.pembelian.index');
+    }
+
+    public function destroy($id)
+    {
+        $item = TbHeadBeli::findOrFail($id);
+        $item->delete();
+
+        TbDetBeli::where('tb_head_beli_id', $id)->delete();
+
+        flash('<i class="fa fa-info"></i>&nbsp; <strong>Pembelian Berhasil Dihapus</strong>')->success();
+        return redirect()->route('admin.pembelian.index');
+    }
+
+    public function edit($id)
+    {
+        $data = TbHeadBeli::with('detbeli', 'supplier', 'items')
+            ->findOrFail($id);
+
+        return view(
+            'backend.order.pembelian.edit',
+            compact('data')
+        );
+    }
+
+    public function update(Request $request, $id)
+    {
+        $r = $request->all();
+        // dd($r);
+
+        $data_header = [
+            'kode_supp' => $r['kode_supp'],
+            'nama'      => $r['nama_supp'],
+            'sub_total' => $r['sub_total']
+        ];
+
+        $adds = TbHeadBeli::where('id', $id)->update($data_header);
+
+        $index    = $id;
+        $del2     = TbDetBeli::where('id', $id)->delete();
+
+        foreach ($request->kode_barang as $item => $kode_barang) {
+            $data_update = [
+                'tb_head_beli_id' => $index,
+                'no_po' => $request['no_po'],
+                'kode_barang' => $r['kode_barang'][$item],
+                'jenis' => $r['jenis'][$item],
+                'jumlah' => $r['jumlah'][$item],
+                'harga' => $r['harga'][$item],
+                'total' => $r['total'][$item],
+            ];
+
+            $add = TbDetBeli::insert($data_update);
+
+            if ($data_update) {
+                $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
+                $barang->stok = $barang->stok + $request->jumlah[$item];
+                $barang->save();
+            }
+        }
+
+
+        flash('<i class="fa fa-info"></i>&nbsp; <strong>Data Pembelian Berhasil Diupdate</strong>')->success();
         return redirect()->route('admin.pembelian.index');
     }
 }
