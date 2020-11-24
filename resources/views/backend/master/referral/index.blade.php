@@ -9,9 +9,9 @@
         </div>
         <div class="col-6">
             <div class="float-right">
-                <a href="{{ route('admin.referral.add') }}" class="btn btn-block btn-info">
+                <div class="btn btn-block btn-secondary">
                     <i class="fa fa-plus-square"></i>&nbsp; Tambah
-                </a>
+                </div>
             </div>
         </div>
     </div>
