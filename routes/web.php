@@ -401,3 +401,20 @@ Route::group([
     Route::get('edit/{id}', 'PembelianController@edit')->name('edit');
     Route::get('delete/{id}', 'PembelianController@destroy')->name('delete');
 });
+
+// Adjusment
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/adjusment/',
+    'as' => 'admin.adjusment.'
+], function () {
+    Route::get('', 'AdjusmentController@index')->name('index');
+    Route::get('datatable', 'AdjusmentController@datatable')->name('datatable');
+    Route::get('edit/{no_so}', 'AdjusmentController@edit')->name('edit');
+    Route::get('view/{no_so}', 'AdjusmentController@view')->name('view');
+    Route::get('delete/{no_so}', 'AdjusmentController@destroy')->name('delete');
+    Route::get('add', 'AdjusmentController@create')->name('add');
+    Route::post('store', 'AdjusmentController@store')->name('store');
+    Route::post('komposisi', 'AdjusmentController@komposisi')->name('komposisi');
+    Route::post('update/{no_so}', 'AdjusmentController@update')->name('update');
+});

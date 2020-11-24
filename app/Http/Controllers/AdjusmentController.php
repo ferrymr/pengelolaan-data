@@ -43,8 +43,6 @@ class AdjusmentController extends Controller
             'user' => $user,
             'adjust' => $adjust
         ]);
-
-        return $adjust;
     }
 
     public function datatable() 
@@ -71,7 +69,11 @@ class AdjusmentController extends Controller
         $roles = $this->roleRepo->getAll();
 
         if (!empty($code)) {
-            $newCode = date('Y') . '/SO/' . str_pad(substr($code->no_so, -4) + 1, 4, '0', STR_PAD_LEFT);
+            $invoice = substr($code->no_so, -4);
+            $invoice = abs($invoice) + 1;
+            $invoice = str_pad($invoice, 4, '0', STR_PAD_LEFT);
+            
+            $newCode = date('Y') . '/SO/' . $invoice;
         } else {
             $newCode = date('Y') . '/SO/0001';
         }
