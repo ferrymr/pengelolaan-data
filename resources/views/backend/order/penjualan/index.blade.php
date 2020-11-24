@@ -31,13 +31,11 @@
                         <th>#</th>
                         <th>No Invoice</th>
                         <th>Tanggal</th>
-                        <th>No Member</th>
-                        <th>Nama</th>
+                        <th>Nama Pembeli</th>
                         <th>Keterangan</th>
-                        <th>Jenis Pembayaran</th>
-                        <th>Type Pembayaran</th>
-                        <th>Bank</th>
                         <th>Sub Total</th>
+                        <th>Status</th>
+                        <th>Action</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -45,16 +43,16 @@
 
             <div id="action-template" style="display:none">
                 <div class="action-content">
-                    <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
-                        <i class="fa fa-edit"></i>
+                    <a href="#" class="btn btn-sm btn-info btn-show" title="Show" style="display: none;">
+                        <i class="fa fa-eye"></i>
                     </a>
-                    <a class="btn btn-danger btn-sm btn-hapus actDelete" 
+                    {{-- <a class="btn btn-danger btn-sm btn-hapus actDelete" 
                         data-placement="left" 
                         data-toggle="confirmation" 
                         data-title="Hapus data ?" 
                         style="display:none;">
                         <i class="fa fa-trash fa-fw"></i>
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>
@@ -77,9 +75,9 @@
 
                 var wrapper = $('<p></p>').append($('#action-template .action-content').clone());
                             
-                // if(data.action.edit) {
-                //     wrapper.find('.btn-edit').attr('href', data.action.edit).show();
-                // }
+                if(data.action.show) {
+                    wrapper.find('.btn-show').attr('href', data.action.show).show();
+                }
 
                 // if(data.action.hapus) {
                 //     wrapper.find('.btn-hapus')
@@ -109,13 +107,18 @@
                     },
                     { data: 'no_do', name: 'no_do' },
                     { data: 'tanggal', name: 'tanggal' },
-                    { data: 'kode_cust', name: 'kode_cust' },
                     { data: 'nama', name: 'nama' },
                     { data: 'note', name: 'note' },
-                    { data: 'trans', name: 'trans' },
-                    { data: 'bayar', name: 'bayar' },
-                    { data: 'cc', name: 'cc' },
                     { data: 'sub_total', name: 'sub_total' },
+                    { 
+                        data: 'status', 
+                        name: 'status', 
+                        render: function(data) {
+                            return `
+                                ${data}
+                            `;
+                        } 
+                    },
                     {
                         // Define the action column
                         data: null,
@@ -124,7 +127,7 @@
                         className: 'dt-body-center',
                         render: renderAction
                     },
-                    { data: 'no_do', name: 'no_do', visible: false },
+                    { data: 'id', name: 'id', visible: false },
                 ],
                 order: [[ 5, 'desc' ]]
             });
