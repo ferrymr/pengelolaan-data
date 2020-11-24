@@ -15,6 +15,10 @@ class CreateVwCashback extends Migration
     public function up()
     {
         DB::statement("
+            DROP VIEW IF EXISTS vw_cashback; 
+        ");
+
+        DB::statement("
             CREATE VIEW `vw_cashback` AS select 
                 `tb_head_jual`.`no_do` AS `no_do`,
                 `tb_head_jual`.`tanggal` AS `tanggal`,

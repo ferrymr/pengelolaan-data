@@ -229,10 +229,10 @@ Route::group([
 ], function () {
     Route::get('', 'ReferralController@index')->name('index');
     Route::get('datatable', 'ReferralController@datatable')->name('datatable');
-    Route::get('edit/{no_member}/{kode_up}', 'ReferralController@edit')->name('edit');
+    Route::get('edit/{no_member}', 'ReferralController@edit')->name('edit');
     // Route::get('view/{no_member}', 'ReferralController@view')->name('view');
     // Route::get('delete/{no_member}', 'ReferralController@destroy')->name('delete');
-    Route::get('add', 'ReferralController@create')->name('add');
+    // Route::get('add', 'ReferralController@create')->name('add');
     Route::post('store', 'ReferralController@store')->name('store');
     Route::post('leads', 'ReferralController@leads')->name('leads');
     Route::post('down', 'ReferralController@down')->name('down');
