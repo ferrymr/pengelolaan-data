@@ -230,10 +230,10 @@ Route::group([
 ], function () {
     Route::get('', 'ReferralController@index')->name('index');
     Route::get('datatable', 'ReferralController@datatable')->name('datatable');
-    Route::get('edit/{no_member}/{kode_up}', 'ReferralController@edit')->name('edit');
+    Route::get('edit/{no_member}', 'ReferralController@edit')->name('edit');
     // Route::get('view/{no_member}', 'ReferralController@view')->name('view');
     // Route::get('delete/{no_member}', 'ReferralController@destroy')->name('delete');
-    Route::get('add', 'ReferralController@create')->name('add');
+    // Route::get('add', 'ReferralController@create')->name('add');
     Route::post('store', 'ReferralController@store')->name('store');
     Route::post('leads', 'ReferralController@leads')->name('leads');
     Route::post('down', 'ReferralController@down')->name('down');
@@ -248,14 +248,16 @@ Route::group([
     'as'     => 'admin.penjualan.'
 ], function () {
     Route::get('index', 'PenjualanController@index')->name('index');
-    Route::get('', 'PenjualanController@getNama')->name('get.nama');
+    Route::get('/', 'PenjualanController@getNama')->name('get.nama');
     Route::get('datatable', 'PenjualanController@datatable')->name('datatable');
     Route::get('add', 'PenjualanController@create')->name('add');
     Route::post('add', 'PenjualanController@create')->name('add');
     Route::post('store', 'PenjualanController@store')->name('store');
     Route::post('create_invoice', 'PenjualanController@create_invoice')->name('create.invoice');
     Route::post('create_kode', 'PenjualanController@create_kode')->name('create.kode');
-    Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('update_penjualan');
+    Route::POST('update_penjualan', 'PenjualanController@update_penjualan')->name('xyz');
+    Route::get('show/{id}', 'PenjualanController@show')->name('show');
+    Route::post('update-status/{id?}', 'PenjualanController@setStatus')->name('update-status');
 });
 
 // Pemesanan
@@ -400,7 +402,25 @@ Route::group([
     Route::post('create_kode', 'PembelianController@create_kode')->name('create.kode');
     Route::post('store', 'PembelianController@store')->name('store');
     Route::get('edit/{id}', 'PembelianController@edit')->name('edit');
+    Route::post('update/{id}', 'PembelianController@update')->name('update');
     Route::get('delete/{id}', 'PembelianController@destroy')->name('delete');
+});
+
+// Adjusment
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/adjusment/',
+    'as' => 'admin.adjusment.'
+], function () {
+    Route::get('', 'AdjusmentController@index')->name('index');
+    Route::get('datatable', 'AdjusmentController@datatable')->name('datatable');
+    Route::get('edit/{no_so}', 'AdjusmentController@edit')->name('edit');
+    Route::get('view/{no_so}', 'AdjusmentController@view')->name('view');
+    Route::get('delete/{no_so}', 'AdjusmentController@destroy')->name('delete');
+    Route::get('add', 'AdjusmentController@create')->name('add');
+    Route::post('store', 'AdjusmentController@store')->name('store');
+    Route::post('komposisi', 'AdjusmentController@komposisi')->name('komposisi');
+    Route::post('update/{no_so}', 'AdjusmentController@update')->name('update');
 });
 
 // movement

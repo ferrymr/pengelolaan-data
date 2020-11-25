@@ -13,7 +13,7 @@
         'url' => route('admin.referral.update', $referral->no_member),
         'method'=>'POST',
         'class'=>'form-horizontal',
-        'id'=>'form-series-update'
+        'id'=>'form-referral-update'
     ]) !!}
 
 <div class="row">
@@ -59,7 +59,7 @@
                 <div class="form-group @if($errors->has('no_member')) has-error @endif">
                     <label for="no_member" class="col-sm-2 control-label">Upline ID</label>    
                     <div class="col-sm-2">
-                        <input type="text" name="no_member" value="{{ $referral->kode_up }}" class="form-control" id="no_member" placeholder="ID Member" required>
+                        <input type="text" name="no_member" @if(isset($upline->no_member)) value="{{ $upline->no_member }}" @endif value="" class="form-control" id="no_member" placeholder="ID Member" required>
                         @if($errors->has('no_member'))
                             <span class="text-danger">{{ $errors->first('no_member') }}</span>
                         @endif
@@ -68,7 +68,7 @@
                 <div class="form-group @if($errors->has('nama')) has-error @endif">
                     <label for="nama" class="col-sm-8 control-label">Nama Upline</label>    
                     <div class="col-sm-8">
-                        <input type="text" name="nama" value="{{ $upline->name }}" class="form-control" id="nama" placeholder="Nama Upline" readonly>
+                        <input type="text" name="nama" @if(isset($upline->no_member)) value="{{ $upline->name }}" @endif class="form-control" id="nama" placeholder="Nama Upline" readonly>
                         @if($errors->has('nama'))
                             <span class="text-danger">{{ $errors->first('nama') }}</span>
                         @endif
@@ -77,7 +77,7 @@
                 <div class="form-group @if($errors->has('info_u')) has-error @endif">
                     <label for="info_1" class="col-sm-12 control-label">Informasi Upline</label>    
                     <div class="col-sm-12">
-                        <input type="text" name="info_u" value="{{ $upline->alamat }}" class="form-control" id="info_u" placeholder="Informasi Upline" readonly>
+                        <input type="text" name="info_u" @if(isset($upline->no_member)) value="{{ $upline->alamat }}" @endif class="form-control" id="info_u" placeholder="Informasi Upline" readonly>
                         @if($errors->has('info_u'))
                             <span class="text-danger">{{ $errors->first('info_u') }}</span>
                         @endif
@@ -86,7 +86,7 @@
                 <div class="form-group @if($errors->has('kode_up')) has-error @endif">
                     <label for="kode_up" class="col-sm-2 control-label">Direct ID</label>    
                     <div class="col-sm-2">
-                        <input type="number" name="kode_up" value="{{ $referral->kode_dr }}" class="form-control" id="kode_up" placeholder="ID Upline" readonly>
+                        <input type="text" name="kode_up" @if(isset($upline->no_member)) value="{{ $upline->kode_up }}" @endif class="form-control" id="kode_up" placeholder="ID Upline" readonly>
                         @if($errors->has('kode_up'))
                             <span class="text-danger">{{ $errors->first('kode_up') }}</span>
                         @endif
@@ -155,13 +155,13 @@
                             var json = data,
                             obj = JSON.parse(json);
                             console.log(obj.nama);
-                            console.log(obj.kode_up);
                             console.log(obj.info_u);
+                            console.log(obj.kode_up);
                             console.log(json);
 
                             self.parents('.dataUpline').find('[name="nama"]').val(obj.nama);
-                            self.parents('.dataUpline').find('[name="kode_up"]').val(obj.kode_up);
                             self.parents('.dataUpline').find('[name="info_u"]').val(obj.info_u);
+                            self.parents('.dataUpline').find('[name="kode_up"]').val(obj.kode_up);
                         }
                     });
                 }, 100);

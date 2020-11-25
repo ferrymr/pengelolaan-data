@@ -41,9 +41,12 @@ class Referral extends Model
         ->orderBy('no_member')->get();
     }
 
-    public function getUpline($kode_up)
+    public function getUpline($no_member)
     {
-        $data = Referral::find($kode_up);
+        $member = Referral::where('no_member', $no_member)
+            ->select('kode_up')->get();
+
+        $data = Referral::where('no_member', $member)->get();
 
         if (!empty($data)) {
             return $data;

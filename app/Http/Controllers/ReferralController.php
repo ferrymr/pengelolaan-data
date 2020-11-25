@@ -39,12 +39,13 @@ class ReferralController extends Controller
         ]);
     }
 
-    public function edit($no_member, $kode_up)
+    public function edit($no_member)
     {
         $user = Auth::user();
         $referral = $this->referralRepo->findId($no_member);
-        $upline = $this->referralRepo->getUpline($kode_up);
         $roles = $this->roleRepo->getAll();
+
+        $upline = Referral::where('no_member', $referral->kode_up)->first();
         
         return view('backend.master.referral.edit')->with([
             'user' => $user,
@@ -66,9 +67,9 @@ class ReferralController extends Controller
                 return date('d F Y', strtotime($view->daftar));
             })
 
-            ->addColumn('action', function ($referral){
+            ->addColumn('action', function ($view){
                 return [
-                    'edit' => route('admin.referral.edit', [$referral->no_member, $referral->kode_up]),
+                    'edit' => route('admin.referral.edit', $view->no_member),
                     // 'hapus' => route('admin.referral.delete', [$referral->no_member, $referral->kode_up]),
                 ];
             })
@@ -111,22 +112,7 @@ class ReferralController extends Controller
 
     public function store(CreateReferralRequest $request, $no_member)
     {
-        try {
-            $param = array(
-                "kode_up" => $request->input('no_member'),
-                "kode_dr" => $request->input('kode_up'),
-            );
-            
-            $series = $this->referralRepo->editReferral($param, $no_member, $request->input('role_id'));
-
-            // perlu tambahan koding, auto referral untuk member dibawahnya
-
-            flash('<i class="fa fa-info"></i>&nbsp; <strong>Referral berhasil diupdate</strong>')->success()->important();
-            return redirect()->route('admin.referral.index');
-        } catch(\Exception $exception) {
-            flash('<i class="fa fa-info"></i>&nbsp; <strong>Referral gagal diupdate</strong>')->error()->important();
-            return redirect()->route('admin.referral.index');
-        }
+        // wait
     }
 
     public function leads(Request $request)
@@ -139,8 +125,8 @@ class ReferralController extends Controller
             foreach ($qry as $value) {
                 $data = array(
                     'nama' => $value->name,
-                    'kode_up' => $value->kode_up,
                     'info_u' => $value->alamat,
+                    'kode_up' => $value->kode_up,
                 );
             }
 
