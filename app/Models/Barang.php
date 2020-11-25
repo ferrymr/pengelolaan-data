@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\BarangImages;
 use App\Models\BarangRelated;
 use App\Models\TbDetSeries;
+use App\Models\SpbStock;
+use App\Models\Spb;
 use Carbon\Carbon;
 
 class Barang extends Model
 {
     protected $table = 'tb_barang';
-
+    
     protected $fillable = [
         'kode_barang', 
         'nama', 
@@ -34,6 +36,7 @@ class Barang extends Model
         'pic', // blm
         'cat', // blm
         'diskon',
+        'jenis_diskon',
         'unit',
         'deskripsi',
         'cara_pakai',
@@ -170,21 +173,26 @@ class Barang extends Model
         // unset($request['produk']);
         // unset($request['qty_product']);
 
-        // dd($product);
+        // dd($request);
 
         $barang = Barang::create($request);
 
         if($request['unit'] == 'SERIES') {
             foreach($product as $key => $row) {
                 if(!empty($row)) {
-                    TbDetSeries::insert([
-                        'tb_barang_id' => $row,
-                        'tb_series_id' => $barang->id,
-                        'qty' => $qty_product[$key]
-                    ]);
-                }                
+                    if(!empty($qty_product[$key])){
+
+                        $input = [
+                            'tb_barang_id' => $row,
+                            'tb_series_id' => $barang->id,
+                            'qty' => $qty_product[$key]
+                        ];
+
+                        TbDetSeries::insert($input);
+                    }
+                }
             }
-        }        
+        }
 
         return $barang;
     }
@@ -231,6 +239,7 @@ class Barang extends Model
     }
 
     // ======================== relations ========================
+
     public function barangImages() {
         return $this->hasMany('App\Models\BarangImages', 'tb_barang_id');
     }

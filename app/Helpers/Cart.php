@@ -57,7 +57,14 @@ class Cart
 
         // get diskon
         if($product->diskon > 0) {
-            $harga = $harga - ($harga * ($product->diskon/100));
+
+            if($product->jenis_diskon == "PERSEN") {
+                $totalDiskon = $harga * ($product->diskon/100);
+            } else {
+                $totalDiskon = $product->diskon;
+            }
+
+            $harga = $harga - $totalDiskon;
         }
 
         if(!isset($cart[$cartIndex])) {

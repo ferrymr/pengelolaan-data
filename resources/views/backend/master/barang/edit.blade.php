@@ -22,8 +22,8 @@
         </div>
 
         <div class="card-body">
-            <div class="form-group row col-sm-12">
-                <div class="form-group @if($errors->has('no_member')) has-error @endif">
+            <div class="row">
+                <div class="form-group col-md-4 @if($errors->has('no_member')) has-error @endif">
                     <label for="kode_barang" maxlength="6" class="col-sm-12 control-label">Kode barang</label>    
                     <div class="col-sm-12">
                         <input maxlength="6" value="{{ $barang->kode_barang }}" type="text" name="kode_barang" class="form-control" id="kode_barang" placeholder="Kode barang" required>
@@ -32,15 +32,15 @@
                         @endif
                     </div>
                 </div>
-            </div>
-            <div class="form-group @if($errors->has('unit')) has-error @endif">
-                <label for="unit" class="col-sm-12 control-label">Unit</label>    
-                <div class="col-sm-4">
-                    <select name="unit" class="form-control select2" id="unit" disabled>
-                        <option value="" selected>Pilih unit</option>
-                        <option value="PIECES" @if($barang->unit == 'PIECES') selected @endif>PIECES</option>
-                        <option value="SERIES" @if($barang->unit == 'SERIES') selected @endif>SERIES</option>
-                    </select>
+                <div class="form-group col-md-4  @if($errors->has('unit')) has-error @endif">
+                    <label for="unit" class="col-sm-12 control-label">Unit</label>    
+                    <div class="col-sm-12">
+                        <select name="unit" class="form-control select2" id="unit" disabled>
+                            <option value="" selected>Pilih unit</option>
+                            <option value="PIECES" @if($barang->unit == 'PIECES') selected @endif>PIECES</option>
+                            <option value="SERIES" @if($barang->unit == 'SERIES') selected @endif>SERIES</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -115,30 +115,33 @@
                     @endif
                 </div>
             </div>
-            <div class="form-group @if($errors->has('tipe_kulit')) has-error @endif">
-                <label for="tipe_kulit" class="col-sm-12 control-label">Tipe kulit</label>    
-                <div class="input-group col-sm-6">
-                    <select name="tipe_kulit" class="custom-select select2">
-                        <option value="">Pilih tipe kulit</option>
-                        <option value="OILY" @if($barang->tipe_kulit == 'OILY') selected @endif>OILY</option>
-                        <option value="NORMAL" @if($barang->tipe_kulit == 'NORMAL') selected @endif>NORMAL</option>                  
-                        <option value="DRY" @if($barang->tipe_kulit == 'DRY') selected @endif>DRY</option>
-                        <option value="COMBINATION" @if($barang->tipe_kulit == 'COMBINATION') selected @endif>COMBINATION</option>
-                        <option value="SENSITIVE" @if($barang->tipe_kulit == 'SENSITIVE') selected @endif>SENSITIVE</option>
-                        <option value="OTHER" @if($barang->tipe_kulit == 'OTHER') selected @endif>OTHER</option>
-                    </select>
+
+            <div class="row">
+                <div class="form-group col-md-4 @if($errors->has('tipe_kulit')) has-error @endif">
+                    <label for="tipe_kulit" class="col-sm-12 control-label">Tipe kulit</label>    
+                    <div class="input-group col-sm-12">
+                        <select name="tipe_kulit" class="custom-select select2">
+                            <option value="">Pilih tipe kulit</option>
+                            <option value="OILY" @if($barang->tipe_kulit == 'OILY') selected @endif>OILY</option>
+                            <option value="NORMAL" @if($barang->tipe_kulit == 'NORMAL') selected @endif>NORMAL</option>                  
+                            <option value="DRY" @if($barang->tipe_kulit == 'DRY') selected @endif>DRY</option>
+                            <option value="COMBINATION" @if($barang->tipe_kulit == 'COMBINATION') selected @endif>COMBINATION</option>
+                            <option value="SENSITIVE" @if($barang->tipe_kulit == 'SENSITIVE') selected @endif>SENSITIVE</option>
+                            <option value="OTHER" @if($barang->tipe_kulit == 'OTHER') selected @endif>OTHER</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group @if($errors->has('jenis')) has-error @endif">
-                <label for="jenis" class="col-sm-12 control-label">Jenis barang</label>    
-                <div class="input-group col-sm-6">
-                    <select name="jenis" class="custom-select select2">
-                    <option value="">Pilih jenis barang</option>
-                    <option value="WHITENING" @if($barang->jenis == 'WHITENING') selected @endif>Whitening</option>
-                    <option value="PURIFYING" @if($barang->jenis == 'PURIFYING') selected @endif>Purifying</option>                  
-                    <option value="DECORATIVE" @if($barang->jenis == 'DECORATIVE') selected @endif>Decorative</option>
-                    <option value="BODYCARE" @if($barang->jenis == 'BODYCARE') selected @endif>Body Care</option>
-                    </select>
+                <div class="form-group col-md-4 @if($errors->has('jenis')) has-error @endif">
+                    <label for="jenis" class="col-sm-12 control-label">Jenis barang</label>    
+                    <div class="input-group col-sm-12">
+                        <select name="jenis" class="custom-select select2">
+                        <option value="">Pilih jenis barang</option>
+                        <option value="WHITENING" @if($barang->jenis == 'WHITENING') selected @endif>Whitening</option>
+                        <option value="PURIFYING" @if($barang->jenis == 'PURIFYING') selected @endif>Purifying</option>                  
+                        <option value="DECORATIVE" @if($barang->jenis == 'DECORATIVE') selected @endif>Decorative</option>
+                        <option value="BODYCARE" @if($barang->jenis == 'BODYCARE') selected @endif>Body Care</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="form-group row col-sm-12">
@@ -155,7 +158,7 @@
                     <label for="satuan" class="col-sm-12 control-label">Satuan berat</label>    
                     <div class="col-sm-12">
                         <select name="satuan" class="form-control select2">
-                            <option value="" selected>Pilih satuan</option>
+                            <option value="">Pilih satuan</option>
                             <option value="PCS" @if($barang->satuan == 'PCS') selected @endif>PCS</option>
                             <option value="GRAM" @if($barang->satuan == 'GRAM') selected @endif>GRAM</option>
                         </select>
@@ -173,17 +176,27 @@
                         @endif
                     </div>
                 </div>            
-                <div class="form-group @if($errors->has('stok')) has-error @endif">
-                    <label for="stok" class="col-sm-12 control-label">Stock</label>    
+                {{-- <div class="form-group @if($errors->has('stok')) has-error @endif">
+                    <label for="stok" class="col-sm-12 control-label">Stock HO</label>    
                     <div class="col-sm-12">
                         <input value="{{ $barang->stok }}" type="number" name="stok" class="form-control" id="stok" placeholder="Stock" min="0" readonly>
                         @if($errors->has('stok'))
                             <span class="text-danger">{{ $errors->first('stok') }}</span>
                         @endif
                     </div>
+                </div> --}}
+                <div class="form-group @if($errors->has('jenis_diskon')) has-error @endif">
+                    <label for="jenis_diskon" class="col-sm-12 control-label">Pilihan Diskon</label>    
+                    <div class="col-sm-12">
+                        <select name="jenis_diskon" class="form-control select2">
+                            <option value="" >Pilih Jenis</option>
+                            <option value="PERSEN" @if($barang->jenis_diskon == 'PERSEN') selected @endif>PERSEN</option>
+                            <option value="POTONGAN" @if($barang->jenis_diskon == 'POTONGAN') selected @endif>POTONGAN</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group @if($errors->has('diskon')) has-error @endif">
-                    <label for="diskon" class="col-sm-12 control-label">Diskon</label>    
+                    <label for="diskon" class="col-sm-12 control-label">Value</label>    
                     <div class="col-sm-12">
                         <input value="{{ $barang->diskon }}" type="number" name="diskon" class="form-control" id="diskon" placeholder="Diskon" min="0">
                         @if($errors->has('diskon'))
@@ -197,7 +210,7 @@
                 <div class="form-group @if($errors->has('h_nomem')) has-error @endif">
                     <label for="h_nomem" class="col-sm-12 control-label">Harga katalog (non member)</label>    
                     <div class="col-sm-12">
-                        <input value="{{ $barang->h_nomem }}" type="number" name="h_nomem" class="form-control" id="h_nomem" placeholder="Harga katalog" min="0">
+                        <input value="{{ $barang->h_nomem }}" type="number" name="h_nomem" class="form-control" id="h_nomem" placeholder="Harga katalog (non member)" min="0">
                         @if($errors->has('h_nomem'))
                             <span class="text-danger">{{ $errors->first('h_nomem') }}</span>
                         @endif
@@ -212,16 +225,16 @@
                         @endif
                     </div>
                 </div>
-            </div>
-            <div class="form-grup @if($errors->has('bpom')) has-error @endif">
-                <div class="col-sm-6">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="bpom" id="bpom" value="1" @if($barang->bpom == 1) checked @endif>
-                        <label class="custom-control-label" for="bpom">BPOM</label>
+                <div class="form-group @if($errors->has('hpp')) has-error @endif">
+                    <label for="hpp" class="col-sm-12 control-label">Harga Hpp</label>    
+                    <div class="col-sm-12">
+                        <input value="{{ $barang->hpp }}" type="number" name="hpp" class="form-control" id="hpp" placeholder="Harga Hpp" min="0">
+                        @if($errors->has('hpp'))
+                            <span class="text-danger">{{ $errors->first('hpp') }}</span>
+                        @endif
                     </div>
                 </div>
             </div>
-            <br>
             {{-- <div class="form-group @if($errors->has('tgl_eks')) has-error @endif">
                 <label for="tgl_eks" class="col-sm-12 control-label">Tanggal expired</label>    
                 <div class="col-sm-6">
@@ -247,6 +260,14 @@
                     @if($errors->has('cara_pakai'))
                         <span class="text-danger">{{ $errors->first('cara_pakai') }}</span>
                     @endif
+                </div>
+            </div>
+            <div class="form-grup @if($errors->has('bpom')) has-error @endif">
+                <div class="col-sm-6">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="bpom" id="bpom" value="1" @if($barang->bpom == 1) checked @endif>
+                        <label class="custom-control-label" for="bpom">BPOM</label>
+                    </div>
                 </div>
             </div>
             <div class="form-grup @if($errors->has('stats')) has-error @endif">
@@ -393,6 +414,62 @@
         {{-- ========================= foto produk yang mungkin cocok untuk anda ========================= --}}        
             
         <div class="col-6">
+
+            {{-- informasi stock barang di sbp --}}
+
+            @if($barang->unit == 'PIECES')
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fa fa-database"></i> &nbsp;Informasi stock barang di SPB
+                        </h3>
+                    </div>
+
+                    <div class="card-body">
+                        
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <table class="table table-bordered table-striped" style="margin-top: 20px;">
+                                    <tbody>
+                                        <tr>
+                                            <th style="width: 10px" class="text-center">No</th>
+                                            <th class="text-center">SPB</th>
+                                            <th class="text-center">Existing Stock</th>
+                                        </tr>
+                                        @php $no = 1; @endphp
+                                        @forelse($barangSpb as $spb)
+                                            <tr>
+                                                <td class="text-center">{{ $no }}.</td>
+                                                <td class="text-center">
+                                                    {{ $spb->spb->name . ' (' . $spb->spb->city_name . ' - ' . $spb->spb->subdistrict_name . ')'}}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ $spb->stock }}
+                                                </td>
+                                            </tr>
+                                            @php $no++; @endphp
+                                        
+                                        @empty
+                                            <tr>
+                                                <td class="text-center" colspan="3">
+                                                    Belum ada stock untuk barang ini
+                                                </td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>                                
+                        </div>
+
+                    </div>
+
+                </div>
+                
+            @endif
+
             <div class="card">
 
                 {!! Form::open([
@@ -407,7 +484,7 @@
 
                     <div class="card-header">
                         <h3 class="card-title">
-                            <i class="fa fa-image"></i> &nbsp;Pilih produk yang mungkin cocok untuk anda
+                            <i class="fa fa-edit"></i> &nbsp;Pilih produk yang mungkin cocok untuk anda
                         </h3>
                     </div>
 

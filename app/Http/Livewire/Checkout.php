@@ -14,6 +14,8 @@ use App\Models\Kecamatan;
 use App\Models\Barang;
 use App\Models\User;
 use App\Models\Setting;
+use App\Models\TbDetSeries;
+use App\Models\SpbStock;
 use App\Http\Resources\CityResource;
 use App\Http\Resources\SubdistrictResource;
 
@@ -232,27 +234,25 @@ class Checkout extends Component
 
             if ($cartItem['unit'] == 'SERIES') {
 
-                $serieItems = DB::table('tb_det_pack')
-                                ->select('kode_barang', 'jumlah')
-                                ->where('kode_pack', $cartItem['kode_barang'])
-                                ->get();
+                $serieItems = TbDetSeries::where('tb_series_id', $cartItem['barang_id'])
+                                            ->get();
                 
                 foreach ($serieItems as $serieItem) {
                     $newCartItems[] = array(
-                        'kode_barang' => $serieItem->kode_barang, 
-                        'qty' => $serieItem->jumlah * $cartItem['qty']
+                        'kode_barang' => $serieItem->tb_barang_id, 
+                        'qty' => (int) ($serieItem->qty * $cartItem['qty'])
                     );
                 }
 
             } else {
                 $newCartItems[] = array(
-                    'kode_barang' => $cartItem['kode_barang'], 
+                    'kode_barang' => $cartItem['barang_id'], 
                     'qty' => $cartItem['qty']
                 );
             }
         }
 
-        // dd($cartItems);
+        // dd($cartItems, $newCartItems, $spbList);
 
         // CHECK KETERSEDIAAN STOK DI MASING-MASING SPB
         // JIKA STOK TIDAK TERSEDIA DI SALAH SATU SPB, MAKA DISABLE SPB TERSEBUT
@@ -262,39 +262,23 @@ class Checkout extends Component
 
                 $spbIndex = 'SPB' . $spb['code'];
 
-                if ($spb['code'] == '00000') {
-
-                    $stockAvailable = Barang::where('kode_barang', $newCartItem['kode_barang'])
-                                        ->where('stok', '>=', $newCartItem['qty'])
+                $stockAvailable = SpbStock::where('tb_barang_id', $newCartItem['kode_barang'])
+                                        ->where('tb_spb_id', $spb['id'])
+                                        ->where('stock', '>=', $newCartItem['qty'])
                                         ->count();
-
-                    // JIKA SALAH SATU STOK ITEM TIDAK MENCUKUPI DI SPB, SKIP PERULANGAN
-                    // TIDAK PERLU CHECK STOK ITEM YANG LAIN, KARENA JIKA SALAH SATU ITEM STOKNYA TIDAK AVAILABLE DI SPB
-                    // MAKA OTOMATIS SPB ITU AKAN DI DISABLE DI FRONT-END
-                    if ($stockAvailable < 1) {
-                        $spbList[$spbIndex]['disabled'] = 'disabled';
-                        continue 2;
-                    }
-
-                } else {
-
-                    // todo checking ke pak alan
-                    $stockAvailable = DB::table('tb_produk')
-                        ->where('no_member', $spb['code'])
-                        ->where('kode_barang', $newCartItem['kode_barang'])
-                        ->where('stok', '>=', $newCartItem['qty'])
-                        ->count();
-
-                    // JIKA SALAH SATU STOK ITEM TIDAK MENCUKUPI DI SPB, SKIP PERULANGAN
-                    // TIDAK PERLU CHECK STOK ITEM YANG LAIN, KARENA JIKA SALAH SATU ITEM STOKNYA TIDAK AVAILABLE DI SPB
-                    // MAKA OTOMATIS SPB ITU AKAN DI DISABLE DI FRONT-END
-                    if ($stockAvailable < 1) {
-                        $spbList[$spbIndex]['disabled'] = 'disabled';
-                        continue 2;
-                    }
+                
+                // JIKA SALAH SATU STOK ITEM TIDAK MENCUKUPI DI SPB, SKIP PERULANGAN
+                // TIDAK PERLU CHECK STOK ITEM YANG LAIN, KARENA JIKA SALAH SATU ITEM STOKNYA TIDAK AVAILABLE DI SPB
+                // MAKA OTOMATIS SPB ITU AKAN DI DISABLE DI FRONT-END
+                if ($stockAvailable < 1) {
+                    $spbList[$spbIndex]['disabled'] = 'disabled';
+                    // continue 2;
                 }
             }
+
         }
+
+        // dd($spbList);
 
         return $spbList;
     }

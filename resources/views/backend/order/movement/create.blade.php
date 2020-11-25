@@ -22,74 +22,79 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="form-group col-md-4 @if($errors->has('no_sm')) has-error @endif">
-                <label for="no_sm" class="col-sm-12 control-label">No Faktur</label>    
+            <div class="form-group col-md-6 @if($errors->has('no_faktur')) has-error @endif">
+                <label for="no_faktur" class="col-sm-12 control-label">No Faktur</label>    
                 <div class="col-sm-10">
-                    <input type="text" name="no_sm" class="form-control" id="no_sm" required>
-                    @if($errors->has('no_sm'))
-                        <span class="text-danger">{{ $errors->first('no_sm') }}</span>
+                    <input type="text" value="{{ $noFaktur }}" name="no_faktur" class="form-control" id="no_faktur" required readonly>
+                    @if($errors->has('no_faktur'))
+                        <span class="text-danger">{{ $errors->first('no_faktur') }}</span>
                     @endif
                 </div>
             </div>
-            <div class="form-group col-md-4 @if($errors->has('no_member')) has-error @endif">
-                <label for="no_member" class="col-sm-12 control-label">No Member</label>    
-                <div class="col-sm-10">
-                    <input type="text" name="no_member" class="form-control" id="no_member" placeholder="no member" required>
-                    @if($errors->has('no_member'))
-                        <span class="text-danger">{{ $errors->first('no_member') }}</span>
-                    @endif
-                </div>
-            </div>
-            <div class="form-group col-md-4 @if($errors->has('tipe_move')) has-error @endif">
-                <label for="tipe_move" class="col-sm-12 control-label">Tipe Movement</label>    
+            <div class="form-group col-md-6 @if($errors->has('jenis_movement')) has-error @endif">
+                <label for="jenis_movement" class="col-sm-12 control-label">Tipe Movement</label>    
                 <div class="input-group col-sm-10">
-                    <select name="tipe_move" class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon" required>
-                        <option selected></option>
-                        <option value="ADMINISTRATIF" name="administratif" id="administratif">ADMINISTRATIF</option>
-                        <option value="BARANG IKLAN ENDORSE" name="barang_iklan_endorse" id="barang_iklan_endorse">BARANG IKLAN ENDORSE</option>
-                        <option value="BARANG SUSULAN" name="barang_susulan" id="barang_susulan">BARANG SUSULAN</option>
-                        <option value="BARANG UNTUK MARKETING" name="barang_untuk_marketing" id="barang_untuk_marketing">BARANG UNTUK MARKETING</option>
-                        <option value="BARANG UNTUK KLINIK" name="barang_untuk_klinik" id="barang_untuk_klinik">BARANG UNTUK KLINIK</option>
-                        <option value="CLINIC" name="clinic" id="clinic">CLINIC</option>
-                        <option value="DIAMBIL PIMPINAN" name="diambil_pimpinan" id="diambil_pimpinan">DIAMBIL PIMPINAN</option>
-                        <option value="PINJAMAN" name="pinjaman" id="pinjaman">PINJAMAN</option>
-                        <option value="RUSAK SAAT PENGIRIMAN" name="rusak_saat_pengiriman" id="rusak_saat_pengiriman">RUSAK SAAT PENGIRIMAN</option>
-                        <option value="SERVICE POINT" name="service_point" id="service_point">SERVICE POINT</option>
+                    <select name="jenis_movement" class="input-group select2" required>
+                        <option value="" selected>Pilih movement</option>
+                        <option value="ADMINISTRATIF" name="administratif">ADMINISTRATIF</option>
+                        <option value="BARANG IKLAN ENDORSE" name="barang_iklan_endorse">BARANG IKLAN ENDORSE</option>
+                        <option value="BARANG SUSULAN" name="barang_susulan">BARANG SUSULAN</option>
+                        <option value="BARANG UNTUK MARKETING" name="barang_untuk_marketing">BARANG UNTUK MARKETING</option>
+                        <option value="BARANG UNTUK KLINIK" name="barang_untuk_klinik">BARANG UNTUK KLINIK</option>
+                        <option value="CLINIC" name="clinic">CLINIC</option>
+                        <option value="DIAMBIL PIMPINAN" name="diambil_pimpinan">DIAMBIL PIMPINAN</option>
+                        <option value="PINJAMAN" name="pinjaman">PINJAMAN</option>
+                        <option value="RUSAK SAAT PENGIRIMAN" name="rusak_saat_pengiriman">RUSAK SAAT PENGIRIMAN</option>
+                        <option value="SERVICE POINT" name="service_point">SERVICE POINT</option>
                       </select>
                 </div>
             </div>
-            <div class="form-group col-md-4 @if($errors->has('tgl_pinjam')) has-error @endif">
-                <label for="tgl_pinjam" class="col-sm-12 control-label">Tanggal</label>    
+            <div class="form-group col-md-6 @if($errors->has('tanggal')) has-error @endif">
+                <label for="tanggal" class="col-sm-12 control-label">Tanggal</label>    
                 <div class="col-sm-10">
-                    <input type="text" name="tgl_pinjam" class="form-control" id="tgl_pinjam" placeholder="tanggal" value="<?php echo date('Y-m-d') ?>" readonly="true">
-                    @if($errors->has('tgl_pinjam'))
-                        <span class="text-danger">{{ $errors->first('tgl_pinjam') }}</span>
+                    <input type="text" name="tanggal" class="form-control" id="tanggal" placeholder="tanggal" value="<?php echo date('Y-m-d') ?>" readonly="true">
+                    @if($errors->has('tanggal'))
+                        <span class="text-danger">{{ $errors->first('tanggal') }}</span>
                     @endif
                 </div>
             </div>
-            <div class="form-group col-md-4 @if($errors->has('nama')) has-error @endif">
-                <label for="nama_member" class="col-sm-12 control-label">Nama Member</label>    
+            <div class="form-group col-md-6 @if($errors->has('note')) has-error @endif">
+                <label for="note" class="col-sm-12 control-label">Keterangan</label>    
                 <div class="col-sm-10">
-                    <input type="text" name="nama_member" class="form-control" id="nama_member" placeholder="nama member" readonly>
-                    @if($errors->has('nama'))
-                        <span class="text-danger">{{ $errors->first('nama') }}</span>
+                    <input type="text" name="note" class="form-control" id="note" placeholder="Keterangan" required>
+                    @if($errors->has('note'))
+                        <span class="text-danger">{{ $errors->first('note') }}</span>
                     @endif
                 </div>
             </div>
-            <div class="form-group col-md-4 @if($errors->has('keterangan')) has-error @endif">
-                <label for="keterangan" class="col-sm-12 control-label">Keterangan</label>    
-                <div class="col-sm-10">
-                    <input type="text" name="keterangan" class="form-control" id="keterangan" placeholder="keterangan" >
-                    @if($errors->has('keterangan'))
-                        <span class="text-danger">{{ $errors->first('keterangan') }}</span>
-                    @endif
+
+            <div class="form-group col-md-6 @if($errors->has('tb_spb_id_from')) has-error @endif">
+                <label for="tb_spb_id_from" class="col-sm-12 control-label">From</label>    
+                <div class="input-group col-sm-10">
+                    <select name="tb_spb_id_from" class="input-group select2" required>
+                        <option value="" selected>Pilih From</option>
+                        @foreach($spb as $dataSpb)
+                            <option value="{{ $dataSpb->id }}">{{ $dataSpb->code . ' (' . $dataSpb->city_name . ' - ' . $dataSpb->subdistrict_name . ')' }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-6 @if($errors->has('tb_spb_id_to')) has-error @endif">
+                <label for="tb_spb_id_to" class="col-sm-12 control-label">To</label>    
+                <div class="input-group col-sm-10">
+                    <select name="tb_spb_id_to" class="input-group select2" required>
+                        <option value="" selected>Pilih To</option>
+                        @foreach($spb as $dataSpb)
+                            <option value="{{ $dataSpb->id }}">{{ $dataSpb->code . ' (' . $dataSpb->city_name . ' - ' . $dataSpb->subdistrict_name . ')' }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card-footer">
+    {{-- <div class="card-footer">
         <button type="button" class="btn btn-info" id="addinvoice">Create</button>
-    </div>
+    </div> --}}
 </div>
     
     <div class="card col-12">
@@ -133,33 +138,28 @@
 
         <div class="card-footer">
             <a href="{{ route("admin.movement.index") }}" class="btn btn-default float-right">Cancel</a>
-            <button type="submit" class="btn btn-info">Update</button>
+            <button type="submit" class="btn btn-info">Create</button>
         </div>
     </div>
 
-
 {!! Form::close() !!}
-@stop
-
-@section('css')
 
 @stop
-
-
 
 @section('js')
+
     <script>
 
-     // select2
-     $('.select2').select2();
+        // select2
+        $('.select2').select2();
 
-// date picker
-$('.datepicker').datepicker({
-    format: 'yyyy-mm-dd',
-    autoclose: true
-});
+        // date picker
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
 
-var delay = (function () {
+        var delay = (function () {
             var timer = 0;
 
             return function (callback, ms) {
@@ -174,43 +174,27 @@ var delay = (function () {
             }
         });
 
-
-// add invoice
-$(document).ready(function() {
-    $('#addinvoice').click(function(){
-        $('.select2').select2();
-        $.ajax({
-                    url: "{{ route('admin.movement.addinvoice') }}",
-                    method:'POST',
-                success: function(data){
-                    console.log(data);
-                    var no_invoice = data;
-                    $('[name=no_sm]').val(no_invoice); 
-                }});
-            
-            var no_invoice = '2020/SM/00001';
-            $('[name=no_sm]').val(no_invoice); 
-            return (false);
-    });
-});
-
-        $("#no_member").keyup(function () {
-            delay(function () {
-                var no_member = $("#no_member").val();
+        // add invoice
+        $(document).ready(function() {
+            $('#addinvoice').click(function(){
+                $('.select2').select2();
                 $.ajax({
-                    url: "{{ route('admin.movement.get.nama') }}",
-                    method:'GET',
-                    data:"no_member="+no_member , 
-                success: function(data){
-                        
-                        $('#nama_member').val(data.nama_member);
-                        
-                }});
-            }, 1000);
+                            url: "{{ route('admin.movement.addinvoice') }}",
+                            method:'POST',
+                        success: function(data){
+                            console.log(data);
+                            var no_invoice = data;
+                            $('[name=no_sm]').val(no_invoice); 
+                        }});
+                    
+                    var no_invoice = '2020/SM/00001';
+                    $('[name=no_sm]').val(no_invoice); 
+                    return (false);
+            });
         });
 
-// add barang
-initKodeBarang();
+        // add barang
+        initKodeBarang();
 
         function initKodeBarang(){
             console.log('initKodeBarang');
@@ -218,7 +202,6 @@ initKodeBarang();
             $('[name="kode_barang[]"]').keyup(function () {
                 var self = $(this);
                 var kode_barang = $(this).val();
-                console.log(kode_barang);
             
                 delay(function () {
                     $.ajax({
@@ -287,6 +270,7 @@ initKodeBarang();
         $('tbody').on('click', '.remove', function(){
             $(this).parent().parent().remove();
         });
-       
+        
     </script>
+
 @stop

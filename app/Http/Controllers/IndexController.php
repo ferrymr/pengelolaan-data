@@ -17,14 +17,14 @@ class IndexController extends Controller
         // todo change best of piece to flag
         $bestSellingProducts = Barang::with('barangImages')
                 ->where('flag_bestseller', 1)
-                ->where('stok','>',0)
+                // ->where('stok','>',0)
                 ->where('stats',1)
                 ->limit(8)
                 ->get();
 
         $promoProducts = Barang::with('barangImages')
                 ->where('flag_promo', 1)
-                ->where('stok','>',0)
+                // ->where('stok','>',0)
                 ->where('stats',1)
                 ->limit(8)
                 ->get();

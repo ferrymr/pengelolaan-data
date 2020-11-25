@@ -34,7 +34,7 @@
                         <th>Nama Barang</th>
                         <th>Jenis</th>
                         <th>Series</th>
-                        <th>Stok</th>
+                        {{-- <th>Stok</th> --}}
                         <th>Poin</th>
                         <th>Action</th>
                         <th>&nbsp;</th>
@@ -135,7 +135,7 @@
                     { data: 'nama', name: 'nama' },
                     { data: 'jenis', name: 'jenis' },
                     { data: 'unit', name: 'unit' },
-                    { data: 'stok', name: 'stok' },
+                    // { data: 'stok', name: 'stok' },
                     { data: 'poin', name: 'poin' },
                     { data: 'created_at', name: 'created_at', visible:false },
                     {

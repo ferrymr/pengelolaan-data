@@ -142,7 +142,7 @@
                         @endif
                     </div>
                 </div>            
-                <div class="form-group @if($errors->has('stok')) has-error @endif">
+                {{-- <div class="form-group @if($errors->has('stok')) has-error @endif">
                     <label for="stok" class="col-sm-12 control-label">Stock HO</label>    
                     <div class="col-sm-12">
                         <input value="{{ old('stok') ? old('stok') : 0 }}" type="number" name="stok" class="form-control" id="stok" placeholder="Stock" min="0" readonly>
@@ -150,11 +150,11 @@
                             <span class="text-danger">{{ $errors->first('stok') }}</span>
                         @endif
                     </div>
-                </div>                
-                <div class="form-group @if($errors->has('satuan')) has-error @endif">
-                    <label for="satuan" class="col-sm-12 control-label">Pilihan Diskon</label>    
+                </div> --}}
+                <div class="form-group @if($errors->has('jenis_diskon')) has-error @endif">
+                    <label for="jenis_diskon" class="col-sm-12 control-label">Pilihan Diskon</label>    
                     <div class="col-sm-12">
-                        <select name="satuan" class="form-control select2">
+                        <select name="jenis_diskon" class="form-control select2">
                             <option value="" selected>Pilih Jenis</option>
                             <option value="PERSEN">PERSEN</option>
                             <option value="POTONGAN">POTONGAN</option>
@@ -174,9 +174,9 @@
             
             <div class="form-group row col-sm-12">
                 <div class="form-group @if($errors->has('h_nomem')) has-error @endif">
-                    <label for="h_nomem" class="col-sm-12 control-label">Harga User</label>    
+                    <label for="h_nomem" class="col-sm-12 control-label">Harga katalog (non member)</label>    
                     <div class="col-sm-12">
-                        <input value="{{ old('h_nomem') }}" type="number" name="h_nomem" class="form-control" id="h_nomem" placeholder="Harga katalog" min="0">
+                        <input value="{{ old('h_nomem') }}" type="number" name="h_nomem" class="form-control" id="h_nomem" placeholder="Harga katalog (non member)" min="0">
                         @if($errors->has('h_nomem'))
                             <span class="text-danger">{{ $errors->first('h_nomem') }}</span>
                         @endif

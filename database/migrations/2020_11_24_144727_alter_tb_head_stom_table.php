@@ -13,6 +13,10 @@ class AlterTbHeadStomTable extends Migration
      */
     public function up()
     {
+        Schema::table('tb_head_stom', function (Blueprint $table) {
+            $table->dropPrimary('no_sm');
+        });
+
         if (!Schema::hasColumn('tb_head_stom', 'id')) {
             Schema::table('tb_head_stom', function(Blueprint $table) {
                 $table->id()->first();
@@ -32,5 +36,9 @@ class AlterTbHeadStomTable extends Migration
                 $table->dropColumn('id');
             });
         }
+
+        Schema::table('tb_head_stom', function (Blueprint $table) {
+            $table->primary('no_sm');
+        });
     }
 }

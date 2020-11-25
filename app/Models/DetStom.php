@@ -11,7 +11,12 @@ class DetStom extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'no_sm', 'tb_head_stom_id', 'kode_barang','nama_barang','jenis', 'jumlah'
+        'no_sm', 
+        'tb_head_stom_id', 
+        'kode_barang',
+        'nama_barang',
+        'jenis', 
+        'jumlah'
     ];
 
     public function getAll() 

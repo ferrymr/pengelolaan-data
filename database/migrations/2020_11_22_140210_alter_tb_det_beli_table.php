@@ -41,6 +41,6 @@ class AlterTbDetBeliTable extends Migration
 
         Schema::table('tb_det_beli', function (Blueprint $table) {
             $table->primary('no_po');
-        });        
+        });
     }
 }

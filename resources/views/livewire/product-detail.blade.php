@@ -87,7 +87,15 @@
                                         @if($product->diskon > 0)
                                             @php
                                                 $harga = $product->h_nomem;
-                                                $harga = $harga - ($harga * ($product->diskon/100));
+
+                                                if($product->jenis_diskon == "PERSEN") {
+                                                    $totalDiskon = $harga * ($product->diskon/100);
+                                                } else {
+                                                    $totalDiskon = $product->diskon;
+                                                }
+
+                                                $harga = $harga - $totalDiskon;
+
                                             @endphp
                                             <span style="font-size: 25px; text-decoration:  line-through;">@currency($product->h_nomem)</span> 
                                             <span style="color:#f00;">@currency($harga)</span>
@@ -100,7 +108,15 @@
                                         @if($product->diskon > 0)
                                             @php
                                                 $harga = $product->h_member;
-                                                $harga = $harga - ($harga * ($product->diskon/100));
+
+                                                if($product->jenis_diskon == "PERSEN") {
+                                                    $totalDiskon = $harga * ($product->diskon/100);
+                                                } else {
+                                                    $totalDiskon = $product->diskon;
+                                                }
+
+                                                $harga = $harga - $totalDiskon;
+
                                             @endphp
                                             <span style="font-size: 25px; text-decoration:  line-through;">@currency($product->h_member)</span> 
                                             <span style="color:#f00;">@currency($harga)</span>
@@ -305,7 +321,15 @@
                                                         @if($product->diskon > 0)
                                                             @php
                                                                 $harga = $product->h_nomem;
-                                                                $harga = $harga - ($harga * ($product->diskon/100));
+                                                                
+                                                                if($product->jenis_diskon == "PERSEN") {
+                                                                    $totalDiskon = $harga * ($product->diskon/100);
+                                                                } else {
+                                                                    $totalDiskon = $product->diskon;
+                                                                }
+
+                                                                $harga = $harga - $totalDiskon;
+
                                                             @endphp
                                                             <span style="text-decoration:  line-through;">@currency($product->h_nomem)</span> 
                                                             <span>@currency($harga)</span>
@@ -318,7 +342,13 @@
                                                         @if($product->diskon > 0)
                                                             @php
                                                                 $harga = $product->h_member;
-                                                                $harga = $harga - ($harga * ($product->diskon/100));
+                                                                if($product->jenis_diskon == "PERSEN") {
+                                                                    $totalDiskon = $harga * ($product->diskon/100);
+                                                                } else {
+                                                                    $totalDiskon = $product->diskon;
+                                                                }
+
+                                                                $harga = $harga - $totalDiskon;
                                                             @endphp
                                                             <span style="text-decoration:  line-through;">@currency($product->h_member)</span> 
                                                             <span>@currency($harga)</span>

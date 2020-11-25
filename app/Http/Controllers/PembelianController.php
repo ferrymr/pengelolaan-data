@@ -12,6 +12,7 @@ use App\Models\TbHeadBeli;
 use App\Models\TbDetBeli;
 use App\Models\Supplier;
 use App\Models\Barang;
+use App\Models\SpbStock;
 
 class PembelianController extends Controller
 {
@@ -92,7 +93,10 @@ class PembelianController extends Controller
             $kode_supp = $request->kode_supp;
             $kode_barang = $request->kode_barang;
 
-            $data = Barang::select('nama', 'jenis', 'hpp')->where('kode_barang', $kode_barang)->first();
+            $data = Barang::select('nama', 'jenis', 'hpp')
+                            ->where('kode_barang', $kode_barang)
+                            ->where('unit', 'PIECES')
+                            ->first();
 
             return response()->json($data, 200);
         }
@@ -114,6 +118,10 @@ class PembelianController extends Controller
 
         $headbeliId = DB::getPDO()->lastInsertId();
         foreach ($request->kode_barang as $item => $kode_barang) {
+
+            // get id barang
+            $barangId = Barang::where('kode_barang', $request->kode_barang[$item])->first()->id;
+
             $data2 = array(
                 'tb_head_beli_id' => $beli->id,
                 'no_po' => $request['no_po'],
@@ -127,10 +135,28 @@ class PembelianController extends Controller
             );
             TbDetBeli::insert($data2);
 
+            // perubahan stock
             if ($data2) {
-                $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
-                $barang->stok = $barang->stok + $request->jumlah[$item];
-                $barang->save();
+                // check on spb is exist or not 
+                // spb id 1 == HO
+                $spbStockTo = SpbStock::where('tb_barang_id', $barangId)
+                                    ->where('tb_spb_id', 1)->first();                
+
+                // update
+                if($spbStockTo) {
+                    SpbStock::where('tb_barang_id', $barangId)
+                                    ->where('tb_spb_id', 1)
+                                    ->update(['stock' => (int) $spbStockTo->stock + $request->jumlah[$item]]);
+                // create new record
+                } else {
+                    SpbStock::insert([
+                        'tb_barang_id' => $barangId,
+                        'tb_spb_id' => 1,
+                        'stock' => $request->jumlah[$item],
+                        'created_at' => date("Y-m-d H:i:s"),
+                        'updated_at' => date("Y-m-d H:i:s"),
+                    ]);
+                }
             }
         }
 

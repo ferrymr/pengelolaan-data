@@ -10,6 +10,7 @@ use App\Models\Barang;
 use App\Models\BarangImages;
 use App\Models\BarangRelated;
 use App\Models\BarangSpb;
+use App\Models\SpbStock;
 use App\Models\RoleUser;
 use App\Models\User;
 use App\Models\Series;
@@ -20,10 +21,15 @@ use File;
 
 class BarangController extends Controller
 {
-    public function __construct (User $user, Barang $barang) 
+    public function __construct (
+        User $user, 
+        Barang $barang,
+        SpbStock $spb
+    ) 
     {
         $this->userRepo     = $user;
         $this->barangRepo   = $barang;
+        $this->spbRepo   = $spb;
     }
     
     public function index()
@@ -75,6 +81,9 @@ class BarangController extends Controller
     {
         $data = $request->all();
         $input = $request->except(['_token']);
+
+        // dd($input);
+
         $input['created_at'] = date("Y-m-d H:i:s");
         $input['update_at'] = date("Y-m-d H:i:s");
         $input['bpom'] = isset($input['bpom']) ? $input['bpom'] : 0;
@@ -82,14 +91,14 @@ class BarangController extends Controller
         
         $jumlah = Barang::where('kode_barang', $input['kode_barang'])->count();
 
-        foreach ($data['no_member'] as $key => $value) {
-            $barangspb = new BarangSpb;
-            $barangspb->no_member = $data['no_member'][$key];
-            $barangspb->kode_barang = $data['kode_barang'];
-            $barangspb->nama = $data['nama'];
-            $barangspb->jenis = $data['jenis'];
-            $barangspb->save();
-        }
+        // foreach ($data['no_member'] as $key => $value) {
+        //     $barangspb = new BarangSpb;
+        //     $barangspb->no_member = $data['no_member'][$key];
+        //     $barangspb->kode_barang = $data['kode_barang'];
+        //     $barangspb->nama = $data['nama'];
+        //     $barangspb->jenis = $data['jenis'];
+        //     $barangspb->save();
+        // }
             
         if ($jumlah>0){
             flash('<i class="fa fa-info"></i>&nbsp; <strong>Kode barang sudah ada</strong>')->error()->important();
@@ -110,13 +119,16 @@ class BarangController extends Controller
         $barangImages = BarangImages::where('tb_barang_id', $id)->get();
         $barangRelated = BarangRelated::where('tb_barang_id', $id)->get();
         $products = Barang::where('unit', '!=', 'SERIES')->get();
-        // dd($barang->series);
+
+        $barangSpb = $this->spbRepo->getBarangSpb($id);
+
         return view('backend.master.barang.edit')->with([
             'user' => $user,
             'barang' => $barang,
             'barangImages' => $barangImages,
             'barangRelated' => $barangRelated,
             'products' => $products,
+            'barangSpb' => $barangSpb,
         ]);
     }
     
@@ -129,12 +141,14 @@ class BarangController extends Controller
             "jenis" => $request->input('jenis'),
             "stok" => $request->input('stok'),
             "poin" => $request->input('poin'),
+            "jenis_diskon" => $request->input('jenis_diskon'),
             "diskon" => $request->input('diskon'),
             "bpom" => $request->input('bpom'),
             "berat" => $request->input('berat'),
             "satuan" => $request->input('satuan'),
             "h_nomem" => $request->input('h_nomem'),
             "h_member" => $request->input('h_member'),
+            "hpp" => $request->input('hpp'),
             "deskripsi" => $request->input('deskripsi'),
             "cara_pakai" => $request->input('cara_pakai'),
             "flag_bestseller" => $request->input('flag_bestseller'),

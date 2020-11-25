@@ -30,14 +30,10 @@
                     <tr>
                         <th>No</th>
                         <th>No Faktur</th>
-                        <th>No Member</th>
-                        <th>Nama Member</th>
                         <th>Tanggal</th>
                         <th>Jenis Movement</th>
-                        {{-- <th>Nama Barang</th>
-                        <th>Jumlah</th> --}}
-                        <th>Action</th>
-                        <th>&nbsp;</th>
+                        {{-- <th>Action</th> --}}
+                        {{-- <th>&nbsp;</th> --}}
                     </tr>
                 </thead>
             </table>
@@ -111,22 +107,17 @@
                             return meta.row + meta.settings._iDisplayStart + 1;
                         }
                     },
-                    { data: 'no_sm', name: 'no_sm'},
-                    { data: 'no_member', name: 'no_member'},
-                    { data: 'nama', name: 'nama' },
-                    { data: 'tgl_pinjam', name: 'tgl_pinjam' },
-                    { data: 'tipe_move', name: 'tipe_move' },
-                    // { data: 'nama_barang', name: 'nama_barang' },
-                    // { data: 'jumlah', name: 'jumlah'},
-                    {
-                        // Define the action column
-                        data: null,
-                        searchable: false,
-                        orderable: false,
-                        className: 'dt-body-center',
-                        render: renderAction
-                    },
-                    { data: 'nama', name: 'nama', visible: false },
+                    { data: 'no_faktur', name: 'no_faktur'},
+                    { data: 'tanggal', name: 'tanggal' },
+                    { data: 'jenis_movement', name: 'jenis_movement' },
+                    // {
+                    //     // Define the action column
+                    //     data: null,
+                    //     searchable: false,
+                    //     orderable: false,
+                    //     className: 'dt-body-center',
+                    //     render: renderAction
+                    // },
                 ],
                 order: [[ 1, 'asc' ]]
                

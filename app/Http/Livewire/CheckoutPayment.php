@@ -13,6 +13,8 @@ use App\Models\TbDetSeries;
 use App\Models\Barang;
 use App\Models\Setting;
 use App\Models\CouponUsed;
+use App\Models\SpbStock;
+use App\Models\Spb;
 use DB;
 use App\Mail\OrderCreated;
 use Illuminate\Support\Facades\Mail;
@@ -145,71 +147,40 @@ class CheckoutPayment extends Component
                 $TbDetJual->addData($inputDetJual);
             }
             
-            // todo refactoring this part
+            $spbId = Spb::where('code', $this->selectedSpb)->first();
+
+            // dd($spbId);
+
             // decrease stock
-            if ($this->selectedSpb == "00000") {
+            foreach($cartItems as $item) {
+                if ($item['unit'] == "SERIES") {
 
-                foreach($cartItems as $item) {
-                    if ($item['unit'] == "SERIES") {
-
-                        $serieItems = TbDetSeries::where('tb_series_id', $item['barang_id'])
-                                            ->get();
-                        
-                        foreach($serieItems as $serieItem) {
-                            $currentQuantity = Barang::select('stok')
-                                                ->where('id', $serieItem->tb_barang_id)
-                                                ->first()
-                                                ->stok;
-                            Barang::where('id', $serieItem->tb_barang_id)
-                                ->update(['stok' => $currentQuantity - ($serieItem->qty * $item['qty'])]);
-                        }
-
-                    } else {
-                        $currentQuantity = Barang::select('stok')
-                                            ->where('kode_barang', $item['kode_barang'])
-                                            ->first()
-                                            ->stok;
-                        Barang::where('kode_barang', $item['kode_barang'])
-                            ->update(['stok' => $currentQuantity - $item['qty']]);
-                    }
-                }
-
-            } else {
-                // todo master product
-                foreach($cartItems as $item) {
-                    if ($item['unit'] == "SERIES") {
-
-                        $serieItems = DB::table('tb_det_pack')
-                                        ->select('kode_barang', 'jumlah')
-                                        ->where('kode_pack', $item['kode_barang'])
+                    $serieItems = TbDetSeries::where('tb_series_id', $item['barang_id'])
                                         ->get();
-                        
-                        foreach($serieItems as $serieItem) {
-                            $currentQuantity = DB::table('tb_produk')
-                                                ->select('stok')
-                                                ->where('kode_barang', $serieItem->kode_barang)
-                                                ->where('no_member', $this->selectedSpb)
-                                                ->first()
-                                                ->stok;
-                            DB::table('tb_produk')
-                                ->where('kode_barang', $serieItem->kode_barang)
-                                ->where('no_member', $this->selectedSpb)
-                                ->update(['stok' => $currentQuantity - ($serieItem->jumlah * $item['qty'])]);
-                        }
-                    } else {
-                        $currentQuantity = DB::table('tb_produk')
-                                            ->select('stok')
-                                            ->where('kode_barang', $item['kode_barang'])
-                                            ->where('no_member', $this->selectedSpb)
-                                            ->first()
-                                            ->stok;
-                        DB::table('tb_produk')
-                            ->where('kode_barang', $item['kode_barang'])
-                            ->where('no_member', $this->selectedSpb)
-                            ->update(['stok' => $currentQuantity - $item['qty']]);
-                    }
-                }
+                    
+                    foreach($serieItems as $serieItem) {
 
+                        $currentQuantity = SpbStock::where('tb_barang_id', $serieItem->tb_barang_id)
+                                        ->where('tb_spb_id', $spbId->id)
+                                        ->first()
+                                        ->stock;                        
+
+                        SpbStock::where('tb_barang_id', $serieItem->tb_barang_id)
+                            ->where('tb_spb_id', $spbId->id)
+                            ->update(['stock' => (int) $currentQuantity - ($serieItem->qty * $item['qty'])]);
+                    
+                    }
+
+                } else {
+                    $currentQuantity = SpbStock::where('tb_barang_id', $serieItem->tb_barang_id)
+                                        ->where('tb_spb_id', $spbId->id)
+                                        ->first()
+                                        ->stock;
+
+                    SpbStock::where('tb_barang_id', $serieItem->tb_barang_id)
+                        ->where('tb_spb_id', $spbId->id)
+                        ->update(['stock' => $currentQuantity - $item['qty']]);
+                }
             }
 
             DB::commit();

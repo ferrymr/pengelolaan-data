@@ -6856,7 +6856,7 @@ ul.list-products {
 .slider-item .slider-inner {
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     position: relative;
 }
 .slider-item .title-small {
