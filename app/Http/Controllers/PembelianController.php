@@ -61,12 +61,9 @@ class PembelianController extends Controller
     {
         $data = TbHeadBeli::orderBy('created_at', 'DESC')->first();
 
-        $dates = Carbon::now();
-        $index = $dates->format('Y') . 'INV' . substr(rand(), 0, 5);
-
         if (!empty($data)) {
-            $invoice = isset($data[0]['no_po']);
-            $invoice = substr($data[0]['no_po'], 9);
+            $invoice = explode('-', $data);
+            $invoice = (int) $invoice[2];
         } else {
             $invoice = 0;
         }
