@@ -272,10 +272,10 @@ return [
                     'text' => 'Supplier',
                     'url' => 'admin/supplier'
                 ],
-                [
-                    'text' => 'Reseller',
-                    'url' => 'admin/reseller'
-                ],
+                // [
+                //     'text' => 'Reseller',
+                //     'url' => 'admin/reseller'
+                // ],
                 // moved to master barang
                 // [
                 //     'text' => 'Series',
