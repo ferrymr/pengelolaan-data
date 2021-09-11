@@ -21,25 +21,25 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'no_member',
-        'nik',
+        // 'no_member',
+        // 'nik',
         'name',
-        'birthdate',
-        'gender',
+        // 'birthdate',
+        // 'gender',
         'phone',
         'email',
         'password',
-        'photo',
-        'google_id',
-        'status',
-        'alamat',
-        'propinsi',
-        'kota',
-        'kecamatan',
-        'foto_ktp',
-        'bank',
-        'norek',
-        'code_aff_ref',
+        // 'photo',
+        // 'google_id',
+        // 'status',
+        // 'alamat',
+        // 'propinsi',
+        // 'kota',
+        // 'kecamatan',
+        // 'foto_ktp',
+        // 'bank',
+        // 'norek',
+        // 'code_aff_ref',
     ];
 
     /**
@@ -114,18 +114,18 @@ class User extends Authenticatable
         $digits = 4;
         $code = rand(pow(10, $digits - 1), pow(10, $digits) - 1);
         $user = array(
-            'no_member' => $request['no_member'],
-            'nik' => $request['nik'],
+            // 'no_member' => $request['no_member'],
+            // 'nik' => $request['nik'],
             'name' => $request['name'],
-            'birthdate' => $request['birthdate'],
-            'gender' => $request['gender'],
+            // 'birthdate' => $request['birthdate'],
+            // 'gender' => $request['gender'],
             'phone' => $request['phone'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             // 'photo' => $request['photo'],
             // 'code_verify' => $code,
             // 'status_verify' => $request['status_verify'],
-            // 'firebase_key' => $request['firebase_key'],            
+            // 'firebase_key' => $request['firebase_key'],
         );
 
         $user = User::create($user);
@@ -323,9 +323,9 @@ class User extends Authenticatable
     	return $this->belongsToMany('App\Models\Role');
     }
 
-    public function getUserData() 
+    public function getUserData()
 {
-    return User::with('roleuser')->get();    
-} 
+    return User::with('roleuser')->get();
+}
 
 }

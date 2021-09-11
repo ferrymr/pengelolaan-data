@@ -20,22 +20,6 @@ return [
             'users' => 'c,r,u,d',
             'profile' => 'r,u'
         ],
-        'stockist' => [
-            'dashboard' => 'r',
-            'profile' => 'r,u',
-        ],
-        'store' => [
-            'dashboard' => 'r',
-            'profile' => 'r,u',
-        ],
-        'reseller' => [
-            'dashboard' => 'r',
-            'profile' => 'r,u',
-        ],
-        'member' => [
-            'dashboard' => 'r',
-            'profile' => 'r,u',
-        ],
         'user' => [
             'dashboard' => 'r',
             'profile' => 'r,u',

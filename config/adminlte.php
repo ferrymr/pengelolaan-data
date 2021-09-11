@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Bellezkin',
+    'title' => 'Kominfo',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '&nbsp;<b>Bellezkin</b> Store',
+    'logo' => '&nbsp;<b>Kominfo</b>',
     'logo_img' => 'assets/images/logo_b.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Bellezkin',
+    'logo_img_alt' => 'Kominfo',
 
     /*
     |--------------------------------------------------------------------------
@@ -188,7 +188,7 @@ return [
 
     'use_route_url' => false,
 
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin/dashboard',
 
     'logout_url' => 'logout',
 
@@ -238,36 +238,16 @@ return [
             'icon' => 'fas fa-fw fa-globe',
         ],
 
-        // [
-        //     'text' => 'search',
-        //     'search' => true,
-        //     'topnav' => true,
-        // ],
-
-        // [
-        //     'text' => 'blog',
-        //     'url'  => 'admin/blog',
-        //     'can'  => 'manage-blog',
-        // ],
-
-        // [
-        //     'text'        => 'pages',
-        //     'url'         => 'admin/pages',
-        //     'icon'        => 'far fa-fw fa-file',
-        //     'label'       => 4,
-        //     'label_color' => 'success',
-        // ],
-
         ['header' => 'MAIN MENU'],
         [
             'text' => 'Master',
             'url'  => 'admin/master',
             'icon' => 'fas fa-fw fa-home',
             'submenu' => [
-                [
-                    'text' => 'Barang',
-                    'url' => 'admin/barang'
-                ],
+                // [
+                //     'text' => 'Barang',
+                //     'url' => 'admin/barang'
+                // ],
                 [
                     'text' => 'Supplier',
                     'url' => 'admin/supplier'
@@ -281,18 +261,18 @@ return [
                 //     'text' => 'Series',
                 //     'url' => 'admin/series'
                 // ],
-                [
-                    'text' => 'Bank',
-                    'url' => 'admin/bank'
-                ],
-                [
-                    'text' => 'Referral',
-                    'url' => 'admin/referral'
-                ],
-                [
-                    'text' => 'Setting',
-                    'url' => 'admin/setting'
-                ],
+                // [
+                //     'text' => 'Bank',
+                //     'url' => 'admin/bank'
+                // ],
+                // [
+                //     'text' => 'Referral',
+                //     'url' => 'admin/referral'
+                // ],
+                // [
+                //     'text' => 'Setting',
+                //     'url' => 'admin/setting'
+                // ],
             ],
         ],
         [
@@ -304,164 +284,164 @@ return [
                     'text' => 'Pemesanan',
                     'url' => 'admin/pemesanan'
                 ],
-                [
-                    'text' => 'Konfirmasi pemesanan',
-                    'url' => 'admin/konfirmasi-penjualan'
-                ],
-                [
-                    'text' => 'Penjualan',
-                    'url' => 'admin/penjualan'
-                ],                
-                [
-                    'text' => 'Pembelian',
-                    'url' => 'admin/pembelian'
-                ],
-                [
-                    'text' => 'Movement',
-                    'url' => 'admin/movement'
-                ],
+                // [
+                //     'text' => 'Konfirmasi pemesanan',
+                //     'url' => 'admin/konfirmasi-penjualan'
+                // ],
+                // [
+                //     'text' => 'Penjualan',
+                //     'url' => 'admin/penjualan'
+                // ],
+                // [
+                //     'text' => 'Pembelian',
+                //     'url' => 'admin/pembelian'
+                // ],
+                // [
+                //     'text' => 'Movement',
+                //     'url' => 'admin/movement'
+                // ],
 
 
             ],
         ],
-        [
-            'text' => 'Bonus',
-            'url'  => 'admin/bonus',
-            'icon' => 'fas fa-fw fa-money-bill',
-            'submenu' => [
-                [
-                    'text' => 'Qualified',
-                    'url' => 'qualified'
-                ],
-                [
-                    'text' => 'Cashback',
-                    'url' => 'admin/cashback'
-                ],
-                [
-                    'text' => 'Reward',
-                    'url' => 'reward'
-                ],
-                [
-                    'text' => 'Leadership',
-                    'url' => 'leadership'
-                ],
-                [
-                    'text' => 'Merchandise',
-                    'url' => 'merchandise'
-                ],
+        // [
+        //     'text' => 'Bonus',
+        //     'url'  => 'admin/bonus',
+        //     'icon' => 'fas fa-fw fa-money-bill',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Qualified',
+        //             'url' => 'qualified'
+        //         ],
+        //         [
+        //             'text' => 'Cashback',
+        //             'url' => 'admin/cashback'
+        //         ],
+        //         [
+        //             'text' => 'Reward',
+        //             'url' => 'reward'
+        //         ],
+        //         [
+        //             'text' => 'Leadership',
+        //             'url' => 'leadership'
+        //         ],
+        //         [
+        //             'text' => 'Merchandise',
+        //             'url' => 'merchandise'
+        //         ],
 
-            ],
-        ],
-        [
-            'text' => 'Finance',
-            'url'  => 'admin/master',
-            'icon' => 'fas fa-fw fa-dollar-sign',
-            'submenu' => [
-                [
-                    'text' => 'Cashbook',
-                    'url' => 'cashbook'
-                ],
-                [
-                    'text' => 'Pembayaran',
-                    'url' => 'pembayaran'
-                ],
-                [
-                    'text' => 'Saldo Member',
-                    'url' => 'saldomember'
-                ],
-
-
-            ],
-        ],
-        [
-            'text' => 'Retur',
-            'url'  => 'admin/master',
-            'icon' => 'fas fa-fw fa-retweet',
-            'submenu' => [
-                [
-                    'text' => 'Penjualan',
-                    'url' => 'returpenjualan'
-                ],
-                [
-                    'text' => 'Pembelian',
-                    'url' => 'returpembelian'
-                ],
-                [
-                    'text' => 'Movement',
-                    'url' => 'returmovement'
-                ],
+        //     ],
+        // ],
+        // [
+        //     'text' => 'Finance',
+        //     'url'  => 'admin/master',
+        //     'icon' => 'fas fa-fw fa-dollar-sign',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Cashbook',
+        //             'url' => 'cashbook'
+        //         ],
+        //         [
+        //             'text' => 'Pembayaran',
+        //             'url' => 'pembayaran'
+        //         ],
+        //         [
+        //             'text' => 'Saldo Member',
+        //             'url' => 'saldomember'
+        //         ],
 
 
-            ],
-        ],
-        [
-            'text' => 'Report',
-            'url'  => 'admin/master',
-            'icon' => 'fas fa-fw fa-book-open',
-            'submenu' => [
-                [
-                    'text' => 'Release Bonus',
-                    'url' => 'release'
-                ],
-                [
-                    'text' => 'Daily sales & Recruitment',
-                    'url' => 'dailysales'
-                ],
+        //     ],
+        // ],
+        // [
+        //     'text' => 'Retur',
+        //     'url'  => 'admin/master',
+        //     'icon' => 'fas fa-fw fa-retweet',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Penjualan',
+        //             'url' => 'returpenjualan'
+        //         ],
+        //         [
+        //             'text' => 'Pembelian',
+        //             'url' => 'returpembelian'
+        //         ],
+        //         [
+        //             'text' => 'Movement',
+        //             'url' => 'returmovement'
+        //         ],
 
-            ],
-        ],
+
+        //     ],
+        // ],
+        // [
+        //     'text' => 'Report',
+        //     'url'  => 'admin/master',
+        //     'icon' => 'fas fa-fw fa-book-open',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Release Bonus',
+        //             'url' => 'release'
+        //         ],
+        //         [
+        //             'text' => 'Daily sales & Recruitment',
+        //             'url' => 'dailysales'
+        //         ],
+
+        //     ],
+        // ],
 
 
-        ['header' => 'SETTINGS'],
-        [
-            'text' => 'Tools',
-            'url'  => 'admin/master',
-            'icon' => 'fas fa-fw fa-tools',
-            'submenu' => [
-                [
-                    'text' => 'Adjusment',
-                    'url' => 'admin/adjusment'
-                ],
-                [
-                    'text' => 'SPB kontrol',
-                    'url' => 'admin/barangspb'
-                ],
-                [
-                    'text' => 'Calculate (barang)',
-                    'url' => 'calculate'
-                ],
-                [
-                    'text' => 'History Barang',
-                    'url' => 'history'
-                ],
-                [
-                    'text' => 'Send Email',
-                    'url' => 'sendemail'
-                ],
-                [
-                    'text' => 'Fix Columns',
-                    'url' => 'fixcolumns'
-                ],
-            ],
+        // ['header' => 'SETTINGS'],
+        // [
+        //     'text' => 'Tools',
+        //     'url'  => 'admin/master',
+        //     'icon' => 'fas fa-fw fa-tools',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Adjusment',
+        //             'url' => 'admin/adjusment'
+        //         ],
+        //         [
+        //             'text' => 'SPB kontrol',
+        //             'url' => 'admin/barangspb'
+        //         ],
+        //         [
+        //             'text' => 'Calculate (barang)',
+        //             'url' => 'calculate'
+        //         ],
+        //         [
+        //             'text' => 'History Barang',
+        //             'url' => 'history'
+        //         ],
+        //         [
+        //             'text' => 'Send Email',
+        //             'url' => 'sendemail'
+        //         ],
+        //         [
+        //             'text' => 'Fix Columns',
+        //             'url' => 'fixcolumns'
+        //         ],
+        //     ],
 
-        ],
+        // ],
 
-        ['header' => 'STORE'],
-        [
-            'text' => 'Slider',
-            'url'  => 'admin/slider',
-            'icon' => 'fas fa-fw fa-image',
-        ],
+        ['header' => 'SETTING'],
+        // [
+        //     'text' => 'Slider',
+        //     'url'  => 'admin/slider',
+        //     'icon' => 'fas fa-fw fa-image',
+        // ],
         // [
         //     'text' => 'Banner',
         //     'url'  => 'admin/banner',
         //     'icon' => 'fas fa-fw fa-tag',
-        // ],        
-        [
-            'text' => 'Coupon',
-            'url'  => 'admin/coupon',
-            'icon' => 'fas fa-fw fa-tag',
-        ],
+        // ],
+        // [
+        //     'text' => 'Coupon',
+        //     'url'  => 'admin/coupon',
+        //     'icon' => 'fas fa-fw fa-tag',
+        // ],
         [
             'text' => 'Users',
             'url'  => 'admin/user',
@@ -472,24 +452,24 @@ return [
         //     'url'  => 'admin/daftar-member',
         //     'icon' => 'fas fa-fw fa-list',
         // ],
-        [
-            'text' => 'Konfirmasi Pendaftaran',
-            'url'  => 'admin/konfirmasi-daftar',
-            'icon' => 'fas fa-fw fa-book',
-        ],
+        // [
+        //     'text' => 'Konfirmasi Pendaftaran',
+        //     'url'  => 'admin/konfirmasi-daftar',
+        //     'icon' => 'fas fa-fw fa-book',
+        // ],
 
-        ['header' => 'PROFILE'],
-        [
-            'text' => 'Logout',
-            'url'  => '/logout',
-            'icon' => 'fas fa-fw fa-power-off',
-        ],
-        [
-            'text' => 'Frontpage',
-            'url'  => '/',
-            'icon' => 'fas fa-fw fa-desktop',
-            'target' => '_blank'
-        ],
+        // ['header' => 'PROFILE'],
+        // [
+        //     'text' => 'Logout',
+        //     'url'  => '/logout',
+        //     'icon' => 'fas fa-fw fa-power-off',
+        // ],
+        // [
+        //     'text' => 'Frontpage',
+        //     'url'  => '/',
+        //     'icon' => 'fas fa-fw fa-desktop',
+        //     'target' => '_blank'
+        // ],
 
         // [
         //     'text'    => 'multilevel',

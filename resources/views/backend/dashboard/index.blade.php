@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <p>Selamat datang di admin dashboard <b>Bellezkin</b>.</p>
+    <p>Selamat datang di dashboard <b>Dinas Kominfo Pemerintah Kota Manado</b>.</p>
 @stop
 
 @section('css')

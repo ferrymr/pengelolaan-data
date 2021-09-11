@@ -38,7 +38,7 @@ class LoginController extends Controller
     protected function redirectTo() {
         $user = Auth::user();
 
-        if($user->hasRole('administrator')) {
+        if($user->hasRole('administrator|user')) {
             return route('admin.dashboard.index');
         } else {
 
@@ -54,18 +54,18 @@ class LoginController extends Controller
             }
 
             if(!empty(Cart::get())) {
-                if($user->status == 2424) { 
+                if($user->status == 2424) {
                     return route('home');
                 } else {
                     return route('checkout');
-                }                
+                }
             } else {
                 return route('home');
             }
 
         }
     }
-    
+
     /**
      * Create a new controller instance.
      *
