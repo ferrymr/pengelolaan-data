@@ -60,3 +60,18 @@ Route::group([
     Route::post('store', 'UserController@store')->name('store');
     Route::post('update/{id}', 'UserController@update')->name('update');
 });
+
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/instansi/',
+    'as' => 'admin.instansi.'
+], function () {
+    Route::get('', 'InstansiController@index')->name('index');
+    Route::get('add', 'InstansiController@create')->name('add');
+    Route::post('store', 'InstansiController@store')->name('store');
+    Route::get('datatable', 'InstansiController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'InstansiController@edit')->name('edit');
+    Route::get('delete/{id}', 'InstansiController@destroy')->name('delete');
+    Route::post('update/{id}', 'InstansiController@update')->name('update');
+
+});
