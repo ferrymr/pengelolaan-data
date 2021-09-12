@@ -29,22 +29,6 @@ Route::group([
 });
 
 
-// Master Supplier
-Route::group([
-    'middleware' => ['role:administrator|user'],
-    'prefix' => '/admin/supplier/',
-    'as' => 'admin.supplier.'
-], function () {
-    Route::get('', 'SupplierController@index')->name('index');
-    Route::get('add', 'SupplierController@create')->name('add');
-    Route::post('store', 'SupplierController@store')->name('store');
-    Route::get('datatable', 'SupplierController@datatable')->name('datatable');
-    Route::get('edit/{kode_supp}', 'SupplierController@edit')->name('edit');
-    Route::get('delete/{kode_supp}', 'SupplierController@destroy')->name('delete');
-    Route::post('update/{kode_supp}', 'SupplierController@update')->name('update');
-
-});
-
 // User
 Route::group([
     'middleware' => ['role:administrator'],
@@ -61,6 +45,7 @@ Route::group([
     Route::post('update/{id}', 'UserController@update')->name('update');
 });
 
+// Instansi
 Route::group([
     'middleware' => ['role:administrator'],
     'prefix' => '/admin/instansi/',
@@ -73,5 +58,21 @@ Route::group([
     Route::get('edit/{id}', 'InstansiController@edit')->name('edit');
     Route::get('delete/{id}', 'InstansiController@destroy')->name('delete');
     Route::post('update/{id}', 'InstansiController@update')->name('update');
+
+});
+
+// Jenis Layanan
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/layanan/',
+    'as' => 'admin.layanan.'
+], function () {
+    Route::get('', 'JenisLayananController@index')->name('index');
+    Route::get('add', 'JenisLayananController@create')->name('add');
+    Route::post('store', 'JenisLayananController@store')->name('store');
+    Route::get('datatable', 'JenisLayananController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'JenisLayananController@edit')->name('edit');
+    Route::get('delete/{id}', 'JenisLayananController@destroy')->name('delete');
+    Route::post('update/{id}', 'JenisLayananController@update')->name('update');
 
 });
