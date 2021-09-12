@@ -75,7 +75,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $roles = $this->roleRepo->getAll();
-        
+
         return view('backend.store.user.create')->with([
             'user' => $user,
             'roles' => $roles,
@@ -146,14 +146,10 @@ class UserController extends Controller
         // password kosong
         $param = array(
             "name" => $request->input('name'),
-            // "distributor_id" => $request->input('distributor_id') ? $request->input('distributor_id') : null,
             "phone" => $request->input('phone'),
             "email" => $request->input('email'),
-            // "discount" => $request->input('discount'),
-            // "address" => $request->input('address'),
-            // "description" => $request->input('description'),
         );
-    
+
         $User = $this->userRepo->editUser($param, $id, $request->input('role_id'));
 
         if(!$this->userRepo->error) {
@@ -185,7 +181,7 @@ class UserController extends Controller
 
 
     // ======================= GANTI PASSWORD ===================================
-    
+
     public function indexGantiPassword($id)
     {
         $user = Auth::user();
@@ -206,7 +202,7 @@ class UserController extends Controller
                 "password" => Hash::make($request->input('password')),
             );
         }
-        
+
         $User = $this->userRepo->editPassword($param, $request->input('id'));
 
         if(!$this->userRepo->error) {
@@ -227,7 +223,7 @@ class UserController extends Controller
             return redirect("activation-failed");
         } else {
             $user = $this->userRepo->activateAccount($user_id, $code);
-            
+
             if($user) {
                 // redirect success
                 return redirect('activation-success');

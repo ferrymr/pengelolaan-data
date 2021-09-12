@@ -248,31 +248,18 @@ return [
                 //     'text' => 'Barang',
                 //     'url' => 'admin/barang'
                 // ],
+                // [
+                //     'text' => 'Supplier',
+                //     'url' => 'admin/supplier'
+                // ],
                 [
-                    'text' => 'Supplier',
-                    'url' => 'admin/supplier'
+                    'text' => 'Instansi',
+                    'url' => 'admin/instansi'
                 ],
-                // [
-                //     'text' => 'Reseller',
-                //     'url' => 'admin/reseller'
-                // ],
-                // moved to master barang
-                // [
-                //     'text' => 'Series',
-                //     'url' => 'admin/series'
-                // ],
-                // [
-                //     'text' => 'Bank',
-                //     'url' => 'admin/bank'
-                // ],
-                // [
-                //     'text' => 'Referral',
-                //     'url' => 'admin/referral'
-                // ],
-                // [
-                //     'text' => 'Setting',
-                //     'url' => 'admin/setting'
-                // ],
+                [
+                    'text' => 'Jenis Layanan',
+                    'url' => 'admin/layanan'
+                ],
             ],
         ],
         [
@@ -281,227 +268,18 @@ return [
             'icon' => 'fas fa-fw fa-shopping-bag',
             'submenu' => [
                 [
-                    'text' => 'Pemesanan',
-                    'url' => 'admin/pemesanan'
+                    'text' => 'Pembayaran',
+                    'url' => 'admin/pembayaran'
                 ],
-                // [
-                //     'text' => 'Konfirmasi pemesanan',
-                //     'url' => 'admin/konfirmasi-penjualan'
-                // ],
-                // [
-                //     'text' => 'Penjualan',
-                //     'url' => 'admin/penjualan'
-                // ],
-                // [
-                //     'text' => 'Pembelian',
-                //     'url' => 'admin/pembelian'
-                // ],
-                // [
-                //     'text' => 'Movement',
-                //     'url' => 'admin/movement'
-                // ],
-
-
             ],
         ],
-        // [
-        //     'text' => 'Bonus',
-        //     'url'  => 'admin/bonus',
-        //     'icon' => 'fas fa-fw fa-money-bill',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Qualified',
-        //             'url' => 'qualified'
-        //         ],
-        //         [
-        //             'text' => 'Cashback',
-        //             'url' => 'admin/cashback'
-        //         ],
-        //         [
-        //             'text' => 'Reward',
-        //             'url' => 'reward'
-        //         ],
-        //         [
-        //             'text' => 'Leadership',
-        //             'url' => 'leadership'
-        //         ],
-        //         [
-        //             'text' => 'Merchandise',
-        //             'url' => 'merchandise'
-        //         ],
-
-        //     ],
-        // ],
-        // [
-        //     'text' => 'Finance',
-        //     'url'  => 'admin/master',
-        //     'icon' => 'fas fa-fw fa-dollar-sign',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Cashbook',
-        //             'url' => 'cashbook'
-        //         ],
-        //         [
-        //             'text' => 'Pembayaran',
-        //             'url' => 'pembayaran'
-        //         ],
-        //         [
-        //             'text' => 'Saldo Member',
-        //             'url' => 'saldomember'
-        //         ],
-
-
-        //     ],
-        // ],
-        // [
-        //     'text' => 'Retur',
-        //     'url'  => 'admin/master',
-        //     'icon' => 'fas fa-fw fa-retweet',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Penjualan',
-        //             'url' => 'returpenjualan'
-        //         ],
-        //         [
-        //             'text' => 'Pembelian',
-        //             'url' => 'returpembelian'
-        //         ],
-        //         [
-        //             'text' => 'Movement',
-        //             'url' => 'returmovement'
-        //         ],
-
-
-        //     ],
-        // ],
-        // [
-        //     'text' => 'Report',
-        //     'url'  => 'admin/master',
-        //     'icon' => 'fas fa-fw fa-book-open',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Release Bonus',
-        //             'url' => 'release'
-        //         ],
-        //         [
-        //             'text' => 'Daily sales & Recruitment',
-        //             'url' => 'dailysales'
-        //         ],
-
-        //     ],
-        // ],
-
-
-        // ['header' => 'SETTINGS'],
-        // [
-        //     'text' => 'Tools',
-        //     'url'  => 'admin/master',
-        //     'icon' => 'fas fa-fw fa-tools',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Adjusment',
-        //             'url' => 'admin/adjusment'
-        //         ],
-        //         [
-        //             'text' => 'SPB kontrol',
-        //             'url' => 'admin/barangspb'
-        //         ],
-        //         [
-        //             'text' => 'Calculate (barang)',
-        //             'url' => 'calculate'
-        //         ],
-        //         [
-        //             'text' => 'History Barang',
-        //             'url' => 'history'
-        //         ],
-        //         [
-        //             'text' => 'Send Email',
-        //             'url' => 'sendemail'
-        //         ],
-        //         [
-        //             'text' => 'Fix Columns',
-        //             'url' => 'fixcolumns'
-        //         ],
-        //     ],
-
-        // ],
 
         ['header' => 'SETTING'],
-        // [
-        //     'text' => 'Slider',
-        //     'url'  => 'admin/slider',
-        //     'icon' => 'fas fa-fw fa-image',
-        // ],
-        // [
-        //     'text' => 'Banner',
-        //     'url'  => 'admin/banner',
-        //     'icon' => 'fas fa-fw fa-tag',
-        // ],
-        // [
-        //     'text' => 'Coupon',
-        //     'url'  => 'admin/coupon',
-        //     'icon' => 'fas fa-fw fa-tag',
-        // ],
         [
             'text' => 'Users',
             'url'  => 'admin/user',
             'icon' => 'fas fa-fw fa-users',
         ],
-        // [
-        //     'text' => 'Pendaftaran Member',
-        //     'url'  => 'admin/daftar-member',
-        //     'icon' => 'fas fa-fw fa-list',
-        // ],
-        // [
-        //     'text' => 'Konfirmasi Pendaftaran',
-        //     'url'  => 'admin/konfirmasi-daftar',
-        //     'icon' => 'fas fa-fw fa-book',
-        // ],
-
-        // ['header' => 'PROFILE'],
-        // [
-        //     'text' => 'Logout',
-        //     'url'  => '/logout',
-        //     'icon' => 'fas fa-fw fa-power-off',
-        // ],
-        // [
-        //     'text' => 'Frontpage',
-        //     'url'  => '/',
-        //     'icon' => 'fas fa-fw fa-desktop',
-        //     'target' => '_blank'
-        // ],
-
-        // [
-        //     'text'    => 'multilevel',
-        //     'icon'    => 'fas fa-fw fa-share',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'level_one',
-        //             'url'  => '#',
-        //         ],
-        //         [
-        //             'text' => 'level_one',
-        //             'url'  => '#',
-        //         ],
-        //     ],
-        // ],
-
-        // ['header' => 'labels'],
-        // [
-        //     'text'       => 'important',
-        //     'icon_color' => 'red',
-        //     'url'        => '#',
-        // ],
-        // [
-        //     'text'       => 'warning',
-        //     'icon_color' => 'yellow',
-        //     'url'        => '#',
-        // ],
-        // [
-        //     'text'       => 'information',
-        //     'icon_color' => 'cyan',
-        //     'url'        => '#',
-        // ],
     ],
 
     /*
