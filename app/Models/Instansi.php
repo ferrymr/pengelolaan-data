@@ -57,4 +57,10 @@ class Instansi extends Model
             return false;
         }
     }
+
+    // ==========================Relation=================================
+    public function pembayaran()
+    {
+        return $this->belongsTo(Pembayaran::class, 'id');
+    }
 }

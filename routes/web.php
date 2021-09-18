@@ -76,3 +76,19 @@ Route::group([
     Route::post('update/{id}', 'JenisLayananController@update')->name('update');
 
 });
+
+// Pembayaran
+Route::group([
+    'middleware' => ['role:administrator'],
+    'prefix' => '/admin/pembayaran/',
+    'as' => 'admin.pembayaran.'
+], function () {
+    Route::get('', 'PembayaranController@index')->name('index');
+    Route::get('add', 'PembayaranController@create')->name('add');
+    Route::post('store', 'PembayaranController@store')->name('store');
+    Route::get('datatable', 'PembayaranController@datatable')->name('datatable');
+    Route::get('edit/{id}', 'PembayaranController@edit')->name('edit');
+    Route::get('delete/{id}', 'PembayaranController@destroy')->name('delete');
+    Route::post('update/{id}', 'PembayaranController@update')->name('update');
+
+});

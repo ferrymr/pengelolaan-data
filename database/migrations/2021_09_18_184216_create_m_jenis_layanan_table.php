@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMInstansiTable extends Migration
+class CreateMJenisLayananTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateMInstansiTable extends Migration
      */
     public function up()
     {
-        Schema::create('m_instansi', function (Blueprint $table) {
-            $table->id();
-            $table->string('no_pelanggan');
-            $table->string('nama_instansi');
+        Schema::create('m_jenis_layanan', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('jenis_layanan');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateMInstansiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('m_instansi');
+        Schema::dropIfExists('m_jenis_layanan');
     }
 }

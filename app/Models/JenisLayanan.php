@@ -55,4 +55,9 @@ class JenisLayanan extends Model
             return false;
         }
     }
+
+    public function pembayaran()
+    {
+        return $this->belongsTo(Pembayaran::class, 'id');
+    }
 }
