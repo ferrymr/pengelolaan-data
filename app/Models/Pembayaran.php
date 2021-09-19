@@ -13,8 +13,8 @@ class Pembayaran extends Model
         'id_jenis_layanan',
         'total_mbps',
         'nominal_pembayaran',
-        'status_pembayaran',
-        'bukti_transfer',
+        'status',
+        'photo',
     ];
 
     public function getAll()
@@ -39,5 +39,8 @@ class Pembayaran extends Model
         return $this->belongsTo(JenisLayanan::class,'id_jenis_layanan','id');
     }
 
-   
+   public function getPhotoAttribute($value)
+   {
+       return url('storage/' . $value);
+   }
 }

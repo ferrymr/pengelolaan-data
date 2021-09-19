@@ -84,6 +84,7 @@ Route::group([
     'as' => 'admin.pembayaran.'
 ], function () {
     Route::get('', 'PembayaranController@index')->name('index');
+    Route::get('get.nama', 'PembayaranController@getNama')->name('get.nama');
     Route::get('add', 'PembayaranController@create')->name('add');
     Route::post('store', 'PembayaranController@store')->name('store');
     Route::get('datatable', 'PembayaranController@datatable')->name('datatable');

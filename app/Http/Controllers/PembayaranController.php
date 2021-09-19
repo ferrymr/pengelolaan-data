@@ -6,7 +6,7 @@ use App\Models\JenisLayanan;
 use App\Models\Instansi;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreatePembayaranRequest;
+use App\Http\Requests\PembayaranRequest;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use App\Models\User;
@@ -60,5 +60,25 @@ class PembayaranController extends Controller
             })
             ->escapeColumns([])
             ->make(true);
+    }
+
+    public function create()
+    {
+        $user = Auth::user();
+        $roles = $this->roleRepo->getAll();
+
+        return view('backend.order.pembayaran.create')->with([
+            'user' => $user,
+            'roles' => $roles,
+        ]);
+    }
+
+    public function getNama(Request $request)
+    {
+        $no_pelanggan = $request->get('no_pelanggan');
+
+        $data = Instansi::select('nama_instansi')->where('no_pelanggan', $no_pelanggan)->firstOrFail();
+
+        return response()->json($data);
     }
 }

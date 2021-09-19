@@ -113,8 +113,8 @@
                     { data: 'jenis_layanan', name: 'jenis_layanan' },
                     { data: 'total_mbps', name: 'total_mbps' },
                     { data: 'nominal_pembayaran', name: 'nominal_pembayaran' },
-                    { data: 'status_pembayaran', name: 'status_pembayaran' },
-                    { data: 'bukti_pembayaran', name: 'bukti_pembayaran' },
+                    { data: 'status', name: 'status' },
+                    { data: 'photo', name: 'photo' },
                     {
                         // Define the action column
                         data: null,
