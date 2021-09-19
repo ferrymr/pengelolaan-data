@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pembayaran extends Model
 {
-    protected $table = 'transaksi';
+    protected $table = 'pembayaran';
     protected $primarykey = 'id';
     protected $fillable = [
+        'id_instansi',
+        'id_jenis_layanan',
         'total_mbps',
         'nominal_pembayaran',
         'status_pembayaran',
@@ -29,11 +31,13 @@ class Pembayaran extends Model
 
     public function instansi()
     {
-    	return $this->belongsToMany('App\Models\Instansi');
+        return $this->belongsTo(Instansi::class,'id_instansi','id');
     }
 
     public function layanan()
     {
-    	return $this->belongsToMany('App\Models\JenisLayanan');
+        return $this->belongsTo(JenisLayanan::class,'id_jenis_layanan','id');
     }
+
+   
 }

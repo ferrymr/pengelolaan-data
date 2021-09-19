@@ -61,6 +61,8 @@ class Instansi extends Model
     // ==========================Relation=================================
     public function pembayaran()
     {
-        return $this->belongsTo(Pembayaran::class, 'id');
-    }
+        return $this->hasMany(Pembayaran::class,'id_instansi');
+    }  
+
+    
 }

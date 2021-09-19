@@ -244,14 +244,6 @@ return [
             'url'  => 'admin/master',
             'icon' => 'fas fa-fw fa-home',
             'submenu' => [
-                // [
-                //     'text' => 'Barang',
-                //     'url' => 'admin/barang'
-                // ],
-                // [
-                //     'text' => 'Supplier',
-                //     'url' => 'admin/supplier'
-                // ],
                 [
                     'text' => 'Instansi',
                     'url' => 'admin/instansi'
@@ -316,6 +308,7 @@ return [
     |
     */
 
+    //
     'plugins' => [
         'Datatables' => [
             'active' => true,
@@ -437,16 +430,16 @@ return [
                 ],
             ],
         ],
-        'Ckeditor' => [
-            'active' => true,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.ckeditor.com/4.14.1/standard/ckeditor.js',
-                ],
-            ],
-        ],
+        // 'Ckeditor' => [
+        //     'active' => true,
+        //     'files' => [
+        //         [
+        //             'type' => 'js',
+        //             'asset' => false,
+        //             'location' => '//cdn.ckeditor.com/4.14.1/standard/ckeditor.js',
+        //         ],
+        //     ],
+        // ],
         'BootstrapFilesyle' => [
             'active' => true,
             'files' => [

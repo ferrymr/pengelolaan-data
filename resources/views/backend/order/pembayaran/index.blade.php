@@ -30,11 +30,12 @@
                     <tr>
                         <th>No</th>
                         <th>No Pelanggan</th>
-                        <th>Nama Pelanggan</th>
+                        <th>Nama Instansi</th>
                         <th>Jenis Layanan</th>
                         <th>Total MBPS</th>
                         <th>Nominal Pembayaran</th>
                         <th>Status Pembayaran</th>
+                        <th>Image</th>
                         <th>Action</th>
                         <th class="text-center">&nbsp;</th>
                     </tr>
@@ -47,13 +48,13 @@
                         <a href="#" class="btn btn-sm btn-info btn-edit" title="Edit" style="display: none;">
                             <i class="fa fa-edit"></i>
                         </a>
-                        {{-- <a class="btn btn-danger btn-sm btn-hapus actDelete"
+                        <a class="btn btn-danger btn-sm btn-hapus actDelete"
                             data-placement="left"
                             data-toggle="confirmation"
                             data-title="Hapus data ?"
                             style="display:none;">
                             <i class="fa fa-trash fa-fw"></i>
-                        </a> --}}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -110,7 +111,7 @@
                     { data: 'no_pelanggan', name: 'no_pelanggan' },
                     { data: 'nama_instansi', name: 'nama_instansi' },
                     { data: 'jenis_layanan', name: 'jenis_layanan' },
-                    { data: 'total_mbps', name: 'email' },
+                    { data: 'total_mbps', name: 'total_mbps' },
                     { data: 'nominal_pembayaran', name: 'nominal_pembayaran' },
                     { data: 'status_pembayaran', name: 'status_pembayaran' },
                     { data: 'bukti_pembayaran', name: 'bukti_pembayaran' },
