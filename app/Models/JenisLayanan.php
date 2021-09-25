@@ -58,6 +58,6 @@ class JenisLayanan extends Model
 
     public function pembayaran()
     {
-        return $this->hasMany(Pembayaran::class,'id_jenis_layanan');
+        return $this->hasMany(Pembayaran::class,'id_jenis_layanan', 'id');
     }  
 }

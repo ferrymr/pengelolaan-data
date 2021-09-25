@@ -20,7 +20,7 @@ class Instansi extends Model
 
     public function getInstansi($roleId)
     {
-        return Supplier::whereHas('roles', function ($q) use ($roleId) {
+        return Instansi::whereHas('roles', function ($q) use ($roleId) {
             $q->where('id', $roleId);
         })->get();
     }
@@ -61,7 +61,7 @@ class Instansi extends Model
     // ==========================Relation=================================
     public function pembayaran()
     {
-        return $this->hasMany(Pembayaran::class,'id_instansi');
+        return $this->hasMany(Pembayaran::class,'id_instansi','id');
     }  
 
     
