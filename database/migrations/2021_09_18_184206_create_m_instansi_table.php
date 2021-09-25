@@ -14,7 +14,7 @@ class CreateMInstansiTable extends Migration
     public function up()
     {
         Schema::create('m_instansi', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('no_pelanggan');
             $table->string('nama_instansi');
             $table->timestamps();

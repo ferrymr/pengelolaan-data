@@ -21,15 +21,22 @@ class PembayaranRequest extends FormRequest
      *
      * @return array
      */
+
     public function rules()
     {
         return [
-            'id_instansi' => 'required|integer|exists:m_instansi,id',
-            'id_jenis_layanan' => 'required|integer|exists:m_jenis_layanan,id',
+            'id_instansi' => 'required|exists:m_instansi,id',
+            'id_jenis_layanan' => 'required|exists:m_jenis_layanan,id',
+            // 'no_pelanggan' => 'required',
+            // 'nama_instansi' => 'required',
+            // 'jenis_layanan' => 'required',
             'total_mbps'    => 'required',
             'nominal_pembayaran'    => 'required',
             'status'    => 'required',
             'photo'    => 'required|image',
         ];
     }
+
 }
+
+            

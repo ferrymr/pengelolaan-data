@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Model;
 use App\Models\JenisLayanan;
 use App\Models\Instansi;
 use App\Models\Pembayaran;
@@ -11,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use App\Models\User;
 use App\Models\Role;
-use Illuminate\Support\Facades\DB;
 
 class PembayaranController extends Controller
 {
@@ -25,16 +26,6 @@ class PembayaranController extends Controller
     public function index()
     {
         $user = Auth::user();
-        // $pembayaran = $this->pembayaranRepo->getAll();
-
-        // $data = Pembayaran::with('instansi','layanan')->get();
-
-        // return view('backend.order.pembayaran.index')->with([
-        //     'user' => $user,
-        //     // 'pembayaran' => $pembayaran
-        //     'data' => $data
-        // ]);
-
         $instansi = Instansi::all();
         $layanan = JenisLayanan::all();
 
@@ -51,7 +42,10 @@ class PembayaranController extends Controller
             ->get();
         
         return Datatables::of($data)
-
+            ->addColumn('photo', function ($data) {
+                $url= asset($data->photo);
+                return '<img src="'.$url.'" border="0" width="100" class="img-rounded" align="center" />';
+            })
             ->addColumn('action', function ($data) {
                 return [
                     'edit'  => route('admin.pembayaran.edit', $data->id),
@@ -66,10 +60,12 @@ class PembayaranController extends Controller
     {
         $user = Auth::user();
         $roles = $this->roleRepo->getAll();
+        $layanan = JenisLayanan::all();
 
         return view('backend.order.pembayaran.create')->with([
             'user' => $user,
             'roles' => $roles,
+            'layanan' => $layanan
         ]);
     }
 
@@ -80,5 +76,19 @@ class PembayaranController extends Controller
         $data = Instansi::select('nama_instansi')->where('no_pelanggan', $no_pelanggan)->firstOrFail();
 
         return response()->json($data);
+    }
+
+    public function store(PembayaranRequest $request)
+    {
+        $r = $request->all();
+        $r['photo'] = $request->file('photo')->store(
+            'assets/product', 'public'
+        );
+
+        
+
+        Pembayaran::create($r);
+        // dd($data);
+        return redirect()->route('admin.pembayaran.index');
     }
 }

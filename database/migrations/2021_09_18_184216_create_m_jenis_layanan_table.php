@@ -14,7 +14,7 @@ class CreateMJenisLayananTable extends Migration
     public function up()
     {
         Schema::create('m_jenis_layanan', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('jenis_layanan');
             $table->timestamps();
         });
