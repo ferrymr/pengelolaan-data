@@ -34,6 +34,7 @@ class PembayaranRequest extends FormRequest
             'nominal_pembayaran'    => 'required',
             'status'    => 'required',
             'photo'    => 'required|image',
+            'tgl_pembayaran' => date('Y-m-d')
         ];
     }
 

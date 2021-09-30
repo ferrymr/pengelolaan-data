@@ -23,24 +23,44 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="form-group col-sm-6 @if($errors->has('no_pelanggan')) has-error @endif">
+                <div class="form-group col-sm-6 @if($errors->has('jenis_layanan')) has-error @endif">
                     <label for="no_pelanggan" class="col-sm-12 control-label">ID Pelanggan *</label>
                     <div class="col-sm-12">
-                        <input type="text" name="no_pelanggan" class="form-control" id="no_pelanggan" placeholder="ID Pelanggan">
+                        <select name="id_instansi" id="no_pelanggan" class="select2" style="width:100%" required>
+                            <option disabled selected>Pilih Salah Satu</option>
+                            @foreach ($instansi as $item )
+                            <option value="{{ $item->id }}">{{ $item->no_pelanggan }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                {{-- <div class="form-group col-sm-6 @if($errors->has('no_pelanggan')) has-error @endif">
+                <label for="no_pelanggan" class="col-sm-12 control-label">ID Pelanggan *</label>
+                <div class="col-sm-12">
+                        <input type="text" name="id_instansi" class="form-control" id="no_pelanggan" placeholder="ID Pelanggan" required>
                         @if($errors->has('no_pelanggan'))
                             <span class="text-danger">{{ $errors->first('no_pelanggan') }}</span>
                         @endif
                     </div>
-                </div>
-                <div class="form-group col-sm-6 @if($errors->has('nama_instansi')) has-error @endif">
-                    <label for="nama_instansi" class="col-sm-12 control-label">Instansi *</label>
+                </div> --}}
+                <div class="form-group col-sm-6 @if($errors->has('tgl_pembayaran')) has-error @endif">
+                    <label for="tgl_pembayaran" class="col-sm-12 control-label">Tanggal Pembayaran *</label>
                     <div class="col-sm-12">
-                        <input type="text" name="nama_instansi" class="form-control" id="nama_instansi" placeholder="Instansi" readonly="true">
+                        <input type="date" name="tgl_pembayaran" class="form-control" id="tgl_pembayaran" placeholder="Tanggal Pembayaran">
+                        @if($errors->has('tgl_pembayaran'))
+                            <span class="text-danger">{{ $errors->first('tgl_pembayaran') }}</span>
+                        @endif
+                    </div>
+                </div>
+                {{-- <div class="form-group col-sm-6 @if($errors->has('nama_instansi')) has-error @endif">
+                    <label for="id_instansi" class="col-sm-12 control-label">Instansi *</label>
+                    <div class="col-sm-12">
+                        <input type="text" name="id_instansi" class="form-control" id="nama_instansi" placeholder="Instansi" readonly="true" required>
                         @if($errors->has('nama_instansi'))
                             <span class="text-danger">{{ $errors->first('nama_instansi') }}</span>
                         @endif
                     </div>
-                </div>
+                </div> --}}
             </div>
 
             <div class="row">
@@ -68,8 +88,8 @@
                 <div class="form-group col-sm-6 @if($errors->has('jenis_layanan')) has-error @endif">
                     <label for="jenis_layanan" class="col-sm-12 control-label">Jenis Layanan *</label>
                     <div class="col-sm-12">
-                        <select name="jenis_layanan" id="jenis_layanan" class="form-control">
-                            <option disabled selected>Pilih Jenis Layanan</option>
+                        <select name="id_jenis_layanan" id="jenis_layanan" class="select2" style="width:100%" required>
+                            <option disabled selected>Pilih Salah Satu</option>
                             @foreach ($layanan as $item )
                             <option value="{{ $item->id }}">{{ $item->jenis_layanan }}</option>
                             @endforeach
@@ -79,10 +99,10 @@
                 <div class="form-group col-sm-6 @if($errors->has('status')) has-error @endif">
                     <label for="status" class="col-sm-12 control-label">Status Pembayaran *</label>
                     <div class="col-sm-12">
-                        <select name="status" id="status" class="form-control">
-                            <option disabled selected>Pilih salah satu</option>
-                            <option value="lunas">Lunas</option>
-                            <option value="belum lunas">Belum Lunas</option>
+                        <select name="status" id="status" class="select2" style="width:100%" required>
+                            <option disabled selected>Pilih Salah Satu</option>
+                            <option value="Lunas">Lunas</option>
+                            <option value="Belum Lunas">Belum Lunas</option>
                         </select>
                     </div>
                 </div>

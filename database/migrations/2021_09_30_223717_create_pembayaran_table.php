@@ -19,8 +19,9 @@ class CreatePembayaranTable extends Migration
             $table->integer('id_jenis_layanan');
             $table->integer('total_mbps');
             $table->integer('nominal_pembayaran');
-            $table->enum('status', ['lunas', 'belum lunas']);
-            $table->string('photo')->nullable();
+            $table->date('tgl_pembayaran');
+            $table->enum('status', ['Lunas', 'Belum Lunas']);
+            $table->string('photo');
             $table->timestamps();
         });
     }

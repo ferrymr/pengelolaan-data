@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\JenisLayanan;
 use App\Models\Instansi;
 use App\Models\Pembayaran;
@@ -28,24 +26,36 @@ class PembayaranController extends Controller
         $user = Auth::user();
         $instansi = Instansi::all();
         $layanan = JenisLayanan::all();
+        // $data = $this->pembayaranRepo->getAll();
 
         return view('backend.order.pembayaran.index', compact('instansi','layanan','user'));
     }
 
     public function datatable() 
     {
-        // $data = Pembayaran::with('instansi','layanan')->get();
         $data = Pembayaran::select('pembayaran.*', 'no_pelanggan','nama_instansi','jenis_layanan')
             ->leftJoin('m_instansi', 'm_instansi.id', 'pembayaran.id_instansi')
             ->leftJoin('m_jenis_layanan', 'm_jenis_layanan.id', 'pembayaran.id_jenis_layanan')
             ->orderBy('id', 'asc')
             ->get();
         
+        // $data = $this->pembayaranRepo->getAll();
         return Datatables::of($data)
             ->addColumn('photo', function ($data) {
                 $url= asset($data->photo);
                 return '<img src="'.$url.'" border="0" width="100" class="img-rounded" align="center" />';
             })
+            // ->addColumn('status', function($data) {
+            //     if(!empty($data)) {
+            //         if($data->status == "Lunas" ||
+            //             $data->status == "Belum Lunas"
+            //         ) { 
+            //             return '<span class="badge bg-warning">Belum Lunas</span>';
+            //         } else {
+            //             return '<span class="badge bg-success">Lunas</span>';
+            //         }
+            //     }
+            // })
             ->addColumn('action', function ($data) {
                 return [
                     'edit'  => route('admin.pembayaran.edit', $data->id),
@@ -61,11 +71,13 @@ class PembayaranController extends Controller
         $user = Auth::user();
         $roles = $this->roleRepo->getAll();
         $layanan = JenisLayanan::all();
+        $instansi = Instansi::all();
 
         return view('backend.order.pembayaran.create')->with([
             'user' => $user,
             'roles' => $roles,
-            'layanan' => $layanan
+            'layanan' => $layanan,
+            'instansi' => $instansi
         ]);
     }
 
@@ -78,17 +90,28 @@ class PembayaranController extends Controller
         return response()->json($data);
     }
 
-    public function store(PembayaranRequest $request)
+    public function store(Request $request)
     {
         $r = $request->all();
         $r['photo'] = $request->file('photo')->store(
             'assets/product', 'public'
         );
 
-        
-
         Pembayaran::create($r);
         // dd($data);
         return redirect()->route('admin.pembayaran.index');
+    }
+
+    public function edit($id)
+    {
+        $item = Pembayaran::findOrFail($id);
+        $instansi = Instansi::all();
+        $layanan = JenisLayanan::all();
+
+        return view('backend.order.pembayaran.edit',[
+            'item' => $item,
+            'instansi' => $instansi,
+            'layanan' => $layanan
+        ]);
     }
 }

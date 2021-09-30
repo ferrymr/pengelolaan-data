@@ -35,6 +35,7 @@
                         <th>Total MBPS</th>
                         <th>Nominal Pembayaran</th>
                         <th>Status Pembayaran</th>
+                        <th>Tanggal Pembayaran</th>
                         <th>Image</th>
                         <th>Action</th>
                         <th class="text-center">&nbsp;</th>
@@ -114,6 +115,7 @@
                     { data: 'total_mbps', name: 'total_mbps' },
                     { data: 'nominal_pembayaran', name: 'nominal_pembayaran' },
                     { data: 'status', name: 'status' },
+                    { data: 'tgl_pembayaran', name: 'tgl_pembayaran' },
                     { data: 'photo', name: 'photo' },
                     {
                         // Define the action column

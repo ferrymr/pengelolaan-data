@@ -15,6 +15,7 @@ class Pembayaran extends Model
         'nominal_pembayaran',
         'status',
         'photo',
+        'tgl_pembayaran'
     ];
 
     
