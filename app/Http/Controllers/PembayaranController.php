@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\JenisLayanan;
+use App\Models\Role;
+use App\Models\User;
 use App\Models\Instansi;
 use App\Models\Pembayaran;
+use App\Models\JenisLayanan;
 use Illuminate\Http\Request;
-use App\Http\Requests\PembayaranRequest;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
-use App\Models\User;
-use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PembayaranRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class PembayaranController extends Controller
 {
@@ -92,26 +94,52 @@ class PembayaranController extends Controller
 
     public function store(Request $request)
     {
-        $r = $request->all();
-        $r['photo'] = $request->file('photo')->store(
-            'assets/product', 'public'
-        );
+        $validateData = $request->validate([
+            'id_instansi' => 'required',
+            'id_jenis_layanan' => 'required',
+            'tgl_pembayaran' => 'required',
+            'nominal_pembayaran' => 'required',
+            'total_mbps' => 'required',
+            'status' => 'required',
+            'photo' => 'image|file|max:1024'
+        ]);
 
-        Pembayaran::create($r);
-        // dd($data);
-        return redirect()->route('admin.pembayaran.index');
+        if($request->file('photo')) {
+                $validateData['photo'] = $request->file('photo')->store(
+                    'assets/product', 'public');
+            }
+
+        Pembayaran::create($validateData);
+
+        return redirect()->route('admin.pembayaran.index');        
     }
 
     public function edit($id)
     {
-        $item = Pembayaran::findOrFail($id);
+        $user = Auth::user();
+        $currentPembayaran = $this->pembayaranRepo->findId($id);
+        $roles = $this->roleRepo->getAll();
         $instansi = Instansi::all();
         $layanan = JenisLayanan::all();
 
-        return view('backend.order.pembayaran.edit',[
-            'item' => $item,
+        return view('backend.order.pembayaran.edit')->with([
+            'user' => $user,
+            'currentPembayaran' => $currentPembayaran,
+            'roles' => $roles,
             'instansi' => $instansi,
-            'layanan' => $layanan
+            'layanan'   => $layanan
         ]);
+    }
+
+    public function destroy($id)
+    {
+        $pembayaran = Pembayaran::where('id', $id)->delete();
+        if(!empty($pembayaran)) {
+            flash('<i class="fa fa-info"></i>&nbsp; <strong>Data pembayaran berhasil dihapus</strong>')->error()->important();
+            return redirect()->route('admin.pembayaran.index');
+        } else {
+            flash()->error('<i class="fa fa-info"></i>&nbsp; <strong>Data Tidak Ditemukan</strong>');
+            return redirect()->route('admin.pembayaran.index');
+        }
     }
 }

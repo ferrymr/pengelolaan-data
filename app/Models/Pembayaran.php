@@ -44,4 +44,26 @@ class Pembayaran extends Model
             $q->where('id', $roleId);
         })->get();
     }
+
+    public function findId($id)
+    {
+        $data = Pembayaran::find($id);
+        if (!empty($data)) {
+            return $data;
+        } else {
+            return false;
+        }
+    }
+
+    public function editPembayaran($request, $id)
+    {
+
+        $data = Pembayaran::where('id', $id)->update($request);
+
+        if (!empty($data)) {
+            return $data;
+        } else {
+            return false;
+        }
+    }
 }

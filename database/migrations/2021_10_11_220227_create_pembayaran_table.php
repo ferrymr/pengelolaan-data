@@ -21,7 +21,7 @@ class CreatePembayaranTable extends Migration
             $table->integer('nominal_pembayaran');
             $table->date('tgl_pembayaran');
             $table->enum('status', ['Lunas', 'Belum Lunas']);
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }
