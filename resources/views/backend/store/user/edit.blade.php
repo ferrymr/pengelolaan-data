@@ -23,24 +23,6 @@
         <div class="card-body">
 
             <div class="row">
-                <div class="form-group col-sm-3 @if($errors->has('no_member')) has-error @endif">
-                    <label for="no_member" class="col-sm-12 control-label">No Member *</label>    
-                    <div class="col-sm-12">
-                        <input type="number" value="{{ $currentUser->no_member }}" name="no_member" class="form-control" id="no_member" placeholder="No Member">
-                        @if($errors->has('no_member'))
-                            <span class="text-danger">{{ $errors->first('no_member') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="form-group col-sm-3 @if($errors->has('nik')) has-error @endif">
-                    <label for="nik" class="col-sm-12 control-label">NIK *</label>    
-                    <div class="col-sm-12">
-                        <input type="number" value="{{ $currentUser->nik }}" name="nik" class="form-control" id="nik" placeholder="NIK">
-                        @if($errors->has('nik'))
-                            <span class="text-danger">{{ $errors->first('nik') }}</span>
-                        @endif
-                    </div>
-                </div>
                 <div class="form-group col-sm-6 @if($errors->has('name')) has-error @endif">
                     <label for="name" class="col-sm-12 control-label">Nama *</label>    
                     <div class="col-sm-12">
@@ -50,11 +32,9 @@
                         @endif
                     </div>
                 </div>
-            </div>
-            
-            <div class="row">
-                <div class="form-group col-sm-3 @if($errors->has('role_id')) has-error @endif">
-                    <label for="role_id" class="col-sm-12 control-label">Role *</label>    
+
+                <div class="form-group col-sm-6 @if($errors->has('role_id')) has-error @endif">
+                    <label for="role_id" class="col-sm-12 control-label">Role *</label>
                     <div class="col-sm-12">
                         <select name="role_id" id="role_id" class="form-control select2">
                             <option value="">Pilih</option>
@@ -67,30 +47,8 @@
                         @endif
                     </div>
                 </div>
-                <div class="form-group col-sm-3 @if($errors->has('birthdate')) has-error @endif">
-                    <label for="birthdate" class="col-sm-12 control-label">Tanggal Lahir *</label>    
-                    <div class="col-sm-12">
-                        {{-- <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask="" im-insert="false"> --}}
-                        <input type="birthdate" value="{{ $currentUser->birthdate }}" name="birthdate" class="form-control datepicker" placeholder="Tanggal Lahir">
-                        @if($errors->has('birthdate'))
-                            <span class="text-danger">{{ $errors->first('birthdate') }}</span>
-                        @endif
-                    </div>
-                </div>
-                <div class="form-group col-sm-3 @if($errors->has('gender')) has-error @endif">
-                    <label for="gender" class="col-sm-12 control-label">Jenis Kelamin *</label>    
-                    <div class="col-sm-12">
-                        <select name="gender" id="gender" class="form-control select2">
-                            <option value="">Pilih Jenis Kelamin</option>
-                            <option value="male" @if($currentUser->gender == 'male') selected @endif>Laki-laki</option>
-                            <option value="female" @if($currentUser->gender == 'female') selected @endif>Perempuan</option>
-                        </select>
-                        @if($errors->has('gender'))
-                            <span class="text-danger">{{ $errors->first('gender') }}</span>
-                        @endif
-                    </div>
-                </div>
             </div>
+            
             
             <div class="row">
                 <div class="form-group col-sm-6 @if($errors->has('phone')) has-error @endif">

@@ -27,8 +27,11 @@
                 <div class="col-sm-12">
                     <select name="id_instansi" id="no_pelanggan" class="select2" style="width:100%" required>
                         <option Disabled selected>Pilih Salah Satu</option>
-                        @foreach ($instansi as $item )
+                        {{-- @foreach ($instansi as $item )
                         <option value="{{ $item->id }}">{{ $item->no_pelanggan }}</option>
+                        @endforeach --}}
+                        @foreach($instansi as $data)
+                            <option value="{{ $data->id }}" @if($currentPembayaran->id_instansi == $data->id) selected @endif>{{ $data->no_pelanggan }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -89,8 +92,8 @@
                 <div class="col-sm-12">
                     <select name="id_jenis_layanan" id="jenis_layanan" class="select2" style="width:100%" required>
                         <option disabled selected>Pilih Salah Satu</option>
-                        @foreach ($layanan as $item )
-                        <option value="{{ $item->id }}">{{ $item->jenis_layanan }}</option>
+                        @foreach($layanan as $data)
+                            <option value="{{ $data->id }}" @if($currentPembayaran->id_jenis_layanan == $data->id) selected @endif>{{ $data->jenis_layanan }}</option>
                         @endforeach
                     </select>
                 </div>

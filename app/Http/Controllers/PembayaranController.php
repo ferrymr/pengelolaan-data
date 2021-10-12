@@ -16,11 +16,13 @@ use Illuminate\Support\Facades\Validator;
 
 class PembayaranController extends Controller
 {
-    public function __construct (User $user, Role $role, Pembayaran $pembayaran)
+    public function __construct (User $user, Role $role, Pembayaran $pembayaran, JenisLayanan $layanan, Instansi $instansi)
     {
         $this->userRepo      = $user;
         $this->roleRepo      = $role;
         $this->pembayaranRepo   = $pembayaran;
+        $this->layananRepo      = $layanan;
+        $this->instansiRepo      = $instansi;
     }
 
     public function index()
@@ -48,13 +50,13 @@ class PembayaranController extends Controller
                 return '<img src="'.$url.'" border="0" width="100" class="img-rounded" align="center" />';
             })
             // ->addColumn('status', function($data) {
-            //     if(!empty($data)) {
+            //     if(!empty($data->status)) {
             //         if($data->status == "Lunas" ||
             //             $data->status == "Belum Lunas"
             //         ) { 
-            //             return '<span class="badge bg-warning">Belum Lunas</span>';
+            //             return '<span class="badge bg-warning">Not confirm yet</span>';
             //         } else {
-            //             return '<span class="badge bg-success">Lunas</span>';
+            //             return '<span class="badge bg-success">Confirmed</span>';
             //         }
             //     }
             // })
@@ -119,8 +121,8 @@ class PembayaranController extends Controller
         $user = Auth::user();
         $currentPembayaran = $this->pembayaranRepo->findId($id);
         $roles = $this->roleRepo->getAll();
-        $instansi = Instansi::all();
-        $layanan = JenisLayanan::all();
+        $instansi = $this->instansiRepo->getAll();
+        $layanan = $this->layananRepo->getAll();
 
         return view('backend.order.pembayaran.edit')->with([
             'user' => $user,
