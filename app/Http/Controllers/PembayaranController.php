@@ -43,7 +43,6 @@ class PembayaranController extends Controller
             ->orderBy('id', 'asc')
             ->get();
         
-        // $data = $this->pembayaranRepo->getAll();
         return Datatables::of($data)
             ->addColumn('photo', function ($data) {
                 $url= asset($data->photo);
