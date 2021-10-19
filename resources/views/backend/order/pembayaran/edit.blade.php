@@ -13,6 +13,7 @@
         'url' => route('admin.pembayaran.update', $currentPembayaran->id),
         'method'=>'POST',
         'class'=>'form-horizontal',
+        'enctype' => 'multipart/form-data',
         'id'=>'form-pembayaran-update'
     ]) !!}
 

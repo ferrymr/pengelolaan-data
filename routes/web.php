@@ -93,3 +93,13 @@ Route::group([
     Route::post('update/{id}', 'PembayaranController@update')->name('update');
 
 });
+
+// Voew Pembayaran
+// Route::group([
+//     'middleware' => ['role:user'],
+//     'prefix' => '/admin/pembayaran/',
+//     'as' => 'admin.pembayaran.'
+// ], function () {
+//     Route::get('', 'PembayaranController@index')->name('index');
+//     Route::get('datatable', 'PembayaranController@datatable')->name('datatable');
+// });

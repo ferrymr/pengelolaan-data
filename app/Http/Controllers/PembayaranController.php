@@ -132,6 +132,30 @@ class PembayaranController extends Controller
         ]);
     }
 
+    public function update(Request $request, $id)
+    {
+        $rules = [
+            'id_instansi' => 'required',
+            'id_jenis_layanan' => 'required',
+            'tgl_pembayaran' => 'required',
+            'nominal_pembayaran' => 'required',
+            'total_mbps' => 'required',
+            'status' => 'required',
+            'photo' => 'image|file|max:1024'
+        ];
+
+        $validateData = $request->validate($rules);
+
+        if($request->file('photo')) {
+            $validateData['photo'] = $request->file('photo')->store(
+                'assets/product', 'public');
+        }
+
+        Pembayaran::find($id)->update($validateData);
+
+        return redirect()->route('admin.pembayaran.index'); 
+    }
+
     public function destroy($id)
     {
         $pembayaran = Pembayaran::where('id', $id)->delete();
