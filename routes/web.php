@@ -83,23 +83,23 @@ Route::group([
     'prefix' => '/admin/pembayaran/',
     'as' => 'admin.pembayaran.'
 ], function () {
-    Route::get('', 'PembayaranController@index')->name('index');
+    // Route::get('', 'PembayaranController@index')->name('index');
     Route::get('get.nama', 'PembayaranController@getNama')->name('get.nama');
     Route::get('add', 'PembayaranController@create')->name('add');
     Route::post('store', 'PembayaranController@store')->name('store');
-    Route::get('datatable', 'PembayaranController@datatable')->name('datatable');
+    // Route::get('datatable', 'PembayaranController@datatable')->name('datatable');
     Route::get('edit/{id}', 'PembayaranController@edit')->name('edit');
     Route::get('delete/{id}', 'PembayaranController@destroy')->name('delete');
     Route::post('update/{id}', 'PembayaranController@update')->name('update');
 
 });
 
-// Voew Pembayaran
-// Route::group([
-//     'middleware' => ['role:user'],
-//     'prefix' => '/admin/pembayaran/',
-//     'as' => 'admin.pembayaran.'
-// ], function () {
-//     Route::get('', 'PembayaranController@index')->name('index');
-//     Route::get('datatable', 'PembayaranController@datatable')->name('datatable');
-// });
+// View Pembayaran
+Route::group([
+    'middleware' => ['role:user|administrator'],
+    'prefix' => '/admin/pembayaran/',
+    'as' => 'admin.pembayaran.'
+], function () {
+    Route::get('', 'PembayaranController@index')->name('index');
+    Route::get('datatable', 'PembayaranController@datatable')->name('datatable');
+});
